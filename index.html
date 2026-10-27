@@ -86,7 +86,7 @@ button.g{background:linear-gradient(#3a4c4a,#26332f)}
 button:disabled{opacity:.4}
 .info{font-size:12px;min-height:34px;margin:4px 2px;opacity:.9;line-height:1.5}
 button.on{outline:2px solid var(--gold);background:linear-gradient(#5a7a3a,#2e4a22)}
-.ver{display:flex;justify-content:space-between;padding-right:40px;font-size:11px;opacity:.75;color:var(--gold)}
+.ver{display:flex;justify-content:space-between;padding-right:84px;font-size:11px;opacity:.75;color:var(--gold)}
 .pool{max-height:40vh;overflow-y:auto}
 .pc .qd{position:absolute;right:3px;top:36%;width:22px;height:22px;border-radius:50%;background:#000b;border:1px solid var(--gold);color:var(--gold);text-align:center;line-height:20px;font-size:14px;z-index:3}
 .fx-x{background:linear-gradient(45deg,transparent 42%,#ff9a9a 48%,#fff 50%,#ff9a9a 52%,transparent 58%),linear-gradient(-45deg,transparent 42%,#ff9a9a 48%,#fff 50%,#ff9a9a 52%,transparent 58%)}
@@ -100,7 +100,7 @@ button.on{outline:2px solid var(--gold);background:linear-gradient(#5a7a3a,#2e4a
 .ov{position:fixed;inset:0;background:rgba(12,18,18,.97);display:none;z-index:55;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .ov.on{display:block}
 .pan{max-width:420px;margin:0 auto;padding:12px 12px 40px}
-.shh,.hth{display:flex;align-items:center;gap:8px;padding-right:40px}
+.shh,.hth{display:flex;align-items:center;gap:8px;padding-right:84px}
 .shh b,.hth b{flex:1;font-size:18px;color:var(--gold);letter-spacing:2px}
 .big{display:block;margin:10px auto;width:min(100%,330px);aspect-ratio:3/4;border-radius:12px;border:2px solid var(--gold);object-fit:cover;box-shadow:0 0 18px #000}
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;margin:8px 0}
@@ -132,9 +132,41 @@ button.on{outline:2px solid var(--gold)}
 .it.fac{cursor:pointer}.it.fac.on{outline:2px solid var(--gold);background:#5a7a3a55}
 #gres{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px;margin:10px 0}
 .gc{position:relative;aspect-ratio:3/4}.gc .tg{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:10px;background:#000b;color:#ffd23a;border-radius:0 0 7px 7px;z-index:3}
+
+.cell.act{z-index:50}
+.card .bar.hp{position:absolute;right:2px;top:17px;bottom:19px;width:10px;height:auto;margin:0;border-radius:6px;background:linear-gradient(90deg,#000d,#2a2a2acc);border:1px solid #ffffff77;box-shadow:0 0 4px #000,inset 0 0 3px #000;overflow:hidden}
+.card .bar.hp i{position:absolute;left:0;right:0;bottom:0;width:100%;height:100%;transition:height .35s;background:linear-gradient(90deg,#1f9e46,#8cf7a6 45%,#1f9e46);box-shadow:0 0 6px #4dff88}
+.card .bar.hp::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 9px,rgba(0,0,0,.4) 9px 10px);pointer-events:none}
+.card .bar.hp.low i{background:linear-gradient(90deg,#b81c1c,#ff7a6a 45%,#b81c1c);box-shadow:0 0 6px #ff4a3a;animation:lowp .7s infinite alternate}
+@keyframes lowp{to{filter:brightness(1.6)}}
+.card .bars{left:3px;right:3px;bottom:3px}
+.card .bar.rg{position:relative;height:9px;margin:0;border-radius:5px;background:#000c;border:1px solid #ffffff66;box-shadow:0 0 4px #000}
+.card .bar.rg i{height:100%;transition:width .3s;background:linear-gradient(90deg,#2a6df0,#6aa8ff 50%,#b57bff);border-radius:4px}
+.card .bar.rg.full i{background:linear-gradient(90deg,#ffa800,#fff2a0 50%,#ffa800);box-shadow:0 0 9px #ffd24a;animation:rgp .55s infinite alternate}
+@keyframes rgp{to{filter:brightness(1.5)}}
+.card .bar.rg::before{content:'怒';position:absolute;left:2px;top:0;font-size:7px;line-height:8px;color:#fff;z-index:2;text-shadow:0 0 2px #000,0 0 2px #000}
+.dead .bar.hp{display:none}
+.card .fac{right:auto;left:2px;bottom:16px}
+.card .str{bottom:36px}
+.fx-imp{inset:10%;border-radius:50%;border:5px solid #fff;box-shadow:0 0 22px 6px #ffd24a,inset 0 0 18px #ffd24a;background:radial-gradient(circle,#fff8 0,transparent 55%)}
+#cine{position:fixed;inset:0;z-index:42;pointer-events:none;overflow:hidden;animation:cIn .12s forwards}
+@keyframes cIn{from{opacity:0}to{opacity:1}}
+#cine.out{animation:cOut .2s forwards}
+@keyframes cOut{to{opacity:0;transform:scale(1.15)}}
+#cine .dk{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(40,20,0,.55),rgba(0,0,0,.93))}
+#cine .cv{position:absolute;left:-50%;top:-50%;width:200%;height:200%;background:repeating-conic-gradient(from 0deg,transparent 0 4deg,rgba(255,225,150,.2) 4deg 5deg);animation:spin 2.4s linear infinite;-webkit-mask-image:radial-gradient(circle,transparent 18%,#000 55%);mask-image:radial-gradient(circle,transparent 18%,#000 55%)}
+@keyframes spin{to{transform:rotate(360deg)}}
+#cine .bd{position:absolute;left:-10%;right:-10%;top:40%;height:26%;background:linear-gradient(90deg,transparent,rgba(217,178,90,.55),transparent);transform:skewY(-9deg);animation:bdIn .35s both}
+@keyframes bdIn{from{transform:skewY(-9deg) scaleX(0)}to{transform:skewY(-9deg) scaleX(1)}}
+#cine .cc{position:absolute;left:50%;top:46%;height:min(66vh,calc(88vw*1.333));aspect-ratio:3/4;background-size:cover;background-position:center top;border:4px solid gold;border-radius:16px;animation:ccIn .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ccIn{0%{opacity:0;transform:translate(calc(-50% + var(--dir)*-90vw),-50%) rotate(calc(var(--dir)*-10deg)) scale(.8)}22%{opacity:1}38%{transform:translate(-50%,-50%) rotate(0) scale(1)}100%{opacity:1;transform:translate(-50%,-50%) rotate(0) scale(1.1)}}
+#cine .ct{position:absolute;left:0;right:0;bottom:7%;text-align:center;font-weight:900;font-size:clamp(34px,11vw,68px);letter-spacing:8px;color:#fff3c4;-webkit-text-stroke:2px #5a2a00;text-shadow:0 0 18px #ffb300,0 4px 0 #5a2a00,0 0 40px #ff6a00;animation:ctIn .5s .12s cubic-bezier(.2,.9,.2,1) both}
+@keyframes ctIn{from{opacity:0;transform:translateX(calc(var(--dir)*60vw)) scale(1.4)}to{opacity:1;transform:none}}
+#cine .cn{position:absolute;left:0;right:0;top:4%;text-align:center;font-size:clamp(18px,5vw,28px);letter-spacing:6px;color:var(--gold);text-shadow:0 0 8px #000,0 0 8px #000;animation:ctIn .4s both}
 </style></head><body><div class="wrap" id="app">
+<button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 6px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 6px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261027d</span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261027e</span></div>
 <h1>三國九宮戰</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="margin-bottom:4px"><button class="g on" id="mPvp">⚔️ 對戰</button><button class="g" id="mExp">📘 經驗塔</button><button class="g" id="mEq">🛡️ 裝備塔</button><button class="g" id="mGold">💰 金幣塔</button><button class="g" id="mGacha">🎴 抽卡</button><button class="g" id="mShop">🏪 商城</button></div>
@@ -200,7 +232,7 @@ function cardEl(u,full){
  const d=document.createElement('div');d.className='card';d.style.backgroundImage=`url(${ART[u.id]})`;d.style.borderColor=RAR[rarOf(u.id)].c;
  const st=full?(S.star[u.id]||0):(u.st||0);
  d.innerHTML=`<span class="zhen">臻</span><span class="lv">Lv.${u.lv||LV(u.id)}</span>${st?`<span class="str">★${st}</span>`:''}<span class="nm">${u.n}</span><span class="fac" style="background:${FC[u.f]}">${u.f}</span>`+
- (full?'':'<div class="shield"></div><div class="bars"><div class="bar hp"><i></i></div><div class="bar rg"><i></i></div></div>');
+ (full?'':'<div class="shield"></div><div class="bar hp"><i></i></div><div class="bars"><div class="bar rg"><i></i></div></div>');
  return d}
 function render(){
  if(MODE==='pvp'&&!busy&&OPP.list.length)buildOpp();
@@ -217,8 +249,8 @@ function render(){
  $('bGo').disabled=busy||!pl.some(x=>x)||(MODE==='tower'&&blocked())||(MODE==='pvp'&&pvpLeft()<=0);
  document.querySelector('.side.p .tag').textContent=`我方 · ${S.lord.n||'天問'}（藍營） ${pl.filter(Boolean).length}/${MAXN()}`;place()}
 function upd(u,c){c=c||cellOf(u);if(!c)return;const hp=c.querySelector('.hp'),rg=c.querySelector('.rg');if(!hp)return;
- hp.firstChild.style.width=Math.max(0,u.hp/u.mhp*100)+'%';hp.classList.toggle('low',u.hp/u.mhp<.35);
- rg.firstChild.style.width=Math.min(100,u.rage)+'%';c.classList.toggle('sh',u.sh>0);c.classList.toggle('dead',u.hp<=0)}
+ hp.firstChild.style.height=Math.max(0,u.hp/u.mhp*100)+'%';hp.classList.toggle('low',u.hp/u.mhp<.35);
+ rg.firstChild.style.width=Math.min(100,u.rage)+'%';rg.classList.toggle('full',u.rage>=100);c.classList.toggle('sh',u.sh>0);c.classList.toggle('dead',u.hp<=0)}
 const cellOf=u=>{let i=pl.indexOf(u);if(i>=0)return $('gp'+i);i=en.indexOf(u);return i>=0?$('ge'+i):null};
 const alive=a=>a.filter(u=>u&&u.hp>0);
 function front(side,arr){ // side 'e': front row = r2 ; 'p': front row = r0
@@ -474,6 +506,22 @@ function doPull(n){au();n=n==='all'?Math.min(pullLeft(),300):Math.min(n,pullLeft
 $('gBody').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.g==='x')$('gacha').classList.remove('on');else if(b.dataset.n)doPull(b.dataset.n==='all'?'all':+b.dataset.n)};
 $('mGacha').onclick=()=>{if(busy)return;GR=null;renderGacha();$('gacha').classList.add('on')};
 $('dsel').onclick=e=>{const b=e.target.closest('button');if(!b||busy||MODE!=='pvp')return;if(b.id==='bReroll'){newOpp();render();setInfo();return}if(b.dataset.d!==undefined){DIFF=+b.dataset.d;newOpp();render();setInfo()}};
+let ANIM=(()=>{try{return localStorage.getItem('sgAnim')||'full'}catch(e){return 'full'}})();
+const ANL={full:['🎬','動畫：完整（技能特寫＋跳躍攻擊）'],short:['⚡','動畫：簡短（只有跳躍攻擊）'],off:['⏹','動畫：關閉（只有特效）']};
+function jump(c,tc,melee,big,mine){if(ANIM==='off'||!c||!tc)return sleep(0);
+ const a=c.getBoundingClientRect(),b=tc.getBoundingClientRect(),dx=b.left+b.width/2-(a.left+a.width/2),dy=b.top+b.height/2-(a.top+a.height/2),k=melee?.8:.25,h=Math.min(110,a.height*.55),sc=melee?(big?1.9:1.6):(big?1.55:1.3),rot=(mine?1:-1)*(big?12:8),dur=big?950:620;
+ c.style.zIndex=60;c.style.transition='none';
+ const an=c.animate([{transform:'translate(0,0) scale(1) rotate(0)',offset:0},{transform:`translate(${-dx*.04}px,${-dy*.04+8}px) scale(.92,.86) rotate(0)`,offset:.12},
+  {transform:`translate(${dx*.12}px,${dy*.12-h}px) scale(${sc*.85}) rotate(${-rot}deg)`,offset:.4},{transform:`translate(${dx*k}px,${dy*k}px) scale(${sc}) rotate(${rot}deg)`,offset:.58},
+  {transform:`translate(${dx*k}px,${dy*k}px) scale(${sc*1.06}) rotate(${rot}deg)`,offset:.68},{transform:'translate(0,0) scale(1) rotate(0)',offset:1}],{duration:dur,easing:'cubic-bezier(.3,.1,.3,1)'});
+ an.finished.then(()=>{c.style.zIndex='';c.style.transition=''},()=>{c.style.zIndex='';c.style.transition=''});
+ return sleep(dur*.58).then(()=>{if(tc!==c){spawn(tc,'fx-imp');if(big){const bd=$('board');bd.classList.remove('shake');void bd.offsetWidth;bd.classList.add('shake')}}})}
+async function cine(u,mine){const d=document.createElement('div');d.id='cine';d.style.setProperty('--dir',mine?-1:1);const rc=RAR[rarOf(u.id)].c;
+ d.innerHTML=`<div class="dk"></div><div class="cv"></div><div class="bd"></div><div class="cc" style="background-image:url(${ART2[u.id]});border-color:${rc};box-shadow:0 0 40px ${rc},0 0 90px ${FC[u.f]}"></div><div class="cn">${u.f}・${u.n}</div><div class="ct">${u.sk}</div>`;
+ document.body.appendChild(d);sfx('crit');await sleep(900);d.classList.add('out');await sleep(200);d.remove()}
+$('anim').onclick=()=>{ANIM=ANIM==='full'?'short':ANIM==='short'?'off':'full';try{localStorage.setItem('sgAnim',ANIM)}catch(e){}$('anim').textContent=ANL[ANIM][0];toast(ANL[ANIM][1])};
+$('anim').textContent=ANL[ANIM][0];
+
 async function act(u,mine){
  const ec=mine?en:pl,es=mine?'e':'p',ac=mine?pl:en,c=cellOf(u);
  const foes=alive(ec);if(!foes.length)return;
@@ -481,20 +529,20 @@ async function act(u,mine){
  if(pat==='heal'&&!useSk)pat='single';
  c.classList.add('act');
  const base=u.atk*(useSk?u.m:.6)*(0.9+Math.random()*.2),crit=useSk&&Math.random()<Math.min(.6,.2+.003*(u.lv-1)+(u.cr||0)),dm=base*(crit?1.5:1);
- if(useSk){u.rage-=100;banner(`${u.n}・${u.sk}`)}else u.rage+=50;sfx(useSk?pat:'single');
+ if(useSk){u.rage-=100;upd(u,c);if(ANIM==='full')await cine(u,mine);else banner(`${u.n}・${u.sk}`)}else u.rage+=50;sfx(useSk?pat:'single');
  if(useSk)u.rage=Math.max(0,u.rage);
  const dir=mine?-1:1;
  if(pat==='single'||pat==='assn'){
   const t=pat==='assn'&&useSk?back(es,ec):front(es,ec);
-  if(pat==='assn'&&useSk){c.style.opacity=.3;spawn(c,'fx-a');await sleep(300);c.style.opacity=1}
-  else{c.style.transform=`translateY(${dir*40}px)`;await sleep(220)}
+  if(pat==='assn'&&useSk){c.style.opacity=.3;spawn(c,'fx-a');await sleep(250);c.style.opacity=1;await jump(c,cellOf(t),true,true,mine)}
+  else await jump(c,cellOf(t),true,useSk,mine);
   await hurt(t,dm,FX[pat],crit);
   if(useSk&&u.id==='caoren'){u.sh+=u.mhp*.25;upd(u,c)}
   await sleep(300);c.style.transform=''}
- else if(pat==='snipe'){const tg=alive(ec).sort((a,b)=>a.hp-b.hp)[0];await fly(c,cellOf(tg),'snipe');await hurt(tg,dm,'fx-n',crit);await sleep(350)}
- else if(pat==='volley'){for(let k=0;k<3;k++){const al=alive(ec);if(!al.length)break;const tg=al[Math.floor(Math.random()*al.length)];fly(c,cellOf(tg),'volley');await sleep(180);await hurt(tg,dm*.62,'fx-v',crit);await sleep(60)}await sleep(300)}
+ else if(pat==='snipe'){const tg=alive(ec).sort((a,b)=>a.hp-b.hp)[0];await jump(c,cellOf(tg),false,true,mine);await fly(c,cellOf(tg),'snipe');await hurt(tg,dm,'fx-n',crit);await sleep(350)}
+ else if(pat==='volley'){await jump(c,cellOf(alive(ec)[0]),false,useSk,mine);for(let k=0;k<3;k++){const al=alive(ec);if(!al.length)break;const tg=al[Math.floor(Math.random()*al.length)];fly(c,cellOf(tg),'volley');await sleep(180);await hurt(tg,dm*.62,'fx-v',crit);await sleep(60)}await sleep(300)}
  else if(pat==='heal'){
-  const al=alive(ac);for(const a of al){const amt=Math.round(a.mhp*u.m);a.hp=Math.min(a.mhp,a.hp+amt);const cc=cellOf(a);
+  await jump(c,c,false,true,mine);const al=alive(ac);for(const a of al){const amt=Math.round(a.mhp*u.m);a.hp=Math.min(a.mhp,a.hp+amt);const cc=cellOf(a);
    spawn(cc,'fx-h','+'+amt,'g');cc.classList.add('heal');setTimeout(()=>cc.classList.remove('heal'),700);upd(a,cc)}
   await sleep(700)}
  else{
@@ -505,7 +553,7 @@ async function act(u,mine){
   else if(pat==='xshape'){L.push([idx,0]);[[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([a,b])=>{const rr=r+a,cc=col+b;if(rr>=0&&rr<3&&cc>=0&&cc<3)L.push([rr*3+cc,220])})}
   else if(pat==='backrow'){for(let k=0;k<3;k++)L.push([br*3+k,k*150])}
   else for(let k=0;k<9;k++)L.push([k,k*70]);
-  await fly(c,$(gid+(pat==='backrow'?br*3+1:idx)),pat);
+  await jump(c,$(gid+(pat==='aoe'?4:pat==='backrow'?br*3+1:idx)),false,useSk,mine);await fly(c,$(gid+(pat==='backrow'?br*3+1:idx)),pat);
   beam(gid,pat,idx,pat==='backrow'?br:r,col);
   await Promise.all(L.map(async([i,d])=>{await sleep(d);const x=ec[i];if(x&&x.hp>0)await hurt(x,dm,FX[pat],crit);else spawn($(gid+i),FX[pat])}));
   await sleep(500)}
