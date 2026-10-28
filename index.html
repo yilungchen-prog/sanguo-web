@@ -257,7 +257,7 @@ body:not(.full) .synb{white-space:normal;overflow:visible;line-height:1.45}body:
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028ah</span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028ai</span></div>
 <h1>三國九宮戰</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="margin-bottom:4px"><button class="g on" id="mPvp">⚔️ 對戰</button><button class="g" id="mExp">📘 經驗塔</button><button class="g" id="mEq">🛡️ 裝備塔</button><button class="g" id="mGold">💰 金幣塔</button><button class="g" id="mGacha">🎴 抽卡</button><button class="g" id="mShop">🏪 商城</button></div>
@@ -296,7 +296,7 @@ const H=[
 {id:'machao',n:'馬超',f:'神',pat:'single',sk:'裂山乘風破',hp:900,atk:145,spd:100,m:2.4,ds:'對自己正對面（同欄、由前往後第一個）的敵人造成重擊並獲得 1 層【神光】，並額外造成 每層神光×15% 攻擊的固定傷害；擊殺額外 +1 層；40% 機率獲得【極意】（本回合追擊必定連發）。<br><b>神・絕騎</b>（天賦）：攻擊 +10%、生命 +5%、傷害加成 +5%。<br><b>騰息踏空碎</b>（絕技）：每次行動結束時，對敵方攻擊最高的目標追擊一次，並分別有 50%、40%、30% 機率再次發動（最多 3 次）。<br><b>神・裂崖</b>（被動）：每次行動後（含追擊）有 40% 機率獲得 1 層【神光】（持續整場）：1 層：受到傷害 −15%；3 層：攻擊 +15%、傷害 +15%；6 層：傷害再 +25%。'},
 {id:'zhangliao',n:'張遼',f:'魏',pat:'pierce',sk:'槍圍破陣',hp:950,atk:135,spd:92,m:1.6},
 {id:'zhaoyun',n:'趙雲',f:'蜀',pat:'pierce',sk:'驚雷翔龍',hp:950,atk:135,spd:96,m:1.6},
-{id:'mayunlu',n:'馬雲祿',f:'神',pat:'pierce',sk:'神弩貫穿',hp:880,atk:130,spd:97,m:1.6},
+{id:'mayunlu',n:'馬雲祿',f:'神',pat:'single',sk:'雲影千襲',hp:880,atk:130,spd:97,m:2.8,ds:'<b>雲影千襲</b>（怒氣技能）：對敵方單體造成重擊（攻擊 280%），並為我方全體附加【鳳魄之護】。<br>【鳳魄之護】：附加馬雲祿最大生命 15% 的護盾，持續 2 回合，最多疊加 3 層，不可驅散，受傷時優先消耗；護盾被敵方武將攻擊擊破時（負面狀態傷害除外），對攻擊者造成等額傷害。<br><b>月華癒魂</b>（被動）：己方其他武將受到致命傷害時，保留 1 點生命並回復馬雲祿最大生命 50% 的血量，每回合最多觸發 1 次（馬雲祿陣亡時失效）。<br><b>雲障挽殤</b>（絕技）：我方任意武將每層【鳳魄之護】被擊破或自然消失時，回復該武將生命上限 5% ＋ 馬雲祿生命上限 5% 的血量。<br><b>驚鴻</b>（天賦）：基礎攻擊 +15%、基礎生命 +30%、傷害減免 +15%。'},
 {id:'zhangfei',n:'張飛',f:'蜀',pat:'sweep',sk:'咆哮怒吼',hp:1100,atk:115,spd:72,m:1.5},
 {id:'guojia',n:'郭嘉',f:'魏',pat:'cross',sk:'天命棋局',hp:800,atk:125,spd:84,m:1.7},
 {id:'zhangjiao',n:'張角',f:'魔',pat:'aoe',sk:'驅雷掣電',hp:900,atk:130,spd:90,m:.95,ds:'對敵方<b>全體</b>造成法術傷害，並施加【雷澤】：受到的直接傷害 +20%、速度 −10%，持續 2 回合；每個目標 50% 機率中【魔蠱】（回合結束受張角攻擊 22% 傷害，最多 3 層）。<br><b>太平之道</b>（天賦）：攻擊 +10%、生命 +5%、傷害加成 +5%。<br><b>鬼道莫測</b>（絕技）：戰鬥開始時偷取敵方攻擊最高武將 15% 的攻擊，附加給己方攻擊最高武將，持續整場；張角陣亡時效果消失。<br><b>蒼天當立</b>（被動）：釋放怒氣技能後，每個命中目標有 30% 機率從【降療】（受治療 −25%）、【攻擊降低】（攻擊 −25%）、【灼燒】、【魔蠱】中隨機施加 2 種負面效果，各持續 2 回合。'},
@@ -355,7 +355,7 @@ const H=[
 {id:'zhangbao',n:'張寶',f:'魔',pat:'snipe',sk:'地公妖術',hp:800,atk:126,spd:88,m:2.0},
 {id:'guosi',n:'郭汜',f:'魔',pat:'single',sk:'涼州狂刀',hp:1000,atk:128,spd:84,m:1.9},
 {id:'xuhuang',n:'徐晃',f:'魏',pat:'single',sk:'長驅直入',hp:1020,atk:130,spd:86,m:1.9}];
-const QMAP={"guan": 99, "guanyu": 92, "caoren": 91, "liubei": 95, "machao": 99, "zhangliao": 92, "zhaoyun": 92, "mayunlu": 95, "zhangfei": 92, "guojia": 92, "zhangjiao": 99, "zhugeliang": 91, "xinxianying": 92, "caiwenji": 93, "zhouyu": 92, "shenzhuge": 95, "huatuo": 99, "zhenmi": 91, "daqiao": 92, "bulianshi": 95, "lubu": 99, "diaochan": 93, "zhangchunhua": 99, "zhangxingcai": 91, "sunce": 91, "yuanshao": 93, "sunshangxiang": 92, "taishici": 91, "xiaoqiao": 89, "wuyue": 55, "lvfan": 60, "lingtong": 65, "xusheng": 65, "chengpu": 75, "zhangzhao": 75, "guyong": 75, "shuyue": 55, "zhangsong": 60, "madai": 65, "zhoucang": 65, "maliang": 75, "jianyong": 75, "liaohua": 75, "weiyue": 55, "chenqun": 60, "yuejin": 65, "caoxiu": 65, "yangxiu": 75, "xunyou": 75,"menghuo":83,"pangde":83,"yuanshu":83,"tianfeng":83,"xuchu":83,"xiahouyuan":83,"xushu":83,"guanping":83,"zhoutai":83,"zhugejin":83,"mateng":75,"taoqian":75,"jushou":75,"panfeng":75,"zhangbao":75,"guosi":75,"xuhuang":75};H.forEach(h=>h.q=QMAP[h.id]);
+const QMAP={"guan": 99, "guanyu": 92, "caoren": 91, "liubei": 95, "machao": 99, "zhangliao": 92, "zhaoyun": 92, "mayunlu": 99, "zhangfei": 92, "guojia": 92, "zhangjiao": 99, "zhugeliang": 91, "xinxianying": 92, "caiwenji": 93, "zhouyu": 92, "shenzhuge": 95, "huatuo": 99, "zhenmi": 91, "daqiao": 92, "bulianshi": 95, "lubu": 99, "diaochan": 93, "zhangchunhua": 99, "zhangxingcai": 91, "sunce": 91, "yuanshao": 93, "sunshangxiang": 92, "taishici": 91, "xiaoqiao": 89, "wuyue": 55, "lvfan": 60, "lingtong": 65, "xusheng": 65, "chengpu": 75, "zhangzhao": 75, "guyong": 75, "shuyue": 55, "zhangsong": 60, "madai": 65, "zhoucang": 65, "maliang": 75, "jianyong": 75, "liaohua": 75, "weiyue": 55, "chenqun": 60, "yuejin": 65, "caoxiu": 65, "yangxiu": 75, "xunyou": 75,"menghuo":83,"pangde":83,"yuanshu":83,"tianfeng":83,"xuchu":83,"xiahouyuan":83,"xushu":83,"guanping":83,"zhoutai":83,"zhugejin":83,"mateng":75,"taoqian":75,"jushou":75,"panfeng":75,"zhangbao":75,"guosi":75,"xuhuang":75};H.forEach(h=>h.q=QMAP[h.id]);
 const JOBOF={"guan": "坦克", "caoren": "坦克", "zhangfei": "坦克", "zhoucang": "坦克", "weiyue": "坦克", "xuchu": "坦克", "menghuo": "坦克", "chengpu": "坦克", "yuejin": "坦克", "xusheng": "坦克", "taoqian": "坦克", "zhoutai": "坦克", "huatuo": "輔助", "zhenmi": "輔助", "daqiao": "輔助", "bulianshi": "輔助", "maliang": "輔助", "jianyong": "輔助", "zhangzhao": "輔助", "guyong": "輔助", "chenqun": "輔助", "jushou": "輔助", "zhangsong": "輔助", "zhugejin": "輔助", "tianfeng": "輔助", "caiwenji": "輔助", "yuanshu": "輔助", "guojia": "法師", "zhangjiao": "法師", "zhugeliang": "法師", "xinxianying": "法師", "zhouyu": "法師", "shenzhuge": "法師", "xiaoqiao": "法師", "xunyou": "法師", "yangxiu": "法師", "xushu": "法師", "zhangbao": "法師", "guanyu": "戰士", "liubei": "戰士", "machao": "戰士", "zhangliao": "戰士", "zhaoyun": "戰士", "mayunlu": "戰士", "lubu": "戰士", "diaochan": "輔助", "zhangchunhua": "戰士", "zhangxingcai": "戰士", "sunce": "戰士", "yuanshao": "戰士", "sunshangxiang": "戰士", "taishici": "戰士", "wuyue": "戰士", "lvfan": "戰士", "lingtong": "戰士", "shuyue": "戰士", "madai": "戰士", "liaohua": "戰士", "caoxiu": "戰士", "xiahouyuan": "戰士", "guanping": "戰士", "mateng": "戰士", "pangde": "戰士", "guosi": "戰士", "xuhuang": "戰士", "panfeng": "戰士"};H.forEach(h=>h.job=JOBOF[h.id]);
 const JB={戰士:{ic:'⚔️',hp:1,atk:1.08,cr:.05,sm:1,hm:1,rg:0,jr:0,jt:1,t:'攻擊 +8%、暴擊率 +5%（物理輸出）'},法師:{ic:'🔮',hp:1,atk:1,cr:0,sm:1.12,hm:1,rg:20,jr:0,jt:1,t:'技能傷害 +12%、開場怒氣 +20（法術輸出）'},坦克:{ic:'🛡️',hp:1.12,atk:1,cr:0,sm:1,hm:1,rg:0,jr:.06,jt:1,t:'生命 +12%、受到傷害 −6%（前排承傷）'},輔助:{ic:'🌿',hp:1.06,atk:1,cr:0,sm:1,hm:1.2,rg:0,jr:0,jt:1.2,t:'生命 +6%、治療量 +20%、陣營特性（連擊／冰凍／灼燒）機率 +20%（治療與控制）'}};
 function jobFix(u){const j=JB[u.job];if(!j)return u;u.hp=u.mhp=Math.round(u.mhp*j.hp);u.atk=Math.round(u.atk*j.atk);u.cr=(u.cr||0)+j.cr;u.m=+(u.m*(u.pat==='heal'?j.hm:j.sm)).toFixed(3);u.rage+=j.rg;u.jr=j.jr;u.jt=j.jt;return u}
@@ -487,7 +487,7 @@ function synPanel(arr){const y=synergy(arr),c3=['魏','蜀','吳'].map(f=>y.cnt[
  h+='<div style="margin-top:6px;opacity:.7">陣營特性：蜀＝連擊、魏＝冰凍、吳＝灼燒、神＝攻擊+5%（生命−7%）、魔＝生命+8%且受療+20%（連擊／冰凍／灼燒的強度隨星級與資質提高）。<br>各陣營加成可疊加；加成套用到全隊，敵我雙方規則相同。</div></details>';return h}
 function upd(u,c){c=c||cellOf(u);if(!c)return;const hp=c.querySelector('.hp'),rg=c.querySelector('.rg');if(!hp)return;
  hp.firstChild.style.height=Math.max(0,u.hp/u.mhp*100)+'%';hp.classList.toggle('low',u.hp/u.mhp<.35);
- rg.firstChild.style.width=Math.min(100,u.rage)+'%';rg.classList.toggle('full',u.rage>=100);c.classList.toggle('sh',u.sh>0);c.classList.toggle('dead',u.hp<=0);c.classList.toggle('ice',u.fz>0&&u.hp>0);c.classList.toggle('burn',u.bn>0&&u.hp>0);c.classList.toggle('hid',u.hid>0&&u.hp>0);c.classList.toggle('ql',u.ql>0&&u.hp>0)}
+ rg.firstChild.style.width=Math.min(100,u.rage)+'%';rg.classList.toggle('full',u.rage>=100);c.classList.toggle('sh',u.sh>0||!!(u.fp&&u.fp.length));c.classList.toggle('dead',u.hp<=0);c.classList.toggle('ice',u.fz>0&&u.hp>0);c.classList.toggle('burn',u.bn>0&&u.hp>0);c.classList.toggle('hid',u.hid>0&&u.hp>0);c.classList.toggle('ql',u.ql>0&&u.hp>0)}
 const cellOf=u=>{let i=pl.indexOf(u);if(i>=0)return $('gp'+i);i=en.indexOf(u);return i>=0?$('ge'+i):null};
 const alive=a=>a.filter(u=>u&&u.hp>0);
 function front(side,arr,any){ // side 'e': front row = r2 ; 'p': front row = r0
@@ -513,7 +513,7 @@ let CUR=null,CSK=false;
 function facHit(t){const s=CUR;if(!s||s.hp<=0||t.hp<=0||t.imm>0)return;const k=tpow(s),m=(CSK?1:TRC.basic)*(s.jt||1),c=cellOf(t);
  if(s.f==='魏'&&!(t.fz>0)&&!t.fi&&!(t.ws>0&&t.sh>0)&&Math.random()<(TRC.fz0+TRC.fz1*k)*m){t.fz=fzTurns(k);t.fzd=TRC.fzd0+TRC.fzd1*k;spawn(c,'fx-i','冰凍');upd(t,c)}
  else if(s.f==='吳'&&Math.random()<(TRC.bn0+TRC.bn1*k)*m){t.bn=TRC.bnT;t.bd=Math.max(1,s.atk*(TRC.bd0+TRC.bd1*k));spawn(c,'fx-b','灼燒');upd(t,c)}}
-async function burnTick(){let any=false;for(const u of[...pl,...en]){if(!u)continue;if(u.hid>0){u.hid--;upd(u,cellOf(u))}if(u.imm>0)u.imm--;if(u.ws>0){u.ws--;if(u.ws<=0){u.sh=Math.max(0,u.sh-(u.wsh||0));u.wsh=0;upd(u,cellOf(u))}}if(u.zt>0){u.zt--;if(u.zt<=0)lbLeave(u)}if(u.hp>0&&u.lz>0){u.lz--;if(u.lz<=0&&u.lzs){u.spd+=u.lzs;u.lzs=0}}if(u.nr>0)u.nr--;if(u.ad>0){u.ad--;if(u.ad<=0&&u.ads){u.atk+=u.ads;u.ads=0}}if(u.hr>0)u.hr--;if(u.qc>0)u.qc--;
+async function burnTick(){let any=false;for(const u of[...pl,...en]){if(!u)continue;if(u.hid>0){u.hid--;upd(u,cellOf(u))}if(u.imm>0)u.imm--;if(u.ws>0){u.ws--;if(u.ws<=0){u.sh=Math.max(0,u.sh-(u.wsh||0));u.wsh=0;upd(u,cellOf(u))}}if(u.zt>0){u.zt--;if(u.zt<=0)lbLeave(u)}if(u.hp>0&&u.lz>0){u.lz--;if(u.lz<=0&&u.lzs){u.spd+=u.lzs;u.lzs=0}}if(u.nr>0)u.nr--;if(u.ad>0){u.ad--;if(u.ad<=0&&u.ads){u.atk+=u.ads;u.ads=0}}if(u.hr>0)u.hr--;if(u.qc>0)u.qc--;u.yhc=0;if(u.fp&&u.fp.length){u.fp.forEach(l=>l.t--);const ex=u.fp.filter(l=>l.t<=0);u.fp=u.fp.filter(l=>l.t>0);if(u.hp>0)ex.forEach(l=>fpGone(u,l));upd(u,cellOf(u))}
   if(u.hp>0&&u.mg>0){const d=Math.round(u.mgD*u.mg*(u.gl&&u.gl.hp>0?.8:1));u.hp=Math.max(0,u.hp-d);spawn(cellOf(u),'fx-a','-'+d);upd(u,cellOf(u));any=true;u.mgT--;if(u.mgT<=0)u.mg=0;if(u.hp<=0)onDeath(u)}
   if(u.hp>0&&u.wind>0){const h=Math.round(u.mhp*.06*(u.hr>0?.75:1));u.hp=Math.min(u.mhp,u.hp+(u.ql>0?0:Math.round(h*(u.qc>0?1.15:1))));spawn(cellOf(u),'fx-h','+'+h,'g');u.wind--;upd(u,cellOf(u));any=true}}
  for(const u of[...pl,...en]){if(u&&u.hp>0&&u.bn>0){const d=Math.round(u.bd*(u.gl&&u.gl.hp>0?.8:1)),c=cellOf(u);u.hp=Math.max(0,u.hp-d);u.bn--;spawn(c,'fx-b','-'+d);upd(u,c);any=true}}if(any)await sleep(450)}
@@ -530,7 +530,7 @@ function onDeath(t){
 function stealInit(){[[pl,en],[en,pl]].forEach(([a,b])=>{const z=a.find(u=>u&&u.id==='zhangjiao'&&u.hp>0);if(!z)return;const e=alive(b).sort((x,y)=>y.atk-x.atk)[0],al=alive(a).filter(u=>u!==z).sort((x,y)=>y.atk-x.atk)[0]||z;if(!e)return;
   const amt=Math.round(e.atk*.15);e.atk-=amt;al.atk+=amt;z.steal={e,al,amt};spawn(cellOf(e),'fx-a','-'+amt);spawn(cellOf(al),'fx-a','+'+amt,'g')})}
 
-const TAL={zhangjiao:[.10,.05,.05,0],zhangchunhua:[.10,.05,.05,0],machao:[.10,.05,.05,0],huatuo:[.05,.10,0,.05],diaochan:[.15,.30,0,.15],guan:[.08,.12,0,.06]};
+const TAL={zhangjiao:[.10,.05,.05,0],zhangchunhua:[.10,.05,.05,0],machao:[.10,.05,.05,0],huatuo:[.05,.10,0,.05],mayunlu:[.15,.30,0,.15],diaochan:[.15,.30,0,.15],guan:[.08,.12,0,.06]};
 function tlInit2(){[...pl,...en].forEach(u=>{const t=u&&TAL[u.id];if(!t||u.t2)return;u.t2=1;u.atk=Math.round(u.atk*(1+t[0]));const o=u.mhp;u.mhp=Math.round(u.mhp*(1+t[1]));u.hp=Math.round(u.hp*u.mhp/o);u.db=(u.db||0)+t[2];u.rd=(u.rd||0)+t[3]})}
 const dbn=x=>(x.fz>0)+(x.bn>0)+(x.mg>0)+(x.lz>0)+(x.ad>0)+(x.hr>0);
 function adApply(t){if(t.imm>0||t.ad>0)return;t.ad=2;t.ads=Math.round(t.atk*.25);t.atk-=t.ads;spawn(cellOf(t),'fx-a','攻擊降低');upd(t,cellOf(t))}
@@ -595,9 +595,22 @@ CSK_.diaochan=async(u,mine,ec,es,ac,c,dm,crit)=>{await jump(c,c,false,true,mine)
  else{t=alive(ac).sort((a,b)=>a.hp/a.mhp-b.hp/b.mhp)[0];if(t)dcHeal(t,u.atk*3.5*u.m)}
  if(t){const sh=Math.round(u.atk);t.sh=(t.sh||0)+sh;t.wsh=(t.wsh||0)+sh;t.ws=Math.max(t.ws||0,2);spawn(cellOf(t),'fx-h','月幕','g');dcQc(t);cleanse1(t);upd(t,cellOf(t))}
  await sleep(700)};
+const sideOf=u=>pl.includes(u)?pl:en;
+function fpHealAmt(t,amt){amt=Math.round(amt*(t.f==='魔'?TRC.mheal:1)*(t.hr>0?.75:1)*(t.qc>0?1.15:1));if(t.ql>0)amt=0;t.hp=Math.min(t.mhp,t.hp+amt);const c=cellOf(t);if(c){spawn(c,'fx-h','+'+amt,'g');c.classList.add('heal');setTimeout(()=>c.classList.remove('heal'),700);upd(t,c)}}
+function fpGone(t,l){fpHealAmt(t,t.mhp*.05+l.m*.05)}
+function fpAdd(t,src){const v=Math.round(src.mhp*.15);t.fp=t.fp||[];if(t.fp.length>=3){t.fp.sort((a,b)=>a.t-b.t||a.v-b.v);t.fp.shift()}t.fp.push({v,t:2,m:src.mhp});const c=cellOf(t);if(c){spawn(c,'fx-h','鳳魄之護×'+t.fp.length,'g');upd(t,c)}}
+function fpAbsorb(t,dmg){if(!t.fp||!t.fp.length||dmg<=0)return dmg;const atk=CUR&&CUR.hp>0&&sideOf(CUR)!==sideOf(t)?CUR:null;
+ while(dmg>0&&t.fp.length){const l=t.fp[0],a=Math.min(l.v,dmg);l.v-=a;dmg-=a;if(l.v<=0){t.fp.shift();const full=Math.round(l.m*.15);
+  if(atk&&atk.hp>0){atk.hp=Math.max(0,atk.hp-full);const ac=cellOf(atk);if(ac){spawn(ac,'fx-a','反震 -'+full);upd(atk,ac)}if(atk.hp<=0)onDeath(atk)}
+  fpGone(t,l)}}
+ upd(t,cellOf(t));return dmg}
+function yhSave(t,dmg){if(t.id==='mayunlu')return dmg;const my=sideOf(t).find(x=>x&&x!==t&&x.id==='mayunlu'&&x.hp>0&&!x.yhc);if(!my)return dmg;my.yhc=1;
+ const d=Math.max(0,t.hp-1);t.hp-=d;fpHealAmt(t,my.mhp*.5);spawn(cellOf(t),'fx-h','月華癒魂','g');return 0}
+CSK_.mayunlu=async(u,mine,ec,es,ac,c,dm,crit)=>{const t=front(es,ec);await jump(c,cellOf(t),true,true,mine);await hurt(t,dm,'fx-s',crit);
+ alive(ac).forEach(a=>fpAdd(a,u));await sleep(400);c.style.transform=''};
 async function hurt(t,dmg,fx,crit){
- if(CUR&&CUR.id==='zhangchunhua'&&!NOLT)LT=t;const c=cellOf(t);dmg*=ruleMul(t,fx)*(1-(t.rd||0))*(1-(t.jr||0))*(t.fz>0?1+(t.fzd||0):1)*(t.lz>0?1.2:1)*(t.wind>0?.75:1)*(t.qc>0?.75:1)*(t.sg>=1?.85:1)*(CAOE&&t.hid>0?.75:1);if(t.id==='guan')dmg*=gpDR(t);if(t.gl&&t.gl!==t&&t.gl.hp>0){dmg*=.9;const sv=dmg*.4;dmg-=sv;glTake(t.gl,sv)}if(t.sh>0){const a=Math.min(t.sh,dmg);t.sh-=a;dmg-=a}
- t.hp=Math.max(0,t.hp-dmg);if(t.id==='guan')t.gs=Math.min(t.mhp,(t.gs||0)+dmg);hitSfx(crit);spawn(c,fx,'-'+Math.round(dmg),crit?'crit':'');c.classList.add('hit');setTimeout(()=>c.classList.remove('hit'),400);upd(t,c);
+ if(CUR&&CUR.id==='zhangchunhua'&&!NOLT)LT=t;const c=cellOf(t);dmg*=ruleMul(t,fx)*(1-(t.rd||0))*(1-(t.jr||0))*(t.fz>0?1+(t.fzd||0):1)*(t.lz>0?1.2:1)*(t.wind>0?.75:1)*(t.qc>0?.75:1)*(t.sg>=1?.85:1)*(CAOE&&t.hid>0?.75:1);if(t.id==='guan')dmg*=gpDR(t);if(t.gl&&t.gl!==t&&t.gl.hp>0){dmg*=.9;const sv=dmg*.4;dmg-=sv;glTake(t.gl,sv)}dmg=fpAbsorb(t,dmg);if(t.sh>0){const a=Math.min(t.sh,dmg);t.sh-=a;dmg-=a}
+ if(t.hp-dmg<=0&&t.hp>0)dmg=yhSave(t,dmg);t.hp=Math.max(0,t.hp-dmg);if(t.id==='guan')t.gs=Math.min(t.mhp,(t.gs||0)+dmg);hitSfx(crit);spawn(c,fx,'-'+Math.round(dmg),crit?'crit':'');c.classList.add('hit');setTimeout(()=>c.classList.remove('hit'),400);upd(t,c);
  const b=$('board');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');facHit(t);if(t.hp<=0)onDeath(t);else if(t.id==='lubu')lbCheck(t)}
 function banner(t){const b=$('bn');b.textContent=t;b.classList.remove('on');void b.offsetWidth;b.classList.add('on')}
 let LAND=false;
@@ -743,7 +756,7 @@ function openMap(k){MAPRES=null;$('tmR').style.display='none';MAPK=k||(MODE==='t
 $('tmap').onclick=e=>{const m=e.target.closest('[data-m]');if(m){if(MAPRES)return;MAPK=m.dataset.m;const tw=S.tw[MAPK];MAPSEL=tw.done?NF-1:tw.f;renderMap();return}
  const n=e.target.closest('.mn');if(n&&MAPRES){if(MAPRES.ready&&+n.dataset.f===S.tw[MAPK].f){$('tmap').classList.remove('on');MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}return}
  if(n){MAPSEL=+n.dataset.f;const sc=$('tmS'),y=sc.scrollTop;renderMap(true);$('tmS').scrollTop=y;return}
- const a=e.target.closest('[data-a]');if(!a)return;if(a.dataset.a==='x'){$('tmap').classList.remove('on');if(MAPRES){MAPRES=null;$('tmR').style.display='none';$('mask').classList.add('on')}}
+ const a=e.target.closest('[data-a]');if(!a)return;if(a.dataset.a==='x'){$('tmap').classList.remove('on');if(MAPRES){MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}}
  else if(a.dataset.a==='next'){$('tmap').classList.remove('on');MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}
  else if(a.dataset.a==='view'){$('tmap').classList.remove('on');MAPRES=null;$('tmR').style.display='none';$('mask').classList.add('on')}
  else if(a.dataset.a==='go'){$('tmap').classList.remove('on');if(!busy&&!(MODE==='tower'&&TK===MAPK))setMode('tower',MAPK)}};
@@ -1040,7 +1053,7 @@ async function act(u,mine,basic){
  if(u.f==='蜀'&&!basic&&u.hp>0&&alive(ec).length&&Math.random()<Math.min(TRC.cbMax,TRC.cb0+TRC.cb1*tpow(u))*(u.jt||1)){spawn(c,'fx-c','連擊');await sleep(260);await act(u,mine,true)}}
 async function battle(){
  SKIP=false;spdUI();
- au();busy=true;sel=-1;if(MODE!=='tower'){buildOpp();dayCheck();if(!S.test&&!OPP.fr){S.d.pvp++;saveS()}};if(MODE==='tower')pl.forEach(u=>{if(u&&!u.bf){u.bf=1;u.rage=100;u.mhp=u.hp=Math.round(u.hp*1.25)}});applySyn(pl);applySyn(en);[...pl,...en].forEach(u=>{if(u){u.fz=0;u.bn=0;u.fi=0;u.mg=0;u.lz=0;u.wind=0;u.hid=0;u.sg=0;u.nr=0;u.rv=0;u.steal=null;u.zm=0;u.zt=0;u.imm=0;u.zl=0;u.zh=0;u.tl=0;u.zatk=0;u.zdb=0;u.t2=0;u.dqi=0;u.qc=0;u.mk=null;u.jy=0;u.ad=0;u.ads=0;u.hr=0;u.gl=null;u.gs=0;u.ws=0;u.wsh=0;u.ql=0}});lbInit();tlInit2();dcInit();document.body.classList.add('full','bt');render();layout();stealInit();$('info').textContent='戰鬥開始！';
+ au();busy=true;sel=-1;if(MODE!=='tower'){buildOpp();dayCheck();if(!S.test&&!OPP.fr){S.d.pvp++;saveS()}};if(MODE==='tower')pl.forEach(u=>{if(u&&!u.bf){u.bf=1;u.rage=100;u.mhp=u.hp=Math.round(u.hp*1.25)}});applySyn(pl);applySyn(en);[...pl,...en].forEach(u=>{if(u){u.fz=0;u.bn=0;u.fi=0;u.mg=0;u.lz=0;u.wind=0;u.hid=0;u.sg=0;u.nr=0;u.rv=0;u.steal=null;u.zm=0;u.zt=0;u.imm=0;u.zl=0;u.zh=0;u.tl=0;u.zatk=0;u.zdb=0;u.t2=0;u.dqi=0;u.fp=null;u.yhc=0;u.qc=0;u.mk=null;u.jy=0;u.ad=0;u.ads=0;u.hr=0;u.gl=null;u.gs=0;u.ws=0;u.wsh=0;u.ql=0}});lbInit();tlInit2();dcInit();document.body.classList.add('full','bt');render();layout();stealInit();$('info').textContent='戰鬥開始！';
  let round=0;
  while(alive(pl).length&&alive(en).length&&round<MAXR()){
   round++;glLink();$('info').textContent=`${MODE==='tower'?`${TKN[TK]}第 ${FLOOR+1} 層・`:''}第 ${round}/${MAXR()} 回合`;
