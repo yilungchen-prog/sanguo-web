@@ -216,24 +216,43 @@ button.on{outline:2px solid var(--gold)}
 .rq{display:flex;align-items:center;gap:8px;margin-top:6px;padding:6px 8px;border-radius:8px;font-size:13px;border:1px solid}.rq span{flex:1}.rq b{font-variant-numeric:tabular-nums}.rq i{font-style:normal;font-size:12px;min-width:68px;text-align:right}.rq.good{color:#8dffa8;border-color:#2f9f4f;background:#1f5a3033}.rq.bad{color:#ff8a80;border-color:#d0453b;background:#d0453b2e;font-weight:700}[data-a=star]:disabled{color:#ff9a90;border-color:#d0453b}
 .syn{font-size:12px;text-align:center;color:#8dffa8;margin:4px 0;line-height:1.5}body.full .syn{display:none}.synp{margin:8px 0;border:1px solid #ffffff30;border-radius:8px;padding:6px 8px;background:#0003;font-size:12px}.synp summary{cursor:pointer;color:var(--gold);font-weight:700;line-height:1.5}.synp .gt{margin-top:8px;color:var(--gold);font-weight:700}.sr2{opacity:.5;padding:1px 0}.sr2.on{color:#8dffa8;opacity:1;font-weight:700}.syc{display:inline-block;border:1px solid;border-radius:10px;padding:0 8px;margin:4px 4px 2px 0}
 .shh{display:flex;align-items:center;gap:8px;justify-content:space-between}
+
+.wrap{padding:26px 6px 10px}
+.stage{display:grid;grid-template-columns:62px minmax(0,1fr) 62px;gap:3px;align-items:stretch}
+.stage .board{min-width:0}
+.sc{display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;padding:5px 0}
+.sbt{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:100%;padding:9px 2px 7px;border-radius:15px;border:2px solid #e7c26a;color:#fff3c4;font-size:11px;letter-spacing:1px;line-height:1.1;text-shadow:0 1px 2px #000;box-shadow:0 3px 0 #000a,0 6px 10px #0008,inset 0 1px 0 #ffffff55,inset 0 -8px 12px #0004;transition:transform .08s,box-shadow .08s}
+.sbt:active{transform:translateY(3px);box-shadow:0 0 0 #000a,inset 0 2px 8px #0008}
+.sbt svg{filter:drop-shadow(0 1px 2px #000b)}
+.sbt.c1{background:linear-gradient(#4f8fd6,#1f4a86)}.sbt.c2{background:linear-gradient(#5fb36e,#24633a)}.sbt.c3{background:linear-gradient(#f0b23c,#a6641a)}
+.sbt.go{flex:1.7;font-size:17px;letter-spacing:2px;font-weight:700;background:radial-gradient(circle at 50% 30%,#e85a48,#8e1f17 75%);border-color:#ffd77a;animation:gopl 1.6s ease-in-out infinite alternate}
+@keyframes gopl{from{box-shadow:0 3px 0 #000a,0 0 6px 1px #ff6a4a66,inset 0 1px 0 #ffffff55}to{box-shadow:0 3px 0 #000a,0 0 16px 4px #ff6a4acc,inset 0 1px 0 #ffffff55}}
+.sbt.sm{flex:none;padding:6px 2px 5px;font-size:10px;border-radius:12px;border-width:1px;background:linear-gradient(#4a5a58,#2a3634);color:#e8dcc0}
+.sbt:disabled{filter:grayscale(.7) brightness(.7);animation:none}
+body.full .stage{display:contents}body.full .sc{display:none}
+
+#modes{flex-wrap:nowrap!important;gap:3px}#modes button{flex:1 1 0!important;min-width:0;padding:6px 0!important;font-size:11px!important;white-space:nowrap;letter-spacing:0}
+#dsel{gap:3px}#dsel button{padding:5px 0;font-size:11.5px;min-width:0;white-space:nowrap}
+body:not(.full) #synL{display:none!important}
+body:not(.full) .info{font-size:11px;line-height:1.35;min-height:0;margin:3px 2px 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+body:not(.full) h1{font-size:17px;margin:0;letter-spacing:5px}
+body:not(.full) .ver{font-size:11px;white-space:nowrap;gap:4px;padding-right:80px}
+body:not(.full) .side{margin:3px 0;padding:4px 6px}
+body:not(.full) .synb{margin-bottom:2px}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028aa</span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028ab</span></div>
 <h1>三國九宮戰</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="margin-bottom:4px"><button class="g on" id="mPvp">⚔️ 對戰</button><button class="g" id="mExp">📘 經驗塔</button><button class="g" id="mEq">🛡️ 裝備塔</button><button class="g" id="mGold">💰 金幣塔</button><button class="g" id="mGacha">🎴 抽卡</button><button class="g" id="mShop">🏪 商城</button></div>
 <div class="btns" id="dsel" style="margin-bottom:4px"><button class="g" data-d="-1">隨機</button><button class="g" data-d="0">簡單</button><button class="g" data-d="1">普通</button><button class="g" data-d="2">困難</button><button class="g" data-d="3">地獄</button><button class="g" id="bReroll">換對手</button><button class="g" id="bFriend">👥 好友</button></div>
-<div class="board" id="board">
+<div class="stage"><div class="sc l"><button class="sbt c1" id="bHeroes" title="武將"><svg viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="#fff3c4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="10" r="4.2"/><path d="M3 27c0-6 3.5-9 8-9s8 3 8 9"/><circle cx="22.5" cy="11.5" r="3.4"/><path d="M21 19c5-.8 8.5 2.2 8.5 8"/></svg><span>武將</span></button><button class="sbt c2" id="bForm" title="布陣"><svg viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="#fff3c4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1.5" fill="#fff3c4" stroke="none"/><rect x="12.7" y="3.5" width="6.5" height="6.5" rx="1.5"/><rect x="22" y="3.5" width="6.5" height="6.5" rx="1.5"/><rect x="3.5" y="12.7" width="6.5" height="6.5" rx="1.5"/><rect x="12.7" y="12.7" width="6.5" height="6.5" rx="1.5" fill="#fff3c4" stroke="none"/><rect x="22" y="12.7" width="6.5" height="6.5" rx="1.5"/><rect x="3.5" y="22" width="6.5" height="6.5" rx="1.5"/><rect x="12.7" y="22" width="6.5" height="6.5" rx="1.5"/><rect x="22" y="22" width="6.5" height="6.5" rx="1.5" fill="#fff3c4" stroke="none"/></svg><span>布陣</span></button><button class="sbt c3" id="bAuto" title="一鍵上陣"><svg viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="#fff3c4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.5 2.5 7 18h8l-2 11.5L25 13h-8z" fill="#fff3c4"/></svg><span>一鍵上陣</span></button></div><div class="board" id="board">
 <div class="side e"><p class="tag">敵方 · 孤城（紅營）</p><div class="synb" id="sbE"></div><div class="grid" id="ge"></div></div>
 <div class="side p"><p class="tag">我方 · 天問（藍營）</p><div class="synb" id="sbP"></div><div class="grid" id="gp"></div></div>
-</div>
+</div><div class="sc r"><button class="sbt go" id="bGo" title="出征"><svg viewBox="0 0 32 32" width="38" height="38" fill="none" stroke="#fff3c4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5l17 17M27 5 10 22" stroke-width="3"/><path d="M19 25l5-5M13 25l-5-5" stroke-width="2.6"/><path d="M22 27l3 3M10 27l-3 3" stroke-width="2.6"/></svg><span>出 征</span></button><button class="sbt sm" id="bTest" title="測試模式"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="#fff3c4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5h8M13.5 3.5v9L5.5 25a2.5 2.5 0 0 0 2.2 3.5h16.6a2.5 2.5 0 0 0 2.2-3.5L18.5 12.5v-9"/><path d="M9 20h14" /></svg><span id="tTxt">測試：關</span></button><button class="sbt sm" id="bWipe" title="重置存檔"><svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="#fff3c4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M26 16a10 10 0 1 1-3.2-7.3"/><path d="M26.5 4.5v6h-6"/></svg><span id="wTxt">重置</span></button></div></div>
 <div class="syn" id="synL"></div>
-<div class="btns hide" id="mapRow" style="margin:0 0 4px"><button class="g" id="bMap">🗺 塔圖</button></div>
 <div class="info" id="info">點我方格子或「布陣」編排陣容（可拖曳換位置），按「保存」即成為預設陣容，之後每場戰鬥自動載入。</div>
-<div class="btns"><button class="g" id="bHeroes">👥 武將</button><button class="g" id="bForm">📋 布陣</button><button class="g" id="bAuto">⚡ 一鍵上陣</button></div>
-<div class="btns"><button id="bGo">出 征</button></div>
-<div class="btns" style="margin-top:6px"><button class="g" id="bTest" style="font-size:12px">測試模式：關</button><button class="g" id="bWipe" style="font-size:12px">重置存檔</button></div>
 </div>
 <div class="ov" id="heroes"><div class="pan"><div class="shh"><b>👥 武將</b><span id="hCnt"></span><button id="hX" style="flex:none;width:44px;padding:6px 0">✕</button></div><div class="btns pfb"><button class="g on" data-pf="all">全部</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="hpool"></div></div></div>
 <div class="ov" id="form"><div class="pan"><div class="shh"><b>📋 布陣（預設陣容）</b><span id="fCnt"></span></div>
@@ -547,11 +566,14 @@ async function hurt(t,dmg,fx,crit){
 function banner(t){const b=$('bn');b.textContent=t;b.classList.remove('on');void b.offsetWidth;b.classList.add('on')}
 let LAND=false;
 function layout(){const W=innerWidth,H=innerHeight,full=document.body.classList.contains('full');LAND=full&&W>H*1.1;document.body.classList.toggle('land',LAND);const r=document.documentElement.style;
- if(!full){r.removeProperty('--ch');place();return}
+ if(!full){mainLayout(r);return}
  const ap=$('app'),cs=getComputedStyle(ap),pv=(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0),ph=(parseFloat(cs.paddingLeft)||0)+(parseFloat(cs.paddingRight)||0),AH=Math.min(ap.clientHeight||H,H)-pv;
  let ch=LAND?Math.min((AH-68)/3,(((W-28-ph)/2-34)/3)/.75):Math.min((AH-70)/6,((W-ph-34)/3)/.75);
  ch=Math.max(50,Math.min(ch,300));r.setProperty('--ch',ch+'px');place();
  for(let i=0;i<60&&ch>50&&ap.scrollHeight>ap.clientHeight+1;i++){ch-=3;r.setProperty('--ch',ch+'px')}}
+function mainLayout(r){r.setProperty('--ch','40px');place();const ap=$('app'),bd=document.querySelector('.stage .board'),de=document.documentElement,cs=getComputedStyle(de);
+ const rp=(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0),base=ap.offsetHeight-6*40,cw=(bd.clientWidth-12-10-4)/3;
+ let ch=Math.min((innerHeight-rp-base-4)/6,cw/.75);ch=Math.max(44,Math.min(128,Math.floor(ch)));r.setProperty('--ch',ch+'px')}
 function place(){document.querySelectorAll('.cell').forEach(c=>{const i=+c.dataset.i,rr=Math.floor(i/3),cc=i%3;c.style.gridArea=LAND?`${cc+1} / ${3-rr}`:''})}
 addEventListener('resize',layout);
 function beam(gid,pat,idx,r,col){const g=$(gid),cs=[...g.querySelectorAll('.cell')];
@@ -691,7 +713,7 @@ $('tmap').onclick=e=>{const m=e.target.closest('[data-m]');if(m){if(MAPRES)retur
  else if(a.dataset.a==='go'){$('tmap').classList.remove('on');if(!busy&&!(MODE==='tower'&&TK===MAPK))setMode('tower',MAPK)}};
 function setMode(m,tk){if(busy)return;OPP.fr=null;MODE=m;if(tk)TK=tk;FLOOR=m==='tower'?S.tw[TK].f:0;
  [['mPvp','pvp',''],['mExp','tower','exp'],['mEq','tower','eq'],['mGold','tower','gold']].forEach(([id,mm,k])=>$(id).classList.toggle('on',mm===MODE&&(MODE==='pvp'||k===TK)));
- $('dsel').classList.toggle('hide',MODE!=='pvp');$('mapRow').classList.toggle('hide',MODE!=='tower');reset()}
+ $('dsel').classList.toggle('hide',MODE!=='pvp');reset()}
 const defS=()=>({dl:null,fl:0,bp:0,wc:0,lv:{},test:false,coins:0,login:'',inv:[],uid:1,own:null,star:{},cp:{},pill:300,pity:0,p10:0,pts:0,born:'',nd:'',lord:{n:'',f:'',l:1,e:0},d:{day:'',pvp:0,pull:0},tw:{exp:{f:0,end:false},eq:{f:0,end:false},gold:{f:0,end:false}}});
 let S=(()=>{const d=defS();try{return Object.assign(d,JSON.parse(localStorage.getItem('sgSave')||'{}'))}catch(e){return d}})();
 const saveS=()=>{try{localStorage.setItem('sgSave',JSON.stringify(S))}catch(e){}};
@@ -997,11 +1019,12 @@ $('bHeroes').onclick=()=>{if(busy)return;$('heroes').classList.add('on');render(
 $('hX').onclick=()=>$('heroes').classList.remove('on');
 $('bGo').onclick=()=>{if(!busy)battle()};$('bAgain').onclick=()=>reset();
 $('mPvp').onclick=()=>{if(!busy&&MODE!=='pvp')setMode('pvp')};
-[['mExp','exp'],['mEq','eq'],['mGold','gold']].forEach(([id,k])=>$(id).onclick=()=>{if(!busy&&!(MODE==='tower'&&TK===k))setMode('tower',k)});
-$('bMap').onclick=()=>openMap();
-$('bTest').textContent='測試模式：'+(S.test?'開（無每日限制）':'關');
-$('bTest').onclick=()=>{S.test=!S.test;saveS();$('bTest').textContent='測試模式：'+(S.test?'開（無每日限制）':'關');render();setInfo()};
-let wp=0;$('bWipe').onclick=()=>{if(!wp){wp=1;$('bWipe').textContent='再按一次確認清除';setTimeout(()=>{wp=0;$('bWipe').textContent='重置存檔'},3000)}else{S=defS();migrate();saveS();wp=0;$('bWipe').textContent='重置存檔';$('bTest').textContent='測試模式：關';daily();MODE='pvp';setMode('pvp');openLord()}};
+[['mExp','exp'],['mEq','eq'],['mGold','gold']].forEach(([id,k])=>$(id).onclick=()=>{if(busy)return;if(!(MODE==='tower'&&TK===k))setMode('tower',k);openMap()});
+
+$('tTxt').textContent='測試'+(S.test?'：開':'：關');
+$('bTest').onclick=()=>{S.test=!S.test;saveS();$('tTxt').textContent='測試'+(S.test?'：開':'：關');render();setInfo()};
+let wp=0;$('bWipe').onclick=()=>{if(!wp){wp=1;$('wTxt').textContent='再按確認';setTimeout(()=>{wp=0;$('wTxt').textContent='重置'},3000)}else{S=defS();migrate();saveS();wp=0;$('wTxt').textContent='重置';$('tTxt').textContent='測試：關';daily();MODE='pvp';setMode('pvp');openLord()}};
 $('snd').onclick=()=>{MUTE=!MUTE;$('snd').textContent=MUTE?'🔇':'🔊'};
 migrate();daily();setMode('pvp');if(!S.lord.n)openLord();
+{const _si=setInfo;setInfo=function(){_si();if(MODE==='tower'&&!document.body.classList.contains('full'))$('info').textContent+='｜點上方塔名可開啟塔圖';requestAnimationFrame(layout)}}addEventListener('load',layout);layout();
 </script></body></html>
