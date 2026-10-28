@@ -257,7 +257,7 @@ body:not(.full) .synb{white-space:normal;overflow:visible;line-height:1.45}body:
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028ai</span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028aj</span></div>
 <h1>三國九宮戰</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="margin-bottom:4px"><button class="g on" id="mPvp">⚔️ 對戰</button><button class="g" id="mExp">📘 經驗塔</button><button class="g" id="mEq">🛡️ 裝備塔</button><button class="g" id="mGold">💰 金幣塔</button><button class="g" id="mGacha">🎴 抽卡</button><button class="g" id="mShop">🏪 商城</button></div>
@@ -840,7 +840,7 @@ function gearBonus(id){const g={atk:0,hp:0,spd:0,crit:0};for(const it of S.inv)i
 function avgGear(){const a=pl.filter(Boolean);if(!a.length)return null;const s={atk:0,hp:0,spd:0,crit:0};a.forEach(u=>{const g=gearBonus(u.id);for(const k in s)s[k]+=g[k]/a.length});return s}
 function refreshPl(){pl=pl.map(u=>u?mkP(H.find(h=>h.id===u.id)):null)}
 let toastT=0;function toast(m){const e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),2200)}
-function daily(){if(S.login!==today()){S.login=today();let nf='';if(!S.fl){S.fl=1;S.coins+=100000;S.bp=100;S.wc=(S.wc||0)+5;nf='新手禮：💰100,000、🎴100 抽、🃏萬用卡 5 張　';}S.coins+=10000;S.pill+=600;const got=[];for(let i=0;i<4;i++){const x=Math.random()*100,tr=x<40?0:x<75?1:x<95?2:3,s=SLOTS[Math.floor(Math.random()*4)].k;S.inv.push({u:S.uid++,s,t:tr,l:1,e:null});got.push(INAME[s][tr])}saveS();toast(`${nf}每日登錄：💰10,000、🔮經驗丹 600、裝備 ${got.join('、')}`)}}
+function daily(){if(S.login!==today()){S.login=today();let nf='';if(!S.fl){S.fl=1;S.coins+=500000;S.bp=100;S.wc=(S.wc||0)+5;nf='新手禮：💰500,000、🎴100 抽、🃏萬用卡 5 張　';}S.coins+=10000;S.pill+=600;const got=[];for(let i=0;i<4;i++){const x=Math.random()*100,tr=x<40?0:x<75?1:x<95?2:3,s=SLOTS[Math.floor(Math.random()*4)].k;S.inv.push({u:S.uid++,s,t:tr,l:1,e:null});got.push(INAME[s][tr])}saveS();toast(`${nf}每日登錄：💰10,000、🔮經驗丹 600、裝備 ${got.join('、')}`)}}
 function deploy(id){const h=H.find(x=>x.id===id);if(!S.own[id]){toast('尚未獲得此武將，請先到抽卡取得');return false}if(pl.some(u=>u&&u.id===id))return true;if(pl.filter(Boolean).length>=MAXN()){toast(`最多只能上陣 ${MAXN()} 位，先卸下一位`);return false}
  const i=sel>=0&&!pl[sel]?sel:pl.findIndex(x=>!x);if(i<0)return false;pl[i]=mkP(h);sel=-1;render();return true}
 function undeploy(id){const i=pl.findIndex(u=>u&&u.id===id);if(i>=0){pl[i]=null;render()}}
@@ -869,9 +869,22 @@ $('heroBody').onchange=e=>{const s=e.target.closest('select[data-slot]');if(!s)r
 $('hero').onclick=e=>{if(e.target.id==='hero')$('hero').classList.remove('on')};
 function equipSlot(hid,slot,uid){S.inv.forEach(i=>{if(i.s===slot&&i.e===hid)i.e=null});if(uid){const it=S.inv.find(i=>i.u===uid);if(it)it.e=hid}saveS();if(!busy)refreshPl();renderHero();render()}
 function equipItem(uid,hid){const it=S.inv.find(i=>i.u===uid);if(!it)return;if(hid)S.inv.forEach(i=>{if(i.s===it.s&&i.e===hid)i.e=null});it.e=hid||null;saveS();if(!busy)refreshPl();renderShop();render()}
+const SHOPI=[
+ {k:'pill1',ic:'🔮',n:'經驗丹 ×1,000',d:'武將升級用',p:5000},
+ {k:'pill10',ic:'🔮',n:'經驗丹 ×10,000',d:'大包裝，九折',p:45000},
+ {k:'pull1',ic:'🎴',n:'招募券 ×1',d:'增加 1 次抽卡（不受每日上限）',p:5000,lim:20},
+ {k:'pull10',ic:'🎴',n:'招募券 ×10',d:'增加 10 次抽卡，九折',p:45000,lim:5},
+ {k:'wc',ic:'🃏',n:'萬用卡 ×1',d:'升星時可代替任何同名卡',p:20000,lim:3},
+ {k:'box',ic:'📦',n:'裝備寶箱',d:'隨機 1 件裝備（良 50%／精 35%／極 13%／神 2%）',p:12000},
+ {k:'gbox',ic:'🎁',n:'高級裝備寶箱',d:'隨機 1 件裝備（精 45%／極 45%／神 10%）',p:40000}];
+function buyItem(k){const x=SHOPI.find(i=>i.k===k);if(!x)return;dayCheck();S.d.sh=S.d.sh||{};const used=S.d.sh[k]||0;
+ if(x.lim&&used>=x.lim){toast('今日購買次數已用完');return}if(S.coins<x.p){toast('金幣不足');return}S.coins-=x.p;if(x.lim)S.d.sh[k]=used+1;let msg='購入 '+x.n;
+ if(k==='pill1')S.pill+=1000;else if(k==='pill10')S.pill+=10000;else if(k==='pull1')S.bp=(S.bp||0)+1;else if(k==='pull10')S.bp=(S.bp||0)+10;else if(k==='wc')S.wc=(S.wc||0)+1;
+ else{const r=Math.random()*100,t=k==='box'?(r<50?1:r<85?2:r<98?3:4):(r<45?2:r<90?3:4),s=SLOTS[Math.floor(Math.random()*4)].k;S.inv.push({u:S.uid++,s,t,l:1,e:null});msg=`開出 ${TIERS[t].n}品・${INAME[s][t]}（已放入背包）`}
+ saveS();toast(msg);sfx('win');renderShop();render()}
 let TAB='shop';
 function renderShop(){$('shCoin').textContent='💰 '+S.coins.toLocaleString();$('tShop').classList.toggle('on',TAB==='shop');$('tBag').classList.toggle('on',TAB==='bag');let h='';
- if(TAB==='shop'){h+=`<p class="sub">每日登錄可領 10,000 金幣、600 顆經驗丹與 4 件隨機裝備（凡 40%／良 35%／精 20%／極 5%）；對戰、經驗塔、金幣塔通關都會獲得金幣，裝備塔會掉落裝備（背包可出售多餘裝備）。${S.test?'<button id="cheat" style="padding:4px 8px;font-size:11px;margin-left:6px">測試：+50,000 金幣、+5,000 經驗丹</button>':''}</p>`;
+ if(TAB==='shop'){h+=`<h3>🎁 道具</h3>`+SHOPI.map(x=>{const lim=x.lim?x.lim-((S.d.sh||{})[x.k]||0):1,ok=S.coins>=x.p&&lim>0;return `<div class="it"><span class="ic" style="border-color:#ffd27a;color:#ffd27a">${x.ic}</span><div class="in"><b style="color:#ffd27a">${x.n}</b><small>${x.d}${x.lim?`（今日剩 ${lim}/${x.lim}）`:''}</small></div><button data-item2="${x.k}" ${ok?'':'disabled'}>💰${x.p.toLocaleString()}</button></div>`}).join('')+`<p class="sub">每日登錄可領 10,000 金幣、600 顆經驗丹與 4 件隨機裝備（凡 40%／良 35%／精 20%／極 5%）；對戰、經驗塔、金幣塔通關都會獲得金幣，裝備塔會掉落裝備（背包可出售多餘裝備）。${S.test?'<button id="cheat" style="padding:4px 8px;font-size:11px;margin-left:6px">測試：+50,000 金幣、+5,000 經驗丹</button>':''}</p>`;
   SLOTS.forEach(sl=>{h+=`<h3>${sl.ic} ${sl.n}（加${sl.s}）</h3>`;TIERS.forEach((tr,i)=>{h+=`<div class="it"><span class="ic" style="border-color:${tr.c};color:${tr.c}">${sl.ic}</span><div class="in"><b style="color:${tr.c}">${INAME[sl.k][i]}</b><small>${tr.n}品・${sl.s} +${pct(IBASE[sl.k][i])}（滿級 +${pct(IBASE[sl.k][i]*(1+.12*(MAXIL-1)))}）</small></div><button data-buy="${sl.k}|${i}" ${S.coins<tr.p?'disabled':''}>💰${tr.p.toLocaleString()}</button></div>`})})}
  else{const its=[...S.inv].sort((a,b)=>SLOTS.findIndex(x=>x.k===a.s)-SLOTS.findIndex(x=>x.k===b.s)||b.t-a.t||b.l-a.l);
   if(!its.length)h+='<p class="sub">背包是空的，先到「商店」購買裝備。</p>';
@@ -881,6 +894,7 @@ function renderShop(){$('shCoin').textContent='💰 '+S.coins.toLocaleString();$
    <div style="display:flex;flex-direction:column;gap:4px"><button data-up="${it.u}" ${mx||S.coins<cost?'disabled':''}>${mx?'已滿級':'升級 💰'+cost.toLocaleString()}</button><button class="g" data-sell="${it.u}" ${it.e?'disabled':''}>出售 💰${sellv(it).toLocaleString()}</button></div></div>`})}
  $('shBody').innerHTML=h}
 $('shBody').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.item2){buyItem(b.dataset.item2);return}
  if(b.id==='cheat'){S.coins+=50000;S.pill+=5000;saveS();renderShop();render();return}
  if(b.dataset.buy){const[k,i]=b.dataset.buy.split('|'),tr=TIERS[+i];if(S.coins<tr.p)return;S.coins-=tr.p;S.inv.push({u:S.uid++,s:k,t:+i,l:1,e:null});saveS();toast(`購入 ${INAME[k][+i]}`);renderShop();render()}
  else if(b.dataset.sell){const it=S.inv.find(x=>x.u===+b.dataset.sell);if(!it||it.e)return;S.coins+=sellv(it);S.inv=S.inv.filter(x=>x!==it);saveS();toast(`已出售 ${INAME[it.s][it.t]}`);renderShop();render()}
@@ -912,7 +926,7 @@ $('lordBody').oninput=e=>{if(e.target.id==='lName')LN=e.target.value};
 $('lordBody').onclick=e=>{const f=e.target.closest('[data-f]');if(f){LN=($('lName')||{}).value||LN;LF=f.dataset.f;renderLord();return}
  const b=e.target.closest('[data-l]');if(!b)return;if(b.dataset.l==='x'){$('lord').classList.remove('on');return}
  const n=LN.trim().slice(0,8),setup=!S.lord.n;if(!n){toast('請輸入主公名稱');return}if(!LF){toast('請選擇陣營');return}
- if(setup){S.lord={n,f:LF,l:1,e:0};(FSTART[LF]||[]).forEach(id=>{if(!S.own[id]){S.own[id]=1;S.star[id]=S.star[id]||0}});toast(`主公「${n}」就任！${FN[LF]||LF+'國'}武將獲得加成`)}
+ if(setup){S.lord={n,f:LF,l:1,e:0};toast(`主公「${n}」就任！${FN[LF]||LF+'國'}武將獲得加成`)}
  else{if(LF!==S.lord.f){if(S.fcFree){S.fcFree=0}else{if(S.coins<FCHG){toast('金幣不足，更換陣營需 '+FCHG.toLocaleString());return}S.coins-=FCHG}S.lord.f=LF;toast('已更換陣營')}S.lord.n=n}
  saveS();if(!busy)refreshPl();$('lord').classList.remove('on');render();setInfo()};
 $('lchip').onclick=()=>{if(!busy)openLord()};
