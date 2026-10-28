@@ -218,7 +218,7 @@ button.on{outline:2px solid var(--gold)}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028t</span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028u</span></div>
 <h1>三國九宮戰</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="margin-bottom:4px"><button class="g on" id="mPvp">⚔️ 對戰</button><button class="g" id="mExp">📘 經驗塔</button><button class="g" id="mEq">🛡️ 裝備塔</button><button class="g" id="mGold">💰 金幣塔</button><button class="g" id="mGacha">🎴 抽卡</button><button class="g" id="mShop">🏪 商城</button></div>
@@ -344,7 +344,7 @@ function render(){
  document.querySelectorAll('.pfb button').forEach(x=>x.classList.toggle('on',x.dataset.pf===PF));
  $('synL').textContent=synText(pl);$('sbE').innerHTML=synBar(en);$('sbP').innerHTML=synBar(pl);
  $('bGo').disabled=busy||!pl.some(x=>x)||(MODE==='tower'&&blocked())||(MODE==='pvp'&&!OPP.fr&&pvpLeft()<=0);
- document.querySelector('.side.p .tag').textContent=`我方 · ${S.lord.n||'天問'}（藍營） ${pl.filter(Boolean).length}/${MAXN()}`;place()}
+ document.querySelector('.side.p .tag').textContent=`我方 · ${S.lord.n||'天問'}（藍營） ${pl.filter(Boolean).length}/${MAXN()}`;place();if(document.body.classList.contains('full')){layout();const a=$('app');if(a)a.scrollTop=0}}
 
 function fillPool(pp){const PW={};H.forEach(h=>PW[h.id]=powOf(h));
  const list=H.filter(h=>PF==='all'||h.f===PF).sort((a,b)=>(!!S.own[b.id]-!!S.own[a.id])||PW[b.id]-PW[a.id]);const st=pp.parentNode.parentNode.scrollTop;pp.innerHTML='';
@@ -881,7 +881,7 @@ async function act(u,mine,basic){
  c.classList.remove('act');upd(u,c);
  if(u.f==='蜀'&&!basic&&u.hp>0&&alive(ec).length&&Math.random()<Math.min(TRC.cbMax,TRC.cb0+TRC.cb1*tpow(u))){spawn(c,'fx-c','連擊');await sleep(260);await act(u,mine,true)}}
 async function battle(){
- au();busy=true;sel=-1;if(MODE!=='tower'){buildOpp();dayCheck();if(!S.test&&!OPP.fr){S.d.pvp++;saveS()}};if(MODE==='tower')pl.forEach(u=>{if(u&&!u.bf){u.bf=1;u.rage=100;u.mhp=u.hp=Math.round(u.hp*1.25)}});applySyn(pl);applySyn(en);[...pl,...en].forEach(u=>{if(u){u.fz=0;u.bn=0;u.fi=0;u.mg=0;u.lz=0;u.wind=0;u.hid=0;u.sg=0;u.nr=0;u.rv=0;u.steal=null}});document.body.classList.add('full');layout();render();stealInit();$('info').textContent='戰鬥開始！';
+ au();busy=true;sel=-1;if(MODE!=='tower'){buildOpp();dayCheck();if(!S.test&&!OPP.fr){S.d.pvp++;saveS()}};if(MODE==='tower')pl.forEach(u=>{if(u&&!u.bf){u.bf=1;u.rage=100;u.mhp=u.hp=Math.round(u.hp*1.25)}});applySyn(pl);applySyn(en);[...pl,...en].forEach(u=>{if(u){u.fz=0;u.bn=0;u.fi=0;u.mg=0;u.lz=0;u.wind=0;u.hid=0;u.sg=0;u.nr=0;u.rv=0;u.steal=null}});document.body.classList.add('full');render();layout();stealInit();$('info').textContent='戰鬥開始！';
  let round=0;
  while(alive(pl).length&&alive(en).length&&round<MAXR()){
   round++;$('info').textContent=`${MODE==='tower'?`${TKN[TK]}第 ${FLOOR+1} 層・`:''}第 ${round}/${MAXR()} 回合`;
