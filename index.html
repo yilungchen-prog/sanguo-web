@@ -257,7 +257,7 @@ body:not(.full) .synb{white-space:normal;overflow:visible;line-height:1.45}body:
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028ak</span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028al</span></div>
 <h1>三國九宮戰</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="margin-bottom:4px"><button class="g on" id="mPvp">⚔️ 對戰</button><button class="g" id="mExp">📘 經驗塔</button><button class="g" id="mEq">🛡️ 裝備塔</button><button class="g" id="mGold">💰 金幣塔</button><button class="g" id="mGacha">🎴 抽卡</button><button class="g" id="mShop">🏪 商城</button></div>
@@ -554,7 +554,7 @@ function dwHit(t,dmg){if(t.id!=='dianwei'||TRF)return dmg;const src=CUR;
 function lvDeath(z){const al=pl.includes(z)?pl:en,foes=alive(pl.includes(z)?en:pl);
  alive(al).forEach(a=>{const h=Math.round(z.atk*1.0);a.hp=Math.min(a.mhp,a.hp+h);spawn(cellOf(a),'fx-h','+'+h,'g');upd(a,cellOf(a))});
  if(!z.zc&&foes.length){z.zc=1;const x=foes.sort((a,b)=>a.hp/a.mhp-b.hp/b.mhp)[0];hurt(x,z.atk*z.m*.4*(1+(z.db||0)),'fx-a',false)}}
-function roundStart(){[...pl,...en].forEach(u=>{if(!u||u.hp<=0)return;const foes=vis(alive(pl.includes(u)?en:pl));const t=foes.slice().sort((a,b)=>b.atk-a.atk)[0];if(!t)return;
+function roundStart(){[...pl,...en].forEach(u=>{if(u)u.zc=0;if(!u||u.hp<=0)return;const foes=vis(alive(pl.includes(u)?en:pl));const t=foes.slice().sort((a,b)=>b.atk-a.atk)[0];if(!t)return;
  if(u.id==='dianwei'&&!(t.imm>0)){u.el=t;spawn(cellOf(t),'fx-a','惡來連結')}
  if(u.id==='lvlingqi'){t.dmk=2;t.dms=u;t.dmd=0;spawn(cellOf(t),'fx-a','死亡印記')}})}
 async function tauntAtk(u,mine){const t=u.tf,c=cellOf(u);CUR=u;CSK=false;c.classList.add('act');spawn(c,'fx-a','被嘲諷');await jump(c,cellOf(t),true,false,mine);
