@@ -257,7 +257,7 @@ body:not(.full) .synb{white-space:normal;overflow:visible;line-height:1.45}body:
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261029d</span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261029e</span></div>
 <h1>三國九宮戰</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="margin-bottom:4px"><button class="g on" id="mPvp">⚔️ 對戰</button><button class="g" id="mTower">🗼 爬塔</button><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button><button class="g" id="mGacha">🎴 抽卡</button><button class="g" id="mShop">🏪 商城</button><button class="g" id="mArena">🏟️ 競技</button></div>
@@ -369,7 +369,7 @@ var BSPD=(()=>{try{return +localStorage.getItem('sgSpd')||1}catch(e){return 1}})
 const $=s=>document.getElementById(s),sleep=ms=>SKIP?Promise.resolve():new Promise(r=>setTimeout(r,ms/BSPD));
 let pl=Array(9).fill(null),en=Array(9).fill(null),sel=-1,busy=false;
 const mk=(h,lv=1,gb=null)=>jobFix(mk0(h,lv,gb));
-const mk0=(h,lv=1,gb=null)=>{const k=1+.06*(lv-1),qm=qmul(h),g=gb||{atk:0,hp:0,spd:0,crit:0},hp=Math.round(h.hp*k*qm*(1+g.hp)*(h.f==='魔'?TRC.mhp:h.f==='神'?TRC.ghp:1));return{...h,lv,hp,mhp:hp,atk:Math.round(h.atk*k*qm*(1+g.atk)*(h.f==='神'?TRC.gatk:1)),spd:Math.round(h.spd*(1+.004*Math.min(lv-1,99)+.001*Math.max(0,lv-100))*(1+g.spd)),m:+(h.m*(1+.01*Math.min(lv-1,99)+.002*Math.max(0,lv-100))).toFixed(3),cr:g.crit,rage:50,sh:0}};
+const mk0=(h,lv=1,gb=null)=>{const g=gb||{atk:0,hp:0,spd:0,crit:0},k=(1+.06*(lv-1))*(1+.15*(g.brk||0)),qm=qmul(h),hp=Math.round(h.hp*k*qm*(1+g.hp)*(h.f==='魔'?TRC.mhp:h.f==='神'?TRC.ghp:1));return{...h,lv,hp,mhp:hp,atk:Math.round(h.atk*k*qm*(1+g.atk)*(h.f==='神'?TRC.gatk:1)),spd:Math.round(h.spd*(1+.004*Math.min(lv-1,99)+.001*Math.max(0,lv-100))*(1+g.spd)),m:+(h.m*(1+.01*Math.min(lv-1,99)+.002*Math.max(0,lv-100))).toFixed(3),cr:g.crit,rage:50,sh:0}};
 const mkP=h=>{const u=mk(h,LV(h.id),gearBonus(h.id));u.st=S.star[h.id]||0;return u};
 function cardEl(u,full){
  const d=document.createElement('div');d.className='card';d.style.backgroundImage=`url(${ART[u.id]})`;d.style.borderColor=FC[u.f]||'#d9b25a';d.style.boxShadow=`inset 0 0 7px 1px ${FC[u.f]||'#d9b25a'}aa`;
@@ -384,7 +384,7 @@ function render(){
    if(u){c.appendChild(cardEl(u));if(u.hp<=0)c.classList.add('dead')}
    if(id==='gp')c.onclick=()=>{if(busy)return;openForm(i)};
    g.appendChild(c);if(u)upd(u,c)})});
- $('coin').textContent='💰 '+S.coins.toLocaleString()+'　🔮 '+S.pill.toLocaleString()+(S.wc?'　🃏 '+S.wc:'');$('lchip').textContent=S.lord.n?`👤 ${S.lord.n} Lv.${S.lord.l}・${S.lord.f}`:'👤 設定主公';
+ $('coin').textContent='💰 '+S.coins.toLocaleString()+'　🔮 '+S.pill.toLocaleString()+(S.wc?'　🃏 '+S.wc:'')+(S.bst?'　💎 '+S.bst:'');$('lchip').textContent=S.lord.n?`👤 ${S.lord.n} Lv.${S.lord.l}・${S.lord.f}`:'👤 設定主公';
  if($('heroes').classList.contains('on'))fillPool($('hpool'));
  if($('form').classList.contains('on')){fillFormList()}
  document.querySelectorAll('.pfb button').forEach(x=>x.classList.toggle('on',x.dataset.pf===PF));
@@ -701,9 +701,9 @@ const SEED={exp:13,eq:71,gold:137,frag:211};
 const MAXN=()=>MODE==='tower'?(TWR[FLOOR].mx||6):6;
 const RT=r=>[r.mx&&`我方最多上陣 ${r.mx} 位`,r.as&&`敵方受單體與刺殺傷害減少 ${Math.round((1-r.as)*100)}%`,r.ao&&`敵方受範圍傷害減少 ${Math.round((1-r.ao)*100)}%`,r.pf&&`每回合結束我方前排損失 ${r.pf}% 生命`,r.pb&&`每回合結束我方後排損失 ${r.pb}% 生命`,r.aj&&`我方相鄰單位受傷 +${Math.round((r.aj-1)*100)}%`,r.sc&&`我方同欄單位受傷 +${Math.round((r.sc-1)*100)}%`,r.rg&&`敵方每回合回復 ${r.rg}% 生命`].filter(Boolean).join('；');
 let EQ=[.02,.015];const ADJ={"exp":[1.09,1.02,0.86,1.11,1.29,0.85,1.07,0.76,1.03,1.05,0.63,0.69,0.87,0.85,0.91,0.81,1.0,0.47,0.81,0.64,0.78,0.61,0.75,0.59,0.7,0.81,0.66,0.9,0.52,0.96,0.92,0.66,0.88,0.46,0.67,0.61,0.97,0.9,0.64,0.85,0.73,0.96,0.99,0.47,0.82,0.86,0.6,0.67,0.68,0.95],"eq":[1.23,1.01,0.95,1.11,1.13,0.89,0.94,0.75,1.0,0.96,0.77,0.67,0.95,0.82,0.96,0.82,0.88,0.63,0.82,0.63,0.78,0.56,0.7,0.58,0.8,1.0,0.64,0.8,0.42,0.87,0.93,0.64,1.04,0.45,0.68,0.6,1.02,0.92,0.66,0.97,0.81,0.82,1.06,0.43,0.83,0.93,0.65,0.63,0.57,0.86],"gold":[1.27,1.07,0.99,1.12,1.19,0.97,1.01,0.63,1.01,1.03,0.8,0.67,0.93,0.77,0.96,0.63,0.95,0.5,0.81,0.74,0.86,0.59,0.69,0.63,0.74,0.92,0.73,0.87,0.49,0.91,0.87,0.67,1.07,0.5,0.7,0.57,0.98,0.88,0.58,0.92,0.82,0.85,0.96,0.4,0.82,0.9,0.66,0.65,0.6,0.92]};
-var TWS={K:200,K2:350,h0:1,h1:.03,h2:.012,h3:.006,a0:.85,a1:.02,a2:.008,a3:.004};const towerLv=f=>Math.min(MAXLV,1+f+((f+1)%5?0:1));
+var TWS={fin:.8,K:200,K2:350,h0:1,h1:.03,h2:.012,h3:.006,a0:.85,a1:.02,a2:.008,a3:.004};const towerLv=f=>Math.min(MAXLV,1+f+((f+1)%5?0:1));
 const expR=f=>Math.round((45+9*f)*((f+1)%5?1:1.5)),goldR=f=>Math.round((500+220*f*(1+f/60))*((f+1)%5?1:2));
-function towerEnemy(){en=Array(9).fill(null);const f=FLOOR,bs=(f+1)%5===0,eLv=towerLv(f),k=bs?1.03:1,a=f<50?(ADJ[TK]||ADJ.exp)[f]:1,f1=Math.min(f,TWS.K),f2=Math.max(0,Math.min(f,TWS.K2)-TWS.K),f3=Math.max(0,f-TWS.K2),hm=(TWS.h0+TWS.h1*f1+TWS.h2*f2+TWS.h3*f3)*k*a,am=(TWS.a0+TWS.a1*f1+TWS.a2*f2+TWS.a3*f3)*k*a;let L=[];
+function towerEnemy(){en=Array(9).fill(null);const f=FLOOR,bs=(f+1)%5===0,eLv=towerLv(f),k=bs?1.03:1,a=(f<50?(ADJ[TK]||ADJ.exp)[f]:1)*(f===NF-1?TWS.fin:1),f1=Math.min(f,TWS.K),f2=Math.max(0,Math.min(f,TWS.K2)-TWS.K),f3=Math.max(0,f-TWS.K2),hm=(TWS.h0+TWS.h1*f1+TWS.h2*f2+TWS.h3*f3)*k*a,am=(TWS.a0+TWS.a1*f1+TWS.a2*f2+TWS.a3*f3)*k*a;let L=[];
  {let s=f*97+SEED[TK];const rnd=()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296};
   const QB=[[0,0,65],[25,55,75],[60,65,83],[110,75,89],[160,83,93],[220,89,95],[280,92,99],[600,95,99],[1000,99,99]],qb=QB.filter(x=>f>=x[0]).pop();let pool=H.filter(h=>h.q>=qb[1]&&h.q<=qb[2]&&h.pat!=='heal');if(pool.length<6)pool=H.filter(h=>h.q<=qb[2]&&h.pat!=='heal');if(f>=qb[0]+10&&qb[2]>=83)pool=pool.concat(H.filter(h=>h.pat==='heal'&&h.q>=qb[1]&&h.q<=qb[2]));
   pool=pool.map(h=>[rnd(),h]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]).slice(0,6).sort((a,b)=>b.hp-a.hp);
@@ -794,7 +794,7 @@ async function autoClimb(k){if(busy||AUTOC)return;if(!(MODE==='tower'&&TK===k))s
   if(!win){lost=true;reset();break}
   AUTOC.n++;const to=T.f;renderMap(true,{cl:to,cur:to,at:f});info(`通過第 ${f+1} 層！`);sfx('win');
   await new Promise(r=>moveTok(f,T.done?f:to,r,650));reset()}
- const n=AUTOC.n,stopped=AUTOC.stop;AUTOC=null;document.body.classList.remove('auto');SKIP=false;
+ const n=AUTOC.n,stopped=AUTOC.stop;if(n)towerSync();AUTOC=null;document.body.classList.remove('auto');SKIP=false;
  MAPSEL=T.done?NF-1:T.f;renderMap(true);
  const sum=`通過 ${n} 層（第 ${start+1} → ${T.done?'登頂':'第 '+(T.f+1)+' 層'}）｜💰+${(S.coins-c0).toLocaleString()}　🔮+${(S.pill-p0).toLocaleString()}${S.inv.length>i0?'　裝備 +'+(S.inv.length-i0)+' 件':''}${k==='frag'?'　一般碎片 +'+(frg().n-g0):''}`;
  $('tmI').innerHTML=`<b style="color:#ffd27a">${T.done?'🏆 登頂成功！':!lost&&T.f>=AUTOMAX&&!stopped?'⛰️ 已到第 351 層，之後要手動挑戰':lost?`⚔️ 第 ${T.f+1} 層打不過，已停止`:'⏸ 已停止'}</b><br><small>${sum}</small>`;
@@ -890,7 +890,8 @@ function finish(){document.body.classList.remove('bt');const win=alive(pl).lengt
   else if(TK==='eq'){if(win){const ds=dropEquip(f,boss);rs='掉落：'+ds.map(it=>`<span style="color:${TIERS[it.t].c}">${TIERS[it.t].n}品・${INAME[it.s][it.t]}</span>`).join('、')+'<br>（到「商城 → 背包」裝備）'}else rs='失敗沒有掉落。'}
   else if(TK==='frag'){rs=fragReward(f,boss,win)}
   else{const cn=win?goldR(f):Math.round(goldR(f)*.1);S.coins+=cn;rs=`💰 +${cn.toLocaleString()} 金幣`}
-  rs+='<br>'+lordGain(win?Math.round((15+3*f)*(boss?1.5:1)):5);
+  if(win&&f>=300){const n=bsDrop(f,boss);S.bst=(S.bst||0)+n;rs+=`<br>💎 突破石 +${n}`}
+  rs+='<br>'+lordGain(win?Math.round((15+3*f)*(boss?1.5:1)):5);if(win)towerSync();
   if(win&&f<NF-1){T.f=f+1;msg=`通過第 ${f+1} 層`;b.textContent='挑戰下一層';NEXT=1}
   else if(win){T.f=NF-1;T.done=1;msg='登 頂 成 功';b.textContent='再挑戰頂層';NEXT=2}
   else{msg=alive(pl).length&&alive(en).length?'20 回合已盡':'敗 北';b.textContent='再挑戰本層';NEXT=3;if(TK==='exp')rs='失敗仍獲得部分經驗。<br>'+rs}}
@@ -903,8 +904,8 @@ const INAME={wp:['鐵劍','精鋼刀','七星寶劍','青釭劍','倚天劍','�
 const IBASE={wp:[.08,.14,.22,.32,.45,.62,.82],ar:[.10,.18,.28,.40,.55,.75,1.0],bt:[.04,.07,.11,.16,.22,.29,.37],ac:[.03,.05,.08,.12,.16,.20,.25]};
 const MAXIL=20,SLN=k=>SLOTS.find(x=>x.k===k);
 const ibonus=it=>IBASE[it.s][it.t]*(1+.12*Math.min(it.l-1,9)+.08*Math.max(0,it.l-10)),ucost=it=>Math.round(TIERS[it.t].p*.2*it.l),pct=v=>(Math.round(v*1000)/10)+'%',hname=id=>(H.find(x=>x.id===id)||{n:'?'}).n;
-function gearBonus(id){const g={atk:0,hp:0,spd:0,crit:0};for(const it of S.inv)if(it.e===id){const b=ibonus(it);if(it.s==='wp')g.atk+=b;else if(it.s==='ar')g.hp+=b;else if(it.s==='bt')g.spd+=b;else g.crit+=b}const hh=H.find(x=>x.id===id);if(hh){const sb=starB(S.star[id]||0);g.atk+=sb;g.hp+=sb;const lb=lordBonus(hh);for(const k in lb)g[k]+=lb[k]}return g}
-function avgGear(){const a=pl.filter(Boolean);if(!a.length)return null;const s={atk:0,hp:0,spd:0,crit:0};a.forEach(u=>{const g=gearBonus(u.id);for(const k in s)s[k]+=g[k]/a.length});return s}
+function gearBonus(id){const g={atk:0,hp:0,spd:0,crit:0,brk:(S.brk||{})[id]||0};for(const it of S.inv)if(it.e===id){const b=ibonus(it);if(it.s==='wp')g.atk+=b;else if(it.s==='ar')g.hp+=b;else if(it.s==='bt')g.spd+=b;else g.crit+=b}const hh=H.find(x=>x.id===id);if(hh){const sb=starB(S.star[id]||0);g.atk+=sb;g.hp+=sb;const lb=lordBonus(hh);for(const k in lb)g[k]+=lb[k]}return g}
+function avgGear(){const a=pl.filter(Boolean);if(!a.length)return null;const s={atk:0,hp:0,spd:0,crit:0,brk:0};a.forEach(u=>{const g=gearBonus(u.id);for(const k in s)s[k]+=g[k]/a.length});return s}
 function refreshPl(){pl=pl.map(u=>u?mkP(H.find(h=>h.id===u.id)):null)}
 let toastT=0;function toast(m){const e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),2200)}
 function daily(){if(S.login!==today()){S.login=today();let nf='';if(!S.fl){S.fl=1;S.coins+=500000;S.bp=100;S.wc=(S.wc||0)+5;nf='新手禮：💰500,000、🎴100 抽、🃏萬用卡 5 張　';}S.coins+=10000;S.pill+=600;const got=[];for(let i=0;i<4;i++){const x=Math.random()*100,tr=x<40?0:x<75?1:x<95?2:3,s=SLOTS[Math.floor(Math.random()*4)].k;S.inv.push({u:S.uid++,s,t:tr,l:1,e:null});got.push(INAME[s][tr])}saveS();toast(`${nf}每日登錄：💰10,000、🔮經驗丹 600、裝備 ${got.join('、')}`)}}
@@ -925,12 +926,13 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  <div class="sec">目前參數</div><div class="sg">${R('生命',u.mhp,u.mhp-b.mhp)}${R('攻擊',u.atk,u.atk-b.atk)}${R('速度',u.spd,u.spd-b.spd)}${R('技能倍率','×'+u.m,'')}${R('暴擊率',pct(cr),gb.crit>0?pct(gb.crit):'')}${R('戰力',pw(u),pw(u)-pw(b))}</div>
  ${own?`<div class="sec">升星</div><div class="skb">★${st}/${MAXSTAR}　目前攻擊與生命 +${Math.round(starB(st)*100)}%（★1–5 每星 +10%、★6–10 每星 +8%、★11–15 每星 +6%）${st<MAXSTAR?(()=>{const need=STAR_COST[st],g=STAR_GOLD[st],cp=S.cp[h.id]||0,wc=S.wc||0,have=cp+wc,okC=have>=need,okG=S.coins>=g;
  return `<div class="rq ${okC?'good':'bad'}"><span>同名卡${wc?'＋🃏萬用卡':''}</span><b>${have} / ${need}</b><i>${okC?'✓ 足夠':'✗ 還差 '+(need-have)+' 張'}</i></div><div class="rq ${okG?'good':'bad'}"><span>💰 金幣</span><b>${S.coins.toLocaleString()} / ${g.toLocaleString()}</b><i>${okG?'✓ 足夠':'✗ 還差 '+(g-S.coins).toLocaleString()}</i></div><div style="font-size:11px;opacity:.8;margin-top:4px">同名卡 ${cp} 張${wc?`、萬用卡 ${wc} 張（可代替任何同名卡）`:''}｜升到 ★${st+1} 需 ${need} 張 ＋ 💰${g.toLocaleString()}</div>`})():'<div class="rq good"><span>已滿星</span><b>★'+MAXSTAR+'</b><i>✓</i></div>'}</div>${st<MAXSTAR?`<button data-a="star" style="width:100%;margin-top:6px" ${(S.cp[h.id]||0)+(S.wc||0)<STAR_COST[st]||S.coins<STAR_GOLD[st]?'disabled':''}>${(S.cp[h.id]||0)+(S.wc||0)<STAR_COST[st]?'同名卡不足，無法升星':S.coins<STAR_GOLD[st]?'金幣不足，無法升星':'升星 → ★'+(st+1)}</button>`:''}`:''}
- <div class="sec">技能</div><div class="skb"><b>${h.sk}</b>（${P[h.pat]}）<br>${h.ds||DESC[h.pat]}${h.id==='caoren'?'<br>施放時為自身附加相當於 25% 生命的護盾。':''}<br>怒氣滿 100 放技能，每次普攻 +50 怒氣，開場怒氣 50。</div>
+ ${own?`<div class="sec">突破（Lv.${MAXLV} 後）</div><div class="skb">${brkHtml(h.id)}</div>`:''}<div class="sec">技能</div><div class="skb"><b>${h.sk}</b>（${P[h.pat]}）<br>${h.ds||DESC[h.pat]}${h.id==='caoren'?'<br>施放時為自身附加相當於 25% 生命的護盾。':''}<br>怒氣滿 100 放技能，每次普攻 +50 怒氣，開場怒氣 50。</div>
  <div class="sec">裝備（綠字為裝備加成）</div>${own?eq:'<div class="sub">獲得此武將後才能裝備。</div>'}${S.inv.length?'':'<div class="sub">還沒有裝備，可到商城購買，或挑戰裝備塔掉落。</div>'}
  <div class="btns" style="margin-top:14px">${own?`<button data-a="dep">${dep?'卸下':'上陣'}</button>`:''}<button class="g" data-a="x">關閉</button></div>`}
 $('heroBody').onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;if(a.dataset.a==='x')$('hero').classList.remove('on');
  else if(a.dataset.a==='pill'){const id=HM,k=a.dataset.k,amt=k==='all'?Math.min(S.pill,lvCost(id,MAXLV)):lvCost(id,+k);if(!S.own[id]||amt<=0||amt>S.pill)return;S.pill-=amt;gain(id,amt);saveS();if(!busy)refreshPl();sfx('win');renderHero();render()}
  else if(a.dataset.a==='star')starUp(HM);
+ else if(a.dataset.a==='brk')brkUp(HM);
  else if(a.dataset.a==='dep'){const dep=pl.some(x=>x&&x.id===HM);if(dep){undeploy(HM);$('hero').classList.remove('on')}else if(deploy(HM))$('hero').classList.remove('on')}};
 $('heroBody').onchange=e=>{const s=e.target.closest('select[data-slot]');if(!s)return;equipSlot(HM,s.dataset.slot,+s.value||0)};
 $('hero').onclick=e=>{if(e.target.id==='hero')$('hero').classList.remove('on')};
@@ -949,10 +951,11 @@ const SHOPI=[
  {k:'pts10',ic:'🏅',n:'招募積分 +10',d:'累積 50 分可自選 1 位神話武將',p:80000,lim:3},
  {k:'lexp',ic:'👤',n:'主公經驗書',d:'主公經驗 +200',p:50000,lim:3},
  {k:'sbox',ic:'🧧',n:'聖品裝備寶箱',d:'隨機 1 件裝備（極 50%／神 40%／聖 10%）',p:150000},
- {k:'dbox',ic:'👑',n:'帝品裝備寶箱',d:'隨機 1 件裝備（神 50%／聖 40%／帝 10%）',p:500000,lim:2}];
+ {k:'dbox',ic:'👑',n:'帝品裝備寶箱',d:'隨機 1 件裝備（神 50%／聖 40%／帝 10%）',p:500000,lim:2},
+ {k:'bst5',ic:'💎',n:'突破石 ×5',d:'Lv350 武將突破用',p:250000,lim:2}];
 function buyItem(k){const x=SHOPI.find(i=>i.k===k);if(!x)return;dayCheck();S.d.sh=S.d.sh||{};const used=S.d.sh[k]||0;
  if(x.lim&&used>=x.lim){toast('今日購買次數已用完');return}if(S.coins<x.p){toast('金幣不足');return}S.coins-=x.p;if(x.lim)S.d.sh[k]=used+1;let msg='購入 '+x.n;
- if(k==='pill1')S.pill+=1000;else if(k==='pill10')S.pill+=10000;else if(k==='pull1')S.bp=(S.bp||0)+1;else if(k==='pull10')S.bp=(S.bp||0)+10;else if(k==='wc')S.wc=(S.wc||0)+1;else if(k==='pill100')S.pill+=100000;else if(k==='wc5')S.wc=(S.wc||0)+5;else if(k==='pts10')S.pts=(S.pts||0)+10;else if(k==='lexp')msg=lordGain(200);
+ if(k==='pill1')S.pill+=1000;else if(k==='pill10')S.pill+=10000;else if(k==='pull1')S.bp=(S.bp||0)+1;else if(k==='pull10')S.bp=(S.bp||0)+10;else if(k==='wc')S.wc=(S.wc||0)+1;else if(k==='pill100')S.pill+=100000;else if(k==='wc5')S.wc=(S.wc||0)+5;else if(k==='pts10')S.pts=(S.pts||0)+10;else if(k==='lexp')msg=lordGain(200);else if(k==='bst5')S.bst=(S.bst||0)+5;
  else{const r=Math.random()*100,t=k==='box'?(r<50?1:r<85?2:r<98?3:4):k==='gbox'?(r<45?2:r<90?3:4):k==='sbox'?(r<50?3:r<90?4:5):(r<50?4:r<90?5:6),s=SLOTS[Math.floor(Math.random()*4)].k;S.inv.push({u:S.uid++,s,t,l:1,e:null});msg=`開出 ${TIERS[t].n}品・${INAME[s][t]}（已放入背包）`}
  saveS();toast(msg);sfx('win');renderShop();render()}
 var BSELL=1,BSC=0;
@@ -1071,12 +1074,12 @@ $('dsel').onclick=e=>{const b=e.target.closest('button');if(!b||busy||MODE!=='pv
 
 /* ---- 好友對戰（陣容碼） ---- */
 let FMSG='';
-function myCode(){const a=[];pl.forEach((u,i)=>{if(u){const g=gearBonus(u.id);a.push([i,u.id,u.lv,u.st||0,[+g.atk.toFixed(4),+g.hp.toFixed(4),+g.spd.toFixed(4),+g.crit.toFixed(4)]])}});
+function myCode(){const a=[];pl.forEach((u,i)=>{if(u){const g=gearBonus(u.id);a.push([i,u.id,u.lv,u.st||0,[+g.atk.toFixed(4),+g.hp.toFixed(4),+g.spd.toFixed(4),+g.crit.toFixed(4),g.brk||0]])}});
  if(!a.length)return '';return 'SG1:'+btoa(unescape(encodeURIComponent(JSON.stringify({n:S.lord.n||'好友',u:a}))))}
 function parseCode(s){try{s=s.trim().replace(/\s+/g,'');if(!s.startsWith('SG1:'))return null;const o=JSON.parse(decodeURIComponent(escape(atob(s.slice(4)))));if(!o||!Array.isArray(o.u))return null;
  const cl=(v,a,b)=>Math.max(a,Math.min(b,+v||0)),fr=[];
  for(const x of o.u.slice(0,6)){const h=H.find(y=>y.id===x[1]);if(!h)return null;const i=cl(x[0],0,8)|0,r=Math.floor(i/3),c=i%3,g=x[4]||[];
-  fr.push({i:(2-r)*3+c,id:h.id,l:Math.round(cl(x[2],1,MAXLV)),s:Math.round(cl(x[3],0,MAXSTAR)),g:{atk:cl(g[0],0,3),hp:cl(g[1],0,3),spd:cl(g[2],0,3),crit:cl(g[3],0,.6)}})}
+  fr.push({i:(2-r)*3+c,id:h.id,l:Math.round(cl(x[2],1,MAXLV)),s:Math.round(cl(x[3],0,MAXSTAR)),g:{atk:cl(g[0],0,6),hp:cl(g[1],0,6),spd:cl(g[2],0,3),crit:cl(g[3],0,.6),brk:Math.round(cl(g[4],0,10))}})}
  if(!fr.length)return null;return{name:String(o.n||'好友').slice(0,8),fr}}catch(e){return null}}
 function renderFriend(){const code=myCode();
  $('fBody').innerHTML=`<div class="shh"><b>👥 好友對戰</b><button data-f="x" style="flex:none;width:44px;padding:6px 0">✕</button></div>
@@ -1104,10 +1107,10 @@ async function cloudCheck(){if(!SB||!ME)return;try{const{data,error}=await SB.fr
  CL.ask={c,at:data.updated_at};arenaOpen()}catch(e){}}
 function cloudUse(){const c=CL.ask&&CL.ask.c;if(!c)return;try{localStorage.setItem('sgSave',JSON.stringify(c))}catch(e){}CL.ask=null;location.reload()}
 function cloudKeep(){CL.ask=null;CL.ready=true;cloudUp();renderArena()}
-const myLineup=()=>{const a=[];pl.forEach((u,i)=>{if(u){const g=gearBonus(u.id);a.push([i,u.id,u.lv,u.st||0,[+g.atk.toFixed(4),+g.hp.toFixed(4),+g.spd.toFixed(4),+g.crit.toFixed(4)]])}});return a};
-const lineupPow=a=>a.reduce((s,x)=>{const h=H.find(y=>y.id===x[1]);if(!h)return s;const g=x[4]||[],u=mk(h,x[2],{atk:g[0]||0,hp:g[1]||0,spd:g[2]||0,crit:g[3]||0});return s+Math.round(u.mhp*.5+u.atk*4+u.spd*6)},0);
+const myLineup=()=>{const a=[];pl.forEach((u,i)=>{if(u){const g=gearBonus(u.id);a.push([i,u.id,u.lv,u.st||0,[+g.atk.toFixed(4),+g.hp.toFixed(4),+g.spd.toFixed(4),+g.crit.toFixed(4),g.brk||0]])}});return a};
+const lineupPow=a=>a.reduce((s,x)=>{const h=H.find(y=>y.id===x[1]);if(!h)return s;const g=x[4]||[],u=mk(h,x[2],{atk:g[0]||0,hp:g[1]||0,spd:g[2]||0,crit:g[3]||0,brk:g[4]||0});return s+Math.round(u.mhp*.5+u.atk*4+u.spd*6)},0);
 function lineupFr(arr){const cl=(v,a,b)=>Math.max(a,Math.min(b,+v||0)),fr=[];for(const x of (arr||[]).slice(0,6)){const h=H.find(y=>y.id===x[1]);if(!h)continue;const i=cl(x[0],0,8)|0,r=Math.floor(i/3),c=i%3,g=x[4]||[];
- fr.push({i:(2-r)*3+c,id:h.id,l:Math.round(cl(x[2],1,MAXLV)),s:Math.round(cl(x[3],0,MAXSTAR)),g:{atk:cl(g[0],0,3),hp:cl(g[1],0,3),spd:cl(g[2],0,3),crit:cl(g[3],0,.6)}})}return fr}
+ fr.push({i:(2-r)*3+c,id:h.id,l:Math.round(cl(x[2],1,MAXLV)),s:Math.round(cl(x[3],0,MAXSTAR)),g:{atk:cl(g[0],0,6),hp:cl(g[1],0,6),spd:cl(g[2],0,3),crit:cl(g[3],0,.6),brk:Math.round(cl(g[4],0,10))}})}return fr}
 async function defSet(quiet){if(!SB||!ME||busy)return;const a=myLineup();if(!a.length){if(!quiet)toast('九宮格上沒有武將');return}
  const row={name:(S.lord.n||'無名').slice(0,8),lineup:a,power:lineupPow(a),updated_at:new Date().toISOString()};
  let{data,error}=await SB.from('arena').update(row).eq('user_id',ME.id).select();
@@ -1168,6 +1171,29 @@ $('aBody').onclick=async e=>{const t=e.target.closest('[data-z],[data-t],[data-f
  if(t.dataset.t){AR.tab=t.dataset.t;renderArena();if(AR.tab==='rank'){await arRank();renderArena()}else if(AR.tab==='log')arLoad();return}
  if(t.dataset.f2)arFight(t.dataset.f2)};
 $('mArena').onclick=()=>arenaOpen();
+/* ---- 突破（Lv350 後的成長）---- */
+const BRKMAX=10,BRK_S=[10,15,20,30,40,55,70,90,115,150],BRK_G=[200000,400000,600000,900000,1200000,1600000,2000000,2500000,3000000,4000000],BRK_P=.15;
+const bsDrop=(f,boss)=>(1+Math.floor(Math.max(0,f-300)/300))*(boss?2:1);
+function brkHtml(id){const b=(S.brk||{})[id]||0,lv=LV(id);let h=`突破 <b>${b}/${BRKMAX}</b>　目前攻擊與生命 ×${(1+BRK_P*b).toFixed(2)}（每階 +${BRK_P*100}%，與其他加成相乘）`;
+ if(b>=BRKMAX)return h+'<div class="rq good"><span>已突破到最高階</span><b>✓</b><i></i></div>';
+ const ns=BRK_S[b],ng=BRK_G[b],okL=lv>=MAXLV,okS=(S.bst||0)>=ns,okG=S.coins>=ng;
+ h+=`<div class="rq ${okL?'good':'bad'}"><span>武將等級</span><b>Lv.${lv} / ${MAXLV}</b><i>${okL?'✓':'✗ 需滿級'}</i></div><div class="rq ${okS?'good':'bad'}"><span>💎 突破石</span><b>${(S.bst||0).toLocaleString()} / ${ns}</b><i>${okS?'✓':'✗'}</i></div><div class="rq ${okG?'good':'bad'}"><span>💰 金幣</span><b>${S.coins.toLocaleString()} / ${ng.toLocaleString()}</b><i>${okG?'✓':'✗'}</i></div>
+ <button data-a="brk" style="width:100%;margin-top:6px" ${okL&&okS&&okG?'':'disabled'}>突破 → 第 ${b+1} 階</button><div style="font-size:11px;opacity:.8;margin-top:4px">突破石來源：四座塔第 301 層起每層掉落（越高越多）、全服里程碑、商城。</div>`;return h}
+function brkUp(id){S.brk=S.brk||{};const b=S.brk[id]||0;if(b>=BRKMAX||LV(id)<MAXLV||(S.bst||0)<BRK_S[b]||S.coins<BRK_G[b])return;S.bst-=BRK_S[b];S.coins-=BRK_G[b];S.brk[id]=b+1;saveS();if(!busy)refreshPl();sfx('win');toast(`${hname(id)} 突破到第 ${b+1} 階！`);renderHero();render()}
+/* ---- 爬塔排行榜・全服里程碑 ---- */
+const MS=[[100,{coins:200000,pill:50000}],[200,{coins:500000,pill:150000,wc:3}],[350,{coins:1000000,bst:10,UR:10}],[500,{coins:2000000,bst:20,SP:10}],[750,{coins:3000000,bst:30,SP:20}],[1000,{coins:5000000,bst:50,SP:30}],[1250,{coins:6000000,bst:60,SP:40}],[1500,{coins:8000000,bst:80,SP:50}],[1750,{coins:10000000,bst:100,SP:60}],[2000,{coins:20000000,bst:150,SP:100}]];
+const MSTXT=r=>[r.coins&&'💰'+r.coins.toLocaleString(),r.pill&&'🔮'+r.pill.toLocaleString(),r.wc&&'🃏萬用卡 '+r.wc,r.bst&&'💎突破石 '+r.bst,r.UR&&'🟠傳說碎片 '+r.UR,r.SP&&'🌟神話碎片 '+r.SP].filter(Boolean).join('、');
+var HUBV='main',TRK={rank:[],ms:[],max:0,msg:''},TST=0;
+const towerFloors=()=>{const o={};['exp','eq','gold','frag'].forEach(k=>{const T=S.tw[k];o[k]=T.done?NF:T.f});o.best=Math.max(o.exp,o.eq,o.gold,o.frag);return o};
+function towerSync(){if(!SB||!ME)return;clearTimeout(TST);TST=setTimeout(async()=>{try{const o=towerFloors();await SB.from('tower_progress').upsert({user_id:ME.id,name:(S.lord.n||'無名').slice(0,8),...o,updated_at:new Date().toISOString()});
+ const{data}=await SB.from('tower_milestones').select('floor');const have=new Set((data||[]).map(x=>x.floor));
+ for(const[fl]of MS)if(o.best>=fl&&!have.has(fl)){await SB.from('tower_milestones').insert({floor:fl,user_id:ME.id,name:(S.lord.n||'無名').slice(0,8)})}}catch(e){}},1500)}
+async function trkLoad(){if(!SB||!ME)return;try{const[r,m]=await Promise.all([SB.from('tower_progress').select('user_id,name,exp,eq,gold,frag,best').order('best',{ascending:false}).limit(50),SB.from('tower_milestones').select('*').order('floor')]);TRK.rank=r.data||[];TRK.ms=m.data||[];TRK.msg=''}catch(e){TRK.msg='讀取失敗'}renderHub()}
+const msReached=fl=>TRK.ms.find(x=>x.floor===fl);
+const msClaimable=()=>MS.filter(([fl])=>msReached(fl)&&!(S.mcl||{})[fl]).length;
+function msClaim(fl){const m=MS.find(x=>x[0]===fl);if(!m||!msReached(fl)||(S.mcl||{})[fl])return;S.mcl=S.mcl||{};S.mcl[fl]=1;const r=m[1],F=frg();
+ if(r.coins)S.coins+=r.coins;if(r.pill)S.pill+=r.pill;if(r.wc)S.wc=(S.wc||0)+r.wc;if(r.bst)S.bst=(S.bst||0)+r.bst;if(r.UR)F.UR+=r.UR;if(r.SP)F.SP+=r.SP;
+ saveS();sfx('win');toast(`已領取第 ${fl} 層里程碑：${MSTXT(r)}`);render();renderHub()}
 /* ---- 爬塔分頁・名將碎片 ---- */
 const FRK=['n','SR','SSR','UR','SP'],FRN={n:'一般碎片',SR:'稀有碎片',SSR:'史詩碎片',UR:'傳說碎片',SP:'神話碎片'},FRI={n:'⚪',SR:'🔷',SSR:'🟣',UR:'🟠',SP:'🌟'};
 const FSYN={SR:20,SSR:30,UR:40,SP:60},FUP={SR:['n',5],SSR:['SR',3],UR:['SSR',3],SP:['UR',3]},DECV={N:1,R:2,Y:3,SR:5};
@@ -1207,14 +1233,24 @@ $('frBody').onclick=e=>{const b=e.target.closest('button');if(!b)return;const F=
   if(!c)return;F.n+=g;saveS();FRMSG=`分解 ${c} 張，獲得一般碎片 +${g}`;toast(FRMSG);renderFrag()}};
 /* 爬塔分頁 */
 const TOWERS=['exp','eq','gold','frag'],TRW={exp:'經驗丹、少量金幣',eq:'裝備（越高層品階越好）',gold:'大量金幣',frag:'名將碎片（越高層資質越高）'};
-function hubOpen(){if(busy)return;$('thub').classList.add('on');renderHub()}
-function renderHub(){let h=`<div class="shh"><b>🗼 爬塔</b><button data-y="x" style="flex:none;width:44px;padding:6px 0">✕</button></div><p class="sub">四座塔各 ${NF} 層，難度相同、獎勵不同；一鍵爬塔最多到第 ${AUTOMAX} 層，之後要手動挑戰。</p>`;
+function hubOpen(){if(busy)return;sbInit();HUBV='main';$('thub').classList.add('on');renderHub();if(ME){towerSync();trkLoad()}}
+function hubSub(){if(!SB||!ME)return '<p class="sub">排行榜與全服里程碑需要登入：請到「🏟️ 競技」用 Email 登入（同一個帳號）。</p>';const o=towerFloors();let h='';
+ if(HUBV==='rank'){h+=`<p class="sub">依「最高層數」（四座塔取最高）排名，前 50 名。我的最高：第 <b>${o.best}</b> 層。</p>`;if(!TRK.rank.length)h+='<p class="sub">讀取中…</p>';
+  TRK.rank.forEach((r,i)=>{h+=`<div class="it"${r.user_id===ME.id?' style="border:1px solid #ffd27a"':''}><b style="width:28px;text-align:center">${i<3?['🥇','🥈','🥉'][i]:i+1}</b><div class="in" style="flex:1"><b>${esc(r.name)}</b><small style="display:block;opacity:.8">📘${r.exp}　⚔️${r.eq}　💰${r.gold}　🧩${r.frag}</small></div><b>${r.best} 層</b></div>`})}
+ else{const top=TRK.rank[0];h+=`<p class="sub">只要<b>任何一位玩家</b>在任一座塔通過下列層數，<b>所有玩家</b>都能領取禮物（每個里程碑每人領一次）。目前全服最高：第 <b>${top?top.best:0}</b> 層。</p>`;
+  MS.forEach(([fl,r])=>{const m=msReached(fl),got=(S.mcl||{})[fl];h+=`<div class="it" style="display:block"><div style="display:flex;justify-content:space-between;align-items:center"><b>第 ${fl} 層</b>${got?'<span style="color:#7fe08a">✓ 已領取</span>':m?`<button data-y="claim" data-f="${fl}">領取</button>`:'<span style="opacity:.6">尚未達成</span>'}</div><small style="display:block;opacity:.85">${MSTXT(r)}</small>${m?`<small style="display:block;color:#ffd27a">首位達成：${esc(m.name||'')}（${new Date(m.reached_at).toLocaleDateString()}）</small>`:''}</div>`})}
+ return h+(TRK.msg?`<p class="sub">${TRK.msg}</p>`:'')}
+function renderHub(){const nc=msClaimable();let h=`<div class="shh"><b>🗼 爬塔</b><button data-y="x" style="flex:none;width:44px;padding:6px 0">✕</button></div><div class="btns" style="margin:6px 0">${[['main','🗼 四座塔'],['rank','🏆 排行榜'],['ms','🎁 全服里程碑'+(nc?'（'+nc+'）':'')]].map(([k,n])=>`<button class="g${HUBV===k?' on':''}" data-y="v" data-v="${k}">${n}</button>`).join('')}</div>`;
+ if(HUBV!=='main'){$('thBody').innerHTML=h+hubSub();return}
+ h+=`<p class="sub">四座塔各 ${NF} 層，難度相同、獎勵不同；一鍵爬塔最多到第 ${AUTOMAX} 層，之後要手動挑戰。</p>`;
  TOWERS.forEach(k=>{const T=S.tw[k],f=T.done?NF-1:T.f,c=MAPT[k].acc;h+=`<div class="it" style="display:block;border-left:4px solid ${c}"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:16px">${TKI[k]} ${TKN[k]}</b><span>${T.done?'已登頂':'第 <b>'+(f+1)+'</b> / '+NF+' 層'}</span></div>
   <div class="xp" style="margin:6px 0"><i style="width:${(T.done?NF:T.f)/NF*100}%"></i></div><small style="opacity:.85">獎勵：${TRW[k]}｜下一層：${TWN[f]}・敵方 Lv.${towerLv(f)}</small>
   <div class="btns" style="margin-top:6px"><button data-y="go" data-k="${k}">挑戰</button><button class="g" data-y="map" data-k="${k}">塔圖</button><button class="g" data-y="auto" data-k="${k}" ${T.done||T.f>=AUTOMAX?'disabled':''}>⚡ 一鍵爬塔</button></div></div>`});
  const F=frg();h+=`<div class="it" style="display:block"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:16px">🧩 名將碎片</b><button data-y="frag">合成／分解</button></div><small style="opacity:.85">${FRK.map(k=>`${FRI[k]}${F[k]}`).join('　')}</small></div>`;
  $('thBody').innerHTML=h}
 $('thBody').onclick=e=>{const b=e.target.closest('[data-y]');if(!b||busy)return;const y=b.dataset.y,k=b.dataset.k;
+ if(y==='v'){HUBV=b.dataset.v;renderHub();if(HUBV!=='main'&&ME)trkLoad();return}
+ if(y==='claim'){msClaim(+b.dataset.f);return}
  if(y==='x'){$('thub').classList.remove('on');return}
  if(y==='frag'){$('thub').classList.remove('on');fragOpen();return}
  $('thub').classList.remove('on');if(!(MODE==='tower'&&TK===k))setMode('tower',k);
