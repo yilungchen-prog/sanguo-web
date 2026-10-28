@@ -64,7 +64,7 @@ h1{margin:4px 0;text-align:center;font-size:20px;letter-spacing:6px;color:var(--
 
 .cell.ql .card{box-shadow:inset 0 0 16px 5px #3fe0a0;filter:saturate(.6)}.cell.ql::after{content:'🐉';position:absolute;left:0;right:0;top:38%;text-align:center;font-size:calc(var(--ch,80px)*.3);pointer-events:none;z-index:6}
 html,body,button,.cell,#spdBar{touch-action:manipulation}
-#spdBar{display:none;position:fixed;top:58%;right:calc(env(safe-area-inset-right,0px) + 4px);z-index:61;flex-direction:column;gap:12px}body.full.bt #spdBar{display:flex}body.auto #spdBar,body.auto #cine{display:none!important}#spdBar button{flex:none;width:60px;height:60px;padding:0;font-size:15px;line-height:1.2;font-weight:700;border-radius:16px;border-width:2px;box-shadow:0 3px 8px #000c;opacity:.92}#bSkip:disabled{opacity:.4}
+#spdBar{display:none;position:fixed;top:58%;right:calc(env(safe-area-inset-right,0px) + 4px);z-index:61;flex-direction:column;gap:12px}body.full.bt #spdBar{display:flex}#tmT{flex-wrap:wrap!important}#tmT>button{flex:1 1 28%!important;white-space:nowrap}body.auto #spdBar,body.auto #cine{display:none!important}#spdBar button{flex:none;width:60px;height:60px;padding:0;font-size:15px;line-height:1.2;font-weight:700;border-radius:16px;border-width:2px;box-shadow:0 3px 8px #000c;opacity:.92}#bSkip:disabled{opacity:.4}
 .cell.hid .card{opacity:.5;filter:blur(.6px)}
 .synb{font-size:10px;margin:0 0 3px 2px;white-space:nowrap;overflow:hidden;line-height:1.5}.synb .syl{opacity:.7;margin-right:3px}.synb .syc{border:1px solid;border-radius:8px;padding:0 5px;margin-right:2px;font-size:10px}.synb .syv{color:#ffd27a}
 body.full .synb{font-size:9px;margin:0 0 1px 2px}
@@ -257,7 +257,7 @@ body:not(.full) .synb{white-space:normal;overflow:visible;line-height:1.45}body:
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261029b</span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261029c</span></div>
 <h1>三國九宮戰</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="margin-bottom:4px"><button class="g on" id="mPvp">⚔️ 對戰</button><button class="g" id="mExp">📘 經驗塔</button><button class="g" id="mEq">🛡️ 裝備塔</button><button class="g" id="mGold">💰 金幣塔</button><button class="g" id="mGacha">🎴 抽卡</button><button class="g" id="mShop">🏪 商城</button><button class="g" id="mArena">🏟️ 競技</button></div>
@@ -684,10 +684,10 @@ function fly(fromC,toC,pat){if(SKIP||pat==='single'||pat==='assn')return Promise
  o.style.left=sx+'px';o.style.top=sy+'px';b.appendChild(o);
  return o.animate([{transform:'translate(0,0) scale(.6)'},{transform:`translate(${ex-sx}px,${ey-sy}px) scale(1.4)`}],{duration:420/BSPD,easing:'ease-in'}).finished.then(()=>o.remove())}
 let MODE='pvp',TK='exp',FLOOR=0,NEXT=0,DIFF=-1,OPP={d:1,list:[]};
-const NF=350,TKN={exp:'經驗塔',eq:'裝備塔',gold:'金幣塔'},TKI={exp:'📘',eq:'⚔️',gold:'💰'};
+const NF=2000,AUTOMAX=350,CHN=50,MAPH=CHN*104+300,TKN={exp:'經驗塔',eq:'裝備塔',gold:'金幣塔'},TKI={exp:'📘',eq:'⚔️',gold:'💰'};
 const MAXR=()=>MODE==='tower'?20:40;
 const TWN0=['鐵壁陣','毒霧陣','八門金鎖','破陣盾','守關．鐵毒','縱列禁錮','後陣瘴氣','回春連環','雙重壁壘','關主．連鎖','五人精銳','縱橫牢籠','鋼鐵八門','毒氣迷城','關主．三才','精銳連環','落雷壁壘','縱毒雙絕','四象之戰','關主．烈焰','四象破壁','全面毒瘴','三才鐵壁','斜線陣','關主．天下無雙',
-'淬鋼陣','連環鎖陣','玄武壁','幽冥後陣','關主．霜天','迷霧毒陣','青龍回春','天罡鐵壁','縱列封鎖','關主．烈陽','疾風連環','三才鎖','白虎破陣','九宮迷局','關主．玄冥','無間毒淵','四象封印','銅牆鐵壁','雙毒夾擊','關主．焚天','北斗七星','天羅地網','五行相剋','萬劫不復','終極．一統天下'],TCH=['','貳・','參・','肆・','伍・','陸・','柒・'],TWN=Array.from({length:350},(_,i)=>i===349?'天命．三國一統':TCH[Math.floor(i/50)]+(i%50===49&&i<349?'關主．'+['群雄','霸業','天下','龍騰','萬象','歸一'][Math.floor(i/50)]:TWN0[i%50]));
+'淬鋼陣','連環鎖陣','玄武壁','幽冥後陣','關主．霜天','迷霧毒陣','青龍回春','天罡鐵壁','縱列封鎖','關主．烈陽','疾風連環','三才鎖','白虎破陣','九宮迷局','關主．玄冥','無間毒淵','四象封印','銅牆鐵壁','雙毒夾擊','關主．焚天','北斗七星','天羅地網','五行相剋','萬劫不復','終極．一統天下'],CNUM=n=>{const d='零一二三四五六七八九';return n<=10?(n===10?'十':d[n]):n<20?'十'+d[n%10]:d[Math.floor(n/10)]+'十'+(n%10?d[n%10]:'')},BOSSN=['群雄','霸業','天下','龍騰','萬象','歸一','乾坤','風雲','鼎立','逐鹿','問鼎','無雙'],TWN=Array.from({length:2000},(_,i)=>{const c=Math.floor(i/50);if(i===349)return '天命．三國一統';if(i===1999)return '終焉．萬世一統';const pre=c?'第'+CNUM(c+1)+'章・':'';return i%50===49?pre+'關主．'+BOSSN[c%12]:pre+TWN0[i%50]});
 const TWR0=[{as:.65},{pf:8},{aj:1.3},{ao:.65},{as:.75,pf:6},{sc:1.3},{pb:8},{aj:1.35,rg:5},{ao:.6,pb:5},{as:.7,aj:1.3},
 {mx:5,pf:8},{sc:1.35,rg:6},{ao:.6,aj:1.35},{pf:10,pb:6},{as:.65,sc:1.3,rg:4},{mx:5,aj:1.4},{ao:.55,pf:8},{sc:1.2,pb:5},{mx:5,as:.7},{aj:1.25,pf:3,rg:2},
 {mx:5,ao:.65,aj:1.3},{pf:8,pb:6,aj:1.3},{mx:5,as:.65,rg:5},{mx:5,aj:1.25,sc:1.15},{mx:5,as:.8,aj:1.3,sc:1.2,pf:6,rg:3},
@@ -695,17 +695,17 @@ const TWR0=[{as:.65},{pf:8},{aj:1.3},{ao:.65},{as:.75,pf:6},{sc:1.3},{pb:8},{aj:
 {ao:.65,pf:8},{aj:1.3,rg:3},{as:.65,pb:8},{sc:1.3,pf:6},{mx:5,ao:.65,rg:4},
 {aj:1.3,pb:6},{as:.7,sc:1.25},{ao:.6,pf:8},{aj:1.25,sc:1.2,rg:3},{mx:5,as:.7,pf:6,rg:3},
 {pf:8,pb:6},{ao:.65,aj:1.25},{as:.6,rg:4},{sc:1.25,pf:6,pb:5},{mx:5,ao:.6,aj:1.25,rg:3},
-{as:.65,aj:1.25,pb:6},{ao:.6,sc:1.2,pf:6},{mx:5,aj:1.25,rg:4},{pf:8,pb:6,aj:1.2,rg:3},{mx:5,as:.75,aj:1.2,sc:1.15,pf:6,rg:3}];const TWR=Array.from({length:350},(_,i)=>TWR0[i%50]);
+{as:.65,aj:1.25,pb:6},{ao:.6,sc:1.2,pf:6},{mx:5,aj:1.25,rg:4},{pf:8,pb:6,aj:1.2,rg:3},{mx:5,as:.75,aj:1.2,sc:1.15,pf:6,rg:3}];const TWR=Array.from({length:2000},(_,i)=>TWR0[i%50]);
 const TWE=[{6:'caoren',7:'guan',8:'liubei',0:'xinxianying',1:'guojia',2:'zhangjiao'},{6:'machao',7:'zhangliao',8:'zhangfei',0:'caiwenji',1:'guojia',2:'xinxianying'},{6:'guan',7:'yuanshao',8:'zhangliao',3:'zhangjiao',1:'lubu',5:'caiwenji'}];
 const SEED={exp:13,eq:71,gold:137};
 const MAXN=()=>MODE==='tower'?(TWR[FLOOR].mx||6):6;
 const RT=r=>[r.mx&&`我方最多上陣 ${r.mx} 位`,r.as&&`敵方受單體與刺殺傷害減少 ${Math.round((1-r.as)*100)}%`,r.ao&&`敵方受範圍傷害減少 ${Math.round((1-r.ao)*100)}%`,r.pf&&`每回合結束我方前排損失 ${r.pf}% 生命`,r.pb&&`每回合結束我方後排損失 ${r.pb}% 生命`,r.aj&&`我方相鄰單位受傷 +${Math.round((r.aj-1)*100)}%`,r.sc&&`我方同欄單位受傷 +${Math.round((r.sc-1)*100)}%`,r.rg&&`敵方每回合回復 ${r.rg}% 生命`].filter(Boolean).join('；');
 let EQ=[.02,.015];const ADJ={"exp":[1.09,1.02,0.86,1.11,1.29,0.85,1.07,0.76,1.03,1.05,0.63,0.69,0.87,0.85,0.91,0.81,1.0,0.47,0.81,0.64,0.78,0.61,0.75,0.59,0.7,0.81,0.66,0.9,0.52,0.96,0.92,0.66,0.88,0.46,0.67,0.61,0.97,0.9,0.64,0.85,0.73,0.96,0.99,0.47,0.82,0.86,0.6,0.67,0.68,0.95],"eq":[1.23,1.01,0.95,1.11,1.13,0.89,0.94,0.75,1.0,0.96,0.77,0.67,0.95,0.82,0.96,0.82,0.88,0.63,0.82,0.63,0.78,0.56,0.7,0.58,0.8,1.0,0.64,0.8,0.42,0.87,0.93,0.64,1.04,0.45,0.68,0.6,1.02,0.92,0.66,0.97,0.81,0.82,1.06,0.43,0.83,0.93,0.65,0.63,0.57,0.86],"gold":[1.27,1.07,0.99,1.12,1.19,0.97,1.01,0.63,1.01,1.03,0.8,0.67,0.93,0.77,0.96,0.63,0.95,0.5,0.81,0.74,0.86,0.59,0.69,0.63,0.74,0.92,0.73,0.87,0.49,0.91,0.87,0.67,1.07,0.5,0.7,0.57,0.98,0.88,0.58,0.92,0.82,0.85,0.96,0.4,0.82,0.9,0.66,0.65,0.6,0.92]};
-var TWS={K:200,h0:1,h1:.03,h2:.012,a0:.85,a1:.02,a2:.008};const towerLv=f=>Math.min(MAXLV,1+f+((f+1)%5?0:1));
+var TWS={K:200,K2:350,h0:1,h1:.03,h2:.012,h3:.006,a0:.85,a1:.02,a2:.008,a3:.004};const towerLv=f=>Math.min(MAXLV,1+f+((f+1)%5?0:1));
 const expR=f=>Math.round((45+9*f)*((f+1)%5?1:1.5)),goldR=f=>Math.round((500+220*f*(1+f/60))*((f+1)%5?1:2));
-function towerEnemy(){en=Array(9).fill(null);const f=FLOOR,bs=(f+1)%5===0,eLv=towerLv(f),k=bs?1.03:1,a=f<50?ADJ[TK][f]:1,f1=Math.min(f,TWS.K),f2=Math.max(0,f-TWS.K),hm=(TWS.h0+TWS.h1*f1+TWS.h2*f2)*k*a,am=(TWS.a0+TWS.a1*f1+TWS.a2*f2)*k*a;let L=[];
+function towerEnemy(){en=Array(9).fill(null);const f=FLOOR,bs=(f+1)%5===0,eLv=towerLv(f),k=bs?1.03:1,a=f<50?ADJ[TK][f]:1,f1=Math.min(f,TWS.K),f2=Math.max(0,Math.min(f,TWS.K2)-TWS.K),f3=Math.max(0,f-TWS.K2),hm=(TWS.h0+TWS.h1*f1+TWS.h2*f2+TWS.h3*f3)*k*a,am=(TWS.a0+TWS.a1*f1+TWS.a2*f2+TWS.a3*f3)*k*a;let L=[];
  {let s=f*97+SEED[TK];const rnd=()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296};
-  const QB=[[0,0,65],[25,55,75],[60,65,83],[110,75,89],[160,83,93],[220,89,95],[280,92,99]],qb=QB.filter(x=>f>=x[0]).pop();let pool=H.filter(h=>h.q>=qb[1]&&h.q<=qb[2]&&h.pat!=='heal');if(pool.length<6)pool=H.filter(h=>h.q<=qb[2]&&h.pat!=='heal');if(f>=qb[0]+10&&qb[2]>=83)pool=pool.concat(H.filter(h=>h.pat==='heal'&&h.q>=qb[1]&&h.q<=qb[2]));
+  const QB=[[0,0,65],[25,55,75],[60,65,83],[110,75,89],[160,83,93],[220,89,95],[280,92,99],[600,95,99],[1000,99,99]],qb=QB.filter(x=>f>=x[0]).pop();let pool=H.filter(h=>h.q>=qb[1]&&h.q<=qb[2]&&h.pat!=='heal');if(pool.length<6)pool=H.filter(h=>h.q<=qb[2]&&h.pat!=='heal');if(f>=qb[0]+10&&qb[2]>=83)pool=pool.concat(H.filter(h=>h.pat==='heal'&&h.q>=qb[1]&&h.q<=qb[2]));
   pool=pool.map(h=>[rnd(),h]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]).slice(0,6).sort((a,b)=>b.hp-a.hp);
   const cells=[6,7,8,0,1,2];L=pool.map((h,k)=>[cells[k],h.id])}
  L.forEach(([i,id])=>{const h=H.find(x=>x.id===id),u=mk(h,eLv);u.mhp=u.hp=Math.round(u.hp*hm);u.atk=Math.round(u.atk*am);en[i]=u})}
@@ -742,29 +742,29 @@ const MAPT={exp:{t:'經驗塔・登雲之路',sky:['#16303c','#3f6f78','#d4e6da'
  gold:{t:'金幣塔・聚寶之路',sky:['#35260c','#9a6a1c','#ffe08a'],mt:'#7a5316',acc:'#ffe08a',ic:['💰','🪙','💎','📿'],bs:'🦁'}};
 let MAPK='exp',MAPSEL=0;
 const rng=(()=>{let x=7;return()=>{x=(x*9301+49297)%233280;return x/233280}});
-const MPOS=i=>[180+Math.sin(i*.85)*100,NF*104+300-130-i*104];
-function mapSVG(k,ov){const T=MAPT[k],tw=S.tw[k],d0=ov?false:tw.done,cl=ov?ov.cl:(tw.done?NF:tw.f),cur=ov?ov.cur:(tw.done?NF-1:tw.f),W=360,STEP=104,H=NF*STEP+300,R=rng();
- const nx=i=>180+Math.sin(i*.85)*100,ny=i=>H-130-i*STEP;
+var MAPCB=0;const MPOS=i=>[180+Math.sin(i*.85)*100,MAPH-130-(i-MAPCB)*104];
+function mapSVG(k,ov){const T=MAPT[k],tw=S.tw[k],d0=ov?false:tw.done,cl=ov?ov.cl:(tw.done?NF:tw.f),cur=ov?ov.cur:(tw.done?NF-1:tw.f),W=360,STEP=104,H=MAPH,R=rng(),A=MAPCB,B=Math.min(NF,MAPCB+CHN);
+ const nx=i=>180+Math.sin(i*.85)*100,ny=i=>H-130-(i-A)*STEP;
  let g=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;max-width:480px;margin:0 auto" xmlns="http://www.w3.org/2000/svg">
  <defs><linearGradient id="sk${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.sky[0]}"/><stop offset=".55" stop-color="${T.sky[1]}"/><stop offset="1" stop-color="${T.sky[2]}"/></linearGradient>
  <radialGradient id="gd${k}"><stop offset="0" stop-color="#fff6c0"/><stop offset="1" stop-color="#e0a52e"/></radialGradient>
  <filter id="gl${k}"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
  <rect width="${W}" height="${H}" fill="url(#sk${k})"/>`;
  for(let y=H-80;y>120;y-=230){const op=.22+.1*R();g+=`<path d="M0 ${y} `;let x=0;while(x<W){const w=40+R()*60;g+=`L${x+w/2} ${y-30-R()*70} L${x+w} ${y} `;x+=w}g+=`L${W} ${y+300} L0 ${y+300}Z" fill="${T.mt}" opacity="${op}"/>`}
- for(let i=0;i<Math.round(NF*.45);i++){const x=R()*W,y=150+R()*(H-300);g+=`<ellipse cx="${x}" cy="${y}" rx="${30+R()*40}" ry="${8+R()*8}" fill="#fff" opacity="${.08+R()*.1}"/>`}
- for(let i=0;i<Math.round(NF*.32);i++){const x=20+R()*320,y=200+R()*(H-400);g+=`<text x="${x}" y="${y}" font-size="${28+R()*14}" opacity=".22" text-anchor="middle">${T.ic[i%4]}</text>`}
+ for(let i=0;i<22;i++){const x=R()*W,y=150+R()*(H-300);g+=`<ellipse cx="${x}" cy="${y}" rx="${30+R()*40}" ry="${8+R()*8}" fill="#fff" opacity="${.08+R()*.1}"/>`}
+ for(let i=0;i<16;i++){const x=20+R()*320,y=200+R()*(H-400);g+=`<text x="${x}" y="${y}" font-size="${28+R()*14}" opacity=".22" text-anchor="middle">${T.ic[i%4]}</text>`}
  // tower summit
- const tx=180,ty=30;g+=`<g fill="#0e1618" opacity=".92"><rect x="${tx-12}" y="${ty+140}" width="24" height="60"/>`;
+ const tx=180,ty=30;if(B<NF)g+=`<text x="180" y="${ny(B-1)-70}" font-size="14" fill="#fff" text-anchor="middle" font-weight="700" style="paint-order:stroke" stroke="#000" stroke-width="3">▲ 第 ${B+1} 層起：下一章</text>`;if(B>=NF){g+=`<g fill="#0e1618" opacity=".92"><rect x="${tx-12}" y="${ty+140}" width="24" height="60"/>`;
  for(let t=0;t<5;t++){const w=110-t*16,y=ty+120-t*26;g+=`<polygon points="${tx-w/2},${y} ${tx+w/2},${y} ${tx+w/2-10},${y-12} ${tx-w/2+10},${y-12}"/><rect x="${tx-w/2+14}" y="${y}" width="${w-28}" height="14"/>`}
- g+=`<rect x="${tx-2}" y="${ty-14}" width="4" height="30"/></g><text x="${tx}" y="${ty+206}" font-size="12" fill="#ffe9a8" text-anchor="middle" font-weight="700">頂層</text>`;
+ g+=`<rect x="${tx-2}" y="${ty-14}" width="4" height="30"/></g><text x="${tx}" y="${ty+206}" font-size="12" fill="#ffe9a8" text-anchor="middle" font-weight="700">頂層</text>`;}
  // path
- let d=`M${nx(0)} ${ny(0)}`;for(let i=1;i<NF;i++){const mx=(nx(i-1)+nx(i))/2,my=(ny(i-1)+ny(i))/2;d+=` Q${nx(i-1)} ${ny(i-1)} ${mx} ${my}`}d+=` L${nx(NF-1)} ${ny(NF-1)}`;
+ let d=`M${nx(A)} ${ny(A)+(A?104:0)}`;for(let i=A+1;i<B;i++){const mx=(nx(i-1)+nx(i))/2,my=(ny(i-1)+ny(i))/2;d+=` Q${nx(i-1)} ${ny(i-1)} ${mx} ${my}`}d+=` L${nx(B-1)} ${ny(B-1)}`;
  g+=`<path d="${d}" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="12" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#e8dcc0" stroke-opacity=".7" stroke-width="6" stroke-dasharray="2 12" stroke-linecap="round"/>`;
  // cleared path overlay
- if(cl>0){let d2=`M${nx(0)} ${ny(0)}`;for(let i=1;i<Math.min(NF,cl+1);i++){const mx=(nx(i-1)+nx(i))/2,my=(ny(i-1)+ny(i))/2;d2+=` Q${nx(i-1)} ${ny(i-1)} ${mx} ${my}`}d2+=` L${nx(Math.min(cl,NF-1))} ${ny(Math.min(cl,NF-1))}`;g+=`<path d="${d2}" fill="none" stroke="${T.acc}" stroke-width="7" stroke-linecap="round" filter="url(#gl${k})"/>`}
+ if(cl>A){let d2=`M${nx(A)} ${ny(A)+(A?104:0)}`;for(let i=A+1;i<Math.min(B,cl+1);i++){const mx=(nx(i-1)+nx(i))/2,my=(ny(i-1)+ny(i))/2;d2+=` Q${nx(i-1)} ${ny(i-1)} ${mx} ${my}`}d2+=` L${nx(Math.min(cl,B-1))} ${ny(Math.min(cl,B-1))}`;g+=`<path d="${d2}" fill="none" stroke="${T.acc}" stroke-width="7" stroke-linecap="round" filter="url(#gl${k})"/>`}
  // start gate
- g+=`<text x="${nx(0)}" y="${ny(0)+62}" font-size="13" fill="#fff" text-anchor="middle" font-weight="700" style="paint-order:stroke" stroke="#000" stroke-width="3">起點</text>`;
- for(let i=0;i<NF;i++){const x=nx(i),y=ny(i),boss=(i+1)%5===0,chest=(i+1)%10===0,done=i<cl,isCur=i===cur&&!d0,r=boss?27:20;
+ g+=`<text x="${nx(0)}" y="${ny(0)+62}" font-size="13" fill="#fff" text-anchor="middle" font-weight="700" style="paint-order:stroke" stroke="#000" stroke-width="3">${A?'▼ 第 '+A+' 層以下：上一章':'起點'}</text>`;
+ for(let i=A;i<B;i++){const x=nx(i),y=ny(i),boss=(i+1)%5===0,chest=(i+1)%10===0,done=i<cl,isCur=i===cur&&!d0,r=boss?27:20;
   const sel=i===MAPSEL;
   g+=`<g class="mn" data-f="${i}" style="cursor:pointer">`;
   if(sel)g+=`<circle cx="${x}" cy="${y}" r="${r+9}" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="4 4"/>`;
@@ -781,13 +781,13 @@ function mapInfo(){const k=MAPK,tw=S.tw[k],f=MAPSEL,boss=(f+1)%5===0,cl=tw.done?
  $('tmI').innerHTML=`<b>第 ${f+1} 層・${TWN[f]}${boss?'（關主）':''}</b>　<span style="color:${f<cl?'#7fe08a':'#ffd27a'}">${st}</span><br><small>${RT(TWR[f])}｜敵方 Lv.${towerLv(f)}</small>`}
 let MAPRES=null;
 var AUTOC=null;
-function mapBtns(){const tw=S.tw[MAPK];return `<div class="btns"><button data-a="go">前往這座塔挑戰</button><button class="g" data-a="auto" ${tw.done?'disabled':''}>⚡ 一鍵爬塔</button></div>`}
+function mapBtns(){const tw=S.tw[MAPK],off=tw.done||tw.f>=AUTOMAX;return `<div class="btns"><button data-a="go">前往這座塔挑戰</button><button class="g" data-a="auto" ${off?'disabled':''}>${tw.f>=AUTOMAX&&!tw.done?'⚡ 351 層起需手動':'⚡ 一鍵爬塔'}</button></div>`}
 async function autoClimb(k){if(busy||AUTOC)return;if(!(MODE==='tower'&&TK===k))setMode('tower',k);else reset();
  if(!pl.some(Boolean)){toast('請先布陣');return}
  const T=S.tw[k],start=T.f,c0=S.coins,p0=S.pill,i0=S.inv.length;AUTOC={stop:false,n:0};MAPRES=null;$('tmR').style.display='none';document.body.classList.add('auto');au();
  const info=(t)=>{$('tmI').innerHTML=`<b style="color:#ffd27a">⚡ 一鍵爬塔中</b>　${t}<br><small>已通過 ${AUTOC.n} 層｜💰+${(S.coins-c0).toLocaleString()}　🔮+${(S.pill-p0).toLocaleString()}${k==='eq'?'　裝備 +'+(S.inv.length-i0):''}</small>`;$('tmBt').innerHTML='<button class="g" data-a="stop">停止</button>'};
  let lost=false;
- while(!AUTOC.stop&&!T.done){const f=T.f;MAPSEL=f;renderMap(AUTOC.n>0,{cl:f,cur:f,at:f});info(`挑戰第 ${f+1} 層・${TWN[f]}…`);
+ while(!AUTOC.stop&&!T.done&&T.f<AUTOMAX){const f=T.f;MAPSEL=f;renderMap(AUTOC.n>0,{cl:f,cur:f,at:f});info(`挑戰第 ${f+1} 層・${TWN[f]}…`);
   await new Promise(r=>setTimeout(r,250));
   const pr=battle();SKIP=true;await pr;const win=alive(pl).length>0&&!alive(en).length;
   if(!win){lost=true;reset();break}
@@ -796,18 +796,18 @@ async function autoClimb(k){if(busy||AUTOC)return;if(!(MODE==='tower'&&TK===k))s
  const n=AUTOC.n,stopped=AUTOC.stop;AUTOC=null;document.body.classList.remove('auto');SKIP=false;
  MAPSEL=T.done?NF-1:T.f;renderMap(true);
  const sum=`通過 ${n} 層（第 ${start+1} → ${T.done?'登頂':'第 '+(T.f+1)+' 層'}）｜💰+${(S.coins-c0).toLocaleString()}　🔮+${(S.pill-p0).toLocaleString()}${S.inv.length>i0?'　裝備 +'+(S.inv.length-i0)+' 件':''}`;
- $('tmI').innerHTML=`<b style="color:#ffd27a">${T.done?'🏆 登頂成功！':lost?`⚔️ 第 ${T.f+1} 層打不過，已停止`:'⏸ 已停止'}</b><br><small>${sum}</small>`;
+ $('tmI').innerHTML=`<b style="color:#ffd27a">${T.done?'🏆 登頂成功！':!lost&&T.f>=AUTOMAX&&!stopped?'⛰️ 已到第 351 層，之後要手動挑戰':lost?`⚔️ 第 ${T.f+1} 層打不過，已停止`:'⏸ 已停止'}</b><br><small>${sum}</small>`;
  $('tmBt').innerHTML=mapBtns()}
 
-function renderMap(keep,ov){const k=MAPK;$('tmT').innerHTML=['exp','eq','gold'].map(x=>`<button class="g${x===k?' on':''}" data-m="${x}">${TKI[x]} ${TKN[x]} <small>${S.tw[x].done?NF:S.tw[x].f+1}/${NF}</small></button>`).join('');
+function renderMap(keep,ov){const k=MAPK;MAPCB=Math.floor(MAPSEL/CHN)*CHN;const ch=MAPCB/CHN;$('tmT').innerHTML=['exp','eq','gold'].map(x=>`<button class="g${x===k?' on':''}" data-m="${x}">${TKI[x]} ${TKN[x]} <small>${S.tw[x].done?NF:S.tw[x].f+1}/${NF}</small></button>`).join('')+`<div style="display:flex;gap:6px;width:100%;align-items:center;margin-top:6px"><button class="g" data-a="cp" style="flex:1" ${MAPCB<=0?'disabled':''}>◀ 上一章</button><b style="flex:1.4;text-align:center;font-size:13px">第${CNUM(ch+1)}章（${MAPCB+1}–${Math.min(NF,MAPCB+CHN)}）</b><button class="g" data-a="cn" style="flex:1" ${MAPCB+CHN>=NF?'disabled':''}>下一章 ▶</button></div>`;
  $('tmH').textContent=MAPT[k].t;$('tmS').innerHTML=mapSVG(k,ov);if(MAPRES)resInfo();else mapInfo();
- if(!keep){const tw=S.tw[k],cur=ov?ov.cur:(tw.done?NF-1:tw.f),sc=$('tmS'),svg=sc.firstChild,sh=svg.getBoundingClientRect().height/(NF*104+300);const y=(NF*104+300-130-cur*104)*sh;requestAnimationFrame(()=>{sc.scrollTop=Math.max(0,y-sc.clientHeight/2)})}}
+ if(!keep){const tw=S.tw[k],cur=ov?ov.cur:(tw.done?NF-1:tw.f),sc=$('tmS'),svg=sc.firstChild,sh=svg.getBoundingClientRect().height/MAPH;const y=(MAPH-130-(Math.max(MAPCB,Math.min(MAPCB+CHN-1,cur))-MAPCB)*104)*sh;requestAnimationFrame(()=>{sc.scrollTop=Math.max(0,y-sc.clientHeight/2)})}}
 
 function resInfo(){const R=MAPRES,z=$('tmR');z.style.display='block';z.innerHTML=`<b style="font-size:17px;color:#ffd27a;letter-spacing:3px">${R.msg}</b><div style="font-size:12px;line-height:1.6;margin-top:4px">${R.rs}</div>`;
  $('tmI').innerHTML=R.ready?`<b style="color:#ffd27a">▶ 點擊發光的「目前」關卡：${R.next}</b>`:'<small>前進中…</small>';
  $('tmBt').innerHTML=R.ready?'<button class="g" data-a="view">查看戰場</button>':''}
-function moveTok(a,b,done,DD){const g=$('tmS').querySelector('#mtok'),sc=$('tmS'),svg=sc.firstChild;if(!g||a===b){setTimeout(done,500);return}
- const[x0,y0]=MPOS(a),[x1,y1]=MPOS(b),t0=performance.now(),D=DD||1500,sh=svg.getBoundingClientRect().height/(NF*104+300);
+function moveTok(a,b,done,DD){const g=$('tmS').querySelector('#mtok'),sc=$('tmS'),svg=sc.firstChild;if(!g||a===b||b<MAPCB||b>=MAPCB+CHN){setTimeout(done,DD?150:500);return}
+ const[x0,y0]=MPOS(a),[x1,y1]=MPOS(b),t0=performance.now(),D=DD||1500,sh=svg.getBoundingClientRect().height/MAPH;
  const step=now=>{const t=Math.min(1,(now-t0)/D),e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,x=x0+(x1-x0)*e,y=y0+(y1-y0)*e-Math.sin(Math.PI*t)*26;
   g.setAttribute('transform',`translate(${x},${y-46})`);sc.scrollTop=Math.max(0,(y-46)*sh-sc.clientHeight/2);if(t<1)requestAnimationFrame(step);else{sfx('win');done()}};requestAnimationFrame(step)}
 function towerResult(from,win,msg,rs,next){const k=TK,to=S.tw[k].f;MAPK=k;MAPSEL=to;MAPRES={msg,rs,next,ready:false};
@@ -819,7 +819,8 @@ $('tmap').onclick=e=>{if(AUTOC){const z=e.target.closest('[data-a]');if(z&&(z.da
 const m=e.target.closest('[data-m]');if(m){if(MAPRES)return;MAPK=m.dataset.m;const tw=S.tw[MAPK];MAPSEL=tw.done?NF-1:tw.f;renderMap();return}
  const n=e.target.closest('.mn');if(n&&MAPRES){if(MAPRES.ready&&+n.dataset.f===S.tw[MAPK].f){$('tmap').classList.remove('on');MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}return}
  if(n){MAPSEL=+n.dataset.f;const sc=$('tmS'),y=sc.scrollTop;renderMap(true);$('tmS').scrollTop=y;return}
- const a=e.target.closest('[data-a]');if(!a)return;if(a.dataset.a==='x'){$('tmap').classList.remove('on');if(MAPRES){MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}}
+ const a=e.target.closest('[data-a]');if(!a)return;if(a.dataset.a==='cp'||a.dataset.a==='cn'){if(MAPRES)return;const tw=S.tw[MAPK],cur=tw.done?NF-1:tw.f,nb=Math.max(0,Math.min(NF-1,MAPCB+(a.dataset.a==='cn'?CHN:-CHN)));MAPSEL=Math.floor(cur/CHN)*CHN===nb?cur:nb;renderMap();return}
+ if(a.dataset.a==='x'){$('tmap').classList.remove('on');if(MAPRES){MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}}
  else if(a.dataset.a==='next'){$('tmap').classList.remove('on');MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}
  else if(a.dataset.a==='view'){$('tmap').classList.remove('on');MAPRES=null;$('tmR').style.display='none';$('mask').classList.add('on')}
  else if(a.dataset.a==='go'){$('tmap').classList.remove('on');if(!busy&&!(MODE==='tower'&&TK===MAPK))setMode('tower',MAPK)}};
@@ -859,7 +860,7 @@ function migrate(){
  if(!S.own){S.own={};STARTERS.forEach(id=>S.own[id]=1);for(const id in S.lv)if(S.lv[id].l>1||S.lv[id].e>0)S.own[id]=1}
  if(!S.v){S.cp=S.cp||{};if(S.dup){for(const id in S.dup)S.cp[id]=(S.cp[id]||0)+S.dup[id];delete S.dup}const OLD=[1,2,4,6,9,12,16,22,30,40];let ref=0;for(const id in (S.star||{})){const st=S.star[id]||0;if(st>MAXSTAR){for(let k=MAXSTAR;k<st;k++)ref+=OLD[k]*500;S.star[id]=MAXSTAR}}S.coins+=ref;S.v=2}
  if(!S.star)S.star={};if(!S.cp)S.cp={};if(S.pill===undefined)S.pill=0;if(!S.lord)S.lord={n:'',f:'',l:1,e:0};if(!S.d)S.d={day:'',pvp:0,pull:0};if(!S.tw)S.tw={};
- for(const k of ['exp','eq','gold']){if(!S.tw[k])S.tw[k]={f:0,end:false};if(!S.nf350&&S.tw[k].done&&S.tw[k].f===49){S.tw[k].done=0;S.tw[k].f=50}}S.nf350=1;saveS()}
+ for(const k of ['exp','eq','gold']){if(!S.tw[k])S.tw[k]={f:0,end:false};if(!S.nf350&&S.tw[k].done&&S.tw[k].f===49){S.tw[k].done=0;S.tw[k].f=50}}S.nf350=1;for(const k of ['exp','eq','gold']){if(!S.nf2000&&S.tw[k].done&&S.tw[k].f===349){S.tw[k].done=0;S.tw[k].f=350}}S.nf2000=1;saveS()}
 function dayCheck(){const t=today();if(S.d.day!==t){S.d={day:t,pvp:0,pull:0};for(const k in S.tw)S.tw[k].end=false;saveS()}}
 function blocked(){return false}
 const pvpLeft=()=>{dayCheck();return S.test?99:Math.max(0,PVPMAX-S.d.pvp)};
@@ -952,12 +953,20 @@ function buyItem(k){const x=SHOPI.find(i=>i.k===k);if(!x)return;dayCheck();S.d.s
  if(k==='pill1')S.pill+=1000;else if(k==='pill10')S.pill+=10000;else if(k==='pull1')S.bp=(S.bp||0)+1;else if(k==='pull10')S.bp=(S.bp||0)+10;else if(k==='wc')S.wc=(S.wc||0)+1;else if(k==='pill100')S.pill+=100000;else if(k==='wc5')S.wc=(S.wc||0)+5;else if(k==='pts10')S.pts=(S.pts||0)+10;else if(k==='lexp')msg=lordGain(200);
  else{const r=Math.random()*100,t=k==='box'?(r<50?1:r<85?2:r<98?3:4):k==='gbox'?(r<45?2:r<90?3:4):k==='sbox'?(r<50?3:r<90?4:5):(r<50?4:r<90?5:6),s=SLOTS[Math.floor(Math.random()*4)].k;S.inv.push({u:S.uid++,s,t,l:1,e:null});msg=`開出 ${TIERS[t].n}品・${INAME[s][t]}（已放入背包）`}
  saveS();toast(msg);sfx('win');renderShop();render()}
+var BSELL=1,BSC=0;
+function autoEquip(){const seen=new Set(),order=[];const add=id=>{if(id&&S.own[id]&&!seen.has(id)){seen.add(id);order.push(id)}};
+ pl.forEach(u=>u&&add(u.id));(S.dl||[]).forEach(add);H.filter(h=>S.own[h.id]).sort((a,b)=>powOf(b)-powOf(a)).forEach(h=>add(h.id));
+ let n=0;for(const id of order)for(const sl of SLOTS){const cur=S.inv.find(x=>x.e===id&&x.s===sl.k),best=S.inv.filter(x=>!x.e&&x.s===sl.k).sort((a,b)=>ibonus(b)-ibonus(a))[0];
+  if(best&&(!cur||ibonus(best)>ibonus(cur)+1e-9)){if(cur)cur.e=null;best.e=id;n++}}
+ saveS();if(!busy)refreshPl();toast(n?`一鍵裝備：更換了 ${n} 件裝備`:'目前已是最佳裝備，沒有可更換的');renderShop();render()}
 let TAB='shop';
 function renderShop(){$('shCoin').textContent='💰 '+S.coins.toLocaleString();$('tShop').classList.toggle('on',TAB==='shop');$('tBag').classList.toggle('on',TAB==='bag');let h='';
  if(TAB==='shop'){h+=`<h3>🎁 道具</h3>`+SHOPI.map(x=>{const lim=x.lim?x.lim-((S.d.sh||{})[x.k]||0):1,ok=S.coins>=x.p&&lim>0;return `<div class="it"><span class="ic" style="border-color:#ffd27a;color:#ffd27a">${x.ic}</span><div class="in"><b style="color:#ffd27a">${x.n}</b><small>${x.d}${x.lim?`（今日剩 ${lim}/${x.lim}）`:''}</small></div><button data-item2="${x.k}" ${ok?'':'disabled'}>💰${x.p.toLocaleString()}</button></div>`}).join('')+`<p class="sub">每日登錄可領 10,000 金幣、600 顆經驗丹與 4 件隨機裝備（凡 40%／良 35%／精 20%／極 5%）；對戰、經驗塔、金幣塔通關都會獲得金幣，裝備塔會掉落裝備（背包可出售多餘裝備）。${S.test?'<button id="cheat" style="padding:4px 8px;font-size:11px;margin-left:6px">測試：+50,000 金幣、+5,000 經驗丹</button>':''}</p>`;
   SLOTS.forEach(sl=>{h+=`<h3>${sl.ic} ${sl.n}（加${sl.s}）</h3>`;TIERS.forEach((tr,i)=>{h+=`<div class="it"><span class="ic" style="border-color:${tr.c};color:${tr.c}">${sl.ic}</span><div class="in"><b style="color:${tr.c}">${INAME[sl.k][i]}</b><small>${tr.n}品・${sl.s} +${pct(IBASE[sl.k][i])}（滿級 +${pct(IBASE[sl.k][i]*(1+.12*(MAXIL-1)))}）</small></div><button data-buy="${sl.k}|${i}" ${S.coins<tr.p?'disabled':''}>💰${tr.p.toLocaleString()}</button></div>`})})}
  else{const its=[...S.inv].sort((a,b)=>SLOTS.findIndex(x=>x.k===a.s)-SLOTS.findIndex(x=>x.k===b.s)||b.t-a.t||b.l-a.l);
-  if(!its.length)h+='<p class="sub">背包是空的，先到「商店」購買裝備。</p>';
+  if(!its.length)h+='<p class="sub">背包是空的，先到「商店」購買裝備。</p>';else{const sl=S.inv.filter(x=>!x.e&&x.t<=BSELL),sv=sl.reduce((a,x)=>a+sellv(x),0);
+  h+=`<div class="it" style="display:block"><b>⚡ 一鍵裝備</b><div class="sub">把沒人裝備的裝備，依強度自動換給武將（先上陣陣容，再依戰力）；被換下的舊裝備會留給下一位。</div><div class="btns" style="margin-top:4px"><button data-ae="1">一鍵裝備</button></div></div>
+  <div class="it" style="display:block"><b>🗑️ 批次出售</b><div class="sub">賣掉所有「未裝備」且品階在選定等級（含）以下的裝備。</div><div style="display:flex;gap:6px;align-items:center;margin-top:4px"><select id="bsT" style="flex:1">${TIERS.map((t,i)=>`<option value="${i}" ${i===BSELL?'selected':''}>${t.n}品（含）以下</option>`).join('')}</select><button data-bs="1" ${sl.length?'':'disabled'}>${BSC?'再按一次確認':'出售'}</button></div><div class="sub">符合 <b>${sl.length}</b> 件，可得 💰<b>${sv.toLocaleString()}</b></div></div>`}
   its.forEach(it=>{const tr=TIERS[it.t],sl=SLN(it.s),mx=it.l>=MAXIL,cost=ucost(it);
    h+=`<div class="it"><span class="ic" style="border-color:${tr.c};color:${tr.c}">${sl.ic}</span><div class="in"><b style="color:${tr.c}">${INAME[it.s][it.t]}</b> Lv${it.l}/${MAXIL}<small>${sl.s} +${pct(ibonus(it))}${mx?'':`（升級後 +${pct(ibonus({...it,l:it.l+1}))}）`}</small>
    <select data-item="${it.u}"><option value="">未裝備</option>${H.filter(x=>S.own[x.id]).map(x=>`<option value="${x.id}" ${it.e===x.id?'selected':''}>${x.n}</option>`).join('')}</select></div>
@@ -967,14 +976,16 @@ $('shBody').onclick=e=>{const b=e.target.closest('button');if(!b)return;
  if(b.dataset.item2){buyItem(b.dataset.item2);return}
  if(b.id==='cheat'){S.coins+=50000;S.pill+=5000;saveS();renderShop();render();return}
  if(b.dataset.buy){const[k,i]=b.dataset.buy.split('|'),tr=TIERS[+i];if(S.coins<tr.p)return;S.coins-=tr.p;S.inv.push({u:S.uid++,s:k,t:+i,l:1,e:null});saveS();toast(`購入 ${INAME[k][+i]}`);renderShop();render()}
+ else if(b.dataset.ae){autoEquip()}
+ else if(b.dataset.bs){if(!BSC){BSC=1;renderShop();setTimeout(()=>{if(BSC){BSC=0;renderShop()}},3000);return}BSC=0;const sl=S.inv.filter(x=>!x.e&&x.t<=BSELL);if(!sl.length)return;const sv=sl.reduce((a,x)=>a+sellv(x),0);S.coins+=sv;S.inv=S.inv.filter(x=>!sl.includes(x));saveS();toast(`已出售 ${sl.length} 件，獲得 💰${sv.toLocaleString()}`);renderShop();render()}
  else if(b.dataset.sell){const it=S.inv.find(x=>x.u===+b.dataset.sell);if(!it||it.e)return;S.coins+=sellv(it);S.inv=S.inv.filter(x=>x!==it);saveS();toast(`已出售 ${INAME[it.s][it.t]}`);renderShop();render()}
  else if(b.dataset.up){const it=S.inv.find(x=>x.u===+b.dataset.up);if(!it||it.l>=MAXIL)return;const c=ucost(it);if(S.coins<c)return;S.coins-=c;it.l++;saveS();if(!busy)refreshPl();toast(`${INAME[it.s][it.t]} 升到 Lv${it.l}`);renderShop();render()}};
-$('shBody').onchange=e=>{const s=e.target.closest('select[data-item]');if(s)equipItem(+s.dataset.item,s.value)};
+$('shBody').onchange=e=>{if(e.target.id==='bsT'){BSELL=+e.target.value;BSC=0;renderShop();return}const s=e.target.closest('select[data-item]');if(s)equipItem(+s.dataset.item,s.value)};
 $('mShop').onclick=()=>{if(busy)return;TAB='shop';renderShop();$('shop').classList.add('on')};
 $('shX').onclick=()=>$('shop').classList.remove('on');
 $('tShop').onclick=()=>{TAB='shop';renderShop()};$('tBag').onclick=()=>{TAB='bag';renderShop()};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function dropEquip(f,boss){const q=f/(NF-1),out=[],n=boss?2:1;
+function dropEquip(f,boss){const q=Math.min(1,f/349),out=[],n=boss?2:1;
  for(let i=0;i<n;i++){const e=.1+5.6*q+(i?.6:0),t=Math.max(0,Math.min(6,Math.round(e+(Math.random()+Math.random()-1)*1.2))),s=SLOTS[Math.floor(Math.random()*4)].k,it={u:S.uid++,s,t,l:1,e:null};S.inv.push(it);out.push(it)}
  return out}
 const spent=it=>{let a=0;for(let l=1;l<it.l;l++)a+=ucost({...it,l});return a},sellv=it=>Math.round(TIERS[it.t].p*.3+spent(it)*.3);
