@@ -239,10 +239,20 @@ body:not(.full) h1{font-size:17px;margin:0;letter-spacing:5px}
 body:not(.full) .ver{font-size:11px;white-space:nowrap;gap:4px;padding-right:80px}
 body:not(.full) .side{margin:3px 0;padding:4px 6px}
 body:not(.full) .synb{margin-bottom:2px}
+
+html,body{overflow-x:hidden;max-width:100%}
+body:not(.full) .ver{flex-wrap:wrap!important;white-space:normal!important;justify-content:flex-start!important;gap:1px 10px!important;padding-right:80px;font-size:11px;min-width:0}
+body:not(.full) .ver span{white-space:nowrap;min-width:0}
+#modes button,#dsel button{overflow:hidden;text-overflow:clip;min-width:0!important;padding-left:0!important;padding-right:0!important}
+#modes button{font-size:clamp(9.5px,2.9vw,12px)!important}
+#dsel button{font-size:clamp(9.5px,3vw,12px)!important}
+.stage{max-width:100%}
+.sc{min-width:0}.sbt span{white-space:nowrap}
+body:not(.full) .synb{white-space:normal;overflow:visible;line-height:1.45}body:not(.full) .synb .syc{display:inline-block;margin-bottom:1px}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028ab</span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261028ac</span></div>
 <h1>三國九宮戰</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="margin-bottom:4px"><button class="g on" id="mPvp">⚔️ 對戰</button><button class="g" id="mExp">📘 經驗塔</button><button class="g" id="mEq">🛡️ 裝備塔</button><button class="g" id="mGold">💰 金幣塔</button><button class="g" id="mGacha">🎴 抽卡</button><button class="g" id="mShop">🏪 商城</button></div>
