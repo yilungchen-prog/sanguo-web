@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>三國九宮戰</title>
+<title>墨戰三國</title>
 <style>
 :root{--bg:#1c2a2b;--panel:#2b3a38;--ink:#f3e6c4;--gold:#d9b25a;--blue:#3b82c4;--red:#c4453b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -301,12 +301,16 @@ body:not(.full) .synb{white-space:normal;overflow:visible;line-height:1.45}body:
 .cell.sgl .card{outline:2px solid #ffd27a;outline-offset:-2px;box-shadow:0 0 12px 3px #ffd27aaa}
 .cell.mkd .card{box-shadow:inset 0 0 14px 3px #9fd8ff}
 .cell.hid .card{box-shadow:0 0 14px 6px #cfd8e888}
+.qmfx{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);z-index:90;pointer-events:none;display:flex;flex-direction:column;align-items:center;padding:10px 26px;border-radius:10px;background:linear-gradient(90deg,#0000,#2a1c10ee 15%,#2a1c10ee 85%,#0000);color:#f3dfae;animation:qmin 1.3s ease forwards;text-shadow:0 2px 4px #000}
+.qmfx.e{top:24%}.qmfx.p{top:62%}.qmfx i{font-style:normal;font-size:30px}.qmfx b{font:900 24px serif;letter-spacing:6px}.qmfx small{opacity:.8}
+@keyframes qmin{0%{opacity:0;clip-path:inset(0 50% 0 50%)}20%,80%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0}}
+.cell .stx{position:absolute;left:2px;top:22%;display:flex;flex-direction:column;gap:0;font-size:calc(var(--ch,80px)*.13);z-index:7;pointer-events:none;line-height:1.05}.cell .stx i{font-style:normal;text-shadow:0 0 3px #000;color:#fff}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
 <div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><span>版本 20261029j</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
-<h1>三國九宮戰</h1>
+<h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
 <div class="btns" id="dsel" style="margin-bottom:4px"><button class="g" data-d="-1">隨機</button><button class="g" data-d="0">簡單</button><button class="g" data-d="1">普通</button><button class="g" data-d="2">困難</button><button class="g" data-d="3">地獄</button><button class="g" id="bReroll">換對手</button><button class="g" id="bFriend">👥 好友</button></div>
@@ -337,87 +341,393 @@ const ART2={"dianwei":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
 const FC={蜀:'#2f9f4f',魏:'#2fa8c9',吳:'#d0453b',神:'#e2b22e',魔:'#9a55d6',群:'#8a7a5a',魂:'#c0508a',靈:'#3a6fc4'};
 const P={single:'單體前排',pierce:'直線貫穿',sweep:'橫排掃蕩',cross:'十字爆裂',aoe:'全場群攻',heal:'全體治療',assn:'後排刺殺',xshape:'X字斬',volley:'亂箭連射',snipe:'定點狙擊',backrow:'後排轟炸'};
 const DESC={single:'衝向敵方前排，對單一目標造成重擊。',pierce:'鎖定目標所在整欄，貫穿三格。',sweep:'橫掃目標所在整排三格。',cross:'以目標為中心，十字形波及上下左右。',aoe:'敵方九格全部受到攻擊。',heal:'恢復我方全體存活單位的生命。',assn:'瞬移到敵方後排，刺殺血量最低者。',xshape:'以目標為中心，沿四個斜角呈 X 字攻擊。',volley:'連射三箭，隨機攻擊敵人（可重複命中，每箭傷害較低）。',snipe:'無視站位，狙擊全場血量最低的敵人。',backrow:'流星墜落，轟擊敵方整個後排三格。'};
-const H=[
-{id:'guan',n:'神關羽',f:'神',pat:'single',sk:'復仇之怒',hp:1050,atk:150,spd:80,m:2.4,ds:'對敵方<b>攻擊最高</b>的 1 名武將造成重擊；若目標生命高於 50%，額外造成自身最大生命 8% 的固定傷害；並釋放【創深痛巨】儲存的傷害；50% 機率施加【神・青龍印記】；隨後自身獲得【武聖庇護】。<br><b>神墜深淵</b>（天賦）：攻擊 +8%、生命 +12%、傷害減免 +6%。<br><b>灼艾分痛</b>（絕技）：每回合開始時，與我方攻擊最高的另一名武將建立【神・青龍守護】連結（1 回合，不可驅散）：被連結者傷害減免 +10%、持續傷害減免 +20%，其受到的直接傷害 40% 改由神關羽承受。<br><b>創深痛巨</b>（被動）：自身生命每降低 1%，傷害減免 +0.5%（最高 +20%）；自身受到的直接傷害（含分攤）會被儲存（上限為自身最大生命 100%），施放怒氣技能時對目標造成儲存傷害的 60%，隨後清空。<br><b>神・青龍印記</b>：下次行動被跳過，期間無法被治療，無法被驅散。<br><b>武聖庇護</b>（2 回合）：獲得自身最大生命 12% 的護盾，護盾被擊破前免疫冰凍與青龍印記等控制效果。'},
-{id:'guanyu',n:'關羽',f:'蜀',pat:'single',sk:'倚天重勢',hp:1050,atk:148,spd:82,m:2.2},
-{id:'caoren',n:'曹仁',f:'魏',pat:'single',sk:'以守為攻',hp:1150,atk:125,spd:72,m:1.8},
-{id:'liubei',n:'劉備',f:'神',pat:'single',sk:'大義天下',hp:1000,atk:135,spd:88,m:2.0},
-{id:'machao',n:'馬超',f:'神',pat:'single',sk:'裂山乘風破',hp:900,atk:145,spd:100,m:2.4,ds:'對自己正對面（同欄、由前往後第一個）的敵人造成重擊並獲得 1 層【神光】，並額外造成 每層神光×15% 攻擊的固定傷害；擊殺額外 +1 層；40% 機率獲得【極意】（本回合追擊必定連發）。<br><b>神・絕騎</b>（天賦）：攻擊 +10%、生命 +5%、傷害加成 +5%。<br><b>騰息踏空碎</b>（絕技）：每次行動結束時，對敵方攻擊最高的目標追擊一次，並分別有 50%、40%、30% 機率再次發動（最多 3 次）。<br><b>神・裂崖</b>（被動）：每次行動後（含追擊）有 40% 機率獲得 1 層【神光】（持續整場）：1 層：受到傷害 −15%；3 層：攻擊 +15%、傷害 +15%；6 層：傷害再 +25%。'},
-{id:'zhangliao',n:'張遼',f:'魏',pat:'pierce',sk:'槍圍破陣',hp:950,atk:135,spd:92,m:1.6},
-{id:'zhaoyun',n:'趙雲',f:'蜀',pat:'pierce',sk:'驚雷翔龍',hp:950,atk:135,spd:96,m:1.6},
-{id:'mayunlu',n:'馬雲祿',f:'神',pat:'single',sk:'雲影千襲',hp:880,atk:130,spd:97,m:2.8,ds:'<b>雲影千襲</b>（怒氣技能）：對敵方單體造成重擊（攻擊 280%），並為我方全體附加【鳳魄之護】。<br>【鳳魄之護】：附加馬雲祿最大生命 15% 的護盾，持續 2 回合，最多疊加 3 層，不可驅散，受傷時優先消耗；護盾被敵方武將攻擊擊破時（負面狀態傷害除外），對攻擊者造成等額傷害。<br><b>月華癒魂</b>（被動）：己方其他武將受到致命傷害時，保留 1 點生命並回復馬雲祿最大生命 50% 的血量，每回合最多觸發 1 次（馬雲祿陣亡時失效）。<br><b>雲障挽殤</b>（絕技）：我方任意武將每層【鳳魄之護】被擊破或自然消失時，回復該武將生命上限 5% ＋ 馬雲祿生命上限 5% 的血量。<br><b>驚鴻</b>（天賦）：基礎攻擊 +15%、基礎生命 +30%、傷害減免 +15%。'},
-{id:'zhangfei',n:'張飛',f:'蜀',pat:'sweep',sk:'咆哮怒吼',hp:1100,atk:115,spd:72,m:1.5},
-{id:'guojia',n:'郭嘉',f:'魏',pat:'cross',sk:'天命棋局',hp:800,atk:125,spd:84,m:1.7},
-{id:'zhangjiao',n:'張角',f:'魔',pat:'aoe',sk:'驅雷掣電',hp:900,atk:130,spd:90,m:.95,ds:'對敵方<b>全體</b>造成法術傷害，並施加【雷澤】：受到的直接傷害 +20%、速度 −10%，持續 2 回合；每個目標 50% 機率中【魔蠱】（回合結束受張角攻擊 22% 傷害，最多 3 層）。<br><b>太平之道</b>（天賦）：攻擊 +10%、生命 +5%、傷害加成 +5%。<br><b>鬼道莫測</b>（絕技）：戰鬥開始時偷取敵方攻擊最高武將 15% 的攻擊，附加給己方攻擊最高武將，持續整場；張角陣亡時效果消失。<br><b>蒼天當立</b>（被動）：釋放怒氣技能後，每個命中目標有 30% 機率從【降療】（受治療 −25%）、【攻擊降低】（攻擊 −25%）、【灼燒】、【魔蠱】中隨機施加 2 種負面效果，各持續 2 回合。'},
-{id:'zhugeliang',n:'諸葛亮',f:'蜀',pat:'cross',sk:'八卦雷霆',hp:820,atk:130,spd:86,m:1.7},
-{id:'xinxianying',n:'辛憲英',f:'魏',pat:'aoe',sk:'霜華漫天',hp:800,atk:115,spd:86,m:1.0},
-{id:'caiwenji',n:'蔡文姬',f:'神',pat:'aoe',sk:'琵琶亂音',hp:780,atk:110,spd:80,m:1.0},
-{id:'zhouyu',n:'周瑜',f:'吳',pat:'aoe',sk:'赤壁烈焰',hp:800,atk:120,spd:90,m:1.0},
-{id:'shenzhuge',n:'神諸葛',f:'神',pat:'aoe',sk:'借東風',hp:850,atk:125,spd:88,m:1.05},
-{id:'huatuo',n:'華佗',f:'神',pat:'heal',sk:'救死扶傷',hp:750,atk:60,spd:75,m:.38,ds:'<b>不進行攻擊</b>。平常行動時治療生命百分比最低的隊友；怒氣滿時為我方全體回復生命，隨機驅散全體 1 種負面效果，並為生命百分比最低的 2 名武將附加【療癒之風】（每回合結束回復 6% 生命，受到傷害 −25%，2 回合）。施放後（<b>懸壺濟世</b>）可復活 1 名陣亡的己方武將（回復 40% 生命）；若無人陣亡，則額外治療生命百分比最低者 25% 生命。<br><b>神・妙手回春</b>（天賦）：攻擊 +5%、生命 +10%、傷害減免 +5%。<br><b>神農再世</b>（被動）：自身陣亡時，復活我方所有陣亡武將並回復 35% 生命，每場一次。'},
-{id:'zhenmi',n:'甄宓',f:'魏',pat:'heal',sk:'洛神清歌',hp:760,atk:65,spd:77,m:.4},
-{id:'daqiao',n:'大喬',f:'吳',pat:'heal',sk:'國色天香',hp:760,atk:60,spd:76,m:.4},
-{id:'bulianshi',n:'步練師',f:'魔',pat:'heal',sk:'安魂渡厄',hp:780,atk:100,spd:78,m:.3,ds:'依全隊狀態二選一：<b>我方全體目前生命 ≤ 50% 總生命</b>時，為我方全體回復生命並附加【撫愉】（傷害減免 +15%，2 回合）；否則對敵方全體造成法術傷害，附加【傾折】（傷害減免 −15%，2 回合），每個目標 40% 機率中【魔蠱】。<br><b>淑懿</b>（天賦）：攻擊 +5%、生命 +10%、傷害減免 +5%。<br><b>苦痛轉贈</b>（絕技）：個人回合結束時，50% 機率將己方隨機 3 名武將身上各 1 種負面狀態（灼燒／魔蠱／攻擊降低／降療），一對一轉移給敵方 3 名武將。<br><b>回魂</b>（被動）：釋放怒氣技能後，為我方攻擊最高與生命百分比最低的武將附加【回魂】：2 回合內死亡時立即復活並回復 30% 最大生命。'},
-{id:'dianwei',n:'典韋',f:'魔',pat:'pierce',sk:'強戟聚魂',hp:920,atk:112,spd:80,m:1.5,ds:'對敵方<b>縱排</b>造成物理傷害，每個目標 50% 機率中【嘲諷】（1 回合內被迫普攻典韋）、40% 機率中【魔蠱】；施放後依命中數回復自身每人 5% 最大生命。<br><b>惡來降世</b>（天賦）：攻擊 +5%、生命 +10%、傷害減免 +5%。<br><b>人戟合一</b>（絕技）：每回合開始時，與敵方攻擊最高的武將【惡來】連結：1 回合內典韋每次受到直接傷害，其中 40% 轉移給該目標（不超過典韋最大生命的 25%）。<br><b>骨戟無雙</b>（被動）：受到敵方攻擊時，必定獲得 1 層【魔魁】（傷害減免 +4%，最多 5 層，持續整場），並有 30% 機率對攻擊者施加【嘲諷】。'},
-{id:'lvlingqi',n:'呂玲綺',f:'魔',pat:'single',sk:'殤緣',hp:860,atk:130,spd:98,m:2.4,ds:'對敵方生命值最低的目標造成重擊，並額外造成目標已損失生命 20% 的固定傷害（不超過自身攻擊的 150%），附加【斬殺】（2 回合：目標生命低於 25% 且剩餘生命不超過自身攻擊 300% 時直接斬殺）；擊殺目標後偷取其 25% 攻擊，持續 2 回合。<br><b>修羅之裔</b>（天賦）：攻擊 +10%、生命 +5%、傷害加成 +5%。<br><b>死亡烙印</b>（絕技）：每回合開始時，對敵方攻擊最高的武將施加【死亡印記】（受到傷害 +25%，2 回合）。<br><b>方天再臨</b>（被動）：攜帶死亡印記的目標死亡後，為己方全體回復呂玲綺攻擊 100% 的生命，並追擊生命百分比最低的敵人（原傷害的 40%，每回合最多 1 次）。'},
-{id:'lubu',n:'呂布',f:'魔',pat:'aoe',sk:'魔神降臨',hp:880,atk:140,spd:100,m:2.6,ds:'對敵方<b>全體</b>造成巨量傷害，總傷害由命中的所有目標均攤（單一目標最多承受 190% 攻擊，目標越少越痛）；對非魔陣營的目標額外造成 30% 攻擊的固定傷害；每個目標 25% 機率中【魔蠱】。<br><b>魔裔</b>（天賦）：攻擊 +8%、生命 +5%、傷害加成 +3%。<br><b>屠神戮鬼</b>（絕技）：隊友行動時（除自身外），呂布有 50% 機率獲得 1 層【戰魔】（傷害 +1.5%，最多 10 層，持續整場）；疊滿 10 層時進入【戰魔降世】並獲得 2 回合【負面免疫】；若已處於戰魔降世，則改為回復自身 20% 生命（每場一次）。<br><b>戰魔</b>（被動）：生命低於 30% 時（每場一次）清除所有負面狀態並回復 25% 生命，隨後進入【戰魔降世】並獲得 2 回合【負面免疫】。<br><b>戰魔降世</b>（3 回合）：攻擊 +12%，我方場上每有 1 名其他魔陣營武將，傷害再 +5%；技能單一目標承受上限提高、魔蠱機率提高至 45%，並額外有 25% 機率令目標【禁止復活】3 回合（無法被復活）。'},
-{id:'diaochan',n:'貂蟬',f:'神',pat:'heal',sk:'魅惑',hp:700,atk:70,spd:98,m:1,ds:'<b>魅惑</b>（怒氣技能）：復活我方 1 名陣亡武將，並為其回復貂蟬攻擊 300% 的生命；若無可復活武將，則為我方生命最低的 1 名武將回復貂蟬攻擊 350% 的生命。同時為該武將附加【月幕】（吸收貂蟬攻擊 100% 的傷害，2 回合）與【傾城】，並隨機驅散 1 種減益狀態。<br><b>閉月</b>（被動）：個人回合結束時，為我方生命百分比最低的 2 名武將回復貂蟬攻擊 150% 的生命。<br><b>傾城</b>（絕技）：戰鬥開始時，提升我方攻擊最高的武將 25% 生命上限（整場戰鬥），並附加【傾城】。<br><b>蝶月之姿</b>（天賦）：基礎攻擊 +15%、基礎生命 +30%、傷害減免 +15%。<br>【傾城】：傷害減免提升 25%，受到的治療效果提升 15%，持續 2 回合。'},
-{id:'zhangchunhua',n:'張春華',f:'魔',pat:'assn',sk:'月影絕息',hp:720,atk:150,spd:102,m:2.5,ds:'對敵方生命百分比最低的目標造成重擊，目標生命每減少 10% 傷害 +5%（最多 +25%），目標身上每有 1 個負面效果再 +5%（最多 +20%）；施放後獲得【隱匿】2 回合：無法被敵方單體技能選中（場上只剩她時失效），受群體傷害 −25%。<br><b>絕情</b>（天賦）：攻擊 +10%、生命 +5%、傷害加成 +5%。<br><b>刺頸暗襲</b>（絕技）：每次行動前，標記敵方攻擊最高的武將【月華標記】；怒氣技能傷害的 25% 會濺射給被標記者；被標記者被濺射擊殺時，50% 機率令其【禁止復活】，並重新標記新目標。<br><b>殤逝</b>（被動）：每次攻擊後，對目標追加（5% ＋ 目標負面數×1.5%）最大生命的固定傷害（最多不超過自身攻擊的 70%）。'},
-{id:'zhangxingcai',n:'張星彩',f:'蜀',pat:'xshape',sk:'星芒十字斬',hp:880,atk:125,spd:93,m:1.5},
-{id:'sunce',n:'孫策',f:'吳',pat:'xshape',sk:'霸王裂地',hp:1000,atk:135,spd:89,m:1.5},
-{id:'yuanshao',n:'袁紹',f:'神',pat:'volley',sk:'箭如雨下',hp:1000,atk:120,spd:85,m:1.8},
-{id:'sunshangxiang',n:'孫尚香',f:'吳',pat:'volley',sk:'連弩亂射',hp:800,atk:130,spd:94,m:1.8},
-{id:'taishici',n:'太史慈',f:'吳',pat:'snipe',sk:'神射奪命',hp:820,atk:140,spd:91,m:2.0},
-{id:'xiaoqiao',n:'小喬',f:'吳',pat:'backrow',sk:'流星墜落',hp:780,atk:115,spd:88,m:1.4},
-{id:'wuyue',n:'吳兵',f:'吳',pat:'volley',sk:'流矢亂舞',hp:880,atk:122,spd:89,m:1.7},
-{id:'lvfan',n:'呂範',f:'吳',pat:'single',sk:'籌算奇謀',hp:840,atk:122,spd:88,m:1.8},
-{id:'lingtong',n:'凌統',f:'吳',pat:'single',sk:'鎖鏈穿心',hp:920,atk:132,spd:94,m:1.9},
-{id:'xusheng',n:'徐盛',f:'吳',pat:'sweep',sk:'斷江烈刃',hp:1000,atk:126,spd:86,m:1.5},
-{id:'chengpu',n:'程普',f:'吳',pat:'single',sk:'烈火矛陣',hp:1100,atk:126,spd:78,m:1.9},
-{id:'zhangzhao',n:'張昭',f:'吳',pat:'snipe',sk:'老謀深算',hp:780,atk:124,spd:80,m:2.0},
-{id:'guyong',n:'顧雍',f:'吳',pat:'cross',sk:'簡牘驅邪',hp:860,atk:118,spd:80,m:1.7},
-{id:'shuyue',n:'蜀兵',f:'蜀',pat:'single',sk:'長槍突刺',hp:1000,atk:128,spd:84,m:1.9},
-{id:'zhangsong',n:'張松',f:'蜀',pat:'aoe',sk:'過目不忘',hp:780,atk:112,spd:85,m:1.0},
-{id:'madai',n:'馬岱',f:'蜀',pat:'sweep',sk:'追風斬',hp:930,atk:128,spd:95,m:1.5},
-{id:'zhoucang',n:'周倉',f:'蜀',pat:'sweep',sk:'巨刃橫掃',hp:1080,atk:118,spd:76,m:1.5},
-{id:'maliang',n:'馬良',f:'蜀',pat:'heal',sk:'白眉妙手',hp:760,atk:62,spd:78,m:0.4},
-{id:'jianyong',n:'簡雍',f:'蜀',pat:'aoe',sk:'談笑風生',hp:800,atk:116,spd:84,m:1.0},
-{id:'liaohua',n:'廖化',f:'蜀',pat:'pierce',sk:'先鋒破甲',hp:980,atk:124,spd:88,m:1.6},
-{id:'weiyue',n:'魏兵',f:'魏',pat:'single',sk:'盾牆堅守',hp:1120,atk:108,spd:72,m:1.7},
-{id:'chenqun',n:'陳群',f:'魏',pat:'cross',sk:'九品鞭策',hp:880,atk:120,spd:82,m:1.7},
-{id:'yuejin',n:'樂進',f:'魏',pat:'sweep',sk:'陷陣雙錘',hp:1050,atk:120,spd:82,m:1.5},
-{id:'caoxiu',n:'曹休',f:'魏',pat:'single',sk:'千里駒影',hp:960,atk:134,spd:90,m:1.9},
-{id:'yangxiu',n:'楊修',f:'魏',pat:'snipe',sk:'雞肋妙算',hp:790,atk:126,spd:87,m:2.0},
-{id:'xunyou',n:'荀攸',f:'魏',pat:'single',sk:'奇謀百出',hp:820,atk:126,spd:86,m:1.9},
-{id:'menghuo',n:'孟獲',f:'神',pat:'sweep',sk:'蠻王震地',hp:1150,atk:124,spd:78,m:1.5},
-{id:'pangde',n:'龐德',f:'神',pat:'single',sk:'抬棺死戰',hp:1020,atk:132,spd:84,m:1.9},
-{id:'yuanshu',n:'袁術',f:'魔',pat:'cross',sk:'傳國玉璽',hp:840,atk:118,spd:80,m:1.7},
-{id:'tianfeng',n:'田豐',f:'魔',pat:'backrow',sk:'鎖鏈神算',hp:800,atk:116,spd:82,m:1.4},
-{id:'xuchu',n:'許褚',f:'魏',pat:'sweep',sk:'虎痴裂地',hp:1150,atk:128,spd:80,m:1.5},
-{id:'xiahouyuan',n:'夏侯淵',f:'魏',pat:'volley',sk:'神速連弩',hp:900,atk:132,spd:96,m:1.8},
-{id:'xushu',n:'徐庶',f:'蜀',pat:'snipe',sk:'破陣妙算',hp:820,atk:124,spd:90,m:2.0},
-{id:'guanping',n:'關平',f:'蜀',pat:'single',sk:'龍膽追擊',hp:960,atk:134,spd:92,m:1.9},
-{id:'zhoutai',n:'周泰',f:'吳',pat:'pierce',sk:'捨身護主',hp:1080,atk:126,spd:86,m:1.6},
-{id:'zhugejin',n:'諸葛瑾',f:'吳',pat:'aoe',sk:'儒雅調和',hp:800,atk:112,spd:84,m:1.0},
-{id:'mateng',n:'馬騰',f:'神',pat:'pierce',sk:'西涼鐵騎',hp:950,atk:130,spd:90,m:1.6},
-{id:'taoqian',n:'陶謙',f:'神',pat:'single',sk:'三讓徐州',hp:920,atk:118,spd:82,m:1.9},
-{id:'jushou',n:'沮授',f:'神',pat:'cross',sk:'觀星謀略',hp:850,atk:118,spd:80,m:1.7},
-{id:'panfeng',n:'潘鳳',f:'魔',pat:'sweep',sk:'無雙巨斧',hp:1060,atk:128,spd:78,m:1.5},
-{id:'zhangbao',n:'張寶',f:'魔',pat:'snipe',sk:'地公妖術',hp:800,atk:126,spd:88,m:2.0},
-{id:'guosi',n:'郭汜',f:'魔',pat:'single',sk:'涼州狂刀',hp:1000,atk:128,spd:84,m:1.9},
-{id:'xuhuang',n:'徐晃',f:'魏',pat:'single',sk:'長驅直入',hp:1020,atk:130,spd:86,m:1.9}];
-const QMAP={"guan": 99, "guanyu": 92, "caoren": 91, "liubei": 95, "machao": 99, "zhangliao": 92, "zhaoyun": 92, "mayunlu": 99, "zhangfei": 92, "guojia": 92, "zhangjiao": 99, "zhugeliang": 91, "xinxianying": 92, "caiwenji": 93, "zhouyu": 92, "shenzhuge": 95, "huatuo": 99, "zhenmi": 91, "daqiao": 92, "bulianshi": 95, "lubu": 99,"dianwei": 93,"lvlingqi": 93, "diaochan": 93, "zhangchunhua": 99, "zhangxingcai": 91, "sunce": 91, "yuanshao": 93, "sunshangxiang": 92, "taishici": 91, "xiaoqiao": 89, "wuyue": 55, "lvfan": 60, "lingtong": 65, "xusheng": 65, "chengpu": 75, "zhangzhao": 75, "guyong": 75, "shuyue": 55, "zhangsong": 60, "madai": 65, "zhoucang": 65, "maliang": 75, "jianyong": 75, "liaohua": 75, "weiyue": 55, "chenqun": 60, "yuejin": 65, "caoxiu": 65, "yangxiu": 75, "xunyou": 75,"menghuo":83,"pangde":83,"yuanshu":83,"tianfeng":83,"xuchu":83,"xiahouyuan":83,"xushu":83,"guanping":83,"zhoutai":83,"zhugejin":83,"mateng":75,"taoqian":75,"jushou":75,"panfeng":75,"zhangbao":75,"guosi":75,"xuhuang":75};H.forEach(h=>h.q=QMAP[h.id]);
-const JOBOF={"dianwei":"坦克","lvlingqi":"戰士","guan": "坦克", "caoren": "坦克", "zhangfei": "坦克", "zhoucang": "坦克", "weiyue": "坦克", "xuchu": "坦克", "menghuo": "坦克", "chengpu": "坦克", "yuejin": "坦克", "xusheng": "坦克", "taoqian": "坦克", "zhoutai": "坦克", "huatuo": "輔助", "zhenmi": "輔助", "daqiao": "輔助", "bulianshi": "輔助", "maliang": "輔助", "jianyong": "輔助", "zhangzhao": "輔助", "guyong": "輔助", "chenqun": "輔助", "jushou": "輔助", "zhangsong": "輔助", "zhugejin": "輔助", "tianfeng": "輔助", "caiwenji": "輔助", "yuanshu": "輔助", "guojia": "法師", "zhangjiao": "法師", "zhugeliang": "法師", "xinxianying": "法師", "zhouyu": "法師", "shenzhuge": "法師", "xiaoqiao": "法師", "xunyou": "法師", "yangxiu": "法師", "xushu": "法師", "zhangbao": "法師", "guanyu": "戰士", "liubei": "戰士", "machao": "戰士", "zhangliao": "戰士", "zhaoyun": "戰士", "mayunlu": "戰士", "lubu": "戰士", "diaochan": "輔助", "zhangchunhua": "戰士", "zhangxingcai": "戰士", "sunce": "戰士", "yuanshao": "戰士", "sunshangxiang": "戰士", "taishici": "戰士", "wuyue": "戰士", "lvfan": "戰士", "lingtong": "戰士", "shuyue": "戰士", "madai": "戰士", "liaohua": "戰士", "caoxiu": "戰士", "xiahouyuan": "戰士", "guanping": "戰士", "mateng": "戰士", "pangde": "戰士", "guosi": "戰士", "xuhuang": "戰士", "panfeng": "戰士"};H.forEach(h=>h.job=JOBOF[h.id]);
+/* ===================== 武將資料（75 位，五國各 15） ===================== */
+const JT={戰士:{hp:900,atk:135,spd:92},坦克:{hp:1150,atk:112,spd:78},法師:{hp:820,atk:130,spd:87},輔助:{hp:860,atk:118,spd:84}};
+const HD=[
+// id,名,陣營,資質,職業,範圍,怒氣技名,速度修正
+['liubei','劉備','蜀',95,'輔助','heal','仁德天下',0],['machao','馬超','蜀',95,'戰士','single','裂山乘風破',8],['mayunlu','馬雲祿','蜀',95,'戰士','single','雲影千襲',5],
+['guanyu','關羽','蜀',92,'戰士','single','青龍嘯天',0],['zhaoyun','趙雲','蜀',92,'戰士','single','絕槍嘶鳴',4],['zhangfei','張飛','蜀',92,'坦克','sweep','長坂斷喝',0],
+['zhugeliang','諸葛亮','蜀',91,'輔助','heal','星途莫測',2],['zhangxingcai','張星彩','蜀',91,'戰士','xshape','槍舞如花',2],['xushu','徐庶','蜀',89,'法師','snipe','破八門金鎖',3],
+['guanping','關平','蜀',83,'戰士','single','赤心刀',0],['liaohua','廖化','蜀',83,'戰士','pierce','先鋒破陣',-4],['maliang','馬良','蜀',75,'輔助','heal','妙計安民',0],
+['jianyong','簡雍','蜀',75,'輔助','aoe','說降',0],['madai','馬岱','蜀',65,'戰士','sweep','孰敢殺我',3],['zhoucang','周倉','蜀',65,'坦克','single','扛刀護主',0],
+['caocao','曹操','魏',95,'戰士','aoe','天下歸心',0],['simayi','司馬懿','魏',95,'法師','aoe','狼顧天下',0],['xiahoudun','夏侯惇','魏',95,'坦克','sweep','獨眼怒斬',2],
+['zhangliao','張遼','魏',92,'戰士','pierce','八百破十萬',8],['guojia','郭嘉','魏',92,'法師','aoe','天妒',0],['xinxianying','辛憲英','魏',92,'法師','aoe','洞悉先機',0],
+['caoren','曹仁','魏',91,'坦克','single','八門金鎖',0],['zhenmi','甄宓','魏',91,'輔助','heal','洛水寒波',2],['xuchu','許褚','魏',89,'坦克','sweep','虎衛斬',0],
+['xiahouyuan','夏侯淵','魏',83,'戰士','volley','三日五百',10],['xuhuang','徐晃','魏',83,'戰士','single','大斧破圍',0],['yangxiu','楊修','魏',75,'法師','snipe','才高八斗',0],
+['xunyou','荀攸','魏',75,'法師','cross','奇策十二',0],['yuejin','樂進','魏',65,'戰士','single','先登',2],['caoxiu','曹休','魏',65,'戰士','single','虎豹騎',2],
+['sunquan','孫權','吳',95,'輔助','aoe','江東之主',2],['luxun','陸遜','吳',95,'法師','aoe','夷陵烈焰',3],['ganning','甘寧','吳',95,'戰士','assn','錦帆夜襲',10],
+['zhouyu','周瑜','吳',92,'法師','aoe','赤壁業火',3],['daqiao','大喬','吳',92,'輔助','heal','流離',0],['sunshangxiang','孫尚香','吳',92,'戰士','volley','結姻連弩',5],
+['sunce','孫策','吳',91,'戰士','xshape','霸王衝陣',0],['taishici','太史慈','吳',91,'戰士','snipe','篤烈箭',2],['xiaoqiao','小喬','吳',89,'法師','backrow','琴音業火',3],
+['zhoutai','周泰','吳',83,'坦克','pierce','奮身護主',0],['zhugejin','諸葛瑾','吳',83,'輔助','aoe','明哲保身',0],['zhangzhao','張昭','吳',75,'輔助','snipe','伏論',-2],
+['chengpu','程普','吳',75,'坦克','single','鐵脊蛇矛',0],['lingtong','凌統','吳',65,'戰士','single','國士',4],['xusheng','徐盛','吳',65,'坦克','sweep','疑城',0],
+['guan','神關羽','神',95,'坦克','single','青龍偃月',0],['huatuo','華佗','神',95,'輔助','heal','青囊妙手',-4],['shenzhuge','神諸葛','神',95,'法師','aoe','觀星喚雨',0],
+['caiwenji','蔡文姬','神',93,'法師','aoe','斷律續愁',0],['diaochan','貂蟬','神',93,'輔助','heal','魅惑',12],['yuanshao','袁紹','神',93,'戰士','aoe','劍如雨下',-4],
+['zuoci','左慈','神',91,'法師','aoe','幻術・百鳥',2],['menghuo','孟獲','神',89,'坦克','sweep','象兵衝鋒',0],['zhurong','祝融','神',89,'戰士','volley','烈焰飛刀',4],
+['pangde','龐德','神',83,'戰士','single','死戰',0],['jushou','沮授','神',83,'輔助','cross','直言',0],['mateng','馬騰','神',75,'戰士','pierce','西涼鐵騎',2],
+['taoqian','陶謙','神',75,'坦克','single','徐州牧',0],['guanlu','管輅','神',65,'法師','snipe','卜卦',0],['yuji','于吉','神',65,'輔助','heal','太平符水',0],
+['lubu','呂布','魔',95,'戰士','aoe','魔神降臨',6],['zhangchunhua','張春華','魔',95,'戰士','assn','冷月斷魂',10],['bulianshi','步練師','魔',95,'輔助','heal','安魂渡厄',0],
+['zhangjiao','張角','魔',93,'法師','aoe','天雷・黃天當立',0],['dianwei','典韋','魔',93,'坦克','pierce','雙戟衛主',0],['lvlingqi','呂玲綺','魔',93,'戰士','single','天戒破陣',6],
+['dongzhuo','董卓','魔',91,'坦克','sweep','焚洛陽',-6],['liru','李儒','魔',89,'法師','cross','毒酒',0],['zhangbao','張寶','魔',89,'法師','snipe','飛砂落石',0],
+['yuanshu','袁術','魔',83,'輔助','cross','傳國玉璽',0],['tianfeng','田豐','魔',83,'輔助','backrow','死諫',0],['guosi','郭汜','魔',75,'戰士','single','劫掠長安',0],
+['panfeng','潘鳳','魔',75,'戰士','sweep','開山大斧',-4],['zhangliang','張梁','魔',65,'坦克','single','人公將軍',0],['lijue','李傕','魔',65,'戰士','single','西涼亂軍',0]];
+const H=HD.map(([id,n,f,q,job,pat,sk,sp])=>{const t=JT[job];return{id,n,f,q,job,pat,sk,hp:t.hp,atk:t.atk,spd:t.spd+(sp||0),m:1}});
+const QMAP={};H.forEach(h=>QMAP[h.id]=h.q);const JOBOF={};H.forEach(h=>JOBOF[h.id]=h.job);
+const REMOVED=['zhangsong','chenqun','guyong','lvfan','shuyue','weiyue','wuyue'];
+/* ===================== 技能 ===================== */
+const isFront=(u)=>{const a=sideOf(u),i=a.indexOf(u);return a===pl?i<3:i>=6};
+const sideHas=(u,id)=>allyA(u).some(x=>x.id===id&&x!==u);
+const cc=(u,p)=>Math.random()<p+(u.X.ctlB||0);
+const lostTen=t=>Math.floor((1-t.hp/t.mhp)*10);
+function lbEnter(u){if(has(u,'zt'))return false;const k=otK(u);addSt(u,'zt',{t:3,v:.12},u);addSt(u,'imm',{t:2},u);u.X.ztA=Math.round(u.atk*.12*k);u.atk+=u.X.ztA;SPA.lubuRage(cellOf(u));return true}
+function lbLeave(u){u.atk=Math.max(1,u.atk-(u.X.ztA||0));u.X.ztA=0;upd(u)}
+async function dandao(g,t){if(!t||t.hp<=0||g.hp<=0)return;g.X.r.dd=(g.X.r.dd||0)+1;await chase(g,t,.3,{txt:'單刀直入',fix:atkOf(g)*.2*otK(g)});
+ const gp=allyA(g).find(x=>x.id==='guanping');if(gp&&hasSk(gp,'ps')&&t.hp>0&&Math.random()<.5*otK(gp)+(bondOn(gp,'gj')?.2:0))await chase(gp,t,.3,{txt:'隨父征戰'})}
+async function guojiaUlt(u,X,pw){const k=pw||1;await ultHit(u,X,{m:1.05*k,each:async t=>{if(t.hp<=0)return;if(cc(u,.3*k))addSt(t,'fz',{t:1,v:.12},u);if(Math.random()<.5*k)addSt(t,'hs',{t:2},u)}})}
+const SK={
+/* ---------- 蜀 ---------- */
+liubei:{tal:'sup',tn:'仁君',ex:['攜民渡江','隊友陣亡時，立刻為其他隊友回復劉備攻擊 80% 的生命，每回合 1 次。'],ps:['漢室宗親','開場我方全體 +30 怒氣，蜀國武將再 +10。'],rg:['仁德天下','我方全體回復攻擊 150% 的生命，各驅散 1 個控制效果，並使攻擊最高的 2 名隊友 +50 怒氣。'],
+ allyDie(u){if(u.X.r.xm)return;u.X.r.xm=1;allyA(u).forEach(a=>heal(u,a,atkOf(u)*.8*otK(u)*u.m))},
+ start(u){allyA(u).forEach(a=>addRage(a,(30+(a.f==='蜀'?10:0))*otK(u)))},
+ async ult(u,X){await ultHeal(u,X,{m:1.5,each:a=>{if(isCtl(a))dispel(a,1,true)}});byHiAtk(allyA(u).filter(a=>a!==u)).slice(0,2).forEach(a=>{addRage(a,50);LBL(a,'怒氣 +50','fx-h','g')})}},
+machao:{tal:'atk',tn:'錦馬超',ex:['西涼鐵騎','每次行動後追擊敵方攻擊最高者，50%／40% 機率連續追擊（最多 3 次）；【極意】時必定連續。'],ps:['神光','行動後 40% 機率、擊殺時必定獲得 1 層神光：1 層受傷 −15%；3 層攻擊、傷害各 +15%；6 層傷害再 +25%。'],rg:['裂山乘風破','重擊正對面的敵人（攻擊 260%），獲得 1 層神光，並依神光層數追加每層 15% 攻擊的固定傷害；40% 機率獲得【極意】。'],
+ sg(u,n){for(let i=0;i<n;i++){u.X.sg=(u.X.sg||0)+1;if(u.X.sg===3){u.atk=Math.round(u.atk*1.15);u.X.sgDb=(u.X.sgDb||0)+.15}if(u.X.sg===6)u.X.sgDb=(u.X.sgDb||0)+.25}LBL(u,'神光×'+u.X.sg,'fx-a');upd(u)},
+ takeMod(u){return u.X.sg?1-.15*otK(u):1},kill(u){if(hasSk(u,'ps'))SK.machao.sg(u,1)},
+ async after(u,X){if(hasSk(u,'ps')&&chance(u,.4))SK.machao.sg(u,1);if(!hasSk(u,'ex'))return;const pr=[.4,.3].map(p=>u.X.jy?1:p*otK(u)+.1);let n=0;
+  for(;;){const t=byHiAtk(vis(foeA(u)))[0];if(!t||u.hp<=0)break;SPA.machaoChase(cellOf(u),t);await chase(u,t,.3);if(n>=2||Math.random()>=pr[n])break;n++}u.X.jy=0},
+ async ult(u,X){await ultHit(u,X,{m:2.6,tgt:'facing',anim:t=>SPA.machao(X.c,t),each:async t=>{SK.machao.sg(u,1);if(t.hp>0)await hit(u,t,0,{fix:atkOf(u)*.15*u.X.sg*rgK(u),fx:'fx-t',noTrig:1});if(Math.random()<.4){u.X.jy=1;LBL(u,'極意','fx-c')}}})}},
+mayunlu:{tal:'def',tn:'巾幗英姿',ex:['月華癒魂','隊友受到致命傷害時保留 1 點生命，並回復馬雲祿最大生命 50% 的血量，每回合 1 次。'],ps:['雲障挽殤','鳳魄之護被擊破或到期時，回復持有者 5% 生命＋馬雲祿最大生命 5%；被敵人擊破時對攻擊者反震馬雲祿最大生命 15% 的傷害。'],rg:['雲影千襲','重擊敵方前排單體（攻擊 280%），並為我方全體附加【鳳魄之護】：馬雲祿最大生命 15% 的護盾，2 回合，最多 3 層。'],
+ allySave(u,t){if(!hasSk(u,'ex')||u.X.r.yh||t===u)return false;u.X.r.yh=1;FUQ.push(async()=>{heal(u,t,u.mhp*.5*otK(u),{nob:1});SPA.moon(t);LBL(t,'月華癒魂','fx-h','g')});return true},
+ async ult(u,X){await ultHit(u,X,{m:2.8,anim:t=>SPA.mayunlu(X.c,t)});SPA.phoenix(X.c,allyA(u));await spw(400);allyA(u).forEach(a=>addShield(a,u.mhp*.15*rgK(u),2,'fp',u))}},
+guanyu:{tal:'atk',tn:'武聖',ex:['單刀直入','隊友行動後 45% 機率跟著攻擊同一目標（攻擊 30% ＋ 20% 固定傷害），每回合最多 2 次。'],ps:['武神','每次造成傷害獲得 1 層【青龍之勢】（攻擊、暴擊各 +3%，最多 10 層，持續整場）。'],rg:['青龍嘯天','攻擊生命百分比最低的敵人（攻擊 280%）；打完低於 50% 時觸發單刀直入；擊殺時回復 25% 生命並再放一次 40% 威力的怒氣技能（每回合 1 次）。'],
+ deal(u){if(hasSk(u,'ps')&&(u.X.qlz||0)<10&&chance(u,1))u.X.qlz=(u.X.qlz||0)+1},
+ async allyAct(u,a){if(!hasSk(u,'ex')||(u.X.r.dd||0)>=2||u.hp<=0)return;const t=a.X.lt;if(t&&t.hp>0&&sideOf(t)!==sideOf(u)&&chance(u,.45))FUQ.push(()=>dandao(u,t))},
+ async ult(u,X,pw){await ultHit(u,X,{m:2.8*(pw||1),tgt:'lowPct',each:async t=>{if(t.hp>0&&t.hp<t.mhp*.5&&hasSk(u,'ex'))FUQ.push(()=>dandao(u,t));
+  if(t.hp<=0){heal(u,u,u.mhp*.25*rgK(u),{nob:1});if(!pw&&!u.X.r.qx){u.X.r.qx=1;FUQ.push(async()=>{if(foeA(u).length){LBL(u,'青龍再嘯','fx-c');await SK.guanyu.ult(u,{...X,c:cellOf(u)},.4)}})}}}})}},
+zhaoyun:{tal:'atk',tn:'常勝',ex:['龍魂','敵人陣亡時追擊生命百分比最低的敵人（攻擊 70%），每回合最多 3 次。'],ps:['龍膽','自己回合結束時追擊生命百分比最低的敵人（攻擊 50%），並附加【破綻】（受傷 +12%，2 回合）。'],rg:['絕槍嘶鳴','優先攻擊帶破綻的敵人，否則攻擊生命最低者（攻擊 280%），暴擊傷害 +25%，再追加目標已損失生命 35% 的固定傷害（上限攻擊 250%）。'],
+ foeDie(u){if(!hasSk(u,'ex')||(u.X.r.lh||0)>=3)return;u.X.r.lh=(u.X.r.lh||0)+1;FUQ.push(async()=>{const t=byLowPct(vis(foeA(u)))[0];if(t)await chase(u,t,.5*otK(u),{txt:'龍魂'})})},
+ async after(u){if(!hasSk(u,'ps'))return;const t=byLowPct(vis(foeA(u)))[0];if(!t)return;await chase(u,t,.35*otK(u),{txt:'龍膽'});if(t.hp>0)addSt(t,'pz',{t:2},u)},
+ async ult(u,X){u.cdb=.25*rgK(u);await ultHit(u,X,{m:2.8,tgt:f=>f.find(x=>has(x,'pz'))||byLowPct(f)[0],each:async t=>{if(t.hp>0)await hit(u,t,0,{fix:Math.min((t.mhp-t.hp)*.35,atkOf(u)*2.5)*rgK(u),fx:'fx-t',noTrig:1})}});u.cdb=0}},
+zhangfei:{tal:'def',tn:'燕人',ex:['據水斷橋','生命首次低於 50% 時，獲得 25% 生命的護盾，並嘲諷敵方全體 1 次行動。'],ps:['萬人敵','受到攻擊時 30% 機率反擊（攻擊 50%）。'],rg:['長坂斷喝','攻擊敵方一整排（攻擊 150%），40% 機率【恫嚇】，並嘲諷被命中者。'],
+ lowHp(u){if(!hasSk(u,'ex')||u.X.jsd||u.hp>=u.mhp*.5)return;u.X.jsd=1;addShield(u,u.mhp*.25*otK(u),3,'',u);LBL(u,'據水斷橋','fx-c');foeA(u).forEach(e=>addSt(e,'tf',{t:1},u))},
+ async hurt(u,s){if(hasSk(u,'ps')&&s.hp>0&&chance(u,.3)&&!u.X.r.wr){u.X.r.wr=(u.X.r.wr||0);if(u.X.r.wr<2){u.X.r.wr++;FUQ.push(()=>chase(u,s,.5,{txt:'反擊',noJump:1}))}}},
+ async ult(u,X){await ultHit(u,X,{m:1.5,each:async t=>{if(t.hp<=0)return;if(cc(u,.4+(bondOn(u,'yr')?0:0)))addSt(t,'kd',{t:1},u);addSt(t,'tf',{t:1,lbl:false},u)}})}},
+zhugeliang:{tal:'def',tn:'臥龍之才',ex:['觀星','自己回合結束時，為我方全體各驅散 1 個負面效果；沒有負面效果的隊友獲得【先機】（抵消 1 次負面效果）。'],ps:['看破','在場時我方全體暴擊 +10%，蜀國武將再 +5%。'],rg:['星途莫測','為生命最低的 3 名隊友回復攻擊 175% 的生命，驅散 2 個負面效果（優先控制），並附加【八陣圖】：行動後回復諸葛亮攻擊 50% 生命，每回合最多 2 次，2 回合。'],
+ aura(u,a){if(!hasSk(u,'ps'))return null;return{cr:(.10+(a.f==='蜀'?.05:0))*otK(u)}},
+ async after(u){if(!hasSk(u,'ex'))return;allyA(u).forEach(a=>{if(negN(a)>0)dispel(a,1);else if(chance(u,1))addSt(a,'xj',{t:2,lbl:false},u)})},
+ async ult(u,X){await ultHeal(u,X,{m:1.75,who:al=>byLowPct(al).slice(0,3),each:a=>{dispel(a,2,true);addSt(a,'bz',{t:2,v:2+(bondOn(u,'wl')?1:0)},u)}})}},
+zhangxingcai:{tal:'atk',tn:'虎女',ex:['丈八蛇矛','攻擊被控制中的敵人時傷害 +30%。'],ps:['承父威','張飛在場時速度 +10%、攻擊 +8%。'],rg:['槍舞如花','X 形攻擊（攻擊 140%），中心目標 30% 機率【恫嚇】。'],
+ dmgMod(u,t){return hasSk(u,'ex')&&isCtl(t)?1+.3*otK(u):1},
+ start(u){if(hasSk(u,'ps')&&sideHas(u,'zhangfei')){u.spd*=1+.1*otK(u);u.atk*=1+.08*otK(u)}},
+ async ult(u,X){let first=true;await ultHit(u,X,{m:1.4,each:async t=>{if(first&&t.hp>0&&cc(u,.3+(bondOn(u,'yr')?.15:0)))addSt(t,'kd',{t:1},u);first=false}})}},
+xushu:{tal:'atk',tn:'單福',ex:['走馬薦諸葛','開場時，諸葛亮或劉備在場則該武將 +50 怒氣。'],ps:['擊劍任俠','普攻改為攻擊生命最低的敵人。'],rg:['破八門金鎖','狙擊生命最低的敵人（攻擊 260%），並驅散其 2 個增益。'],
+ start(u){if(!hasSk(u,'ex'))return;allyA(u).filter(a=>a.id==='zhugeliang'||a.id==='liubei').forEach(a=>addRage(a,50*otK(u)))},
+ baT(u,X){return hasSk(u,'ps')?byLowHp(vis(alive(X.ec)))[0]:front(X.es,X.ec)},
+ async ult(u,X){await ultHit(u,X,{m:2.6,tgt:'lowHp',each:async t=>{if(t.hp>0)dispelBuff(t,2)}})}},
+guanping:{tal:'atk',tn:'少將',ps:['隨父征戰','關羽觸發單刀直入時，50% 機率跟著攻擊（攻擊 30%）。'],rg:['赤心刀','重擊前排單體（攻擊 260%），目標生命高於 70% 時傷害 +30%。'],
+ async ult(u,X){await ultHit(u,X,{m:2.6,mt:(t,m)=>t.hp>t.mhp*.7?m*1.3:m})}},
+liaohua:{tal:'def',tn:'老將',ps:['老當益壯','每回合開始攻擊 +4%（最多 +20%）。'],rg:['先鋒破陣','攻擊敵方一整欄（攻擊 150%）。'],
+ rStart(u){if(hasSk(u,'ps')&&(u.X.lzh||0)<5){u.X.lzh=(u.X.lzh||0)+1;u.atk*=1+.04*otK(u)}},
+ async ult(u,X){await ultHit(u,X,{m:1.5})}},
+maliang:{ps:['白眉','治療有 30% 機率效果 ×1.5。'],rg:['妙計安民','我方全體回復攻擊 110% 的生命，生命最低者再獲得攻擊 100% 的護盾。'],
+ hcrit(u){return hasSk(u,'ps')?.3*otK(u):0},
+ async ult(u,X){await ultHeal(u,X,{m:1.1});const a=byLowPct(allyA(u))[0];if(a)addShield(a,atkOf(u)*rgK(u)*u.m,2,'',u)}},
+jianyong:{ps:['談笑自若','開場隨機 2 名隊友 +30 怒氣。'],rg:['說降','攻擊敵方全體（攻擊 100%），30% 機率【沉默】。'],
+ start(u){allyA(u).filter(a=>a!==u).sort(()=>Math.random()-.5).slice(0,2).forEach(a=>addRage(a,30*otK(u)))},
+ async ult(u,X){await ultHit(u,X,{m:1.0,each:async t=>{if(t.hp>0&&cc(u,.3))addSt(t,'sl',{t:1},u)}})}},
+madai:{rg:['孰敢殺我','攻擊敵方一整排（攻擊 145%），對生命低於 30% 的目標傷害 ×1.5。'],async ult(u,X){await ultHit(u,X,{m:1.45,mt:(t,m)=>t.hp<t.mhp*.3?m*1.5:m})}},
+zhoucang:{rg:['扛刀護主','重擊前排單體（攻擊 220%），為關羽（不在場則生命最低的隊友）分攤 40% 傷害 2 回合，自己獲得 20% 生命的護盾。'],
+ guard(u,t){return u.X.gT===t&&ROUND<=u.X.gR?.4:0},
+ async ult(u,X){await ultHit(u,X,{m:2.2});const g=allyA(u).find(a=>a.id==='guanyu')||byLowPct(allyA(u).filter(a=>a!==u))[0];if(g){u.X.gT=g;u.X.gR=ROUND+1;LBL(g,'周倉護主','fx-h','g')}addShield(u,u.mhp*.2*rgK(u),2,'',u)}},
+/* ---------- 魏 ---------- */
+caocao:{tal:'atk',tn:'魏武',ex:['挾天子以令諸侯','每回合開始令敵方攻擊最高者【沉默】（無法放怒氣技能），同一人不會連續兩回合。'],ps:['寧我負人','敵人每被我方控制 1 次，曹操攻擊 +5%（最多 +30%）。'],rg:['天下歸心','攻擊敵方全體（攻擊 120%），對凍結中的敵人改為 200%；我方魏國武將 +25 怒氣。'],
+ rStart(u){if(!hasSk(u,'ex'))return;const t=byHiAtk(foeA(u)).find(x=>x!==u.X.slT);if(t){u.X.slT=t;addSt(t,'sl',{t:1},u)}},
+ onCtl(u){if(hasSk(u,'ps')&&(u.X.cc||0)<6)u.X.cc=(u.X.cc||0)+otK(u)},
+ async ult(u,X){await ultHit(u,X,{m:1.2,mt:(t,m)=>has(t,'fz')?m*1.67:m});allyA(u).filter(a=>a.f==='魏'&&a!==u).forEach(a=>addRage(a,25))}},
+simayi:{tal:'atk',tn:'冢虎',ex:['鷹視狼顧','敵人放完怒氣技能後，40% 機率扣其 50 怒氣。'],ps:['隱忍','生命首次低於 50% 時，接下來 2 次受到的傷害 −50%，並立刻 +100 怒氣。'],rg:['狼顧天下','攻擊敵方全體（攻擊 105%），偷取每個目標 20 怒氣分給我方怒氣最低的 2 人，40% 機率【攻擊降低】。'],
+ foeUlt(u,e){if(hasSk(u,'ex')&&e.hp>0&&chance(u,.4)&&loseRage(e,50))LBL(e,'怒氣 −50')},
+ lowHp(u){if(!hasSk(u,'ps')||u.X.yr0||u.hp>=u.mhp*.5)return;u.X.yr0=1;u.X.yr=2;addRage(u,100);LBL(u,'隱忍','fx-c')},
+ takeMod(u){if(u.X.yr>0){u.X.yr--;return 1-.5*otK(u)}return 1},
+ async ult(u,X){let pool=0;await ultHit(u,X,{m:1.05,each:async t=>{pool+=loseRage(t,20);if(t.hp>0&&cc(u,.4))addSt(t,'ad',{t:2},u)}});
+  const lo=allyA(u).filter(a=>a!==u).sort((a,b)=>a.rage-b.rage).slice(0,2);lo.forEach(a=>addRage(a,pool/Math.max(1,lo.length)))}},
+xiahoudun:{tal:'def',tn:'盲夏侯',ex:['拔矢啖睛','受到致命傷害時保留 1 點生命、回復 30% 生命，並反擊攻擊者（攻擊 100%），每場 1 次。'],ps:['剛烈','受到攻擊時 40% 機率讓攻擊者【攻擊降低】。'],rg:['獨眼怒斬','攻擊敵方一整排（攻擊 150%），自己獲得 30% 生命的護盾，並嘲諷被命中者。'],
+ save(u,d,s){if(!hasSk(u,'ex')||u.X.bs)return false;u.X.bs=1;FUQ.push(async()=>{heal(u,u,u.mhp*.3*otK(u),{nob:1});LBL(u,'拔矢啖睛','fx-c');if(s&&s.hp>0)await chase(u,s,1.0,{txt:'反擊'})});return true},
+ async hurt(u,s){if(hasSk(u,'ps')&&s.hp>0&&chance(u,.4))addSt(s,'ad',{t:2},u)},
+ async ult(u,X){await ultHit(u,X,{m:1.5,each:async t=>{if(t.hp>0)addSt(t,'tf',{t:1,lbl:false},u)}});addShield(u,u.mhp*.3*rgK(u),2,'',u)}},
+zhangliao:{tal:'atk',tn:'文遠',ex:['威震逍遙津','第 1 回合必定最先出手，第 1 次攻擊傷害 +50%。'],ps:['止啼','命中時偷取目標 10% 速度（最多 3 次）。'],rg:['八百破十萬','攻擊敵方一整欄（攻擊 160%），30% 機率【恫嚇】。'],
+ start(u){if(hasSk(u,'ex')){u.X.first=1;u.X.fa=1}},
+ dmgMod(u){if(u.X.fa){u.X.fa=0;return 1+.5*otK(u)}return 1},
+ deal(u,t){if(hasSk(u,'ps')&&(u.X.zt||0)<3&&t.hp>0){u.X.zt=(u.X.zt||0)+1;const a=spdOf(t)*.1*otK(u);t.X.ssp=(t.X.ssp||0)-a;u.X.ssp=(u.X.ssp||0)+a}},
+ async ult(u,X){await ultHit(u,X,{m:1.6,each:async t=>{if(t.hp>0&&cc(u,.3))addSt(t,'kd',{t:1},u)}})}},
+guojia:{tal:'atk',tn:'天成之妙',ex:['遺計','受到攻擊時 50% 機率（累計 3 次必定）放一次威力減半的怒氣技能，每回合 1 次，不消耗怒氣。'],ps:['算無遺策','開場敵方全體速度 −5%、減傷 −25%，2 回合。'],rg:['天妒','攻擊敵方全體（攻擊 105%），30% 機率【凍結】、50% 機率【寒霜】（受傷 +10%，最多 3 層；帶著陣亡時對其隊友造成郭嘉攻擊 50% 傷害）。'],
+ async hurt(u){if(!hasSk(u,'ex')||u.X.r.yj)return;u.X.yjc=(u.X.yjc||0)+1;if(u.X.yjc>=3||chance(u,.5)){u.X.r.yj=1;u.X.yjc=0;FUQ.push(async()=>{if(u.hp>0&&foeA(u).length){LBL(u,'遺計','fx-c');const mine=pl.includes(u);await guojiaUlt(u,{mine,ec:mine?en:pl,es:mine?'e':'p',ac:mine?pl:en,c:cellOf(u)},.5)}})}},
+ start(u){if(!hasSk(u,'ps'))return;foeA(u).forEach(e=>{addSt(e,'sd',{t:2,v:.05*otK(u),lbl:false},u);addSt(e,'rdn',{t:2,v:.25*otK(u),lbl:false},u)});LBL(u,'算無遺策','fx-c')},
+ async ult(u,X){await guojiaUlt(u,X,1)}},
+xinxianying:{tal:'atk',tn:'才女',ex:['明鑒','敵人被我方凍結時，辛憲英追加攻擊 50% 的傷害，每回合最多 2 次。'],ps:['智識','我方魏國武將冰凍機率 +5%。'],rg:['洞悉先機','攻擊敵方全體（攻擊 100%），40% 機率【沉默】，對已有負面效果的目標傷害 +20%。'],
+ onDeb(u,t,k){if(k==='fz'&&hasSk(u,'ex')&&(u.X.r.mj||0)<2){u.X.r.mj=(u.X.r.mj||0)+1;FUQ.push(()=>chase(u,t,.5*otK(u),{txt:'明鑒',noJump:1,ranged:1,fx:'fx-i'}))}},
+ start(u){if(hasSk(u,'ps'))allyA(u).filter(a=>a.f==='魏').forEach(a=>a.X.fzB=(a.X.fzB||0)+.05*otK(u))},
+ async ult(u,X){await ultHit(u,X,{m:1.0,mt:(t,m)=>negN(t)?m*1.2:m,each:async t=>{if(t.hp>0&&cc(u,.4))addSt(t,'sl',{t:1},u)}})}},
+caoren:{tal:'def',tn:'大將軍',ex:['堅城','在場時我方前排受到的傷害 −12%。'],ps:['鐵壁','生命高於 50% 時減傷 +15%。'],rg:['八門金鎖','重擊前排單體（攻擊 240%），自己獲得 30% 生命的護盾，並嘲諷敵方全體。'],
+ aura(u,a){return hasSk(u,'ex')&&isFront(a)?{rd:.12*otK(u)}:null},rdMod(u){return hasSk(u,'ps')&&u.hp>u.mhp*.5?.15*otK(u):0},
+ async ult(u,X){await ultHit(u,X,{m:2.4});addShield(u,u.mhp*.3*rgK(u),2,'',u);foeA(u).forEach(e=>addSt(e,'tf',{t:1,lbl:false},u));LBL(u,'嘲諷全體','fx-c')}},
+zhenmi:{tal:'sup',tn:'洛神',ex:['凌波微步','隊友被控制時 40% 機率立刻解除，每回合 2 次。'],ps:['傾國','被她治療的隊友速度 +10%，1 回合。'],rg:['洛水寒波','我方全體回復攻擊 140% 的生命並獲得 15% 生命的護盾；敵方攻擊最高者 30% 機率【凍結】。'],
+ allyCtl(u,t,k){if(!hasSk(u,'ex')||(u.X.r.lb||0)>=2||k==='ql')return;if(chance(u,.4)){u.X.r.lb=(u.X.r.lb||0)+1;delSt(t,k);LBL(t,'凌波解除','fx-h','g')}},
+ async ult(u,X){await ultHeal(u,X,{m:1.4,each:a=>{addShield(a,a.mhp*.15*rgK(u),2,'',u);if(hasSk(u,'ps'))addSt(a,'su',{t:1,v:.1*otK(u),lbl:false},u)}});const t=byHiAtk(foeA(u))[0];if(t&&cc(u,.3))addSt(t,'fz',{t:1,v:.12},u)}},
+xuchu:{tal:'def',tn:'虎侯',ex:['裸衣','生命低於 50% 時攻擊 +30%、減傷 −10%。'],ps:['虎癡','曹操在場時替他承受 50% 傷害。'],rg:['虎衛斬','攻擊敵方一整排（攻擊 150%），30% 機率【凍結】。'],
+ start(u){if(hasSk(u,'ex'))u.X.lzB=1},rdMod(u){return u.X.lzB&&u.hp<u.mhp*.5?-.1:0},
+ guard(u,t){return hasSk(u,'ps')&&t.id==='caocao'?.5*otK(u):0},
+ async ult(u,X){await ultHit(u,X,{m:1.5,each:async t=>{if(t.hp>0&&cc(u,.3))addSt(t,'fz',{t:1,v:.12},u)}})}},
+xiahouyuan:{tal:'atk',tn:'妙才',ps:['神速','速度 +15%；每回合第 1 次攻擊傷害 +20%。'],rg:['三日五百','隨機射擊 3 次（每次攻擊 100%），每次 20% 機率【凍結】。'],
+ start(u){if(hasSk(u,'ps'))u.spd*=1+.15*otK(u)},dmgMod(u){if(hasSk(u,'ps')&&!u.X.r.fa){u.X.r.fa=1;return 1+.2*otK(u)}return 1},
+ async ult(u,X){await ultHit(u,X,{m:1.0,n:3,each:async t=>{if(t.hp>0&&cc(u,.2))addSt(t,'fz',{t:1,v:.12},u)}})}},
+xuhuang:{tal:'atk',tn:'周亞夫之風',ps:['長驅','攻擊帶負面效果的目標時暴擊率 +20%。'],rg:['大斧破圍','重擊前排單體（攻擊 260%），先打碎目標身上所有護盾。'],
+ critB(u,t){return hasSk(u,'ps')&&negN(t)?.2*otK(u):0},
+ async ult(u,X){await ultHit(u,X,{m:2.6,pre:async t=>{if(t.shl&&t.shl.length){t.shl=[];t.sh=0;LBL(t,'破盾');upd(t)}}})}},
+yangxiu:{ps:['雞肋','開場扣敵方怒氣最高者 30 怒氣。'],rg:['才高八斗','狙擊生命最低的敵人（攻擊 240%），30% 機率【沉默】。'],
+ start(u){const t=foeA(u).sort((a,b)=>b.rage-a.rage)[0];if(t&&loseRage(t,30*otK(u)))LBL(t,'雞肋')},
+ async ult(u,X){await ultHit(u,X,{m:2.4,tgt:'lowHp',each:async t=>{if(t.hp>0&&cc(u,.3))addSt(t,'sl',{t:1},u)}})}},
+xunyou:{ps:['謀主','我方每成功控制 1 次，荀攸 +15 怒氣。'],rg:['奇策十二','十字攻擊（攻擊 135%），25% 機率【凍結】。'],
+ onCtl(u){addRage(u,15*otK(u))},async ult(u,X){await ultHit(u,X,{m:1.35,each:async t=>{if(t.hp>0&&cc(u,.25))addSt(t,'fz',{t:1,v:.12},u)}})}},
+yuejin:{rg:['先登','重擊前排單體（攻擊 260%），第 1 回合傷害 +50%。'],async ult(u,X){await ultHit(u,X,{m:ROUND===1?3.9:2.6})}},
+caoxiu:{rg:['虎豹騎','重擊前排單體（攻擊 250%），30% 機率【攻擊降低】。'],async ult(u,X){await ultHit(u,X,{m:2.5,each:async t=>{if(t.hp>0&&Math.random()<.3)addSt(t,'ad',{t:2},u)}})}},
+/* ---------- 吳 ---------- */
+sunquan:{tal:'sup',tn:'碧眼紫髯',ex:['坐斷東南','每回合開始，我方速度最高的 2 人 +20 怒氣。'],ps:['制衡','在場時我方吳國武將速度 +8%、施加的灼燒傷害 +15%。'],rg:['江東之主','攻擊敵方全體（攻擊 95%），灼燒中的目標灼燒 +1 回合；我方全體速度 +15%，2 回合。'],
+ rStart(u){if(hasSk(u,'ex'))allyA(u).sort((a,b)=>spdOf(b)-spdOf(a)).slice(0,2).forEach(a=>addRage(a,15*otK(u)))},
+ aura(u,a){return hasSk(u,'ps')&&a.f==='吳'?{spd:.08*otK(u),bnB:.15*otK(u)}:null},
+ async ult(u,X){await ultHit(u,X,{m:.95,each:async t=>{if(has(t,'bn'))t.ST.bn.t++}});allyA(u).forEach(a=>addSt(a,'su',{t:2,v:.15*rgK(u),lbl:false},u));LBL(u,'全軍加速','fx-h','g')}},
+luxun:{tal:'atk',tn:'伯言',ex:['火燒連營','我方施加的灼燒結束時引爆，對其相鄰的敵人造成陸遜攻擊 60% 的傷害。'],ps:['書生拜將','對灼燒中的目標傷害 +20%。'],rg:['夷陵烈焰','攻擊敵方全體（攻擊 105%），必定【灼燒】；已在灼燒中的目標灼燒層數 +1。'],
+ dmgMod(u,t){return hasSk(u,'ps')&&has(t,'bn')?1+.2*otK(u):1},
+ bnEnd(u,t){if(!hasSk(u,'ex'))return;const a=foeOf(u),i=a.indexOf(t),r=Math.floor(i/3),c=i%3;[[r-1,c],[r+1,c],[r,c-1],[r,c+1]].forEach(([y,x])=>{if(y<0||y>2||x<0||x>2)return;const e=a[y*3+x];if(e&&e.hp>0)FUQ.push(()=>hit(u,e,0,{fix:atkOf(u)*.6*otK(u),fx:'fx-b',noTrig:1}))})},
+ async ult(u,X){await ultHit(u,X,{m:1.05,each:async t=>{if(t.hp>0)addSt(t,'bn',{t:3,v:atkOf(u)*.6,n:1,stack:1},u)}})}},
+ganning:{tal:'atk',tn:'興霸',ex:['百騎劫營','第 1 回合開始時突襲敵方後排 1 人（攻擊 60%），不耗怒氣。'],ps:['錦帆','速度 +15%；擊殺時立刻再行動 1 次，每回合 1 次。'],rg:['錦帆夜襲','刺殺敵方後排生命最低者（攻擊 290%）並【灼燒】，目標生命低於 30% 時傷害 +50%。'],
+ start(u){if(hasSk(u,'ps'))u.spd*=1+.15*otK(u)},
+ async rStart(u){if(ROUND===1&&hasSk(u,'ex')){const t=back(pl.includes(u)?'e':'p',foeOf(u));if(t)FUQ.push(()=>chase(u,t,.6*otK(u),{txt:'百騎劫營'}))}},
+ kill(u){if(hasSk(u,'ps')&&!u.X.r.ag){u.X.r.ag=1;u.X.again=1}},
+ async ult(u,X){await ultHit(u,X,{m:2.9,tgt:'back',mt:(t,m)=>t.hp<t.mhp*.3?m*1.5:m,each:async t=>{if(t.hp>0)addSt(t,'bn',{t:3,v:atkOf(u)*.5},u)}})}},
+zhouyu:{tal:'atk',tn:'美周郎',ex:['赤壁東風','回合結束時，我方的灼燒有 25% 機率擴散到另 1 名敵人。'],ps:['雅量高致','開場自己 +50 怒氣。'],rg:['赤壁業火','攻擊敵方全體（攻擊 100%），60% 機率【灼燒】，灼燒可疊 2 層。'],
+ start(u){if(hasSk(u,'ps'))addRage(u,50*otK(u))},
+ rEnd(u){if(!hasSk(u,'ex'))return;const f=foeA(u),p=.25*otK(u)+(bondOn(u,'dd')?.1:0);f.filter(e=>has(e,'bn')&&sideOf(e.ST.bn.s||u)!==sideOf(e)).forEach(e=>{if(Math.random()<p){const o=f.filter(x=>!has(x,'bn'));if(o.length){const x=rnd(o);addSt(x,'bn',{t:2,v:e.ST.bn.v},u)}}})},
+ async ult(u,X){await ultHit(u,X,{m:1.0,each:async t=>{if(t.hp>0&&Math.random()<.6)addSt(t,'bn',{t:3,v:atkOf(u)*.55,n:1,stack:1},u)}})}},
+daqiao:{tal:'sup',tn:'國色',ex:['春風','每回合結束為生命最低的隊友回復攻擊 60% 的生命。'],ps:['姊妹情深','小喬在場時兩人治療量與傷害 +15%。'],rg:['流離','我方全體回復攻擊 140% 的生命，各驅散 1 個負面效果，速度 +10% 1 回合。'],
+ start(u){if(hasSk(u,'ps')&&sideHas(u,'xiaoqiao')){[u,allyA(u).find(a=>a.id==='xiaoqiao')].forEach(a=>{a.hb=(a.hb||0)+.15*otK(u);a.db=(a.db||0)+.15*otK(u)})}},
+ rEnd(u){if(!hasSk(u,'ex'))return;const a=byLowPct(allyA(u))[0];if(a)heal(u,a,atkOf(u)*.6*otK(u)*u.m)},
+ async ult(u,X){await ultHeal(u,X,{m:1.4,each:a=>{dispel(a,1);addSt(a,'su',{t:1,v:.1,lbl:false},u)}})}},
+sunshangxiang:{tal:'atk',tn:'弓腰姬',ex:['連弩','每次普攻額外射 1 箭（攻擊 50%）打隨機敵人。'],ps:['梟姬','速度高於目標時暴擊率 +15%。'],rg:['結姻連弩','隨機射擊 4 次（每次攻擊 75%），每次 30% 機率【灼燒】。'],
+ async baEach(u){if(!hasSk(u,'ex'))return;const t=rnd(foeA(u));if(t)await chase(u,t,.5*otK(u)/u.m,{txt:'連弩',noJump:1,ranged:1,fx:'fx-v'})},
+ critB(u,t){return hasSk(u,'ps')&&spdOf(u)>spdOf(t)?.15*otK(u):0},
+ async ult(u,X){await ultHit(u,X,{m:.75,n:4+(bondOn(u,'sj')?1:0),each:async t=>{if(t.hp>0&&Math.random()<.3)addSt(t,'bn',{t:3,v:atkOf(u)*.45},u)}})}},
+sunce:{tal:'atk',tn:'小霸王',ex:['江東猛虎','擊殺時 +50 怒氣。'],ps:['激昂','生命低於 50% 時速度 +20%、攻擊 +15%。'],rg:['霸王衝陣','X 形攻擊（攻擊 140%），50% 機率【灼燒】。'],
+ kill(u){if(hasSk(u,'ex'))addRage(u,50*otK(u))},start(u){if(hasSk(u,'ps'))u.X.sce=1},
+ async ult(u,X){await ultHit(u,X,{m:1.4,each:async t=>{if(t.hp>0&&Math.random()<.5)addSt(t,'bn',{t:3,v:atkOf(u)*.5},u)}})}},
+taishici:{tal:'atk',tn:'子義',ex:['神亭酣戰','對敵方攻擊最高者傷害 +25%。'],ps:['信義','受到致命傷害時 50% 機率保留 1 點生命，每場 1 次。'],rg:['篤烈箭','狙擊生命最低的敵人（攻擊 260%）並【灼燒】。'],
+ dmgMod(u,t){return hasSk(u,'ex')&&byHiAtk(foeA(u))[0]===t?1+.25*otK(u):1},
+ save(u){if(!hasSk(u,'ps')||u.X.xy)return false;u.X.xy=1;if(chance(u,.5)){LBL(u,'信義','fx-c');return true}return false},
+ async ult(u,X){await ultHit(u,X,{m:2.6,tgt:'lowHp',each:async t=>{if(t.hp>0)addSt(t,'bn',{t:3,v:atkOf(u)*.5},u)}})}},
+xiaoqiao:{tal:'atk',tn:'天香',ex:['紅蓮','灼燒中的敵人受到她的傷害 +25%。'],ps:['琴瑟和鳴','周瑜在場時速度 +10%。'],rg:['琴音業火','轟擊敵方後排（攻擊 145%），必定【灼燒】。'],
+ dmgMod(u,t){return hasSk(u,'ex')&&has(t,'bn')?1+.25*otK(u):1},start(u){if(hasSk(u,'ps')&&sideHas(u,'zhouyu'))u.spd*=1+.1*otK(u)},
+ async ult(u,X){await ultHit(u,X,{m:1.45,each:async t=>{if(t.hp>0)addSt(t,'bn',{t:3,v:atkOf(u)*.55},u)}})}},
+zhoutai:{tal:'def',tn:'幼平',ps:['不屈','受到致命傷害時保留 1 點生命並獲得【療癒之風】2 回合，每場 1 次。'],rg:['奮身護主','攻擊敵方一整欄（攻擊 140%），為孫權（不在場則生命最低的隊友）加 25% 生命的護盾。'],
+ save(u){if(!hasSk(u,'ps')||u.X.bq)return false;u.X.bq=1;FUQ.push(async()=>{addSt(u,'wd',{t:2},u);LBL(u,'不屈','fx-c')});return true},
+ async ult(u,X){await ultHit(u,X,{m:1.4});const g=allyA(u).find(a=>a.id==='sunquan')||byLowPct(allyA(u))[0];if(g)addShield(g,g.mhp*.25*rgK(u),2,'',u)}},
+zhugejin:{tal:'sup',tn:'子瑜',ps:['緩兵','開場敵方全體速度 −8%，2 回合。'],rg:['明哲保身','攻擊敵方全體（攻擊 95%），30% 機率【攻擊降低】。'],
+ start(u){foeA(u).forEach(e=>addSt(e,'sd',{t:2,v:.08*otK(u),lbl:false},u))},
+ async ult(u,X){await ultHit(u,X,{m:.95,each:async t=>{if(t.hp>0&&Math.random()<.3)addSt(t,'ad',{t:2},u)}})}},
+zhangzhao:{ps:['託孤重臣','開場我方前排獲得【先機】。'],rg:['伏論','狙擊生命最低的敵人（攻擊 230%），40% 機率【沉默】。'],
+ start(u){allyA(u).filter(isFront).forEach(a=>addSt(a,'xj',{t:2,lbl:false},u))},
+ async ult(u,X){await ultHit(u,X,{m:2.3,tgt:'lowHp',each:async t=>{if(t.hp>0&&cc(u,.4))addSt(t,'sl',{t:1},u)}})}},
+chengpu:{ps:['江表虎臣','減傷 +10%。'],rg:['鐵脊蛇矛','重擊前排單體（攻擊 220%），嘲諷敵方全體，自己獲得 20% 生命的護盾。'],
+ start(u){u.rd=(u.rd||0)+.1*otK(u)},async ult(u,X){await ultHit(u,X,{m:2.2});foeA(u).forEach(e=>addSt(e,'tf',{t:1,lbl:false},u));addShield(u,u.mhp*.2*rgK(u),2,'',u)}},
+lingtong:{rg:['國士','重擊前排單體（攻擊 260%）並【灼燒】。'],async ult(u,X){await ultHit(u,X,{m:2.6,each:async t=>{if(t.hp>0)addSt(t,'bn',{t:3,v:atkOf(u)*.45},u)}})}},
+xusheng:{rg:['疑城','攻擊敵方一整排（攻擊 140%），我方全體減傷 +10% 1 回合。'],async ult(u,X){await ultHit(u,X,{m:1.4});allyA(u).forEach(a=>addSt(a,'ru',{t:1,v:.1*rgK(u),lbl:false},u))}},
+/* ---------- 神 ---------- */
+guan:{tal:'def',tn:'神威蓋世',ex:['青龍守護','每回合開始守護我方攻擊最高的另一名武將，替他承受 40% 的直接傷害；承受的傷害儲存為【創深痛巨】。'],ps:['武聖庇護','放完怒氣技能後獲得 12% 生命的護盾（2 回合），護盾存在時免疫控制。'],rg:['青龍偃月','重擊敵方攻擊最高者（攻擊 240%），目標生命高於 50% 時加 8% 最大生命固定傷害；釋放創深痛巨 60%；50% 機率【青龍印記】（跳過下次行動）；附加 1 層天威。'],
+ rStart(u){if(!hasSk(u,'ex'))return;const t=byHiAtk(allyA(u).filter(a=>a!==u))[0];u.X.glT=t||null;if(t)LBL(t,'青龍守護','fx-h','g')},
+ guard(u,t){return u.X.glT===t?.4*otK(u):0},rdMod(u){return Math.min(.2,(1-u.hp/u.mhp)*.5)},
+ hurt(u,s,d){u.X.gs=Math.min(u.mhp,(u.X.gs||0)+d)},
+ async ult(u,X){await ultHit(u,X,{m:2.4,tgt:'hiAtk',anim:t=>SPA.guan(X.c,t),each:async t=>{if(t.hp>0&&t.hp>t.mhp*.5)await hit(u,t,0,{fix:u.mhp*.08*rgK(u),fx:'fx-s',noTrig:1});
+  if(t.hp>0&&u.X.gs>0){const s=u.X.gs*.6;u.X.gs=0;LBL(u,'創深痛巨','fx-b');await hit(u,t,0,{fix:s,fx:'fx-b',noTrig:1})}else u.X.gs=0;
+  if(t.hp>0&&Math.random()<.5){if(addSt(t,'ql',{t:1},u))SPA.guanSeal(t)}if(t.hp>0)twAdd(t,u,1)}});
+  if(hasSk(u,'ps')){addShield(u,u.mhp*.12*otK(u),2,'ws',u);u.wsShield=1;SPA.guanShield(X.c);LBL(u,'武聖庇護','fx-h','g')}}},
+huatuo:{tal:'sup',tn:'神醫',ex:['懸壺','不普攻，改為治療生命百分比最低的隊友（攻擊 60%）。'],ps:['療癒之風','放怒氣技能時，生命最低的 2 名隊友獲得【療癒之風】（每回合回復 6% 生命、受傷 −25%，2 回合）。'],rg:['青囊妙手','我方全體回復攻擊 120% 的生命並各驅散 1 個負面效果；復活 1 名陣亡隊友（40% 生命），沒人陣亡則生命最低者再回復 25% 生命。'],
+ async basic(u,X){if(!hasSk(u,'ex')){const t=front(X.es,X.ec);if(t){await jump(X.c,cellOf(t),true,false,X.mine);await hit(u,t,TRC.basic,{kind:'ba'});X.c.style.transform=''}return}
+  await jump(X.c,X.c,false,false,X.mine);const a=byLowPct(allyA(u))[0];if(a)heal(u,a,atkOf(u)*.6*otK(u)*u.m);await sleep(380)},
+ async ult(u,X){const al=await ultHeal(u,X,{m:1.2,anim:al=>SPA.huatuo(X.c,X.mine,al),each:a=>dispel(a,1)});
+  if(hasSk(u,'ps'))byLowPct(allyA(u)).slice(0,2).forEach(a=>addSt(a,'wd',{t:2},u));
+  const d=X.ac.filter(canRevive);if(d.length){reviveU(d[0],.4*rgK(u)+(bondOn(u,'sy')?.1:0));SPA.revive(d[0])}else{const a=byLowPct(allyA(u))[0];if(a)heal(u,a,a.mhp*.25*rgK(u),{nob:1})}}},
+shenzhuge:{tal:'atk',tn:'知天命',ex:['東風運祚','敵方的開場效果（絕技、被動）有 70% 機率延到第 2 回合才生效。'],ps:['大霧','每回合開始我方全體獲得【七星奇象】（攻擊 +15%、受到的持續與固定傷害 −15%）。'],rg:['觀星喚雨','對敵方全體共造成攻擊 450% 的傷害，由命中目標均攤（每人最多 170%）；50% 機率【神威】，已有天威者再 +1 層；帶天威或神威的目標追加最大生命 15% 固定傷害（上限攻擊 150%）。'],
+ rStart(u){if(hasSk(u,'ps'))allyA(u).forEach(a=>addSt(a,'qx',{t:1,v:otK(u),lbl:false},u))},
+ async ult(u,X){await ultHit(u,X,{m:3.6,share:1,cap:1.4,each:async t=>{if(t.hp<=0)return;if(Math.random()<.5)addSt(t,'sw',{t:2},u);if(has(t,'tw'))addSt(t,'sw',{t:2,lbl:false},u);
+  if(has(t,'tw')||has(t,'sw'))await hit(u,t,0,{fix:Math.min(t.mhp*.15,atkOf(u)*1.5)*rgK(u),fx:'fx-c',noTrig:1})}})}},
+caiwenji:{tal:'atk',tn:'神・念',ex:['波漾清輝','放完怒氣技能後，追擊敵方攻擊最高者（攻擊 55%）並附加【傷害加深】（受傷 +15%，2 回合）。'],ps:['神・思','在場時我方全體攻擊、暴擊 +10%，每有 1 名神陣營武將攻擊再 +1%。'],rg:['斷律續愁','攻擊敵方全體（攻擊 105%），60% 機率驅散目標最多 2 個增益（每驅散 1 個附加 1 層【音顫】），50% 機率【天威】。'],
+ aura(u){if(!hasSk(u,'ps'))return null;const n=allyA(u).filter(a=>a.f==='神').length;return{atk:(.10+.01*n)*otK(u),cr:.10*otK(u)}},
+ async afterUlt(u){if(!hasSk(u,'ex'))return;const t=byHiAtk(foeA(u))[0];if(t){await chase(u,t,.55,{txt:'波漾清輝',noJump:1,ranged:1,fx:'fx-c'});if(t.hp>0)addSt(t,'dd',{t:2},u)}},
+ async ult(u,X){await ultHit(u,X,{m:1.05,each:async t=>{if(t.hp<=0)return;if(Math.random()<.6){const n=dispelBuff(t,2);if(n)addSt(t,'yc',{t:1,n},u)}if(Math.random()<.5)twAdd(t,u,1)}})}},
+diaochan:{tal:'sup',tn:'閉月',ex:['傾城','開場讓攻擊最高的隊友生命上限 +25%，並附加【傾城】（減傷 +25%、受治療 +15%，2 回合）。'],ps:['閉月','自己每次行動後，為生命最低的 2 名隊友回復攻擊 100% 的生命。'],rg:['魅惑','復活 1 名陣亡隊友並回復攻擊 300% 的生命（沒人陣亡則治療生命最低者 350%），附加攻擊 100% 的護盾與【傾城】，並驅散 1 個負面效果。'],
+ start(u){if(!hasSk(u,'ex'))return;const t=byHiAtk(allyA(u))[0];if(!t)return;const o=t.mhp;t.mhp=Math.round(t.mhp*(1+.25*otK(u)));t.hp=Math.round(t.hp*t.mhp/o);addSt(t,'qc',{t:2},u)},
+ async after(u){if(!hasSk(u,'ps'))return;byLowPct(allyA(u)).slice(0,2).forEach(a=>heal(u,a,atkOf(u)*1.0*otK(u)*u.m*(a.id==='lubu'&&bondOn(u,'wd')?1.3:1)));await sleep(200)},
+ async ult(u,X){await jump(X.c,X.c,false,true,X.mine);const d=X.ac.filter(canRevive).sort((a,b)=>b.atk-a.atk);let t;const k=rgK(u)*u.m*atkOf(u);
+  if(d.length){t=d[0];reviveU(t,0);t.hp=0;t.dead=0;heal(u,t,k*3);t.hp=Math.max(1,t.hp);SPA.revive(t)}else{t=byLowPct(allyA(u))[0];if(t)heal(u,t,k*3.5*(t.id==='lubu'&&bondOn(u,'wd')?1.3:1))}
+  if(t){addShield(t,atkOf(u)*rgK(u),2,'',u);addSt(t,'qc',{t:2},u);dispel(t,1);upd(t)}await sleep(500)}},
+yuanshao:{tal:'atk',tn:'官裔',ex:['劍雨','開場速度 +15%（2 回合）；對速度不高於他的目標，附加天威與恫嚇的機率 +15%。'],ps:['四世三公','在場時，被我方附加天威的敵人同時獲得【震懾】（減傷 −15%、受治療 −25%，袁紹陣亡即消失）。'],rg:['劍如雨下','攻擊敵方全體（攻擊 105%），50% 機率【天威】（沒有天威者 +15%）；已有天威者 25% 機率【恫嚇】。'],
+ start(u){if(hasSk(u,'ex'))addSt(u,'su',{t:2,v:.15*otK(u),lbl:false},u)},
+ onDeb(u,t,k){if(k==='tw'&&hasSk(u,'ps')&&!has(t,'zsh'))addSt(t,'zsh',{t:3,lbl:false},u)},
+ async ult(u,X){await ultHit(u,X,{m:1.05,each:async t=>{if(t.hp<=0)return;const sl=hasSk(u,'ex')&&spdOf(t)<=spdOf(u)?.15*otK(u):0,had=has(t,'tw');
+  if(Math.random()<.5+(had?0:.15)+sl)twAdd(t,u,1);if(had&&cc(u,.25+sl))addSt(t,'kd',{t:1},u)}})}},
+zuoci:{tal:'atk',tn:'烏角先生',ex:['擲杯戲曹','每回合第 1 次受到直接傷害時，50% 機率化為幻影不受傷害。'],ps:['遁甲天書','攻擊天威已滿 3 層的敵人時，再附加 1 層【神威】。'],rg:['幻術・百鳥','攻擊敵方全體（攻擊 100%），50% 機率【天威】、20% 機率【恫嚇】。'],
+ dodge(u){if(!hasSk(u,'ex')||u.X.r.dg)return false;u.X.r.dg=1;return chance(u,.5)},
+ deal(u,t){if(hasSk(u,'ps')&&t.hp>0&&stN(t,'tw')>=3)addSt(t,'sw',{t:2,lbl:false},u)},
+ async ult(u,X){await ultHit(u,X,{m:1.0,each:async t=>{if(t.hp<=0)return;if(Math.random()<.5)twAdd(t,u,1);if(cc(u,.2))addSt(t,'kd',{t:1},u)}})}},
+menghuo:{tal:'def',tn:'南蠻王',ex:['七擒七縱','陣亡時 50% 機率以 30% 生命復活，每場 1 次。'],ps:['蠻橫','受到攻擊時 30% 機率對攻擊者附加 1 層【天威】。'],rg:['象兵衝鋒','攻擊敵方一整排（攻擊 150%），並嘲諷被命中者。'],
+ revive(u){if(!hasSk(u,'ex')||u.X.qq)return false;u.X.qq=1;if(chance(u,.5)){reviveU(u,.3);LBL(u,'七擒七縱','fx-c');return true}return false},
+ async hurt(u,s){if(hasSk(u,'ps')&&s.hp>0&&chance(u,.3))twAdd(s,u,1)},
+ async ult(u,X){await ultHit(u,X,{m:1.5,each:async t=>{if(t.hp>0)addSt(t,'tf',{t:1,lbl:false},u)}})}},
+zhurong:{tal:'atk',tn:'火神後裔',ex:['飛刀','每次普攻額外擲 1 把飛刀（攻擊 50%）打隨機敵人。'],ps:['蠻王之妻','孟獲在場時攻擊 +12%。'],rg:['烈焰飛刀','隨機擲 4 把飛刀（每把攻擊 75%），每把 30% 機率【天威】。'],
+ async baEach(u){if(!hasSk(u,'ex'))return;const t=rnd(foeA(u));if(t)await chase(u,t,.5*otK(u)/u.m,{txt:'飛刀',noJump:1,ranged:1,fx:'fx-v'})},
+ start(u){if(hasSk(u,'ps')&&sideHas(u,'menghuo'))u.atk*=1+.12*otK(u)},
+ async ult(u,X){await ultHit(u,X,{m:.75,n:4,each:async t=>{if(t.hp>0&&Math.random()<.3)twAdd(t,u,1)}})}},
+pangde:{tal:'atk',tn:'令明',ps:['抬櫬決死','生命每少 10%，傷害 +4%。'],rg:['死戰','重擊前排單體（攻擊 270%），對帶天威的目標傷害 +20%。'],
+ dmgMod(u){return hasSk(u,'ps')?1+lostTen(u)*.04*otK(u):1},async ult(u,X){await ultHit(u,X,{m:2.7,mt:(t,m)=>has(t,'tw')?m*1.2:m})}},
+jushou:{tal:'sup',tn:'監軍',ps:['遠略','我方神陣營武將附加天威的機率 +10%。'],rg:['直言','十字攻擊（攻擊 135%），40% 機率【天威】。'],
+ start(u){if(hasSk(u,'ps'))allyA(u).filter(a=>a.f==='神').forEach(a=>a.X.twB=(a.X.twB||0)+.1*otK(u))},
+ async ult(u,X){await ultHit(u,X,{m:1.35,each:async t=>{if(t.hp>0&&Math.random()<.4)twAdd(t,u,1)}})}},
+mateng:{ps:['伏波之後','開場速度 +20%，1 回合。'],rg:['西涼鐵騎','攻擊敵方一整欄（攻擊 150%），30% 機率【天威】。'],
+ start(u){addSt(u,'su',{t:1,v:.2*otK(u),lbl:false},u)},async ult(u,X){await ultHit(u,X,{m:1.5,each:async t=>{if(t.hp>0&&Math.random()<.3)twAdd(t,u,1)}})}},
+taoqian:{ps:['三讓徐州','開場把自己 20% 生命轉成護盾，給生命最少的隊友。'],rg:['徐州牧','重擊前排單體（攻擊 220%），自己獲得 25% 生命的護盾，並嘲諷目標。'],
+ start(u){const t=allyA(u).filter(a=>a!==u).sort((a,b)=>a.mhp-b.mhp)[0];if(t){const v=u.mhp*.2*otK(u);u.hp=Math.max(1,u.hp-v*.5);addShield(t,v,3,'',u);LBL(t,'三讓徐州','fx-h','g')}},
+ async ult(u,X){await ultHit(u,X,{m:2.2,each:async t=>{if(t.hp>0)addSt(t,'tf',{t:1},u)}});addShield(u,u.mhp*.25*rgK(u),2,'',u)}},
+guanlu:{rg:['卜卦','狙擊生命最低的敵人（攻擊 240%），隨機附加【天威】、【沉默】、【攻擊降低】其中一個。'],
+ async ult(u,X){await ultHit(u,X,{m:2.4,tgt:'lowHp',each:async t=>{if(t.hp<=0)return;const r=Math.floor(Math.random()*3);if(r===0)twAdd(t,u,1);else if(r===1)addSt(t,'sl',{t:1},u);else addSt(t,'ad',{t:2},u)}})}},
+yuji:{rg:['太平符水','我方全體回復攻擊 100% 的生命，各驅散 1 個負面效果。'],async ult(u,X){await ultHeal(u,X,{m:1.0,each:a=>dispel(a,1)})}},
+/* ---------- 魔 ---------- */
+lubu:{tal:'atk',tn:'飛將',ex:['戰魔','隊友行動時 50% 機率獲得 1 層戰魔（傷害 +1.5%，最多 10 層）；滿 10 層進入【戰魔降世】，已在降世中則回復 20% 生命（每場 1 次）。'],ps:['戰魔降世','生命首次低於 30% 時清除負面效果、回復 25% 生命並進入【戰魔降世】：攻擊 +12%、負面免疫 2 回合，持續 3 回合。'],rg:['魔神降臨','對敵方全體共造成攻擊 450% 的傷害，由命中目標均攤（每人最多 190%）；生命高於 50% 的目標追加攻擊 30% 固定傷害；25% 機率【魔蠱】（降世中 45%，並 25% 機率【禁復活】）。'],
+ allyAct(u){if(!hasSk(u,'ex')||(u.X.zm||0)>=10||!chance(u,.5+(bondOn(u,'lj')?.2:0)))return;u.X.zm=(u.X.zm||0)+1;u.X.zmDb=(u.X.zm)*.015;LBL(u,'戰魔×'+u.X.zm,'fx-a');
+  if(u.X.zm>=10){if(has(u,'zt')){if(!u.X.zh){u.X.zh=1;heal(u,u,u.mhp*.2,{nob:1})}}else lbEnter(u)}},
+ lowHp(u){if(!hasSk(u,'ps')||u.X.zl||u.hp>=u.mhp*.3)return;u.X.zl=1;Object.keys(u.ST).forEach(k=>{if(STD[k]&&STD[k].neg)delete u.ST[k]});heal(u,u,u.mhp*.25*otK(u),{nob:1});lbEnter(u)},
+ async ult(u,X){const zm=has(u,'zt');await SPA.lubu(X.mine);await ultHit(u,X,{m:4.5,share:1,cap:1.9*(zm?1.3:1),each:async t=>{if(t.hp<=0)return;if(t.hp>t.mhp*.5)await hit(u,t,0,{fix:atkOf(u)*.3*rgK(u),fx:'fx-f',noTrig:1});
+  if(Math.random()<(zm?.45:.25))mgAdd(t,u,1);if(zm&&Math.random()<.25)addSt(t,'nr',{t:3},u)}})}},
+zhangchunhua:{tal:'atk',tn:'冷月',ex:['月華標記','標記敵方攻擊最高者；放怒氣技能時對被標記者追加 25% 傷害，擊殺被標記者時 50% 機率【禁復活】。'],ps:['傷','每次行動後，對最後打到的敵人追加（5%＋負面數×1.5%）最大生命的固定傷害（上限攻擊 70%）。'],rg:['冷月斷魂','刺殺生命百分比最低的敵人（攻擊 260%），目標每少 10% 生命傷害 +5%（最多 +25%）、每個負面效果 +5%（最多 +20%）；之後【隱匿】2 回合。'],
+ mark(u){if(!hasSk(u,'ex'))return;if(u.X.mk&&u.X.mk.hp>0)return;const t=byHiAtk(vis(foeA(u)))[0];if(t){u.X.mk=t;LBL(t,'月華標記');fxAt(cellOf(t),'s-cres','☽',600)}},
+ rStart(u){SK.zhangchunhua.mark(u)},
+ async after(u){if(!hasSk(u,'ps'))return;const t=u.X.lt;if(!t||t.hp<=0)return;await hit(u,t,0,{fix:Math.min(atkOf(u)*.7,t.mhp*(.05+negN(t)*.015))*otK(u),fx:'fx-a',noTrig:1})},
+ async ult(u,X){SK.zhangchunhua.mark(u);await ultHit(u,X,{m:2.6,tgt:'lowPct',anim:t=>SPA.zhangchunhua(X.c,t),mt:(t,m)=>m*(1+Math.min(.25,lostTen(t)*.05)+Math.min(.2,negN(t)*.05)),each:async(t,d)=>{const mk=u.X.mk;if(mk&&mk.hp>0&&mk!==t){await hit(u,mk,0,{fix:d*.25,fx:'fx-a',noTrig:1});if(mk.hp<=0&&Math.random()<.5)addSt(mk,'nr',{t:3},u)}}});
+  addSt(u,'hid',{t:2},u);fxAt(X.c,'s-cloud','🌫️🌫️',800)}},
+bulianshi:{tal:'sup',tn:'溫婉',ex:['回魂','放怒氣技能後，攻擊最高與生命最低的隊友獲得【回魂】：2 回合內陣亡立刻以 30% 生命復活。'],ps:['苦痛轉贈','自己回合結束時 50% 機率，把我方最多 3 名隊友身上各 1 個負面效果轉移給敵人。'],rg:['安魂渡厄','我方總生命 ≤ 50% 時：全體回復攻擊 130% 的生命並附加【撫愉】（減傷 +15%，2 回合）；否則攻擊敵方全體（攻擊 95%），附加【傾折】（減傷 −15%）並 40% 機率【魔蠱】。'],
+ async after(u){if(!hasSk(u,'ps')||!chance(u,.5))return;const al=allyA(u).filter(a=>negN(a)).slice(0,3),fo=foeA(u).sort(()=>Math.random()-.5);
+  al.forEach((a,i)=>{const e=fo[i];if(!e)return;const k=Object.keys(a.ST).find(k=>has(a,k)&&STD[k].neg&&!STD[k].nd);if(!k)return;const s=a.ST[k];delete a.ST[k];addSt(e,k,{t:s.t,v:s.v,n:s.n},u);LBL(a,'轉贈','fx-h','g');upd(a)})},
+ async afterUlt(u){if(!hasSk(u,'ex'))return;[...new Set([byHiAtk(allyA(u))[0],byLowPct(allyA(u))[0]])].forEach(a=>{if(a)addSt(a,'hh',{t:2},u)})},
+ async ult(u,X){const al=allyA(u),th=al.reduce((s,x)=>s+x.hp,0),tm=al.reduce((s,x)=>s+x.mhp,0);
+  if(th<=tm*.5)await ultHeal(u,X,{m:1.3,each:a=>addSt(a,'fu',{t:2,lbl:false},u)});
+  else await ultHit(u,X,{m:.95,pat:'aoe',fx:'fx-a',each:async t=>{if(t.hp<=0)return;addSt(t,'qz',{t:2,lbl:false},u);if(Math.random()<.4)mgAdd(t,u,1)}})}},
+zhangjiao:{tal:'atk',tn:'大賢良師',ex:['黃天','雷澤中的敵人被附加魔蠱時，多疊 1 層。'],ps:['太平要術','在場時我方魔蠱傷害 +15%。'],rg:['天雷・黃天當立','攻擊敵方全體（攻擊 100%），附加【雷澤】（受傷 +20%、速度 −10%，2 回合），50% 機率【魔蠱】；30% 機率再附加降療、攻擊降低、灼燒、魔蠱其中 2 種。'],
+ onDeb(u,t,k){if(k==='mg'&&hasSk(u,'ex')&&has(t,'lz')&&!u.X.inHT){u.X.inHT=1;addSt(t,'mg',{t:2,n:1,lbl:false},u);u.X.inHT=0}},
+ start(u){if(hasSk(u,'ps'))allyA(u).forEach(a=>a.X.mgB=(a.X.mgB||0)+.15*otK(u))},
+ async ult(u,X){await SPA.zhangjiao(X.mine,X.ec);await ultHit(u,X,{m:1.0,each:async t=>{if(t.hp<=0)return;addSt(t,'lz',{t:2,v:bondOn(u,'hj2')?.25:.2},u);if(Math.random()<.5)mgAdd(t,u,1);
+  if(Math.random()<.3){const L=[()=>addSt(t,'hr',{t:2},u),()=>addSt(t,'ad',{t:2},u),()=>addSt(t,'bn',{t:2,v:atkOf(u)*.3},u),()=>mgAdd(t,u,1)].sort(()=>Math.random()-.5);L[0]();L[1]()}}})}},
+dianwei:{tal:'def',tn:'惡來',ex:['古之惡來','生命首次低於 30% 時減傷 +30%，1 回合。'],ps:['雙戟','放怒氣技能時每命中 1 人回復 5% 生命。'],rg:['雙戟衛主','攻擊敵方一整欄（攻擊 150%），50% 機率【嘲諷】、40% 機率【魔蠱】。'],
+ lowHp(u){if(!hasSk(u,'ex')||u.X.gz||u.hp>=u.mhp*.3)return;u.X.gz=1;addSt(u,'ru',{t:1,v:.3*otK(u)},u);LBL(u,'古之惡來','fx-c')},
+ async ult(u,X){let n=0;await ultHit(u,X,{m:1.5,each:async t=>{n++;if(t.hp<=0)return;if(Math.random()<.5)addSt(t,'tf',{t:1},u);if(Math.random()<.4)mgAdd(t,u,1)}});if(hasSk(u,'ps'))heal(u,u,u.mhp*.05*n*otK(u),{nob:1})}},
+lvlingqi:{tal:'atk',tn:'虎女',ex:['死亡印記','每回合開始對敵方攻擊最高者施加【死亡印記】（受傷 +25%，2 回合）；帶印記者陣亡時，為我方全體回復攻擊 100% 生命並追擊生命最低者（攻擊 40%）。'],ps:['斬殺','怒氣技能附加【斬殺】：目標生命低於 25% 且不超過她攻擊 300% 時直接斬殺。'],rg:['天戒破陣','重擊生命最低的敵人（攻擊 260%），追加目標已損失生命 20% 的固定傷害（上限攻擊 150%），附加【斬殺】；擊殺時偷取目標 25% 攻擊 2 回合。'],
+ rStart(u){if(!hasSk(u,'ex'))return;const t=byHiAtk(vis(foeA(u)))[0];if(t)addSt(t,'dm',{t:2},u)},
+ markDie(u){allyA(u).forEach(a=>heal(u,a,atkOf(u)*otK(u)));if(!u.X.r.md){u.X.r.md=1;FUQ.push(async()=>{const t=byLowPct(foeA(u))[0];if(t)await chase(u,t,.4,{txt:'方天再臨'})})}},
+ kill(u,t){const a=Math.round(t.atk*.25);u.X.stl=(u.X.stl||0)+a;FUQ.push(async()=>{LBL(u,'奪 +'+a,'fx-a')});u.X.stlR=ROUND+2},
+ rEnd(u){if(u.X.stlR&&ROUND>=u.X.stlR){u.X.stl=0;u.X.stlR=0}},
+ async ult(u,X){u.X.zsU=bondOn(u,'lj')?.03:0;await ultHit(u,X,{m:2.6,tgt:'lowHp',each:async t=>{if(t.hp<=0)return;await hit(u,t,0,{fix:Math.min((t.mhp-t.hp)*.2,atkOf(u)*1.5)*rgK(u),fx:'fx-a',noTrig:1});if(t.hp>0&&hasSk(u,'ps'))addSt(t,'zs',{t:2},u)}})}},
+dongzhuo:{tal:'def',tn:'相國',ex:['酒池肉林','每回合開始吸取敵方生命最高者 5% 最大生命，回復給自己。'],ps:['暴虐','帶魔蠱的敵人攻擊他時，反彈 20% 傷害。'],rg:['焚洛陽','攻擊敵方一整排（攻擊 145%），必定【魔蠱】，並回復自己造成傷害的 30%。'],
+ rStart(u){if(!hasSk(u,'ex'))return;const t=foeA(u).sort((a,b)=>b.hp-a.hp)[0];if(t){const d=rawDmg(t,t.mhp*.05*otK(u),'fx-a','酒池 -');heal(u,u,d,{nob:1,quiet:1})}},
+ async hurt(u,s,d){if(hasSk(u,'ps')&&has(s,'mg')&&s.hp>0)rawDmg(s,d*.2*otK(u),'fx-a','反彈 -')},
+ async ult(u,X){let tot=0;await ultHit(u,X,{m:1.45,each:async(t,d)=>{tot+=d;if(t.hp>0)mgAdd(t,u,1)}});heal(u,u,tot*.3,{nob:1})}},
+liru:{tal:'atk',tn:'毒士',ex:['鴆殺','回合結束時，魔蠱 3 層的敵人再受最大生命 3% 傷害（上限攻擊 60%）。'],ps:['毒計','我方施加的魔蠱持續 +1 回合。'],rg:['毒酒','十字攻擊（攻擊 135%），必定附加 2 層【魔蠱】。'],
+ rEnd(u){if(!hasSk(u,'ex'))return;foeA(u).filter(e=>stN(e,'mg')>=3).forEach(e=>rawDmg(e,Math.min(e.mhp*.03,atkOf(u)*.6)*otK(u),'fx-a','鴆殺 -'))},
+ start(u){if(hasSk(u,'ps'))allyA(u).forEach(a=>a.X.mgT=1)},
+ async ult(u,X){await ultHit(u,X,{m:1.35,each:async t=>{if(t.hp>0)mgAdd(t,u,2)}})}},
+zhangbao:{tal:'atk',tn:'地公將軍',ex:['妖術','放怒氣技能時 30% 機率使目標【沉默】。'],ps:['黃巾兄弟','張角在場時攻擊 +10%。'],rg:['飛砂落石','狙擊生命最低的敵人（攻擊 260%）並附加【魔蠱】。'],
+ start(u){if(hasSk(u,'ps')&&sideHas(u,'zhangjiao'))u.atk*=1+.1*otK(u)},
+ async ult(u,X){await ultHit(u,X,{m:2.6,tgt:'lowHp',each:async t=>{if(t.hp<=0)return;mgAdd(t,u,1);if(hasSk(u,'ex')&&cc(u,.3*otK(u)))addSt(t,'sl',{t:1},u)}})}},
+yuanshu:{tal:'sup',tn:'仲氏',ps:['偽帝','開場我方魔陣營武將 +20 怒氣。'],rg:['傳國玉璽','十字攻擊（攻擊 135%），我方全體平分回復造成傷害的 40%。'],
+ start(u){allyA(u).filter(a=>a.f==='魔').forEach(a=>addRage(a,20*otK(u)))},
+ async ult(u,X){let tot=0;await ultHit(u,X,{m:1.35,each:async(t,d)=>{tot+=d}});const al=allyA(u);al.forEach(a=>heal(u,a,tot*.4/al.length,{nob:1}))}},
+tianfeng:{tal:'sup',tn:'剛直',ps:['犯顏','在場時我方被控制的機率 −30%（有 30% 機率免疫控制）。'],rg:['死諫','轟擊敵方後排（攻擊 140%），40% 機率【攻擊降低】。'],
+ start(u){if(hasSk(u,'ps'))allyA(u).forEach(a=>a.ctlImm=Math.max(a.ctlImm||0,.3*otK(u)))},
+ async ult(u,X){await ultHit(u,X,{m:1.4,each:async t=>{if(t.hp>0&&Math.random()<.4)addSt(t,'ad',{t:2},u)}})}},
+guosi:{ps:['掠奪','擊殺時回復 20% 生命。'],rg:['劫掠長安','重擊前排單體（攻擊 250%）並附加【魔蠱】。'],
+ kill(u){heal(u,u,u.mhp*.2*otK(u),{nob:1})},async ult(u,X){await ultHit(u,X,{m:2.5,each:async t=>{if(t.hp>0)mgAdd(t,u,1)}})}},
+panfeng:{ps:['上將潘鳳','開場攻擊 +20%，但受到的傷害 +10%。'],rg:['開山大斧','攻擊敵方一整排（攻擊 145%）。'],
+ start(u){u.atk*=1+.2*otK(u)},takeMod(){return 1.1},async ult(u,X){await ultHit(u,X,{m:1.45})}},
+zhangliang:{rg:['人公將軍','重擊前排單體（攻擊 220%），嘲諷目標，自己獲得 20% 生命的護盾。'],
+ async ult(u,X){await ultHit(u,X,{m:2.2,each:async t=>{if(t.hp>0)addSt(t,'tf',{t:1},u)}});addShield(u,u.mhp*.2*rgK(u),2,'',u)}},
+lijue:{rg:['西涼亂軍','重擊前排單體（攻擊 250%），30% 機率【魔蠱】。'],async ult(u,X){await ultHit(u,X,{m:2.5,each:async t=>{if(t.hp>0&&Math.random()<.3)mgAdd(t,u,1)}})}}};
+/* ===================== 武將羈絆 ===================== */
+const BONDS=[
+ {k:'ty',n:'桃園結義',ids:['liubei','guanyu','zhangfei'],min:3,t:'三人攻擊 +10%；任一人生命低於 30% 時，另外兩人各分攤其 15% 傷害'},
+ {k:'wh',n:'五虎上將',ids:['guanyu','zhangfei','zhaoyun','machao'],min:3,t:'3 人：成員追擊傷害 +10%；4 人：再暴擊 +5%'},
+ {k:'wd',n:'溫侯與貂蟬',ids:['lubu','diaochan'],min:2,t:'呂布傷害 +10%；貂蟬治療呂布 +30%'},
+ {k:'hb',n:'河北謀主',ids:['yuanshao','tianfeng','jushou'],min:3,t:'天威每回合觸發上限 +1'},
+ {k:'hj',n:'黃巾三兄弟',ids:['zhangjiao','zhangbao','zhangliang'],min:2,t:'2 人：雷澤效果 +25%；3 人：魔蠱上限 +1 層'},
+ {k:'wl',n:'臥龍出山',ids:['liubei','zhugeliang','xushu'],min:2,t:'2 人：八陣圖每回合多觸發 1 次；3 人：開場諸葛亮 +50 怒氣'},
+ {k:'cs',n:'曹氏宗親',ids:['caocao','caoren','caoxiu','xiahoudun','xiahouyuan'],min:3,t:'3 人：成員減傷 +5%；5 人：+10%'},
+ {k:'eq',n:'江東二喬',ids:['daqiao','xiaoqiao'],min:2,t:'兩人治療量、灼燒傷害各 +15%'},
+ {k:'lj',n:'呂家父女',ids:['lubu','lvlingqi'],min:2,t:'呂布戰魔獲得機率 +20%；呂玲綺斬殺門檻 +3%'},
+ {k:'wz',n:'五子良將',ids:['zhangliao','yuejin','xuhuang'],min:2,t:'每多 1 人，成員冰凍機率 +5%'},
+ {k:'ws',n:'曹魏謀士',ids:['guojia','xunyou','simayi','yangxiu'],min:2,t:'每多 1 人，成員控制機率 +5%'},
+ {k:'xl',n:'西涼馬家',ids:['mateng','machao','madai','mayunlu'],min:2,t:'每多 1 人，成員速度 +3%'},
+ {k:'sj',n:'孫家兄妹',ids:['sunce','sunquan','sunshangxiang'],min:2,t:'2 人：速度 +5%；3 人：開場 +30 怒氣，孫尚香連弩多射 1 箭'},
+ {k:'sb',n:'江東雙璧',ids:['sunce','zhouyu'],min:2,t:'開場兩人各 +50 怒氣'},
+ {k:'dd',n:'東吳都督',ids:['zhouyu','luxun'],min:2,t:'周瑜的灼燒擴散機率 +10%'},
+ {k:'xj2',n:'西涼軍閥',ids:['dongzhuo','liru','lijue','guosi'],min:3,t:'成員魔蠱吸血 30% → 45%'},
+ {k:'sy',n:'神醫妙手',ids:['huatuo','bulianshi'],min:2,t:'復活時多回復 10% 生命'},
+ {k:'gj',n:'關家父子',ids:['guanyu','guanping'],min:2,t:'關平跟著攻擊的機率 +20%'},
+ {k:'yr',n:'燕人父女',ids:['zhangfei','zhangxingcai'],min:2,t:'張星彩恫嚇機率 +15%'},
+ {k:'hc',n:'虎癡惡來',ids:['xuchu','dianwei'],min:2,t:'兩人減傷 +10%'},
+ {k:'cn',n:'亂世才女',ids:['caiwenji','xinxianying','zhenmi'],min:2,t:'每多 1 人，全隊受到治療 +5%'},
+ {k:'st',n:'神亭酣戰',ids:['sunce','taishici'],min:2,t:'兩人攻擊 +8%'},
+ {k:'jf',n:'錦帆宿敵',ids:['ganning','lingtong'],min:2,t:'兩人暴擊 +8%'},
+ {k:'dz',n:'東吳重臣',ids:['zhangzhao','zhugejin'],min:2,t:'全隊減傷 +5%'},
+ {k:'nm',n:'南蠻夫妻',ids:['menghuo','zhurong'],min:2,t:'兩人生命 +10%'},
+ {k:'fw',n:'方外仙人',ids:['zuoci','yuji','guanlu'],min:2,t:'每多 1 人，成員天威機率 +5%'},
+ {k:'yj',n:'袁家兄弟',ids:['yuanshao','yuanshu'],min:2,t:'兩人生命 +10%'}];
+function bondsOf(arr){const ids=arr.filter(Boolean).map(u=>u.id);const on=[];for(const b of BONDS){const n=b.ids.filter(i=>ids.includes(i)).length;if(n>=b.min)on.push({...b,c:n})}return on.slice(0,3)}
+const bondOn=(u,k)=>!!(u&&u.X&&u.X.bd&&u.X.bd[k]);
+function applyBonds(arr){const on=bondsOf(arr),us=arr.filter(Boolean);
+ for(const b of on){const mem=us.filter(u=>b.ids.includes(u.id));us.forEach(u=>{u.X.bd=u.X.bd||{};u.X.bd[b.k]=1;if(b.k==='hj'){u.X.bd.hj2=1;if(b.c>=3)u.X.bd.hj3=1}});
+  const hpUp=(u,p)=>{const o=u.mhp;u.mhp=Math.round(u.mhp*(1+p));u.hp=Math.round(u.hp*u.mhp/o)};
+  switch(b.k){case 'ty':mem.forEach(u=>{u.atk*=1.1;u.X.ty=1});break;
+   case 'wh':mem.forEach(u=>{u.X.fuDb=.1;if(b.c>=4)u.cr=(u.cr||0)+.05});break;
+   case 'wd':mem.filter(u=>u.id==='lubu').forEach(u=>u.db=(u.db||0)+.1);break;
+   case 'hb':us.forEach(u=>u.X.twCap=1);break;
+   case 'wl':if(b.c>=3)mem.filter(u=>u.id==='zhugeliang').forEach(u=>u.rage+=50);break;
+   case 'cs':mem.forEach(u=>u.rd=(u.rd||0)+(b.c>=5?.1:.05));break;
+   case 'eq':mem.forEach(u=>{u.hb=(u.hb||0)+.15;u.X.bnB=.15});break;
+   case 'wz':mem.forEach(u=>u.X.fzB=(u.X.fzB||0)+.05*b.c);break;
+   case 'ws':mem.forEach(u=>u.X.ctlB=(u.X.ctlB||0)+.05*b.c);break;
+   case 'xl':mem.forEach(u=>u.spd*=1+.03*b.c);break;
+   case 'sj':mem.forEach(u=>{u.spd*=1.05;if(b.c>=3)u.rage+=30});break;
+   case 'sb':mem.forEach(u=>u.rage+=50);break;
+   case 'xj2':mem.forEach(u=>u.X.mgL=.15);break;
+   case 'hc':mem.forEach(u=>u.rd=(u.rd||0)+.1);break;
+   case 'cn':us.forEach(u=>u.X.hrv=.05*b.c);break;
+   case 'st':mem.forEach(u=>u.atk*=1.08);break;
+   case 'jf':mem.forEach(u=>u.cr=(u.cr||0)+.08);break;
+   case 'dz':us.forEach(u=>u.rd=(u.rd||0)+.05);break;
+   case 'nm':case 'yj':mem.forEach(u=>hpUp(u,.1));break;
+   case 'fw':mem.forEach(u=>u.X.twB=(u.X.twB||0)+.05*b.c);break}}
+ us.forEach(u=>{u.atk=Math.round(u.atk);u.spd=Math.round(u.spd)})}
+
+const SKSL={tal:'天賦',ex:'絕技',ps:'被動',rg:'怒氣'};
+function skList(h,st){const d=SK[h.id]||{},u={q:h.q,st:st||0};return SLOTS_OF(h.q).map(s=>{if(s==='tal'){const T=TALT[d.tal||'atk'];return{s,l:'天賦',n:d.tn||'天賦',d:`${T.n}：攻擊 +${Math.round(T.a*100)}%、生命 +${Math.round(T.h*100)}%、${T.x==='db'?'傷害 +5%':T.x==='rd'?'減傷 +5%':'治療量 +8%'}`,lv:SKLV(u,'o'),mx:3}}
+ const a=d[s]||['—',''];return{s,l:SKSL[s],n:a[0],d:a[1],lv:SKLV(u,s==='rg'?'rg':'o'),mx:s==='rg'?4:3}})}
+function heroSkills(h){return skList(h,S.star[h.id]||0).map(x=>[x.n,x.l])}
+function skHtml(h,st){return skList(h,st).map(x=>`<div class="skr"><b>${x.l}・${x.n}</b> <small>Lv.${x.lv}/${x.mx}</small><br>${x.d}</div>`).join('')+`<div class="sub" style="font-size:11px">技能等級隨星級提升：怒氣技 ★0／5／10／15 為 Lv.1–4（威力 70／80／90／100%）；其他技能 ★0／5／10 為 Lv.1–3（效果 60／80／100%）。說明中的數值為最高等級；怒氣技倍率另隨武將等級提高（目前 ×${lvmOf(LV(h.id)).toFixed(2)}）。</div>`}
+const skBrief=h=>{const a=(SK[h.id]||{}).rg;return a?a[1]:''};
+
 const JB={戰士:{ic:'⚔️',hp:1,atk:1.08,cr:.05,sm:1,hm:1,rg:0,jr:0,jt:1,t:'攻擊 +8%、暴擊率 +5%（物理輸出）'},法師:{ic:'🔮',hp:1,atk:1,cr:0,sm:1.12,hm:1,rg:20,jr:0,jt:1,t:'技能傷害 +12%、開場怒氣 +20（法術輸出）'},坦克:{ic:'🛡️',hp:1.12,atk:1,cr:0,sm:1,hm:1,rg:0,jr:.06,jt:1,t:'生命 +12%、受到傷害 −6%（前排承傷）'},輔助:{ic:'🌿',hp:1.06,atk:1,cr:0,sm:1,hm:1.2,rg:0,jr:0,jt:1.2,t:'生命 +6%、治療量 +20%、陣營特性（連擊／冰凍／灼燒）機率 +20%（治療與控制）'}};
 function jobFix(u){const j=JB[u.job];if(!j)return u;u.hp=u.mhp=Math.round(u.mhp*j.hp);u.atk=Math.round(u.atk*j.atk);u.cr=(u.cr||0)+j.cr;u.m=+(u.m*(u.pat==='heal'?j.hm:j.sm)).toFixed(3);u.rage+=j.rg;u.jr=j.jr;u.jt=j.jt;return u}
-const qmul=h=>1+((h.q||92)-92)*.009;
+const qmul=h=>1+((h.q||92)-92)*.004;
 let PF='all';const powOf=h=>{const u=mkP(h);return Math.round(u.mhp*.5+u.atk*4+u.spd*6)};
 const FX={single:'fx-s',pierce:'fx-t',sweep:'fx-r',cross:'fx-c',aoe:'fx-f',heal:'fx-h',assn:'fx-a',xshape:'fx-x',volley:'fx-v',snipe:'fx-n',backrow:'fx-b'};
 var BSPD=(()=>{try{return +localStorage.getItem('sgSpd')||1}catch(e){return 1}})(),SKIP=false;
 const $=s=>document.getElementById(s),sleep=ms=>SKIP?Promise.resolve():new Promise(r=>setTimeout(r,ms/BSPD));
 let pl=Array(9).fill(null),en=Array(9).fill(null),sel=-1,busy=false;
 const mk=(h,lv=1,gb=null)=>jobFix(mk0(h,lv,gb));
-const mk0=(h,lv=1,gb=null)=>{const g=gb||{atk:0,hp:0,spd:0,crit:0},k=(1+.06*(lv-1))*(1+.15*(g.brk||0)),qm=qmul(h),hp=Math.round(h.hp*k*qm*(1+g.hp)*(h.f==='魔'?TRC.mhp:h.f==='神'?TRC.ghp:1));return{...h,lv,hp,mhp:hp,atk:Math.round(h.atk*k*qm*(1+g.atk)*(h.f==='神'?TRC.gatk:1)),spd:Math.round(h.spd*(1+.004*Math.min(lv-1,99)+.001*Math.max(0,lv-100))*(1+g.spd)),m:+(h.m*(1+.01*Math.min(lv-1,99)+.002*Math.max(0,lv-100))).toFixed(3),cr:g.crit,rage:50,sh:0}};
+const mk0=(h,lv=1,gb=null)=>{const g=gb||{atk:0,hp:0,spd:0,crit:0},k=(1+.06*(lv-1))*(1+.15*(g.brk||0)),qm=qmul(h),hp=Math.round(h.hp*k*qm*(1+g.hp));return{...h,lv,hp,mhp:hp,atk:Math.round(h.atk*k*qm*(1+g.atk)),spd:Math.round(h.spd*(1+.004*Math.min(lv-1,99)+.001*Math.max(0,lv-100))*(1+g.spd)),m:+lvmOf(lv).toFixed(3),cr:g.crit,rage:50,sh:0}};
 const mkP=h=>{const u=mk(h,LV(h.id),gearBonus(h.id));u.st=S.star[h.id]||0;return u};
 function cardEl(u,full){
  const d=document.createElement('div');d.className='card';d.style.backgroundImage=`url(${ART[u.id]})`;d.style.borderColor=FC[u.f]||'#d9b25a';d.style.boxShadow=`inset 0 0 7px 1px ${FC[u.f]||'#d9b25a'}aa`;
@@ -511,123 +821,303 @@ $('fSave').onclick=()=>{if(!fcnt()){toast('至少要上陣 1 位武將');return}
  pl=FL.map(id=>id?mkP(H.find(h=>h.id===id)):null);
  if(MAXN()>=6){S.dl=FL.slice();saveS();if(ME&&AR.me)setTimeout(()=>defSet(true),300);toast(`已儲存為預設陣容（${fcnt()} 位）`)}else toast('已套用到本場（此關人數受限，不覆蓋預設陣容）');
  closeForm();render()};
-/* ---- 羈絆（同陣營／資質）加成 ---- */
-const SYN3={atk:[0,0,5,8,12,16,20],hp:[0,0,7,11,16,22,25]},SYNG={atk:[0,3,7,11,15,20,25],hp:[0,4,10,15,22,30,35]};
+/* ---- 羈絆（陣營＋武將） ---- */
+const SYN3={atk:[0,0,5,8,12,16,20],hp:[0,0,7,11,16,22,25]};
 function synergy(arr){const us=arr.filter(Boolean),cnt={魏:0,蜀:0,吳:0,神:0,魔:0};us.forEach(u=>{if(cnt[u.f]!==undefined)cnt[u.f]++});
- let atk=0,hp=0;['魏','蜀','吳'].forEach(f=>{const n=cnt[f];if(n>=2){atk+=SYN3.atk[n];hp+=SYN3.hp[n]}});['神','魔'].forEach(f=>{const n=cnt[f];if(n>=1){atk+=SYNG.atk[n];hp+=SYNG.hp[n]}});
- const n9=us.filter(u=>u.q>=90&&u.q<=94).length,n95=us.filter(u=>u.q>=95).length;
- return{cnt,atk,hp,n9,n95,db:3*n9+5*n95,spd:(n9>=6?2:n9>=5?1:0)+(n95>=6?6:n95>=5?3:0)}}
-
+ let atk=0,hp=0,res=null;for(const f in cnt){const n=Math.min(6,cnt[f]);if(n>=2){atk+=SYN3.atk[n];hp+=SYN3.hp[n]}if(cnt[f]>=6)res=f}
+ return{cnt,atk,hp,res,db:0,spd:0}}
 function synBar(arr){const y=synergy(arr),us=arr.filter(Boolean);if(!us.length)return '';
- const ch=['魏','蜀','吳','神','魔'].filter(f=>y.cnt[f]>0).map(f=>`<span class="syc" style="border-color:${FC[f]};color:${FC[f]}${(f==='神'||f==='魔'?y.cnt[f]>=1:y.cnt[f]>=2)?';background:'+FC[f]+'33':';opacity:.6'}">${f}${y.cnt[f]}</span>`).join('');
- const v=[];if(y.atk||y.hp)v.push(`攻+${y.atk}% 血+${y.hp}%`);if(y.db)v.push(`傷/減+${y.db}%`);if(y.spd)v.push(`速+${y.spd}%`);
+ const ch=['魏','蜀','吳','神','魔'].filter(f=>y.cnt[f]>0).map(f=>`<span class="syc" style="border-color:${FC[f]};color:${FC[f]}${y.cnt[f]>=2?';background:'+FC[f]+'33':';opacity:.6'}">${f}${y.cnt[f]}</span>`).join('');
+ const b=bondsOf(arr).map(x=>x.n);const v=[];if(y.atk||y.hp)v.push(`攻+${y.atk}% 血+${y.hp}%`);if(y.res)v.push(y.res+'共鳴');if(b.length)v.push(b.join('・'));
  return `<span class="syl">羈絆</span>${ch} <span class="syv">${v.join('｜')||'無加成'}</span>`}
-function applySyn(arr){const y=synergy(arr);arr.forEach(u=>{if(!u||u.sy)return;u.sy=1;u.atk=Math.round(u.atk*(1+y.atk/100));u.mhp=Math.round(u.mhp*(1+y.hp/100));u.hp=u.mhp;u.spd=Math.round(u.spd*(1+y.spd/100));u.db=y.db/100;u.rd=y.db/100})}
-function synText(arr){const y=synergy(arr),p=[];const fs=['魏','蜀','吳'].filter(f=>y.cnt[f]>=2).map(f=>f+'×'+y.cnt[f]).concat(['神','魔'].filter(f=>y.cnt[f]>=1).map(f=>f+'×'+y.cnt[f]));
- if(y.atk||y.hp)p.push(`陣營 ${fs.join(' ')}：攻擊+${y.atk}% 生命+${y.hp}%`);
- if(y.db)p.push(`資質 傷害+${y.db}% 減免+${y.db}%${y.spd?' 速度+'+y.spd+'%':''}`);
- return p.length?'羈絆　'+p.join('｜'):'羈絆：同陣營、高資質武將一起上陣可獲得加成（按「布陣」查看）'}
+function applySyn(arr){const y=synergy(arr);arr.forEach(u=>{if(!u||u.sy)return;u.sy=1;u.atk=Math.round(u.atk*(1+y.atk/100));u.mhp=Math.round(u.mhp*(1+y.hp/100));u.hp=u.mhp;u.db=0;u.rd=0})}
+function synText(arr){const y=synergy(arr),p=[];const fs=['魏','蜀','吳','神','魔'].filter(f=>y.cnt[f]>=2).map(f=>f+'×'+y.cnt[f]);
+ if(y.atk||y.hp)p.push(`陣營 ${fs.join(' ')}：攻擊+${y.atk}% 生命+${y.hp}%${y.res?'｜'+y.res+'共鳴':''}`);const b=bondsOf(arr);if(b.length)p.push('武將 '+b.map(x=>x.n).join('、'));
+ return p.length?'羈絆　'+p.join('｜'):'羈絆：同陣營 2 人以上、或湊齊武將羈絆名單可獲得加成（按「布陣」查看）'}
 let SYNOPEN=false;
-function synPanel(arr){const y=synergy(arr),c3=['魏','蜀','吳'].map(f=>y.cnt[f]),cg=['神','魔'].map(f=>y.cnt[f]),row=(t,a)=>`<div class="sr2${a?' on':''}">${t}</div>`;
- let h=`<details class="synp"${SYNOPEN?' open':''}><summary>⚔ 羈絆加成：攻擊+${y.atk}% 生命+${y.hp}%${y.db?`｜傷害+${y.db}% 減免+${y.db}%`:''}${y.spd?`｜速度+${y.spd}%`:''}</summary>`;
+function synPanel(arr){const y=synergy(arr),row=(t,a)=>`<div class="sr2${a?' on':''}">${t}</div>`,mx=Math.max(...Object.values(y.cnt));const on=bondsOf(arr).map(b=>b.k),ids=arr.filter(Boolean).map(u=>u.id);
+ let h=`<details class="synp"${SYNOPEN?' open':''}><summary>⚔ 羈絆：攻擊+${y.atk}% 生命+${y.hp}%${y.res?`｜${y.res}共鳴`:''}${on.length?'｜'+bondsOf(arr).map(b=>b.n).join('、'):''}</summary>`;
  h+='<div>'+['魏','蜀','吳','神','魔'].map(f=>`<span class="syc" style="border-color:${FC[f]};color:${FC[f]}">${f} ${y.cnt[f]}</span>`).join('')+'</div>';
- h+='<div class="gt">魏、蜀、吳　同系武將</div>';for(let n=2;n<=6;n++)h+=row(`上陣 ${n} 個：攻擊+${SYN3.atk[n]}% 生命+${SYN3.hp[n]}%`,c3.includes(n));
- h+='<div class="gt">神、魔　同系武將</div>';for(let n=1;n<=6;n++)h+=row(`上陣 ${n} 個：攻擊+${SYNG.atk[n]}% 生命+${SYNG.hp[n]}%`,cg.includes(n));
- h+='<div class="gt">資質 90–94 的武將</div>';for(let n=1;n<=6;n++)h+=row(`${n} 個：傷害+${3*n}% 減免+${3*n}%${n>=5?` 速度+${n-4}%`:''}`,y.n9===n);
- h+='<div class="gt">資質 ≥95 的武將</div>';for(let n=1;n<=6;n++)h+=row(`${n} 個：傷害+${5*n}% 減免+${5*n}%${n>=5?` 速度+${n===5?3:6}%`:''}`,y.n95===n);
- h+='<div style="margin-top:6px;opacity:.7">陣營特性：蜀＝連擊、魏＝冰凍、吳＝灼燒、神＝攻擊+5%（生命−7%）、魔＝生命+8%且受療+20%（連擊／冰凍／灼燒的強度隨星級與資質提高）。<br>各陣營加成可疊加；加成套用到全隊，敵我雙方規則相同。</div></details>';return h}
+ h+='<div class="gt">陣營羈絆（五國相同，可疊加）</div>';for(let n=2;n<=6;n++)h+=row(`同陣營 ${n} 人：攻擊+${SYN3.atk[n]}% 生命+${SYN3.hp[n]}%${n===6?'，並觸發「陣營共鳴」：陣營特性機率 ×1.5':''}`,Object.values(y.cnt).some(c=>Math.min(6,c)===n));
+ h+='<div class="gt">武將羈絆（最多同時 3 組，可跨陣營）</div>';
+ BONDS.forEach(b=>{const n=b.ids.filter(i=>ids.includes(i)).length;if(!n&&!on.includes(b.k))return;h+=row(`<b>${b.n}</b>（${b.ids.map(i=>`<span style="${ids.includes(i)?'color:#ffd27a':'opacity:.55'}">${hname(i)}</span>`).join('、')}）：${b.t}`,on.includes(b.k))});
+ h+=`<div style="margin-top:6px;opacity:.75">陣營特性：蜀＝連擊、魏＝冰凍、吳＝灼燒、神＝天威、魔＝魔蠱（強度隨星級與資質提高）。敵我雙方規則相同。</div></details>`;return h}
 function upd(u,c){c=c||cellOf(u);if(!c)return;const hp=c.querySelector('.hp'),rg=c.querySelector('.rg');if(!hp)return;
  hp.firstChild.style.height=Math.max(0,u.hp/u.mhp*100)+'%';hp.classList.toggle('low',u.hp/u.mhp<.35);
- rg.firstChild.style.width=Math.min(100,u.rage)+'%';rg.classList.toggle('full',u.rage>=100);c.classList.toggle('sh',u.sh>0||!!(u.fp&&u.fp.length));c.classList.toggle('dead',u.hp<=0);c.classList.toggle('ice',u.fz>0&&u.hp>0);c.classList.toggle('burn',u.bn>0&&u.hp>0);c.classList.toggle('hid',u.hid>0&&u.hp>0);c.classList.toggle('ql',u.ql>0&&u.hp>0);const lv=u.hp>0;c.classList.toggle('thz',lv&&u.lz>0);c.classList.toggle('zfire',lv&&u.zt>0);c.classList.toggle('sgl',lv&&(u.sg||0)>=3);c.classList.toggle('mkd',lv&&[...pl,...en].some(z=>z&&z.mk===u&&z.hp>0&&z.id==='zhangchunhua'))}
+ rg.firstChild.style.width=Math.min(100,u.rage)+'%';rg.classList.toggle('full',u.rage>=100);const lv=u.hp>0,H2=k=>lv&&has(u,k);
+ c.classList.toggle('sh',lv&&u.sh>0);c.classList.toggle('dead',!lv);c.classList.toggle('ice',H2('fz'));c.classList.toggle('burn',H2('bn'));c.classList.toggle('hid',H2('hid'));c.classList.toggle('ql',H2('ql'));
+ c.classList.toggle('thz',H2('lz'));c.classList.toggle('zfire',H2('zt'));c.classList.toggle('sgl',lv&&!!u.X&&(u.X.sg||0)>=3);c.classList.toggle('mkd',lv&&[...pl,...en].some(z=>z&&z.X&&z.X.mk===u&&z.hp>0));
+ let ic='';if(lv&&u.ST){const L=[['tw','☀'],['sw','🌟'],['mg','🪲'],['kd','😱'],['sl','🤐'],['hs','❆'],['dd','💢'],['pz','🎯'],['yc','🎵'],['zsh','⚡'],['xj','🔰'],['bz','☯'],['hh','💫'],['by','😤'],['qn','😰'],['fx','🌀'],['gd','🛡'],['sz','💀']];for(const[k,e]of L)if(has(u,k))ic+=`<i>${e}${STD[k].mx&&stN(u,k)>1?stN(u,k):''}</i>`}
+ let s=c.querySelector('.stx');if(!s){s=document.createElement('div');s.className='stx';c.appendChild(s)}if(s.innerHTML!==ic)s.innerHTML=ic}
 const cellOf=u=>{let i=pl.indexOf(u);if(i>=0)return $('gp'+i);i=en.indexOf(u);return i>=0?$('ge'+i):null};
 const alive=a=>a.filter(u=>u&&u.hp>0);
 function front(side,arr,any){ // side 'e': front row = r2 ; 'p': front row = r0
  const rows=side==='e'?[2,1,0]:[0,1,2];
- for(const r of rows){const l=[0,1,2].map(c=>arr[r*3+c]).filter(u=>u&&u.hp>0&&(any||!u.hid));if(l.length)return l[Math.floor(Math.random()*l.length)]}
+ for(const r of rows){const l=[0,1,2].map(c=>arr[r*3+c]).filter(u=>u&&u.hp>0&&!has(u,'fx')&&(any||!has(u,'hid')));if(l.length)return l[Math.floor(Math.random()*l.length)]}
  if(!any)return front(side,arr,true)}
 function back(side,arr,any){const rows=side==='e'?[0,1,2]:[2,1,0];
- for(const r of rows){const l=[0,1,2].map(c=>arr[r*3+c]).filter(u=>u&&u.hp>0&&(any||!u.hid));if(l.length)return l.sort((a,b)=>a.hp-b.hp)[0]}
+ for(const r of rows){const l=[0,1,2].map(c=>arr[r*3+c]).filter(u=>u&&u.hp>0&&!has(u,'fx')&&(any||!has(u,'hid')));if(l.length)return l.sort((a,b)=>a.hp-b.hp)[0]}
  if(!any)return back(side,arr,true)}
 function spawn(c,cls,txt,ex){if(!c)return;const f=document.createElement('div');f.className='fx '+cls;c.appendChild(f);setTimeout(()=>f.remove(),850);
  if(txt!=null){const n=document.createElement('div');n.className='num '+(ex||'');n.textContent=txt;c.appendChild(n);setTimeout(()=>n.remove(),1000)}}
 
-const TRC={gatk:1.05,ghp:.93,mhp:1.08,mheal:1.2,cb0:.06,cb1:.28,cbMax:.35,fz0:.07,fz1:.22,fzd0:.08,fzd1:.14,bn0:.44,bn1:.52,bd0:.48,bd1:.34,bnT:3,basic:.6};
-const tpow=u=>{const s=Math.min(5,u.st||0)/5,z=Math.max(0,Math.min(1,((u.q||80)-70)/28));return .5*s+.5*z};
+/* ===================== 戰鬥引擎 v2（五國平衡版） ===================== */
+const TRC={cb0:.06,cb1:.28,cbMax:.25,fz0:.06,fz1:.16,fzd0:.08,fzd1:.14,bn0:.44,bn1:.52,bd0:.6,bd1:.45,bnT:3,aoeT:.5,twP:.2,swP:.3,tw0:.10,tw1:.30,mg0:.12,mg1:.33,mgD:.3,mgL:.30,basic:.6,res:1.5};
+const tpow=u=>{const s=Math.min(5,u.st||0)/5,z=Math.max(0,Math.min(1,((u.q||80)-60)/35));return .5*s+.5*z};
 const fzTurns=k=>k>=.65?2:1;
-function facTrait(h,st){const k=tpow({q:h.q,st}),p=v=>Math.round(v*1000)/10+'%';
- if(h.f==='蜀')return `連擊：行動後 ${p(Math.min(TRC.cbMax,TRC.cb0+TRC.cb1*k))} 機率再追加一次普攻（不增怒氣）`;
- if(h.f==='魏')return `冰凍：命中時 ${p(TRC.fz0+TRC.fz1*k)}（普攻 ×${TRC.basic}）使敵人冰凍 ${fzTurns(k)} 回合，冰凍中無法行動且多受 ${p(TRC.fzd0+TRC.fzd1*k)} 傷害；解凍後下次行動前免疫`;
- if(h.f==='吳')return `灼燒：命中時 ${p(TRC.bn0+TRC.bn1*k)}（普攻 ×${TRC.basic}）使敵人燃燒 ${TRC.bnT} 回合，每回合損失自身攻擊 ${p(TRC.bd0+TRC.bd1*k)} 的傷害（無視護盾）`;
- if(h.f==='神')return `天威：攻擊 +${Math.round((TRC.gatk-1)*100)}%（生命 −${Math.round((1-TRC.ghp)*100)}%）`;
- if(h.f==='魔')return `魔軀：生命 +${Math.round((TRC.mhp-1)*100)}%、受到治療 +${Math.round((TRC.mheal-1)*100)}%`;return ''}
-let CUR=null,CSK=false;
-function facHit(t){const s=CUR;if(!s||s.hp<=0||t.hp<=0||t.imm>0)return;const k=tpow(s),m=(CSK?1:TRC.basic)*(s.jt||1),c=cellOf(t);
- if(s.f==='魏'&&!(t.fz>0)&&!t.fi&&!(t.ws>0&&t.sh>0)&&Math.random()<(TRC.fz0+TRC.fz1*k)*m){t.fz=fzTurns(k);t.fzd=TRC.fzd0+TRC.fzd1*k;spawn(c,'fx-i','冰凍');upd(t,c)}
- else if(s.f==='吳'&&Math.random()<(TRC.bn0+TRC.bn1*k)*m){t.bn=TRC.bnT;t.bd=Math.max(1,s.atk*(TRC.bd0+TRC.bd1*k));spawn(c,'fx-b','灼燒');upd(t,c)}}
-async function burnTick(){let any=false;for(const u of[...pl,...en]){if(!u)continue;if(u.hid>0){u.hid--;upd(u,cellOf(u))}if(u.imm>0)u.imm--;if(u.ws>0){u.ws--;if(u.ws<=0){u.sh=Math.max(0,u.sh-(u.wsh||0));u.wsh=0;upd(u,cellOf(u))}}if(u.zt>0){u.zt--;if(u.zt<=0)lbLeave(u)}if(u.hp>0&&u.lz>0){u.lz--;if(u.lz<=0&&u.lzs){u.spd+=u.lzs;u.lzs=0}}if(u.nr>0)u.nr--;if(u.ad>0){u.ad--;if(u.ad<=0&&u.ads){u.atk+=u.ads;u.ads=0}}if(u.hr>0)u.hr--;if(u.qc>0)u.qc--;u.yhc=0;if(u.fp&&u.fp.length){u.fp.forEach(l=>l.t--);const ex=u.fp.filter(l=>l.t<=0);u.fp=u.fp.filter(l=>l.t>0);if(u.hp>0)ex.forEach(l=>fpGone(u,l));upd(u,cellOf(u))}if(u.zs>0)u.zs--;if(u.dmk>0)u.dmk--;if(u.fu>0)u.fu--;if(u.qz>0)u.qz--;if(u.hh>0)u.hh--;u.tfN=0;u.el=null;u.zc=0;if(u.stt>0){u.stt--;if(u.stt<=0&&u.stl){u.atk=Math.max(1,u.atk-u.stl);u.stl=0}}
-  if(u.hp>0&&u.mg>0){const d=Math.round(u.mgD*u.mg*(u.gl&&u.gl.hp>0?.8:1));u.hp=Math.max(0,u.hp-d);spawn(cellOf(u),'fx-a','-'+d);upd(u,cellOf(u));any=true;u.mgT--;if(u.mgT<=0)u.mg=0;if(u.hp<=0)onDeath(u)}
-  if(u.hp>0&&u.wind>0){const h=Math.round(u.mhp*.06*(u.hr>0?.75:1));u.hp=Math.min(u.mhp,u.hp+(u.ql>0?0:Math.round(h*(u.qc>0?1.15:1))));spawn(cellOf(u),'fx-h','+'+h,'g');u.wind--;upd(u,cellOf(u));any=true}}
- for(const u of[...pl,...en]){if(u&&u.hp>0&&u.bn>0){const d=Math.round(u.bd*(u.gl&&u.gl.hp>0?.8:1)),c=cellOf(u);u.hp=Math.max(0,u.hp-d);u.bn--;spawn(c,'fx-b','-'+d);upd(u,c);any=true}}if(any)await sleep(450)}
-
-const TRS={lbCap:1.9,lbFix:.3,mg:.22,sg:.15,fixM:1,mcC:.25};
-const vis=l=>{const v=l.filter(x=>!x.hid);return v.length?v:l};
-let CAOE=false;
-function mgApply(t,s){if(t.imm>0)return;t.mg=Math.min(3,(t.mg||0)+1);t.mgT=2;t.mgD=s.atk*TRS.mg;upd(t,cellOf(t));spawn(cellOf(t),'fx-a','魔蠱')}
-function sgAdd(u,n){for(let i=0;i<n;i++){u.sg=(u.sg||0)+1;if(u.sg===3){u.atk=Math.round(u.atk*1.15);u.db=(u.db||0)+.15}if(u.sg===6)u.db=(u.db||0)+.25}upd(u,cellOf(u))}
-function reviveU(x,pct){x.hp=Math.max(1,Math.round(x.mhp*pct));x.fz=0;x.bn=0;x.mg=0;x.lz=0;x.hid=0;const c=cellOf(x);if(c){c.classList.add('heal');setTimeout(()=>c.classList.remove('heal'),700);spawn(c,'fx-h','復活','g');upd(x,c)}}
-function onDeath(t){
- if(t.hh>0&&!(t.nr>0)){t.hh=0;reviveU(t,.3);SPA.revive(t);spawn(cellOf(t),'fx-h','回魂','g');return}
- if(t.zs>0&&t.zsrc&&t.zsrc.hp>0&&!t.zsd){t.zsd=1;const a=Math.round(t.atk*.25),z=t.zsrc;z.atk+=a;z.stl=(z.stl||0)+a;z.stt=2;spawn(cellOf(z),'fx-a','奪+'+a)}
- if(t.dmk>0&&t.dms&&t.dms.hp>0&&!t.dmd){t.dmd=1;lvDeath(t.dms)}
-
+const pc=v=>Math.round(v*1000)/10+'%';
+function facTrait(h,st){const k=tpow({q:h.q,st});
+ if(h.f==='蜀')return `連擊：行動後 ${pc(Math.min(TRC.cbMax,TRC.cb0+TRC.cb1*k))} 機率再普攻 1 次（不增怒氣）`;
+ if(h.f==='魏')return `冰凍：命中時 ${pc(TRC.fz0+TRC.fz1*k)}（普攻 ×${TRC.basic}）機率冰凍 ${fzTurns(k)} 次行動，冰凍中多受 ${pc(TRC.fzd0+TRC.fzd1*k)} 傷害，被打 3 次提早解凍`;
+ if(h.f==='吳')return `灼燒：命中時 ${pc(TRC.bn0+TRC.bn1*k)}（普攻 ×${TRC.basic}）機率灼燒 ${TRC.bnT} 回合，每回合受施加者攻擊 ${pc(TRC.bd0+TRC.bd1*k)} 傷害（無視護盾）`;
+ if(h.f==='神')return `天威：命中時 ${pc(TRC.tw0+TRC.tw1*k)}（普攻 ×${TRC.basic}）機率附加 1 層天威（每次受到直接傷害，再受施加者攻擊 35% 傷害，最多 3 層）`;
+ if(h.f==='魔')return `魔蠱：命中時 ${pc(TRC.mg0+TRC.mg1*k)}（普攻 ×${TRC.basic}）機率附加 1 層魔蠱（每回合受施加者攻擊 22%×層數傷害，其中 30% 回復施加者）`;return ''}
+/* 技能等級（隨星級） */
+const SKLV=(u,slot)=>{const s=u.st||0;return slot==='rg'?(s>=15?4:s>=10?3:s>=5?2:1):(s>=10?3:s>=5?2:1)};
+const RGF=[0,.7,.8,.9,1],OTF=[0,.6,.8,1];
+const rgK=u=>RGF[SKLV(u,'rg')],otK=u=>OTF[SKLV(u,'o')];
+const tierOf=q=>q>=89?4:q>=83?3:q>=75?2:1;
+const SLOTS_OF=q=>({4:['tal','ex','ps','rg'],3:['tal','ps','rg'],2:['ps','rg'],1:['rg']})[tierOf(q)];
+const hasSk=(u,s)=>SLOTS_OF(u.q).includes(s);
+const TALT={atk:{n:'攻擊型',a:.10,h:.05,x:'db'},def:{n:'防守型',a:.05,h:.10,x:'rd'},sup:{n:'輔助型',a:.05,h:.08,x:'hb'}};
+/* 狀態定義：neg 負面、ctl 控制、nd 不可驅散、tk:'act' 以行動次數計、mx 最大層數 */
+const STD={fz:{n:'凍結',neg:1,ctl:1,tk:'act'},kd:{n:'恫嚇',neg:1,ctl:1,tk:'act'},sl:{n:'沉默',neg:1,ctl:1,tk:'act'},tf:{n:'嘲諷',neg:1,ctl:1,tk:'act'},ql:{n:'青龍印記',neg:1,ctl:1,nd:1,tk:'act'},
+ bn:{n:'灼燒',neg:1,mx:2,ns:1},mg:{n:'魔蠱',neg:1,mx:3},yc:{n:'音顫',neg:1,nd:1,mx:5},tw:{n:'天威',neg:1,mx:3},sw:{n:'神威',neg:1,mx:3},dd:{n:'傷害加深',neg:1},pz:{n:'破綻',neg:1},hs:{n:'寒霜',neg:1,mx:3},
+ zsh:{n:'震懾',neg:1,nd:1},lz:{n:'雷澤',neg:1},ad:{n:'攻擊降低',neg:1},hr:{n:'降療',neg:1},qz:{n:'傾折',neg:1},dm:{n:'死亡印記',neg:1},zs:{n:'斬殺',neg:1},nr:{n:'禁復活',neg:1,nd:1},sd:{n:'減速',neg:1},rdn:{n:'減傷降低',neg:1},
+ xj:{n:'先機'},bz:{n:'八陣圖',nd:1},fu:{n:'撫愉'},qc:{n:'傾城'},wd:{n:'療癒之風'},hh:{n:'回魂'},hid:{n:'隱匿'},imm:{n:'負面免疫',nd:1},au:{n:'攻擊提升'},su:{n:'速度提升'},ru:{n:'減傷提升'},zt:{n:'戰魔降世',nd:1},qx:{n:'七星奇象',nd:1},cdu:{n:'暴傷提升'},by:{n:'暴虐',nd:1},qn:{n:'怯懦',neg:1,nd:1},fx:{n:'放逐',nd:1},gd:{n:'格擋',mx:2},sz:{n:'死戰',nd:1},qmu:{n:'怒技增傷',nd:1}};
+const has=(u,k)=>!!(u&&u.ST&&u.ST[k]&&u.ST[k].t>0);
+const stN=(u,k)=>has(u,k)?(u.ST[k].n||1):0;
+const stV=(u,k)=>has(u,k)?(u.ST[k].v||0):0;
+const sideOf=u=>pl.includes(u)?pl:en,foeOf=u=>pl.includes(u)?en:pl;
+const allyA=u=>alive(sideOf(u)),foeA=u=>alive(foeOf(u));
+const byLowPct=a=>a.slice().sort((x,y)=>x.hp/x.mhp-y.hp/y.mhp),byHiAtk=a=>a.slice().sort((x,y)=>atkOf(y)-atkOf(x)),byLowHp=a=>a.slice().sort((x,y)=>x.hp-y.hp);
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const vis=l=>{l=l.filter(x=>!has(x,'fx'));const v=l.filter(x=>!has(x,'hid'));return v.length?v:l};
+const negN=x=>Object.keys(x.ST||{}).filter(k=>has(x,k)&&STD[k]&&STD[k].neg).length;
+const isCtl=x=>['fz','kd','sl','tf','ql'].some(k=>has(x,k));
+const sk=u=>SK[u.id]||{};
+let CUR=null,CSK=false,CAOE=false,FUQ=[],ROUND=0,BLOG=null;
+const LBL=(t,txt,cls,ex)=>{const c=cellOf(t);if(c)spawn(c,cls||'fx-a',txt,ex)};
+function addSt(t,k,o,src){o=o||{};if(!t||t.hp<=0||has(t,'fx'))return false;const D=STD[k]||{};if(src&&src.X&&src.X.wei6&&(k==='fz'||k==='kd'))o={...o,t:(o.t||1)+1};if(k==='bn'&&src&&src.X&&src.X.bn2)o={...o,stack:1};
+ if(D.neg){if(has(t,'imm'))return false;if(src&&sideOf(src)===sideOf(t))return false;
+  if(has(t,'xj')){delete t.ST.xj;LBL(t,'先機抵消','fx-h','g');upd(t);return false}
+  if(D.ctl){if(t.wsShield&&t.sh>0&&k!=='tf')return false;if(k==='fz'&&t.fi)return false;if(t.ctlImm>Math.random())return false}}
+ const old=t.ST[k]&&t.ST[k].t>0?t.ST[k]:null,mx=(D.mx||1)+(k==='mg'&&src&&bondOn(src,'hj3')?1:0)+(k==='tw'&&src&&src.X&&src.X.tw6?1:0);
+ let n=1;if(D.mx){n=(D.ns&&!o.stack)?Math.max(1,old?old.n||1:1):Math.min(mx,(old?old.n||1:0)+(o.n||1))}
+ let v=o.v!=null?o.v*(o.v&&src&&src.f&&(k==='bn'||k==='mg')?BAL[src.f]||1:1):(old?old.v:0);if(k==='bn'&&src)v*=1+auraSum(src,'bnB')+(src.X&&src.X.bnB||0);if(k==='bn'&&old)v=Math.max(v,old.v||0);
+ t.ST[k]={t:o.t||1,n,v,s:src||(old&&old.s)||null,c:old?old.c||0:0};
+ if(o.lbl!==false&&D.n)LBL(t,D.n+(D.mx&&n>1?'×'+n:''),D.neg?(k==='fz'?'fx-i':k==='bn'?'fx-b':'fx-a'):'fx-h',D.neg?'':'g');
+ if(D.neg&&src){sideOf(src).forEach(a=>{if(a&&a.hp>0&&sk(a).onDeb)sk(a).onDeb(a,t,k,src)});if(D.ctl)foeOf(t).forEach(a=>{if(a&&a.hp>0&&sk(a).onCtl)sk(a).onCtl(a,t,k)})}
+ if(D.ctl)allyA(t).forEach(a=>{if(a!==t&&sk(a).allyCtl&&has(t,k))sk(a).allyCtl(a,t,k)});
+ upd(t);return true}
+function delSt(t,k){if(t.ST&&t.ST[k]){delete t.ST[k];if(k==='zt')lbLeave(t);upd(t)}}
+function dispel(t,n,prefCtl){let c=0;const ks=Object.keys(t.ST).filter(k=>has(t,k)&&STD[k]&&STD[k].neg&&!STD[k].nd).sort((a,b)=>prefCtl?(STD[b].ctl?1:0)-(STD[a].ctl?1:0):Math.random()-.5);
+ for(const k of ks){if(c>=n)break;delSt(t,k);c++}if(c)LBL(t,'驅散','fx-h','g');return c}
+function dispelBuff(t,n){let c=0;const ks=['xj','fu','qc','wd','hh','hid','au','su','ru','cdu'].filter(k=>has(t,k)).sort(()=>Math.random()-.5);
+ if(t.shl&&t.shl.length)ks.unshift('shield');
+ for(const k of ks){if(c>=n)break;if(k==='shield'){t.shl=[];t.sh=0}else delSt(t,k);c++}if(c){LBL(t,'增益驅散');upd(t)}return c}
+/* 護盾：清單形式，可附帶破碎／到期效果 */
+function addShield(t,v,turns,tag,src){if(!t||t.hp<=0)return;t.shl=t.shl||[];if(tag==='fp'){const fps=t.shl.filter(s=>s.tag==='fp');if(fps.length>=3){const o=fps.sort((a,b)=>a.t-b.t||a.v-b.v)[0];t.shl.splice(t.shl.indexOf(o),1)}}
+ t.shl.push({v:Math.round(v),t:turns||99,tag:tag||'',src:src||null,m:src?src.mhp:0});t.sh=t.shl.reduce((s,x)=>s+x.v,0);upd(t)}
+function absorb(t,d,src,direct){if(!t.shl||!t.shl.length||d<=0)return d;
+ while(d>0&&t.shl.length){const s=t.shl[0],a=Math.min(s.v,d);s.v-=a;d-=a;if(s.v<=0){t.shl.shift();
+   if(s.tag==='fp'){if(direct&&src&&src.hp>0&&sideOf(src)!==sideOf(t)){const f=Math.round(s.m*.15*otK(s.src||t));rawDmg(src,f,'fx-a','反震 -');}fpGone(t,s)}}}
+ t.sh=t.shl.reduce((s,x)=>s+x.v,0);return d}
+function fpGone(t,s){if(t.hp>0)heal(s.src||t,t,t.mhp*.05+(s.m||0)*.05*otK(s.src||t),{nob:1})}
+/* 數值 */
+const lvmOf=lv=>1+.01*Math.min(lv-1,99)+.002*Math.max(0,lv-100);
+function auraSum(u,key){let v=0;for(const a of sideOf(u)){if(a&&a.hp>0&&sk(a).aura){const r=sk(a).aura(a,u);if(r&&r[key])v+=r[key]}}return v}
+function atkOf(u){let m=1+stV(u,'au')+(has(u,'qx')?.15*(u.ST.qx.v||1):0)+(u.X.qlz||0)*.03+(u.X.cc||0)*.05+auraSum(u,'atk')-(has(u,'ad')?.25:0);if(u.X.lzB&&u.hp<u.mhp*.5)m+=.30;if(u.X.sce&&u.hp<u.mhp*.5)m+=.15;return Math.max(1,u.atk*Math.max(.2,m)+(u.X.stl||0))}
+function spdOf(u){let m=1+stV(u,'su')-stV(u,'sd')-(has(u,'lz')?.1:0)+auraSum(u,'spd');if(u.X.sce&&u.hp<u.mhp*.5)m+=.2;return u.spd*Math.max(.3,m)+(u.X.ssp||0)}
+function critOf(u){return Math.min(.75,.2+.003*(u.lv-1)+(u.cr||0)+(u.X.qlz||0)*.03+auraSum(u,'cr'))}
+function rdOf(t){let r=(t.rd||0)+(t.jr||0)+stV(t,'ru')+(has(t,'fu')?.15:0)+(has(t,'qc')?.25:0)+auraSum(t,'rd')-(has(t,'zsh')?.15:0)-stV(t,'rdn')-(has(t,'qz')?.15:0);
+ if(sk(t).rdMod)r+=sk(t).rdMod(t);return Math.max(-.5,Math.min(.75,r))}
+function takeMul(t){let m=(1+(has(t,'dd')?.15:0))*(1+(has(t,'pz')?.12:0))*(1+(has(t,'lz')?(t.ST.lz.v||.2):0))*(1+.1*stN(t,'hs'))*(1+(has(t,'dm')?.25:0))*(has(t,'fz')?1+(t.ST.fz.v||0):1)*(has(t,'wd')?.75:1);return m}
+function healMul(t){if(has(t,'ql')||has(t,'sz'))return 0;return Math.max(0,(1-(has(t,'hr')?.25:0)-(has(t,'zsh')?.25:0))*(1+(has(t,'qc')?.15:0)+auraSum(t,'hrv')+(t.X&&t.X.hrv||0)))}
+function heal(src,t,amt,o){o=o||{};if(!t||t.hp<=0)return 0;amt*=healMul(t)*(o.nob?1:1+(src.hb||0));if(!o.nob&&sk(src).hcrit&&Math.random()<sk(src).hcrit(src))amt*=1.5;amt=Math.round(amt);if(amt<=0)return 0;t.hp=Math.min(t.mhp,t.hp+amt);
+ const c=cellOf(t);if(c&&!o.quiet){spawn(c,'fx-h','+'+amt,'g');c.classList.add('heal');setTimeout(()=>c.classList.remove('heal'),700)}upd(t);if(BLOG)BLOG.heal[sideOf(t)===pl?0:1]+=amt;return amt}
+function addRage(u,n){if(!u||u.hp<=0)return;u.rage=Math.max(0,Math.min(200,u.rage+n));upd(u);if(n>0&&u.rage>=100&&typeof qmRageCap==='function')qmRageCap(u)}
+/* 直接扣血（不觸發） */
+function rawDmg(t,d,fx,pre){if(!t||t.hp<=0)return 0;d=Math.round(d);if(d<=0)return 0;t.hp=Math.max(0,t.hp-d);if(t.ST){for(const k of['bn','mg','yc']){const z=t.ST[k]&&t.ST[k].s;if(z&&z.X&&has(t,k)){z.X.dd=(z.X.dd||0)+d;break}}}LBL(t,(pre||'-')+d,fx||'fx-a');upd(t);if(t.hp<=0)onDeath(t,null);return d}
+/* 主傷害函式 */
+async function hit(src,t,mult,o){o=o||{};if(!t||t.hp<=0||has(t,'fx'))return 0;const c=cellOf(t);let d,crit=false,direct=!o.fix&&!o.dot;
+ if(o.fix!=null){d=o.fix*(has(t,'qx')?.85:1)*(1-auraSum(t,'fixr'))}
+ else{d=atkOf(src)*mult*(.92+Math.random()*.16);crit=o.crit!=null?o.crit:Math.random()<critOf(src)+stV(src,'by')+(sk(src).critB?sk(src).critB(src,t)||0:0);
+  if(crit)d*=1.5+(src.cdb||0)+stV(src,'cdu');
+  let db=1+(src.db||0)+(src.X.sgDb||0)+(src.X.zmDb||0)+auraSum(src,'db')+(o.kind==='fu'?src.X.fuDb||0:0)+stV(src,'by')+(o.kind==='sk'?stV(src,'qmu'):0)+(src.X.wei4&&isCtl(t)?.15:0);if(sk(src).dmgMod)db*=sk(src).dmgMod(src,t,o)||1;d*=db;
+  d*=takeMul(t)*(1-rdOf(t))*ruleMul(t,o.fx||'fx-s')*(CAOE&&has(t,'hid')?.75:1);if(sk(t).takeMod)d*=sk(t).takeMod(t,src,o)||1}
+ if(direct&&sk(t).dodge&&sk(t).dodge(t,src)){LBL(t,'幻影','fx-h','g');return 0}
+ d=Math.max(1,d*(src.f&&BAL[src.f]||1));if(direct)src.X.lt=t;
+ if(direct&&has(t,'gd')){t.ST.gd.n--;if(t.ST.gd.n<=0)delete t.ST.gd;LBL(t,'格擋','fx-h','g');upd(t);return 0}
+ if(has(t,'sz')){t.ST.sz.c=(t.ST.sz.c||0)+(direct?1:0);const q=qmOf(t);if(direct&&q&&!t.ST.sz.v&&t.ST.sz.c>=qmV(q,'a')){delete t.ST.sz;t.hp=0;onDeath(t,src);upd(t)}else LBL(t,'死戰','fx-c');return 0}
+ if(direct||o.fix!=null){for(const g of allyA(t)){if(g===t)continue;const f=sk(g).guard&&sk(g).guard(g,t,src);if(f>0){const sv=d*f;d-=sv;guardTake(g,sv)}}
+  for(const g of allyA(t)){if(g!==t&&t.X.ty&&g.X.ty&&t.hp<t.mhp*.3){const sv=d*.15;d-=sv;guardTake(g,sv)}}}
+ if(!o.noShield)d=absorb(t,d,src,direct);
+ if(t.hp-d<=0&&t.hp>0){if(sk(t).save&&sk(t).save(t,d,src)){d=Math.max(0,t.hp-1)}else if(qmSave(t)){d=Math.max(0,t.hp-1)}else{for(const g of allyA(t)){if(g!==t&&sk(g).allySave&&sk(g).allySave(g,t)){d=Math.max(0,t.hp-1);break}}}}
+ d=Math.round(d);t.hp=Math.max(0,t.hp-d);if(src.X&&src.X.mo6&&src.hp>0&&src.hp<src.mhp*.5)heal(src,src,d*.15,{nob:1,quiet:1});if(o.kind==='sk'&&!src.X.r.qnD&&qmOf(src)&&qmOf(src).id==='smcg'&&t.hp>0&&Math.random()<qmV(qmOf(src),'b'))addSt(t,'qn',{t:1},src);if(BLOG)BLOG.dmg[sideOf(src)===pl?0:1]+=d;if(src.X)src.X.dd=(src.X.dd||0)+d;
+ if(c){if(!SKIP)hitSfx(crit);spawn(c,o.fx||'fx-s','-'+d,crit?'crit':'');c.classList.add('hit');setTimeout(()=>c.classList.remove('hit'),400)}upd(t);
+ if(direct&&!o.quiet){const b=$('board');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}
+ if(t.hp>0&&direct&&!o.noTrig){
+  if(has(t,'fz')){t.ST.fz.c=(t.ST.fz.c||0)+1;if(t.ST.fz.c>=3){delSt(t,'fz');t.fi=1;LBL(t,'解凍','fx-i')}}
+  await procTw(t);
+  if(has(t,'zs')){const z=t.ST.zs.s;if(z&&z.hp>0&&t.hp<t.mhp*(.25+(z.X.zsU||0))&&t.hp<=atkOf(z)*3){t.hp=0;LBL(t,'斬殺');upd(t)}}}
+ if(direct&&!o.noTrig&&src.hp>0){facHit(src,t,o);if(sk(src).deal)sk(src).deal(src,t,d,o);if(t.hp>0&&sk(t).hurt)await sk(t).hurt(t,src,d,o)}
+ if(t.hp<=0)onDeath(t,src);else if(sk(t).lowHp)sk(t).lowHp(t);
+ return d}
+async function procTw(t){for(const[k,p,cap]of[['tw',TRC.twP,2],['sw',TRC.swP,1]]){if(!has(t,k)||t.hp<=0)continue;const s=t.ST[k],z=s.s;if(!z)continue;const lim=cap+(k==='tw'?(z.X.twCap||0)+(z.X.tw6?1:0):0);if((s.c||0)>=lim)continue;s.c=(s.c||0)+1;
+  await hit(z,t,0,{fix:atkOf(z)*p*(z.X.twM||1)*(s.n||1),fx:'fx-c',noTrig:1,quiet:1})}}
+function guardTake(g,d){if(g.hp<=0)return;d*=(1-rdOf(g));d=absorb(g,d,null,false);g.hp=Math.max(0,g.hp-d);if(g.id==='guan')g.X.gs=Math.min(g.mhp,(g.X.gs||0)+d);LBL(g,'分攤 -'+Math.round(d),'fx-s');upd(g);if(g.hp<=0)onDeath(g,null)}
+function facHit(s,t,o){if(!s||s.hp<=0||t.hp<=0)return;const k=tpow(s),m=(o.kind==='ba'?TRC.basic:1)*(CAOE?TRC.aoeT:1)*(s.jt||1)*(s.X.res?TRC.res:1),R=Math.random();
+ if(s.f==='魏'){if(!has(t,'fz')&&!t.fi&&R<(TRC.fz0+TRC.fz1*k+(s.X.fzB||0))*m)addSt(t,'fz',{t:fzTurns(k),v:TRC.fzd0+TRC.fzd1*k},s)}
+ else if(s.f==='吳'){if(R<(TRC.bn0+TRC.bn1*k)*m)addSt(t,'bn',{t:TRC.bnT,v:Math.max(1,atkOf(s)*(TRC.bd0+TRC.bd1*k)),n:s.X.bn2?1:0},s)}
+ else if(s.f==='神'){if(R<(TRC.tw0+TRC.tw1*k+(s.X.twB||0))*m)addSt(t,'tw',{t:3},s)}
+ else if(s.f==='魔'){if(R<(TRC.mg0+TRC.mg1*k)*m)mgAdd(t,s,1)}}
+function mgAdd(t,s,n){return addSt(t,'mg',{t:2+(s.X.mgT||0),v:atkOf(s)*TRC.mgD*(1+(s.X.mgB||0)),n:n||1},s)}
+function twAdd(t,s,n){return addSt(t,'tw',{t:3,n:n||1},s)}
+/* 死亡 */
+function onDeath(t,src){if(t.hp>0||t.dead)return;
+ if(has(t,'hh')&&!has(t,'nr')){delSt(t,'hh');reviveU(t,.3+(bondOn(t,'sy')?.1:0));SPA.revive(t);LBL(t,'回魂','fx-h','g');return}
+ if(sk(t).revive&&!has(t,'nr')&&sk(t).revive(t))return;
+ t.dead=1;t.shl=[];t.sh=0;qmAllyDie(t);
+ if(has(t,'hs')){const z=t.ST.hs.s;if(z&&z.hp>0){const f=atkOf(z)*.5*otK(z);foeA(z).forEach(x=>FUQ.push(async()=>{if(x.hp>0)await hit(z,x,0,{fix:f,fx:'fx-i',noTrig:1})}))}}
+ if(has(t,'dm')){const z=t.ST.dm.s;if(z&&z.hp>0&&sk(z).markDie)sk(z).markDie(z,t)}
  if(t.steal){const z=t.steal;t.steal=null;if(z.e&&z.e.hp>0)z.e.atk+=z.amt;if(z.al&&z.al.hp>0)z.al.atk=Math.max(1,z.al.atk-z.amt)}
- if(t.id==='huatuo'&&!t.rv){t.rv=1;const arr=pl.includes(t)?pl:en;arr.forEach(x=>{if(x&&x!==t&&x.hp<=0&&!(x.nr>0))reviveU(x,.35)});const c=cellOf(t);if(c)spawn(c,'fx-h','神農再世','g')}}
-function stealInit(){[[pl,en],[en,pl]].forEach(([a,b])=>{const z=a.find(u=>u&&u.id==='zhangjiao'&&u.hp>0);if(!z)return;const e=alive(b).sort((x,y)=>y.atk-x.atk)[0],al=alive(a).filter(u=>u!==z).sort((x,y)=>y.atk-x.atk)[0]||z;if(!e)return;
-  const amt=Math.round(e.atk*.15);e.atk-=amt;al.atk+=amt;z.steal={e,al,amt};spawn(cellOf(e),'fx-a','-'+amt);spawn(cellOf(al),'fx-a','+'+amt,'g')})}
+ if(src&&src.hp>0&&sideOf(src)!==sideOf(t)&&sk(src).kill)sk(src).kill(src,t);
+ for(const a of foeA(t))if(sk(a).foeDie)sk(a).foeDie(a,t);
+ for(const a of allyA(t))if(sk(a).allyDie)sk(a).allyDie(a,t);
+ if(sk(t).die)sk(t).die(t);
+ [...pl,...en].forEach(x=>{if(x&&x.hp>0&&has(x,'zsh')&&x.ST.zsh.s===t)delSt(x,'zsh')});upd(t)}
+function reviveU(x,pct){x.dead=0;x.hp=Math.max(1,Math.round(x.mhp*pct));['fz','bn','mg','lz','hid','kd','sl','tf','ql','yc'].forEach(k=>{if(x.ST)delete x.ST[k]});const c=cellOf(x);if(c){c.classList.add('heal');setTimeout(()=>c.classList.remove('heal'),700);spawn(c,'fx-h','復活','g');upd(x,c)}}
+function canRevive(x){return x&&x.hp<=0&&!has(x,'nr')}
+/* 目標 / 範圍 */
+function pickT(u,X,how){const ec=X.ec,foes=vis(alive(ec));if(!foes.length)return null;
+ if(typeof how==='function')return how(foes)||front(X.es,ec);
+ switch(how){case 'lowPct':return byLowPct(foes)[0];case 'lowHp':return byLowHp(foes)[0];case 'hiAtk':return byHiAtk(foes)[0];case 'back':return back(X.es,ec);case 'rand':return rnd(foes);
+  case 'facing':{const col=X.ac.indexOf(u)%3,rows=X.es==='e'?[2,1,0]:[0,1,2];for(const r of rows){const x=ec[r*3+col];if(x&&x.hp>0&&!has(x,'hid'))return x}return front(X.es,ec)}
+  default:return front(X.es,ec)}}
+function areaOf(pat,X,t){const ec=X.ec,idx=ec.indexOf(t),r=Math.floor(idx/3),col=idx%3,br=X.es==='e'?0:2;let L=[];
+ if(pat==='pierce')for(let k=0;k<3;k++)L.push([k*3+col,k*110]);
+ else if(pat==='sweep')for(let k=0;k<3;k++)L.push([r*3+k,k*170]);
+ else if(pat==='cross'){L.push([idx,0]);if(r>0)L.push([idx-3,200]);if(r<2)L.push([idx+3,200]);if(col>0)L.push([idx-1,200]);if(col<2)L.push([idx+1,200])}
+ else if(pat==='xshape'){L.push([idx,0]);[[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([a,b])=>{const rr=r+a,cc=col+b;if(rr>=0&&rr<3&&cc>=0&&cc<3)L.push([rr*3+cc,220])})}
+ else if(pat==='backrow'){let rr=br;const rows=X.es==='e'?[0,1,2]:[2,1,0];for(const q of rows){if([0,1,2].some(k=>ec[q*3+k]&&ec[q*3+k].hp>0)){rr=q;break}}for(let k=0;k<3;k++)L.push([rr*3+k,k*150]);L.r=rr}
+ else if(pat==='aoe')for(let k=0;k<9;k++)L.push([k,k*70]);
+ else L.push([idx,0]);return L}
+/* 標準怒氣技能執行器 */
+var BAL={蜀:.80,魏:.89,吳:1.39,神:1.23,魔:1.85};
+const PATF={aoe:.65,sweep:.75,pierce:.75,backrow:.75,cross:.75,xshape:.75};
+async function ultHit(u,X,sp){const ec=X.ec,c=X.c,gid=X.mine?'ge':'gp';const pat=sp.pat||u.pat;let t=sp.t||pickT(u,X,sp.tgt);if(!t)return[];
+ const mult=sp.m*rgK(u)*u.m,crit=sp.crit!=null?sp.crit:Math.random()<critOf(u);const fx=sp.fx||FX[pat]||'fx-s';const hits=[];
+ if(sp.pre)await sp.pre(t);
+ if(pat==='single'||pat==='assn'||pat==='snipe'){
+  if(pat==='assn'){c.style.opacity=.3;spawn(c,'fx-a');await sleep(250);c.style.opacity=1;await jump(c,cellOf(t),true,true,X.mine)}
+  else if(pat==='snipe'){await jump(c,cellOf(t),false,true,X.mine);await fly(c,cellOf(t),'snipe')}
+  else await jump(c,cellOf(t),true,true,X.mine);
+  if(sp.anim)await sp.anim(t);
+  const m2=sp.mt?sp.mt(t,mult):mult;const d=await hit(u,t,m2,{fx,crit,kind:'sk'});hits.push([t,d]);if(sp.each)await sp.each(t,d,crit);await sleep(260);c.style.transform=''}
+ else if(pat==='volley'){const n=sp.n||3;await jump(c,cellOf(t),false,true,X.mine);for(let k=0;k<n;k++){const al=alive(ec);if(!al.length)break;const tg=rnd(al);fly(c,cellOf(tg),'volley');await sleep(170);const d=await hit(u,tg,mult,{fx,crit:Math.random()<critOf(u),kind:'sk'});hits.push([tg,d]);if(sp.each)await sp.each(tg,d);await sleep(50)}await sleep(260)}
+ else{const L=areaOf(pat,X,t),ctr=pat==='aoe'?4:pat==='backrow'?L.r*3+1:ec.indexOf(t);
+  await jump(c,$(gid+ctr),false,true,X.mine);await fly(c,$(gid+ctr),pat);if(sp.anim)await sp.anim(t);
+  beam(gid,pat,ec.indexOf(t),pat==='backrow'?L.r:Math.floor(ec.indexOf(t)/3),ec.indexOf(t)%3);CAOE=true;
+  const tg=L.map(([i,dl])=>[ec[i],dl,i]).filter(([x])=>x&&x.hp>0);const share=sp.share?Math.max(1,tg.length):1/(PATF[pat]||1);
+  await Promise.all(L.map(async([i,dl])=>{await sleep(dl);const x=ec[i];if(x&&x.hp>0){let m2=mult/share;if(sp.cap)m2=Math.min(m2,sp.cap*rgK(u)*u.m);if(sp.mt)m2=sp.mt(x,m2);const d=await hit(u,x,m2,{fx,crit,kind:'sk'});hits.push([x,d]);if(sp.each)await sp.each(x,d,crit)}else spawn($(gid+i),fx)}));CAOE=false;await sleep(420)}
+ return hits}
+async function ultHeal(u,X,sp){const c=X.c;await jump(c,c,false,true,X.mine);let al=alive(X.ac);if(sp.who)al=sp.who(al);if(sp.anim)await sp.anim(al);
+ for(const a of al){heal(u,a,atkOf(u)*sp.m*rgK(u)*u.m);if(sp.each)await sp.each(a)}await sleep(600);return al}
+const chance=(u,p)=>Math.random()<p*otK(u);
+const chR=(u,p)=>Math.random()<p;
+/* 普攻 */
+async function basicAtk(u,X){const c=X.c;if(sk(u).basic){await sk(u).basic(u,X);return}
+ const t=sk(u).baT?sk(u).baT(u,X):front(X.es,X.ec);if(!t)return;await jump(c,cellOf(t),true,false,X.mine);
+ const d=await hit(u,t,TRC.basic,{fx:'fx-s',kind:'ba'});if(sk(u).baEach)await sk(u).baEach(u,t,d,X);await sleep(220);c.style.transform=''}
+/* 行動 */
+async function act(u,mine,basic,o){o=o||{};const ec=mine?en:pl,es=mine?'e':'p',ac=mine?pl:en,c=cellOf(u);const X={mine,ec,es,ac,c};
+ if(!alive(ec).length||u.hp<=0)return;
+ if(has(u,'tf')&&u.ST.tf.s&&u.ST.tf.s.hp>0){const t=u.ST.tf.s;delSt(u,'tf');CUR=u;CSK=false;c.classList.add('act');LBL(u,'被嘲諷');await jump(c,cellOf(t),true,false,mine);await hit(u,t,TRC.basic,{fx:'fx-s',kind:'ba'});addRage(u,50);await sleep(200);c.style.transform='';c.classList.remove('act');return}
+ const sil=has(u,'sl');if(sil)delSt(u,'sl');
+ const useSk=!basic&&u.rage>=100&&!sil;CUR=u;CSK=useSk;c.classList.add('act');
+ if(useSk&&BLOG)BLOG.ult=(BLOG.ult||[0,0]),BLOG.ult[mine?0:1]++;if(sil&&BLOG){BLOG.sil=BLOG.sil||[0,0];BLOG.sil[mine?0:1]++}if(useSk){u.rage-=100;upd(u,c);if(ANIM==='full')await cine(u,mine);else banner(`${u.n}・${u.sk}`);sfx(u.pat==='heal'?'heal':u.pat);
+  if(sk(u).ult)await sk(u).ult(u,X);else await ultHit(u,X,{m:1.2});if(sk(u).afterUlt)await sk(u).afterUlt(u,X);for(const e of alive(ec))if(sk(e).foeUlt)sk(e).foeUlt(e,u);u.X.r.qnD=1}
+ else{sfx('single');await basicAtk(u,X);if(!basic&&!o.extra)addRage(u,50)}
+ c.classList.remove('act');upd(u,c);
+ if(u.hp>0){if(has(u,'bz')){const s=u.ST.bz;if((s.c||0)<(s.v||1)){s.c=(s.c||0)+1;heal(s.s||u,u,atkOf(s.s||u)*.5*otK(s.s||u))}}
+  if(has(u,'yc')){const s=u.ST.yc,z=s.s;rawDmg(u,Math.min(u.mhp*.03,(z?atkOf(z):u.atk)*.6)*(s.n||1),'fx-a','音顫 -')}
+  if(u.hp>0&&sk(u).after)await sk(u).after(u,X,{ult:useSk,basic})}
+ for(const a of allyA(u)){if(a!==u&&sk(a).allyAct)await sk(a).allyAct(a,u,X,{ult:useSk})}
+ await flushFU();
+ if(u.f==='蜀'&&!basic&&u.hp>0&&alive(ec).length&&Math.random()<(Math.min(TRC.cbMax,TRC.cb0+TRC.cb1*tpow(u))+(u.X.cbB||0))*(u.jt||1)*(u.X.res?TRC.res:1)){LBL(u,'連擊','fx-c');await sleep(240);await act(u,mine,true)}}
+async function flushFU(){let n=0;while(FUQ.length&&n<40&&alive(pl).length&&alive(en).length){const f=FUQ.shift();n++;try{await f()}catch(e){console.error(e)}}FUQ=[]}
+/* 追擊（不消耗怒氣） */
+async function chase(u,t,mult,o){if(!t||t.hp<=0||u.hp<=0)return 0;o=o||{};const c=cellOf(u),mine=pl.includes(u);CUR=u;LBL(u,o.txt||'追擊','fx-c');
+ if(!o.noJump)await jump(c,cellOf(t),!o.ranged,false,mine);const d=await hit(u,t,mult*u.m,{fx:o.fx||'fx-t',kind:'fu',crit:o.crit});if(o.fix&&t.hp>0)await hit(u,t,0,{fix:o.fix,fx:o.fx||'fx-t',noTrig:1});if(u.X.shu6)heal(u,u,u.mhp*.03,{nob:1,quiet:1});await sleep(150);if(c)c.style.transform='';return d}
+/* 回合開始 / 結束 */
+async function roundStartV2(){for(const u of[...alive(pl),...alive(en)]){u.X.r={};['tw','sw','bz'].forEach(k=>{if(has(u,k))u.ST[k].c=0})}
+ if(ROUND===2&&DELAYQ.length){const q=DELAYQ;DELAYQ=[];for(const f of q){try{f()}catch(e){console.error(e)}}}
+ for(const u of[...alive(pl),...alive(en)])if(sk(u).rStart&&u.hp>0)await sk(u).rStart(u);await qmRoundStart()}
+async function roundEndV2(){let any=false;
+ for(const u of[...pl,...en]){if(!u||u.hp<=0)continue;
+  if(has(u,'bn')){const s=u.ST.bn;rawDmg(u,(s.v||1)*(s.n||1)*(1-auraSum(u,'fixr'))*(has(u,'qx')?.85:1),'fx-b');any=true}
+  if(u.hp>0&&has(u,'mg')){const s=u.ST.mg,z=s.s,d=(s.v||1)*(s.n||1)*(has(u,'qx')?.85:1)*(1-auraSum(u,'fixr'));const got=rawDmg(u,d,'fx-a');any=true;if(z&&z.hp>0)heal(z,z,got*(TRC.mgL+(z.X.mgL||0)),{nob:1,quiet:1});
+   if(u.hp>0&&z&&(s.n||1)>=3&&sk(z).mg3)sk(z).mg3(z,u)}
+  if(u.hp>0&&has(u,'wd')){heal(u,u,u.mhp*.06,{nob:1});any=true}}
+ for(const u of[...alive(pl),...alive(en)])if(sk(u).rEnd)await sk(u).rEnd(u);await qmRoundEnd();
+ for(const u of[...pl,...en]){if(!u)continue;for(const k in u.ST){const D=STD[k]||{};if(D.tk==='act')continue;u.ST[k].t--;if(u.ST[k].t<=0){const z=u.ST[k].s;delete u.ST[k];if(k==='zt')lbLeave(u);if(k==='bn'&&z&&u.hp>0){const lx=allyA(z).find(a=>a.id==='luxun');if(lx)SK.luxun.bnEnd(lx,u)}}}
+  if(u.shl&&u.shl.length){u.shl.forEach(s=>s.t--);const ex=u.shl.filter(s=>s.t<=0);u.shl=u.shl.filter(s=>s.t>0);u.sh=u.shl.reduce((s,x)=>s+x.v,0);if(u.hp>0)ex.forEach(s=>{if(s.tag==='fp')fpGone(u,s)})}
+  if(u.wsShield&&!u.shl.some(s=>s.tag==='ws'))u.wsShield=0;u.fi=0;upd(u)}
+ if(any)await sleep(420)}
+let DELAYQ=[];
+/* 開場 */
+const FT={蜀:['連擊機率 +5%','追擊傷害 +15%','每次追擊回復 3% 生命'],魏:['冰凍機率 +5%','對被控制的敵人傷害 +15%','冰凍與恫嚇多持續 1 次行動'],吳:['速度 +8%','灼燒傷害 +25%','灼燒可疊 2 層，開場 +30 怒氣'],神:['天威機率 +5%','天威傷害 +35%','天威上限 4 層、觸發上限 +1'],魔:['魔蠱吸血 +10%','魔蠱傷害 +25%','生命低於 50% 時所有傷害吸血 15%']};
+function facTier(arr){const y=synergy(arr);arr.forEach(u=>{if(!u)return;const n=y.cnt[u.f]||0,X=u.X;if(n<2)return;const t4=n>=4,t6=n>=6;
+ if(u.f==='蜀'){X.cbB=.05;if(t4)X.fuDb=(X.fuDb||0)+.15;if(t6)X.shu6=1}
+ else if(u.f==='魏'){X.fzB=(X.fzB||0)+.05;if(t4)X.wei4=1;if(t6)X.wei6=1}
+ else if(u.f==='吳'){u.spd=Math.round(u.spd*1.08);if(t4)X.bnB=(X.bnB||0)+.25;if(t6){X.bn2=1;u.rage+=30}}
+ else if(u.f==='神'){X.twB=(X.twB||0)+.05;if(t4)X.twM=1.35;if(t6)X.tw6=1}
+ else if(u.f==='魔'){X.mgL=(X.mgL||0)+.1;if(t4)X.mgB=(X.mgB||0)+.25;if(t6)X.mo6=1}})}
+const BHP=2.5;
+function battleInit(){[...pl,...en].forEach(u=>{if(!u)return;u.mhp=Math.round(u.mhp*BHP);u.hp=Math.round(u.hp*BHP);u.ST={};u.shl=[];u.sh=0;u.X={};u.dead=0;u.fi=0;u.steal=null;u.wsShield=0;u.ctlImm=0;u.cdb=0;u.hb=u.hb||0;
+  if(hasSk(u,'tal')&&sk(u).tal){const T=TALT[sk(u).tal],k=otK(u);u.atk=Math.round(u.atk*(1+T.a*k));const o=u.mhp;u.mhp=Math.round(u.mhp*(1+T.h*k));u.hp=Math.round(u.hp*u.mhp/o);if(T.x==='db')u.db=(u.db||0)+.05*k;else if(T.x==='rd')u.rd=(u.rd||0)+.05*k;else u.hb=(u.hb||0)+.08*k}});
+ [pl,en].forEach(a=>{const y=synergy(a);a.forEach(u=>{if(u&&y.res&&u.f===y.res)u.X.res=1})});
+ [pl,en].forEach(a=>applyBonds(a));[pl,en].forEach(a=>facTier(a));
+ DELAYQ=[];[[pl,en],[en,pl]].forEach(([a,b])=>{const zg=alive(b).find(x=>x.id==='shenzhuge');const p=zg?.7*otK(zg):0;
+  alive(a).forEach(u=>{if(sk(u).start){if(p&&Math.random()<p){LBL(u,'東風延遲');DELAYQ.push(()=>sk(u).start(u))}else sk(u).start(u)}})});qmInit()}
 
-const TAL={zhangjiao:[.10,.05,.05,0],zhangchunhua:[.10,.05,.05,0],machao:[.10,.05,.05,0],huatuo:[.05,.10,0,.05],bulianshi:[.05,.10,0,.05],dianwei:[.05,.10,0,.05],lvlingqi:[.10,.05,.05,0],mayunlu:[.15,.30,0,.15],diaochan:[.15,.30,0,.15],guan:[.08,.12,0,.06]};
-function tlInit2(){[...pl,...en].forEach(u=>{const t=u&&TAL[u.id];if(!t||u.t2)return;u.t2=1;u.atk=Math.round(u.atk*(1+t[0]));const o=u.mhp;u.mhp=Math.round(u.mhp*(1+t[1]));u.hp=Math.round(u.hp*u.mhp/o);u.db=(u.db||0)+t[2];u.rd=(u.rd||0)+t[3]})}
-const dbn=x=>(x.fz>0)+(x.bn>0)+(x.mg>0)+(x.lz>0)+(x.ad>0)+(x.hr>0);
-function adApply(t){if(t.imm>0||t.ad>0)return;t.ad=2;t.ads=Math.round(t.atk*.25);t.atk-=t.ads;spawn(cellOf(t),'fx-a','攻擊降低');upd(t,cellOf(t))}
-function hrApply(t){if(t.imm>0)return;t.hr=2;spawn(cellOf(t),'fx-a','降療');upd(t,cellOf(t))}
-function bnApply(t,s){if(t.imm>0)return;t.bn=2;t.bd=Math.max(1,s.atk*.3);spawn(cellOf(t),'fx-b','灼燒');upd(t,cellOf(t))}
-function cleanse1(x){const l=[];if(x.fz>0)l.push('fz');if(x.bn>0)l.push('bn');if(x.mg>0)l.push('mg');if(x.lz>0)l.push('lz');if(x.ad>0)l.push('ad');if(x.hr>0)l.push('hr');if(!l.length)return;const k=l[Math.floor(Math.random()*l.length)];
- if(k==='lz'){x.lz=0;if(x.lzs){x.spd+=x.lzs;x.lzs=0}}else if(k==='ad'){x.ad=0;if(x.ads){x.atk+=x.ads;x.ads=0}}else x[k]=0;spawn(cellOf(x),'fx-h','驅散','g');upd(x,cellOf(x))}
+/* ===================== 奇謀（全隊戰術，每隊裝備 1 個，★0–5＝Lv1–6） ===================== */
+const QMD=[
+ {id:'xsdr',n:'先聲奪人',ic:'📯',t:'戰鬥開始時，我方每名武將 {a} 機率 +50 怒氣；Lv4 起，我方武將被扣怒氣時替他擋下，每場 {b} 次。',a:[.5,.75,1,1,1,1],b:[0,0,0,2,3,4]},
+ {id:'gbyz',n:'故布疑陣',ic:'🎭',t:'奇數回合結束時，我方怒氣最少的 {a} 人 +30 怒氣；Lv4 起，下一回合我方怒氣技能傷害 +{b}。',a:[2,4,6,6,6,6],b:[0,0,0,.1,.2,.3]},
+ {id:'dlj',n:'斷糧絕草',ic:'🌾',t:'奇數回合開始時，敵方每名武將 {a} 機率 −30 怒氣；Lv4 起，敵人怒氣漲到 100 以上時再扣 {b} 點，每場 {c} 次。',a:[.4,.7,1,1,1,1],b:[0,0,0,50,100,100],c:[0,0,0,2,2,3]},
+ {id:'qszh',n:'敲山震虎',ic:'🐯',t:'每回合結束時，我方全體回復 {a} 生命；Lv4 起，生命低於 50% 的隊友再回復 {b}，每場 {c} 次。',a:[.04,.06,.08,.08,.08,.08],b:[0,0,0,.1,.18,.25],c:[0,0,0,2,2,3]},
+ {id:'wmzm',n:'無謀之謀',ic:'🌙',t:'我方武將陣亡時，生命最低的隊友獲得【無敵盾】（擋下 1 次攻擊，{a} 機率再擋 1 次），每場 {c} 次。',a:[.5,.75,1,1,1,1],c:[1,1,1,2,2,3]},
+ {id:'smcg',n:'四面楚歌',ic:'🎶',t:'奇數回合開始時，我方全體獲得【暴虐】：暴擊、傷害各 +{a}，1 回合；放怒氣技能時 {b} 機率讓目標【怯懦】（行動 50% 失敗，1 回合）。',a:[.1,.2,.3,.3,.3,.3],b:[.3,.4,.5,.6,.7,.8]},
+ {id:'wwjz',n:'圍魏救趙',ic:'🏯',t:'每回合開始時，敵方存活 3 人以上，{a} 機率【放逐】攻擊最高的敵人 1 回合（無法行動、無法被攻擊、不受任何效果），每名武將每場 1 次；Lv5 起敵方 2 人以上即可觸發，Lv6 被放逐者再 −30 怒氣。',a:[.5,.75,1,1,1,1]},
+ {id:'mtgh',n:'瞞天過海',ic:'⛵',t:'偶數回合開始時，我方全體獲得 {a} 生命的護盾與 +{b} 減傷，2 回合；Lv4 起，生命最低的 {c} 人獲得【攻擊格擋】（擋下 1 次直接傷害）。',a:[.08,.12,.15,.15,.15,.15],b:[.1,.15,.2,.2,.2,.2],c:[0,0,0,2,4,6]},
+ {id:'qlfb',n:'潛龍伏波',ic:'🐉',t:'我方武將受到致命傷害時進入【死戰】：生命鎖定 1 點、本回合免疫傷害、無法被治療，回合結束或被攻擊 {a} 次後陣亡，每場 {c} 次；Lv4 起進入時回復 20% 生命且回合結束不再陣亡。',a:[4,5,6,6,6,6],c:[1,1,2,2,2,3]}];
+const QMU=20,QMSTAR=[10,20,30,40,50];
+let QMS=[null,null];
+const qmOf=u=>sideOf(u)===pl?QMS[0]:QMS[1];
+const qmV=(q,k)=>{const d=QMD.find(x=>x.id===q.id);return d[k][q.lv-1]};
+const pctS=v=>Math.round(v*100)+'%';
+function qmText(id,lv){const d=QMD.find(x=>x.id===id);const f=k=>{const v=d[k]&&d[k][lv-1];return v==null?'':(v<=1&&!['c'].includes(k)&&!(d.id==='gbyz'&&k==='a')&&!(d.id==='qlfb'&&k==='a')&&!(d.id==='mtgh'&&k==='c')&&!(d.id==='dlj'&&k==='b')?pctS(v):v)};return d.t.replace('{a}',f('a')).replace('{b}',f('b')).replace('{c}',f('c'))}
+function fxQM(side,q){if(!q)return;const d=QMD.find(x=>x.id===q.id);if(BLOG){BLOG.qm=(BLOG.qm||0)+1}if(SKIP||!SPX())return;const e=document.createElement('div');e.className='qmfx '+(side===pl?'p':'e');e.innerHTML=`<i>${d.ic}</i><b>${d.n}</b><small>奇謀・Lv.${q.lv}</small>`;document.body.appendChild(e);setTimeout(()=>e.remove(),1300/BSPD)}
+function qmInit(){const mine=S.qm&&S.qm.eq&&S.qm.own&&S.qm.own[S.qm.eq]!=null?{id:S.qm.eq,lv:S.qm.own[S.qm.eq]+1}:null;QMS=[mine?{...mine,u:{}}:null,OPP.qm?{...OPP.qm,u:{}}:null];
+ [[pl,0],[en,1]].forEach(([a,i])=>{const q=QMS[i];if(!q)return;if(q.id==='xsdr'){fxQM(a,q);alive(a).forEach(u=>{if(Math.random()<qmV(q,'a'))addRage(u,50)})}})}
+function qmBlockRage(t){const q=qmOf(t);if(!q||q.id!=='xsdr'||(q.u.b||0)>=qmV(q,'b'))return false;q.u.b=(q.u.b||0)+1;LBL(t,'先聲奪人','fx-h','g');return true}
+function loseRage(t,n){if(!t||t.hp<=0||n<=0)return 0;if(qmBlockRage(t))return 0;const r=Math.min(t.rage,n);t.rage-=r;upd(t);return r}
+function qmRageCap(t){const q=qmOf(t)===QMS[0]?QMS[1]:QMS[0];if(!q||q.id!=='dlj'||t.rage<100)return;const b=qmV(q,'b');if(!b||(q.u.c||0)>=qmV(q,'c'))return;q.u.c=(q.u.c||0)+1;if(loseRage(t,b)){LBL(t,'斷糧 −'+b)}}
+async function qmRoundStart(){for(const[a,i]of[[pl,0],[en,1]]){const q=QMS[i];if(!q)continue;const foes=i?pl:en,odd=ROUND%2===1;
+  if(q.id==='dlj'&&odd){fxQM(a,q);alive(foes).forEach(e=>{if(Math.random()<qmV(q,'a')&&loseRage(e,30))LBL(e,'斷糧 −30')})}
+  if(q.id==='smcg'&&odd){fxQM(a,q);alive(a).forEach(u=>addSt(u,'by',{t:1,v:qmV(q,'a')},u))}
+  if(q.id==='mtgh'&&!odd){fxQM(a,q);alive(a).forEach(u=>{addShield(u,u.mhp*qmV(q,'a'),2,'',u);addSt(u,'ru',{t:2,v:qmV(q,'b'),lbl:false},u)});const c=qmV(q,'c');if(c)byLowPct(alive(a)).slice(0,c).forEach(u=>addSt(u,'gd',{t:2,n:1},u))}
+  if(q.id==='wwjz'){const al=alive(foes).filter(e=>!has(e,'fx'));if(al.length>=(q.lv>=5?2:3)&&Math.random()<qmV(q,'a')){const t=byHiAtk(al).find(e=>!e.X.fxd);if(t){t.X.fxd=1;fxQM(a,q);t.ST.fx={t:1,n:1,v:0,s:null};LBL(t,'放逐','fx-c');if(q.lv>=6)loseRage(t,30);upd(t)}}}}}
+async function qmRoundEnd(){for(const[a,i]of[[pl,0],[en,1]]){const q=QMS[i];if(!q)continue;
+  if(q.id==='gbyz'&&ROUND%2===1){fxQM(a,q);alive(a).sort((x,y)=>x.rage-y.rage).slice(0,qmV(q,'a')).forEach(u=>addRage(u,30));const b=qmV(q,'b');if(b)alive(a).forEach(u=>addSt(u,'qmu',{t:2,v:b,lbl:false},u))}
+  if(q.id==='qszh'){alive(a).forEach(u=>heal(u,u,u.mhp*qmV(q,'a'),{nob:1,quiet:1}));const b=qmV(q,'b');if(b){for(const u of byLowPct(alive(a))){if(u.hp>=u.mhp*.5||(q.u.c||0)>=qmV(q,'c'))break;q.u.c=(q.u.c||0)+1;heal(u,u,u.mhp*b,{nob:1})}}}
+  if(q.id==='qlfb')alive(a).forEach(u=>{if(has(u,'sz')&&!u.ST.sz.v){delete u.ST.sz;u.hp=0;onDeath(u,null);upd(u)}})}}
+function qmAllyDie(t){const q=qmOf(t);if(!q||q.id!=='wmzm'||(q.u.c||0)>=qmV(q,'c'))return;const a=byLowPct(allyA(t))[0];if(!a)return;q.u.c=(q.u.c||0)+1;fxQM(sideOf(t),q);addSt(a,'gd',{t:9,n:Math.random()<qmV(q,'a')?2:1},a);LBL(a,'無敵盾','fx-h','g')}
+function qmSave(t){const q=qmOf(t);if(!q||q.id!=='qlfb'||(q.u.c||0)>=qmV(q,'c')||has(t,'sz'))return false;q.u.c=(q.u.c||0)+1;fxQM(sideOf(t),q);t.ST.sz={t:1,n:0,v:q.lv>=4?1:0,s:null,c:0};
+ FUQ.push(async()=>{if(q.lv>=4){t.hp=Math.max(t.hp,Math.round(t.mhp*.2));LBL(t,'死戰 +20%','fx-h','g')}else LBL(t,'死戰','fx-c');upd(t)});return true}
 
-let TRF=false;
-function dwHit(t,dmg){if(t.id!=='dianwei'||TRF)return dmg;const src=CUR;
- if(src&&src.hp>0&&(pl.includes(t)!==pl.includes(src))){if((t.mq||0)<5){t.mq=(t.mq||0)+1;t.rd=Math.min(.6,(t.rd||0)+.04);spawn(cellOf(t),'fx-a','魔魁×'+t.mq)}
-  if(Math.random()<.3&&!(src.imm>0)&&!(src.tfN>0)){src.tf=t;src.tfN=1;spawn(cellOf(src),'fx-a','嘲諷')}}
- if(t.el&&t.el.hp>0&&t.hp>0){const tr=Math.min(dmg*.4,t.mhp*.25);dmg-=tr;TRF=true;hurt(t.el,tr,'fx-a',false);TRF=false}
- return dmg}
-function lvDeath(z){const al=pl.includes(z)?pl:en,foes=alive(pl.includes(z)?en:pl);
- alive(al).forEach(a=>{const h=Math.round(z.atk*1.0);a.hp=Math.min(a.mhp,a.hp+h);spawn(cellOf(a),'fx-h','+'+h,'g');upd(a,cellOf(a))});
- if(!z.zc&&foes.length){z.zc=1;const x=foes.sort((a,b)=>a.hp/a.mhp-b.hp/b.mhp)[0];hurt(x,z.atk*z.m*.4*(1+(z.db||0)),'fx-a',false)}}
-function roundStart(){[...pl,...en].forEach(u=>{if(u)u.zc=0;if(!u||u.hp<=0)return;const foes=vis(alive(pl.includes(u)?en:pl));const t=foes.slice().sort((a,b)=>b.atk-a.atk)[0];if(!t)return;
- if(u.id==='dianwei'&&!(t.imm>0)){u.el=t;spawn(cellOf(t),'fx-a','惡來連結')}
- if(u.id==='lvlingqi'){t.dmk=2;t.dms=u;t.dmd=0;spawn(cellOf(t),'fx-a','死亡印記')}})}
-async function tauntAtk(u,mine){const t=u.tf,c=cellOf(u);CUR=u;CSK=false;c.classList.add('act');spawn(c,'fx-a','被嘲諷');await jump(c,cellOf(t),true,false,mine);
- await hurt(t,u.atk*.6*(.9+Math.random()*.2)*(1+(u.db||0)),FX.single,false);u.rage+=50;await sleep(300);c.style.transform='';c.classList.remove('act');upd(u,c)}
-function trDebuff(u,mine){if(Math.random()>.5)return;const al=mine?pl:en,ec=mine?en:pl;
- const srcs=alive(al).filter(a=>a.bn>0||a.mg>0||a.ad>0||a.hr>0).sort(()=>Math.random()-.5).slice(0,3),tg=alive(ec).sort(()=>Math.random()-.5);
- srcs.forEach((a,i)=>{const e=tg[i];if(!e)return;const ks=['bn','mg','ad','hr'].filter(k=>a[k]>0),k=ks[Math.floor(Math.random()*ks.length)];
-  if(k==='bn'){if(!(e.imm>0)){e.bn=a.bn;e.bd=a.bd}a.bn=0;spawn(cellOf(e),'fx-b','轉移灼燒')}
-  else if(k==='mg'){if(!(e.imm>0)){e.mg=Math.min(3,(e.mg||0)+1);e.mgT=a.mgT||2;e.mgD=a.mgD}a.mg=Math.max(0,a.mg-1);spawn(cellOf(e),'fx-a','轉移魔蠱')}
-  else if(k==='ad'){a.ad=0;if(a.ads){a.atk+=a.ads;a.ads=0}adApply(e)}
-  else{a.hr=0;hrApply(e)}
-  spawn(cellOf(a),'fx-h','轉贈','g');upd(a,cellOf(a));upd(e,cellOf(e))})}
-let LT=null,NOLT=false;
-function mkSet(u,ec){if(u.mk&&u.mk.hp>0)return;const t=vis(alive(ec)).sort((a,b)=>b.atk-a.atk)[0];if(t){u.mk=t;spawn(cellOf(t),'fx-a','月華標記');fxAt(cellOf(t),'s-cres','☽',600)}}
-async function shang(u){const t=LT;if(!t||t.hp<=0||u.hp<=0)return;const f=Math.min(u.atk*.7,t.mhp*(.05+dbn(t)*.015));NOLT=true;await hurt(t,f,'fx-a',false);NOLT=false}
-async function mcSg(u){if(Math.random()<.4){sgAdd(u,1);spawn(cellOf(u),'fx-a','神光×'+u.sg)}}
-async function mcChase(u,mine){const ec=mine?en:pl;if(u.hp<=0)return;const pr=u.jy>0?[1,1,1]:[.5,.4,.3];let n=0;
- for(;;){const t=vis(alive(ec)).sort((a,b)=>b.atk-a.atk)[0];if(!t)break;const c=cellOf(u);spawn(c,'fx-c','追擊');SPA.machaoChase(c,t);await jump(c,cellOf(t),true,false,mine);
-  await hurt(t,u.atk*TRS.mcC*(1+(u.db||0))*(0.9+Math.random()*.2),'fx-t',false);if(t.hp<=0)sgAdd(u,1);await mcSg(u);c.style.transform='';await sleep(160);
-  if(u.hp<=0||n>=3||Math.random()>=pr[n])break;n++}
- u.jy=0}
-const gpDR=g=>1-Math.min(.2,(1-g.hp/g.mhp)*.5);
-function glTake(g,d){if(g.hp<=0)return;d*=(1-(g.rd||0))*(1-(g.jr||0))*gpDR(g);if(g.sh>0){const a=Math.min(g.sh,d);g.sh-=a;d-=a}g.hp=Math.max(0,g.hp-d);g.gs=Math.min(g.mhp,(g.gs||0)+d);const c=cellOf(g);if(c){spawn(c,'fx-s','分攤 -'+Math.round(d));upd(g,c)}if(g.hp<=0)onDeath(g)}
-function glLink(){[pl,en].forEach(a=>{a.forEach(x=>{if(x)x.gl=null});const g=a.find(u=>u&&u.id==='guan'&&u.hp>0);if(!g)return;const t=alive(a).filter(x=>x!==g).sort((x,y)=>y.atk-x.atk)[0];if(!t)return;t.gl=g;spawn(cellOf(t),'fx-h','青龍守護','g');upd(t,cellOf(t))})}
 /* ---- 神將專屬戰鬥動畫 ---- */
 const SPX=()=>ANIM==='full'&&!SKIP&&!AUTOC;
 function sfxRel(el){const b=$('board'),br=b.getBoundingClientRect(),r=el.getBoundingClientRect();return{x:r.left-br.left+r.width/2,y:r.top-br.top+r.height/2,w:r.width,h:r.height}}
@@ -657,80 +1147,6 @@ const SPA={
  zhangjiao:async(mine,ec)=>{if(!SPX())return;const g=mine?'ge':'gp';fxDark(1300);fxGrid(g,'s-sky','☁️☁️☁️☁️',1300,-1*($(g).getBoundingClientRect().height*.4));await sleep(200);
   const al=ec.filter(x=>x&&x.hp>0);for(let k=0;k<3;k++){const x=al[Math.floor(Math.random()*al.length)];if(x)fxAt(cellOf(x),'s-bolt','',480,0,$(g).getBoundingClientRect().height*.1);await sleep(140)}fxFlash();await sleep(80)}};
 
-const CSK_={};
-CSK_.lvlingqi=async(u,mine,ec,es,ac,c,dm,crit)=>{const t=vis(alive(ec)).sort((a,b)=>a.hp-b.hp)[0];await jump(c,cellOf(t),true,true,mine);await hurt(t,dm,'fx-a',crit);
- if(t.hp>0){if(!(t.imm>0)){t.zs=2;t.zsrc=u;t.zsd=0;spawn(cellOf(t),'fx-a','斬殺')}await hurt(t,Math.min((t.mhp-t.hp)*.2,u.atk*1.5),'fx-a',false)}
- await sleep(300);c.style.transform=''};
-CSK_.dianwei=async(u,mine,ec,es,ac,c,dm,crit)=>{const t=front(es,ec),col=ec.indexOf(t)%3,rows=es==='e'?[2,1,0]:[0,1,2];await jump(c,cellOf(t),true,true,mine);let hit=0;
- for(const r of rows){const x=ec[r*3+col];if(x&&x.hp>0){hit++;await hurt(x,dm,'fx-t',crit);if(x.hp>0&&!(x.imm>0)){if(Math.random()<.5){x.tf=u;x.tfN=1;spawn(cellOf(x),'fx-a','嘲諷')}if(Math.random()<.4)mgApply(x,u)}await sleep(110)}}
- const h=Math.round(u.mhp*.05*hit);u.hp=Math.min(u.mhp,u.hp+h);spawn(c,'fx-h','+'+h,'g');upd(u,c);await sleep(300);c.style.transform=''};
-CSK_.bulianshi=async(u,mine,ec,es,ac,c,dm,crit)=>{const al=alive(ac),th=al.reduce((s,x)=>s+x.hp,0),tm=al.reduce((s,x)=>s+x.mhp,0),gid=mine?'ge':'gp';
- if(th<=tm*.5){await jump(c,c,false,true,mine);al.forEach(a=>{const amt=Math.round(a.mhp*u.m*(a.f==='魔'?TRC.mheal:1)*(a.hr>0?.75:1));a.hp=Math.min(a.mhp,a.hp+Math.round(amt*(a.qc>0?1.15:1)));const cc=cellOf(a);spawn(cc,'fx-h','+'+amt,'g');cc.classList.add('heal');setTimeout(()=>cc.classList.remove('heal'),700);a.fu=2;upd(a,cc)});await sleep(700)}
- else{await jump(c,$(gid+4),false,true,mine);await fly(c,$(gid+4),'aoe');beam(gid,'aoe',4,0,0);const dmg=u.atk*(1+(u.db||0))*(crit?1.5:1);
-  await Promise.all(ec.map(async(x,k)=>{await sleep(k*70);if(x&&x.hp>0){await hurt(x,dmg,'fx-a',crit);if(x.hp>0&&!(x.imm>0)){x.qz=2;if(Math.random()<.4)mgApply(x,u)}}else spawn($(gid+k),'fx-a')}));await sleep(500)}
- const t1=al.slice().sort((a,b)=>b.atk-a.atk)[0],t2=al.slice().sort((a,b)=>a.hp/a.mhp-b.hp/b.mhp)[0];[...new Set([t1,t2])].forEach(x=>{if(x&&x.hp>0){x.hh=2;spawn(cellOf(x),'fx-h','回魂','g')}})};
-
-CSK_.guan=async(u,mine,ec,es,ac,c,dm,crit)=>{const t=vis(alive(ec)).sort((a,b)=>b.atk-a.atk)[0]||front(es,ec);const hi=t.hp>t.mhp*.5;
- await jump(c,cellOf(t),true,true,mine);await SPA.guan(c,t);await hurt(t,dm,'fx-s',crit);
- if(t.hp>0&&hi)await hurt(t,u.mhp*.08,'fx-s',false);
- if(t.hp>0&&u.gs>0){const st=u.gs*.6;u.gs=0;spawn(c,'fx-b','創深痛巨');await hurt(t,st,'fx-b',false)}else u.gs=0;
- if(t.hp>0&&!(t.imm>0)&&!(t.ws>0&&t.sh>0)&&Math.random()<.5){t.ql=1;SPA.guanSeal(t);spawn(cellOf(t),'fx-c','青龍印記');upd(t,cellOf(t))}
- const w=Math.round(u.mhp*.12);u.sh=Math.max(0,u.sh-(u.wsh||0))+w;u.wsh=w;u.ws=2;SPA.guanShield(c);spawn(c,'fx-h','武聖庇護','g');upd(u,c);
- await sleep(300);c.style.transform=''};
-CSK_.lubu=async(u,mine,ec,es,ac,c,dm,crit)=>{const gid=mine?'ge':'gp',zm=u.zt>0,n=alive(ec).length||1,cap=u.atk*TRS.lbCap*(zm?1.3:1)*(crit?1.5:1)*(1+(u.db||0)),per=Math.min(cap,dm/n);
- await jump(c,$(gid+4),false,true,mine);await fly(c,$(gid+4),'aoe');beam(gid,'aoe',4,0,0);await SPA.lubu(mine);
- await Promise.all(ec.map(async(x,k)=>{await sleep(k*70);if(x&&x.hp>0){const fx=x.f==='魔'?0:u.atk*TRS.lbFix;await hurt(x,per+fx,'fx-f',crit);if(x.hp>0){if(Math.random()<(zm?.45:.25))mgApply(x,u);if(zm&&Math.random()<.25&&!(x.imm>0)){x.nr=3;spawn(cellOf(x),'fx-a','禁復活')}}}else spawn($(gid+k),'fx-f')}));await sleep(500)};
-function lbEnter(u){if(u.zt>0)return false;const n=(pl.includes(u)?pl:en).filter(x=>x&&x!==u&&x.hp>0&&x.f==='魔').length;u.zt=3;u.imm=2;u.zatk=Math.round(u.atk*.12);u.atk+=u.zatk;u.zdb=.05*n;u.db=(u.db||0)+u.zdb;const c=cellOf(u);SPA.lubuRage(c);spawn(c,'fx-a','戰魔降世');upd(u,c);return true}
-function lbLeave(u){u.atk=Math.max(1,u.atk-(u.zatk||0));u.zatk=0;u.db=(u.db||0)-(u.zdb||0);u.zdb=0;upd(u,cellOf(u))}
-function lbHeal(u,p){const h=Math.round(u.mhp*p);u.hp=Math.min(u.mhp,u.hp+(u.ql>0?0:Math.round(h*(u.qc>0?1.15:1))));const c=cellOf(u);spawn(c,'fx-h','+'+h,'g');upd(u,c)}
-function lbCheck(t){if(t.hp<=0||t.zl||t.hp>=t.mhp*.3)return;t.zl=1;t.fz=0;t.bn=0;t.mg=0;if(t.lz>0){t.lz=0;if(t.lzs){t.spd+=t.lzs;t.lzs=0}}t.hid=t.hid;lbHeal(t,.25);lbEnter(t)}
-function zmGain(u){(pl.includes(u)?pl:en).forEach(z=>{if(z&&z.id==='lubu'&&z!==u&&z.hp>0&&(z.zm||0)<10&&Math.random()<.5){z.zm=(z.zm||0)+1;z.db=(z.db||0)+.015;spawn(cellOf(z),'fx-a','戰魔×'+z.zm);
-  if(z.zm>=10){if(z.zt>0){if(!z.zh){z.zh=1;lbHeal(z,.2)}}else lbEnter(z)}}})}
-function lbInit(){[...pl,...en].forEach(u=>{if(u&&u.id==='lubu'&&!u.tl){u.tl=1;u.atk=Math.round(u.atk*1.08);const o=u.mhp;u.mhp=Math.round(u.mhp*1.05);u.hp=Math.round(u.hp*u.mhp/o);u.db=(u.db||0)+.03}})}
-CSK_.machao=async(u,mine,ec,es,ac,c,dm,crit)=>{const iu=ac.indexOf(u),col=iu%3,rows=es==='e'?[2,1,0]:[0,1,2];let t=null;
-  for(const r of rows){const x=ec[r*3+col];if(x&&x.hp>0&&!x.hid){t=x;break}}if(!t)t=front(es,ec);
-  await SPA.machao(c,t);await jump(c,cellOf(t),true,true,mine);await hurt(t,dm,'fx-t',crit);
-  sgAdd(u,1);spawn(c,'fx-a','神光×'+u.sg);if(t.hp>0&&u.sg>0)await hurt(t,u.atk*TRS.sg*u.sg,'fx-t',false);
-  if(t.hp<=0){sgAdd(u,1)}if(Math.random()<.4){u.jy=1;spawn(c,'fx-c','極意')}
-  await sleep(300);c.style.transform=''};
-CSK_.zhangchunhua=async(u,mine,ec,es,ac,c,dm,crit)=>{const t=vis(alive(ec)).sort((a,b)=>a.hp/a.mhp-b.hp/b.mhp)[0];
-  const lost=Math.floor((1-t.hp/t.mhp)*10),mul=1+Math.min(.25,lost*.05)+Math.min(.2,dbn(t)*.05);
-  c.style.opacity=.3;spawn(c,'fx-a');await sleep(250);c.style.opacity=1;await jump(c,cellOf(t),true,true,mine);await SPA.zhangchunhua(c,t);await hurt(t,dm*mul,'fx-a',crit);
-  const mk=u.mk;if(mk&&mk.hp>0){await hurt(mk,dm*.25,'fx-a',false);if(mk.hp<=0&&Math.random()<.5&&!(mk.imm>0)){mk.nr=3}}
-  u.hid=2;upd(u,c);spawn(c,'fx-a','隱匿');fxAt(c,'s-cloud','🌫️🌫️',800);await sleep(300);c.style.transform=''};
-CSK_.huatuo=async(u,mine,ec,es,ac,c,dm,crit)=>{await jump(c,c,false,true,mine);const al=alive(ac);await SPA.huatuo(c,mine,al);
- al.forEach(a=>{const amt=Math.round(a.mhp*u.m*(a.f==='魔'?TRC.mheal:1)*(a.hr>0?.75:1));a.hp=Math.min(a.mhp,a.hp+(a.ql>0?0:Math.round(amt*(a.qc>0?1.15:1))));const cc=cellOf(a);spawn(cc,'fx-h','+'+amt,'g');cc.classList.add('heal');setTimeout(()=>cc.classList.remove('heal'),700);upd(a,cc)});
- al.forEach(cleanse1);al.slice().sort((a,b)=>a.hp/a.mhp-b.hp/b.mhp).slice(0,2).forEach(a=>{a.wind=2;spawn(cellOf(a),'fx-h','療癒之風','g');upd(a,cellOf(a))});
- const dead=ac.filter(x=>x&&x.hp<=0&&!(x.nr>0));
- if(dead.length){reviveU(dead[0],.4);SPA.revive(dead[0])}else{const a=al.slice().sort((x,y)=>x.hp/x.mhp-y.hp/y.mhp)[0];if(a){const amt=Math.round(a.mhp*.25);a.hp=Math.min(a.mhp,a.hp+(a.ql>0?0:Math.round(amt*(a.qc>0?1.15:1))));spawn(cellOf(a),'fx-h','+'+amt,'g');upd(a,cellOf(a))}}
- await sleep(700)};
-function dcHeal(a,amt){amt=Math.round(amt*(a.f==='魔'?TRC.mheal:1)*(a.hr>0?.75:1));a.hp=Math.min(a.mhp,a.hp+(a.ql>0?0:Math.round(amt*(a.qc>0?1.15:1))));const cc=cellOf(a);if(cc){spawn(cc,'fx-h','+'+amt,'g');cc.classList.add('heal');setTimeout(()=>cc.classList.remove('heal'),700);upd(a,cc)}}
-function dcQc(a){a.qc=2;const cc=cellOf(a);if(cc){spawn(cc,'fx-h','傾城','g');upd(a,cc)}}
-function dcInit(){[pl,en].forEach(arr=>{arr.forEach(d=>{if(!d||d.id!=='diaochan'||d.hp<=0||d.dqi)return;d.dqi=1;const t=alive(arr).sort((x,y)=>y.atk-x.atk)[0];if(!t)return;const o=t.mhp;t.mhp=Math.round(t.mhp*1.25);t.hp=Math.round(t.hp*t.mhp/o);dcQc(t)})})}
-async function dcBy(u,mine){const al=alive(mine?pl:en).sort((a,b)=>a.hp/a.mhp-b.hp/b.mhp).slice(0,2);if(!al.length)return;al.forEach(a=>dcHeal(a,u.atk*1.5*u.m));spawn(cellOf(u),'fx-h','閉月','g');await sleep(300)}
-CSK_.diaochan=async(u,mine,ec,es,ac,c,dm,crit)=>{await jump(c,c,false,true,mine);
- const dead=ac.filter(x=>x&&x.hp<=0&&!(x.nr>0)).sort((a,b)=>b.atk-a.atk);let t;
- if(dead.length){t=dead[0];reviveU(t,0);t.hp=0;dcHeal(t,u.atk*3*u.m);t.hp=Math.max(1,t.hp)}
- else{t=alive(ac).sort((a,b)=>a.hp/a.mhp-b.hp/b.mhp)[0];if(t)dcHeal(t,u.atk*3.5*u.m)}
- if(t){const sh=Math.round(u.atk);t.sh=(t.sh||0)+sh;t.wsh=(t.wsh||0)+sh;t.ws=Math.max(t.ws||0,2);spawn(cellOf(t),'fx-h','月幕','g');dcQc(t);cleanse1(t);upd(t,cellOf(t))}
- await sleep(700)};
-const sideOf=u=>pl.includes(u)?pl:en;
-function fpHealAmt(t,amt){amt=Math.round(amt*(t.f==='魔'?TRC.mheal:1)*(t.hr>0?.75:1)*(t.qc>0?1.15:1));if(t.ql>0)amt=0;t.hp=Math.min(t.mhp,t.hp+amt);const c=cellOf(t);if(c){spawn(c,'fx-h','+'+amt,'g');c.classList.add('heal');setTimeout(()=>c.classList.remove('heal'),700);upd(t,c)}}
-function fpGone(t,l){fpHealAmt(t,t.mhp*.05+l.m*.05)}
-function fpAdd(t,src){const v=Math.round(src.mhp*.15);t.fp=t.fp||[];if(t.fp.length>=3){t.fp.sort((a,b)=>a.t-b.t||a.v-b.v);t.fp.shift()}t.fp.push({v,t:2,m:src.mhp});const c=cellOf(t);if(c){spawn(c,'fx-h','鳳魄之護×'+t.fp.length,'g');upd(t,c)}}
-function fpAbsorb(t,dmg){if(!t.fp||!t.fp.length||dmg<=0)return dmg;const atk=CUR&&CUR.hp>0&&sideOf(CUR)!==sideOf(t)?CUR:null;
- while(dmg>0&&t.fp.length){const l=t.fp[0],a=Math.min(l.v,dmg);l.v-=a;dmg-=a;if(l.v<=0){t.fp.shift();const full=Math.round(l.m*.15);
-  if(atk&&atk.hp>0){atk.hp=Math.max(0,atk.hp-full);const ac=cellOf(atk);if(ac){spawn(ac,'fx-a','反震 -'+full);upd(atk,ac)}if(atk.hp<=0)onDeath(atk)}
-  fpGone(t,l)}}
- upd(t,cellOf(t));return dmg}
-function yhSave(t,dmg){if(t.id==='mayunlu')return dmg;const my=sideOf(t).find(x=>x&&x!==t&&x.id==='mayunlu'&&x.hp>0&&!x.yhc);if(!my)return dmg;my.yhc=1;
- const d=Math.max(0,t.hp-1);t.hp-=d;fpHealAmt(t,my.mhp*.5);SPA.moon(t);spawn(cellOf(t),'fx-h','月華癒魂','g');return 0}
-CSK_.mayunlu=async(u,mine,ec,es,ac,c,dm,crit)=>{const t=front(es,ec);await jump(c,cellOf(t),true,true,mine);await SPA.mayunlu(c,t);await hurt(t,dm,'fx-s',crit);
- SPA.phoenix(c,alive(ac));await spw(450);alive(ac).forEach(a=>fpAdd(a,u));await sleep(400);c.style.transform=''};
-async function hurt(t,dmg,fx,crit){
- if(CUR&&CUR.id==='zhangchunhua'&&!NOLT)LT=t;const c=cellOf(t);dmg*=ruleMul(t,fx)*(1-(t.rd||0))*(1-(t.jr||0))*(t.fz>0?1+(t.fzd||0):1)*(t.lz>0?1.2:1)*(t.wind>0?.75:1)*(t.qc>0?.75:1)*(t.sg>=1?.85:1)*(CAOE&&t.hid>0?.75:1)*(t.dmk>0?1.25:1)*(t.qz>0?1.15:1)*(t.fu>0?.85:1);dmg=dwHit(t,dmg);if(t.id==='guan')dmg*=gpDR(t);if(t.gl&&t.gl!==t&&t.gl.hp>0){dmg*=.9;const sv=dmg*.4;dmg-=sv;glTake(t.gl,sv)}dmg=fpAbsorb(t,dmg);if(t.sh>0){const a=Math.min(t.sh,dmg);t.sh-=a;dmg-=a}
- if(t.hp-dmg<=0&&t.hp>0)dmg=yhSave(t,dmg);t.hp=Math.max(0,t.hp-dmg);if(t.id==='guan')t.gs=Math.min(t.mhp,(t.gs||0)+dmg);if(t.hp>0&&t.zs>0&&t.zsrc&&t.zsrc.hp>0&&t.hp<t.mhp*.25&&t.hp<=t.zsrc.atk*3){t.hp=0;spawn(c,'fx-a','斬殺')}hitSfx(crit);spawn(c,fx,'-'+Math.round(dmg),crit?'crit':'');c.classList.add('hit');setTimeout(()=>c.classList.remove('hit'),400);upd(t,c);
- const b=$('board');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');facHit(t);if(t.hp<=0)onDeath(t);else if(t.id==='lubu')lbCheck(t)}
 function banner(t){const b=$('bn');b.textContent=t;b.classList.remove('on');void b.offsetWidth;b.classList.add('on')}
 let LAND=false;
 function layout(){const W=innerWidth,H=innerHeight,full=document.body.classList.contains('full');LAND=full&&W>H*1.1;document.body.classList.toggle('land',LAND);const r=document.documentElement.style;
@@ -782,10 +1198,10 @@ var TWS={fin:.8,K:200,K2:350,h0:1,h1:.03,h2:.012,h3:.006,a0:.85,a1:.02,a2:.008,a
 const expR=f=>Math.round((45+9*f)*((f+1)%5?1:1.5)),goldR=f=>Math.round((500+220*f*(1+f/60))*((f+1)%5?1:2));
 function towerEnemy(){en=Array(9).fill(null);const f=FLOOR,bs=(f+1)%5===0,eLv=towerLv(f),k=bs?1.03:1,a=(f<50?(ADJ[TK]||ADJ.exp)[f]:1)*(f===NF-1?TWS.fin:1),f1=Math.min(f,TWS.K),f2=Math.max(0,Math.min(f,TWS.K2)-TWS.K),f3=Math.max(0,f-TWS.K2),hm=(TWS.h0+TWS.h1*f1+TWS.h2*f2+TWS.h3*f3)*k*a,am=(TWS.a0+TWS.a1*f1+TWS.a2*f2+TWS.a3*f3)*k*a;let L=[];
  {let s=f*97+SEED[TK];const rnd=()=>{s=(s*1664525+1013904223)>>>0;return s/4294967296};
-  const QB=[[0,0,65],[25,55,75],[60,65,83],[110,75,89],[160,83,93],[220,89,95],[280,92,99],[600,95,99],[1000,99,99]],qb=QB.filter(x=>f>=x[0]).pop();let pool=H.filter(h=>h.q>=qb[1]&&h.q<=qb[2]&&h.pat!=='heal');if(pool.length<6)pool=H.filter(h=>h.q<=qb[2]&&h.pat!=='heal');if(f>=qb[0]+10&&qb[2]>=83)pool=pool.concat(H.filter(h=>h.pat==='heal'&&h.q>=qb[1]&&h.q<=qb[2]));
+  const QB=[[0,0,65],[25,55,75],[60,65,83],[110,75,89],[160,83,93],[220,89,95],[280,91,95],[600,92,95],[1000,95,95]],qb=QB.filter(x=>f>=x[0]).pop();let pool=H.filter(h=>h.q>=qb[1]&&h.q<=qb[2]&&h.pat!=='heal');if(pool.length<6)pool=H.filter(h=>h.q<=qb[2]&&h.pat!=='heal');if(f>=qb[0]+10&&qb[2]>=83)pool=pool.concat(H.filter(h=>h.pat==='heal'&&h.q>=qb[1]&&h.q<=qb[2]));
   pool=pool.map(h=>[rnd(),h]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]).slice(0,6).sort((a,b)=>b.hp-a.hp);
-  const cells=[6,7,8,0,1,2];L=pool.map((h,k)=>[cells[k],h.id])}
- L.forEach(([i,id])=>{const h=H.find(x=>x.id===id),u=mk(h,eLv);u.mhp=u.hp=Math.round(u.hp*hm);u.atk=Math.round(u.atk*am);en[i]=u})}
+  const cells=[6,7,8,0,1,2];L=pool.map((h,k)=>[cells[k],h.id])}const est=Math.min(15,Math.floor(f/60));
+ L.forEach(([i,id])=>{const h=H.find(x=>x.id===id),u=mk(h,eLv);u.st=est;u.mhp=u.hp=Math.round(u.hp*hm);u.atk=Math.round(u.atk*am);en[i]=u})}
 function ruleMul(t,fx){if(MODE!=='tower')return 1;const R=TWR[FLOOR];let m=1;
  if(en.includes(t)){if(R.as&&['fx-s','fx-a','fx-n'].includes(fx))m*=R.as;if(R.ao&&['fx-t','fx-r','fx-c','fx-f','fx-x','fx-v','fx-b'].includes(fx))m*=R.ao}
  else{const i=pl.indexOf(t);if(i>=0){const r=Math.floor(i/3),c=i%3,al=(a,b)=>a>=0&&a<3&&b>=0&&b<3&&pl[a*3+b]&&pl[a*3+b].hp>0;
@@ -802,7 +1218,7 @@ const PVPMAX=5,PULLMAX=50,PVPP=[20,40,80,160],PILL=f=>Math.round(expR(f)*6*(1+f/
 function newOpp(){let d=DIFF;if(d<0){const x=Math.random();d=x<.3?0:x<.65?1:x<.9?2:3}const hs=[...H.filter(h=>d===0||h.q>=88)].sort(()=>Math.random()-.5).slice(0,6),cs=[...Array(9).keys()].sort(()=>Math.random()-.5);
  OPP={d,list:hs.map((h,i)=>[cs[i],h.id])};buildOpp()}
 function buildOpp(){if(OPP.fr){en=Array(9).fill(null);OPP.fr.forEach(x=>{const h=H.find(y=>y.id===x.id);if(!h)return;const e=mk(h,x.l,x.g);e.st=x.s;en[x.i]=e});return}
- const L=Math.max(1,avgLv()),G=avgGear(),dm=DIFFS[OPP.d].m;en=Array(9).fill(null);OPP.list.forEach(([i,id])=>{const e=mk(H.find(h=>h.id===id),L,G);e.mhp=e.hp=Math.round(e.hp*dm);e.atk=Math.round(e.atk*dm);en[i]=e})}
+ const L=Math.max(1,avgLv()),G=avgGear(),dm=DIFFS[OPP.d].m;en=Array(9).fill(null);const ast=Math.round(pl.filter(Boolean).reduce((s,u)=>s+(u.st||0),0)/Math.max(1,pl.filter(Boolean).length));OPP.list.forEach(([i,id])=>{const e=mk(H.find(h=>h.id===id),L,G);e.st=ast;e.mhp=e.hp=Math.round(e.hp*dm);e.atk=Math.round(e.atk*dm);en[i]=e})}
 function setInfo(){const e=document.querySelector('.side.e .tag');
  document.querySelectorAll('#dsel [data-d]').forEach(b=>b.classList.toggle('on',+b.dataset.d===DIFF));
  if(MODE==='tower'){const f=FLOOR,boss=(f+1)%5===0;
@@ -917,7 +1333,7 @@ const LMAX=300,LNEED=l=>Math.round(40+15*l+(l>30?2*(l-30)*(l-30):0)),lordMulL=l=
 function lordBonus(h){const o={atk:0,hp:0,spd:0,crit:0},F=FACS[S.lord.f];if(F&&h.f===S.lord.f){const m=lordMul();for(const k in F.b)o[k]+=F.b[k]*m}return o}
 function lordGain(x){const b=S.lord.l;S.lord.e+=x;while(S.lord.l<LMAX&&S.lord.e>=LNEED(S.lord.l)){S.lord.e-=LNEED(S.lord.l);S.lord.l++}if(S.lord.l>=LMAX)S.lord.e=0;return `主公經驗 +${x}`+(S.lord.l>b?`（升到 Lv.${S.lord.l}）`:'')}
 const RAR={SP:{n:'神話',c:'#ff3df0',min:99},UR:{n:'傳說',c:'#ff6a3c',min:95},SSR:{n:'史詩',c:'#c07bff',min:92},SR:{n:'稀有',c:'#4aa3ff',min:85},Y:{n:'優',c:'#e0a63a',min:80},R:{n:'良',c:'#58c47a',min:70},N:{n:'凡',c:'#9aa5a8',min:0}};
-const RKEYS=['SP','UR','SSR','SR','Y','R','N'],RO={};H.forEach(h=>{RO[h.id]=RKEYS.find(k=>h.q>=RAR[k].min)});RKEYS.forEach(k=>RAR[k].ids=H.filter(h=>RO[h.id]===k).map(h=>h.id));
+const RKEYS=['SP','UR','SSR','SR','Y','R','N'],RO={};H.forEach(h=>{RO[h.id]=RKEYS.find(k=>h.q>=RAR[k].min)});RKEYS.forEach(k=>RAR[k].ids=H.filter(h=>RO[h.id]===k).map(h=>h.id));const PKIDS=[...RAR.UR.ids,...RAR.SSR.ids];
 const rarOf=id=>RO[id];
 const STARTERS=['caoren','zhangliao','zhangfei','xinxianying','zhugeliang','yuanshao'],STAR_COST=[1,1,2,2,3,3,4,4,5,5,6,6,8,8,10],STAR_GOLD=[2000,4000,8000,16000,32000,50000,70000,100000,140000,200000,280000,400000,550000,750000,1000000],MAXSTAR=15,starB=n=>.10*Math.min(n,5)+.08*Math.max(0,Math.min(n,10)-5)+.06*Math.max(0,n-10);
 function addCard(id){const o={id,isNew:false,coin:0};
@@ -925,13 +1341,14 @@ function addCard(id){const o={id,isNew:false,coin:0};
  else if((S.star[id]||0)>=MAXSTAR){const c={N:80,R:150,Y:200,SR:300,SSR:800,UR:2000,SP:6000}[rarOf(id)];S.coins+=c;o.coin=c}
  else S.cp[id]=(S.cp[id]||0)+1;
  return o}
-function pullOne(){if(Math.random()*100<2){S.wc=(S.wc||0)+1;return{wild:true,id:'wild',isNew:false,coin:0}}S.pity++;S.p10++;S.sp=(S.sp||0)+1;const x=Math.random()*100;let r=S.pity>=30?'UR':x<3?'UR':x<20?'SSR':x<45?'SR':x<65?'Y':x<80?'R':'N';const spHit=S.sp>=100||Math.random()*100<.6;if(spHit){r='SP';S.sp=0}if(S.p10>=10&&r!=='UR'&&r!=='SSR')r='SSR';if(r==='UR'||r==='SP')S.pity=0;if(r==='UR'||r==='SSR'||r==='SP')S.p10=0;
+function pullOne(){if(Math.random()*100<2){S.wc=(S.wc||0)+1;return{wild:true,id:'wild',isNew:false,coin:0}}S.pity++;S.p10++;S.sp=(S.sp||0)+1;const x=Math.random()*100;let r=S.pity>=30?'UR':x<3?'UR':x<20?'SSR':x<45?'SR':x<65?'Y':x<80?'R':'N';if(S.p10>=10&&r!=='UR'&&r!=='SSR')r='SSR';if(r==='UR'||r==='SP')S.pity=0;if(r==='UR'||r==='SSR'||r==='SP')S.p10=0;
  const ids=RAR[r].ids;return addCard(ids[Math.floor(Math.random()*ids.length)])}
 function starUp(id){const st=S.star[id]||0;if(!S.own[id]||st>=MAXSTAR)return;const c=STAR_COST[st],g=STAR_GOLD[st];if((S.cp[id]||0)+(S.wc||0)<c){toast('同名卡不足（萬用卡可代替）');return}if(S.coins<g){toast('金幣不足');return}
  const uc=Math.min(S.cp[id]||0,c),uw=c-uc;S.cp[id]=(S.cp[id]||0)-uc;S.wc=(S.wc||0)-uw;S.coins-=g;S.star[id]=st+1;saveS();if(!busy)refreshPl();toast(`${hname(id)} 升到 ★${st+1}${uw?`（用了 ${uw} 張萬用卡）`:''}`);sfx('win');renderHero();render()}
 function starReady(id){const st=S.star[id]||0;if(!S.own[id]||st>=MAXSTAR||(S.cp[id]||0)+(S.wc||0)<STAR_COST[st])return 0;return S.coins>=STAR_GOLD[st]?2:1}
 function lvCost(id,k){const o=S.lv[id]||{l:1,e:0};k=Math.min(k,MAXLV-o.l);if(k<=0)return 0;let c=-o.e;for(let j=0;j<k;j++)c+=NEED(o.l+j);return c}
 function migrate(){
+ if(!S.v5){S.v5=1;S.own=S.own||{};let rp=0,rc=0;for(const id of REMOVED){if(S.own[id]){rp+=lvSpent(id);rc+=(S.cp[id]||0)+starSpent(id)}delete S.own[id];delete S.lv[id];delete S.star[id];delete S.cp[id];if(S.brk)delete S.brk[id];(S.inv||[]).forEach(x=>{if(x.e===id)x.e=null});if(Array.isArray(S.dl))S.dl=S.dl.map(x=>x===id?null:x);if(S.hj&&S.hj.sl)S.hj.sl=S.hj.sl.map(x=>x===id?null:x)}S.pill=(S.pill||0)+rp;S.wc=(S.wc||0)+rc;if(S.frag&&S.frag.SP){S.frag.UR=(S.frag.UR||0)+S.frag.SP*3;S.frag.SP=0}if(rp||rc)S.v5msg=`武將名單調整：退還 🔮${rp.toLocaleString()}、🃏萬用卡 ${rc} 張`}
  if(S.lord&&S.lord.f==='群'){S.lord.f='魏';S.fcFree=1}
  if(!S.v3){S.v3=1;if(S.own&&S.own.lulingqi){S.coins+=800;}if(S.own)delete S.own.lulingqi;delete S.star.lulingqi;delete S.cp.lulingqi;delete S.lv.lulingqi;(S.inv||[]).forEach(x=>{if(x.e==='lulingqi')x.e=null});if(Array.isArray(S.dl))S.dl=S.dl.map(x=>x==='lulingqi'?null:x)}
  if(!S.fl&&S.login)S.fl=1;if(!S.bp)S.bp=0;if(!S.wc)S.wc=0;if(S.sp==null)S.sp=0;if(!S.pts)S.pts=0;if(!S.born)S.born=today();
@@ -993,8 +1410,6 @@ function deploy(id){const h=H.find(x=>x.id===id);if(!S.own[id]){toast('尚未獲
 function undeploy(id){const i=pl.findIndex(u=>u&&u.id===id);if(i>=0){pl[i]=null;render()}}
 let HM=null;
 function openHero(id){HM=id;renderHero();$('hero').classList.add('on')}
-function heroSkills(h){const o=[[h.sk,'怒氣']],ds=h.ds||'';let m;const re=/<b>([^<]+)<\/b>（([^）]+)）/g;while((m=re.exec(ds))){const t=m[2].replace(/技能/,'');if(m[1]!==h.sk)o.push([m[1],t])}
- if(o.length===1)o[0][1]=P[h.pat];return o.slice(0,5)}
 function heroCardHtml(h,u,lv,st,own){const r=RAR[rarOf(h.id)],b=(S.brk||{})[h.id]||0,pw=Math.round(u.mhp*.5+u.atk*4+u.spd*6),cr=Math.min(.6,.2+.003*(lv-1)+(u.cr||0)),hj=typeof inHJ==='function'&&inHJ(h.id);
  return `<div class="hcard" style="border-color:${r.c}"><img src="${ART2[h.id]}" alt="${h.n}">
  <div class="hct"><div><div class="hcn">${h.n}</div><div><span class="tg" style="background:${FC[h.f]};border-color:${FC[h.f]}">${h.f}</span><span class="tg">${JB[h.job]?JB[h.job].ic:''}${h.job}</span>${b?`<span class="tg" style="border-color:#7fd8ff;color:#bfeaff">突破 ${b}</span>`:''}${hj?'<span class="tg">📖 豪傑書</span>':''}</div></div>
@@ -1014,7 +1429,7 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  <div class="sec">目前參數</div><div class="sg">${R('生命',u.mhp,u.mhp-b.mhp)}${R('攻擊',u.atk,u.atk-b.atk)}${R('速度',u.spd,u.spd-b.spd)}${R('技能倍率','×'+u.m,'')}${R('暴擊率',pct(cr),gb.crit>0?pct(gb.crit):'')}${R('戰力',pw(u),pw(u)-pw(b))}</div>
  ${own?`<div class="sec">升星</div><div class="skb">★${st}/${MAXSTAR}　目前攻擊與生命 +${Math.round(starB(st)*100)}%（★1–5 每星 +10%、★6–10 每星 +8%、★11–15 每星 +6%）${st<MAXSTAR?(()=>{const need=STAR_COST[st],g=STAR_GOLD[st],cp=S.cp[h.id]||0,wc=S.wc||0,have=cp+wc,okC=have>=need,okG=S.coins>=g;
  return `<div class="rq ${okC?'good':'bad'}"><span>同名卡${wc?'＋🃏萬用卡':''}</span><b>${have} / ${need}</b><i>${okC?'✓ 足夠':'✗ 還差 '+(need-have)+' 張'}</i></div><div class="rq ${okG?'good':'bad'}"><span>💰 金幣</span><b>${S.coins.toLocaleString()} / ${g.toLocaleString()}</b><i>${okG?'✓ 足夠':'✗ 還差 '+(g-S.coins).toLocaleString()}</i></div><div style="font-size:11px;opacity:.8;margin-top:4px">同名卡 ${cp} 張${wc?`、萬用卡 ${wc} 張（可代替任何同名卡）`:''}｜升到 ★${st+1} 需 ${need} 張 ＋ 💰${g.toLocaleString()}</div>`})():'<div class="rq good"><span>已滿星</span><b>★'+MAXSTAR+'</b><i>✓</i></div>'}</div>${st<MAXSTAR?`<button data-a="star" style="width:100%;margin-top:6px" ${(S.cp[h.id]||0)+(S.wc||0)<STAR_COST[st]||S.coins<STAR_GOLD[st]?'disabled':''}>${(S.cp[h.id]||0)+(S.wc||0)<STAR_COST[st]?'同名卡不足，無法升星':S.coins<STAR_GOLD[st]?'金幣不足，無法升星':'升星 → ★'+(st+1)}</button>`:''}`:''}
- ${own?`<div class="sec">突破（Lv.${MAXLV} 後）</div><div class="skb">${brkHtml(h.id)}</div>`:''}${own?rstHtml(h.id):''}<div class="sec">技能</div><div class="skb"><b>${h.sk}</b>（${P[h.pat]}）<br>${h.ds||DESC[h.pat]}${h.id==='caoren'?'<br>施放時為自身附加相當於 25% 生命的護盾。':''}<br>怒氣滿 100 放技能，每次普攻 +50 怒氣，開場怒氣 50。</div>
+ ${own?`<div class="sec">突破（Lv.${MAXLV} 後）</div><div class="skb">${brkHtml(h.id)}</div>`:''}${own?rstHtml(h.id):''}<div class="sec">技能（攻擊範圍：${P[h.pat]}）</div><div class="skb">${skHtml(h,st)}<div class="sub" style="font-size:11px">怒氣滿 100 放怒氣技能，每次普攻 +50 怒氣，開場怒氣 50。</div></div>
  <div class="sec">裝備（綠字為裝備加成）</div>${own?'<button data-a="ae" style="width:100%;margin:4px 0">⚡ 一鍵裝備（換上沒人用的最佳裝備）</button>':''}${own?eq:'<div class="sub">獲得此武將後才能裝備。</div>'}${S.inv.length?'':'<div class="sub">還沒有裝備，可到商城購買，或挑戰裝備塔掉落。</div>'}
  <div class="btns" style="margin-top:14px">${own?`<button data-a="dep">${dep?'卸下':'上陣'}</button>`:''}<button class="g" data-a="x">關閉</button></div>`}
 $('heroBody').onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;if(a.dataset.a==='x')$('hero').classList.remove('on');
@@ -1039,7 +1454,7 @@ const SHOPI=[
  {k:'gbox',ic:'🎁',n:'高級裝備寶箱',d:'隨機 1 件裝備（精 45%／極 45%／神 10%）',p:40000},
  {k:'pill100',ic:'🔮',n:'經驗丹 ×100,000',d:'高等級武將用，八折',p:400000},
  {k:'wc5',ic:'🃏',n:'萬用卡 ×5',d:'高星升級用，九折',p:90000,lim:1},
- {k:'pts10',ic:'🏅',n:'招募積分 +10',d:'累積 50 分可自選 1 位神話武將',p:80000,lim:3},
+ {k:'pts10',ic:'🏅',n:'招募積分 +10',d:'累積 50 分可自選 1 位傳說或史詩武將',p:80000,lim:3},
  {k:'lexp',ic:'👤',n:'主公經驗書',d:'主公經驗 +200',p:50000,lim:3},
  {k:'sbox',ic:'🧧',n:'聖品裝備寶箱',d:'隨機 1 件裝備（極 50%／神 40%／聖 10%）',p:150000},
  {k:'dbox',ic:'👑',n:'帝品裝備寶箱',d:'隨機 1 件裝備（神 50%／聖 40%／帝 10%）',p:500000,lim:2},
@@ -1117,8 +1532,8 @@ const bornDay=()=>{if(!S.born)S.born=today();return Math.max(0,Math.round(dnum(t
 const newLeft=()=>S.test||(bornDay()<NEWDAYS&&S.nd!==today());
 const ptsReady=()=>(S.pts||0)>=PTGOAL;
 let GINFO=false,PICK=null,GST=null,GI=0;
-function stageApply(){const ids=RAR.SP.ids,n=ids.length;document.querySelectorAll('#gBody .gsc').forEach((e,k)=>{e.dataset.p=((k-GI)%n+n)%n});const h=H.find(x=>x.id===ids[GI%n]);const nm=$('gnm');if(nm&&h)nm.innerHTML=`<b>${h.n}</b>　<span style="color:${FC[h.f]}">${h.f}</span>・${h.sk}<br><small>資質 99・神話　${h.ds?h.ds.split('<br>')[0].replace(/<[^>]+>/g,'').slice(0,34)+'…':''}</small>`}
-function renderGacha(){const left=pullLeft(),ids=RAR.SP.ids,pts=S.pts||0;
+function stageApply(){const ids=RAR.UR.ids,n=ids.length;document.querySelectorAll('#gBody .gsc').forEach((e,k)=>{e.dataset.p=((k-GI)%n+n)%n});const h=H.find(x=>x.id===ids[GI%n]);const nm=$('gnm');if(nm&&h)nm.innerHTML=`<b>${h.n}</b>　<span style="color:${FC[h.f]}">${h.f}</span>・${h.sk}<br><small>資質 ${h.q}・傳說　${skBrief(h).slice(0,34)}…</small>`}
+function renderGacha(){const left=pullLeft(),ids=RAR.UR.ids,pts=S.pts||0;
  let h=`<div class="gs"><div class="shh"><b>🎴 招募</b><button data-g="x" style="flex:none;width:44px;padding:6px 0">✕</button></div>
  <div class="gchips"><span>今日抽數 <b>${S.test?'∞':Math.max(0,PULLMAX-S.d.pull)}/${PULLMAX}</b></span><span>🃏 萬用卡 <b>${S.wc||0}</b></span>${S.bp?`<span>🎁 贈送抽數 <b>${S.bp}</b></span>`:''}</div>
  <div class="gleft"><div class="gic${ptsReady()?' ready':''}" data-g="pts"><b>🏅</b>積分招募<i><u style="width:${Math.min(100,pts/PTGOAL*100)}%"></u></i>${Math.min(pts,PTGOAL)}/${PTGOAL}${pts>=PTGOAL*2?'<br>×'+Math.floor(pts/PTGOAL):''}</div>
@@ -1126,32 +1541,32 @@ function renderGacha(){const left=pullLeft(),ids=RAR.SP.ids,pts=S.pts||0;
  <div class="gic" data-g="info"><b>ℹ️</b>機率說明</div></div>
  <div class="gstage">${ids.map(id=>`<div class="gsc" style="background-image:url(${ART2[id]})" data-id="${id}"></div>`).join('')}<div class="gring"></div></div>
  <div class="gname" id="gnm"></div>
- <div class="gpity">傳說保底：${Math.max(0,30-S.pity)} 抽內必出　神話保底：${Math.max(0,100-(S.sp||0))} 抽內必出</div>
+ <div class="gpity">傳說保底：${Math.max(0,30-S.pity)} 抽內必出</div>
  <div class="gbtns"><button class="gb1" data-n="1" ${left<1?'disabled':''}>單次招募<small>×1</small></button><button class="gb2" data-n="${S.test||left>=10?10:'all'}" ${left<1?'disabled':''}>${S.test||left>=10?'十連招募':'全部抽完'}<small>×${S.test||left>=10?10:left}</small></button></div>
- <div class="gnote">每抽 +1 積分，滿 ${PTGOAL} 分可自選 1 張資質 99 的神話武將。${bornDay()<NEWDAYS?`新手前 ${NEWDAYS} 天，每天可免費自選 1 張。`:''}</div>`;
+ <div class="gnote">每抽 +1 積分，滿 ${PTGOAL} 分可從任一陣營的傳說、史詩武將中自選 1 位。${bornDay()<NEWDAYS?`新手前 ${NEWDAYS} 天，每天可免費自選 1 張。`:''}</div>`;
  if(GINFO)h+=`<div class="gpk"><div class="gpp"><div class="shh"><b>機率與規則</b><button data-g="info" style="flex:none;width:44px;padding:6px 0">✕</button></div>
- <p class="sub"><span style="color:${RAR.SP.c}">神話 0.6%（100 抽保底）</span>（${RAR.SP.ids.length} 位）・<span style="color:${RAR.UR.c}">傳說 3%</span>（${RAR.UR.ids.length} 位）・<span style="color:${RAR.SSR.c}">史詩 17%</span>（${RAR.SSR.ids.length} 位）・<span style="color:${RAR.SR.c}">稀有 25%</span>（${RAR.SR.ids.length} 位）・<span style="color:${RAR.Y.c}">優 20%</span>（${RAR.Y.ids.length} 位）・<span style="color:${RAR.R.c}">良 15%</span>（${RAR.R.ids.length} 位）・<span style="color:${RAR.N.c}">凡 20%</span>（${RAR.N.ids.length} 位）；每 10 抽至少一張史詩以上。稀有度依「資質」劃分：神話 99、傳說 95–98、史詩 92–94、稀有 85–91、優 80–84、良 70–79、凡 70 以下。</p>
- <p class="sub">抽到新武將就能上陣；重複抽到的變成「同名卡」，到武將詳情花費同名卡與金幣升星（最高 ★15；★1 需 1 張，越高需要越多，★15 需 10 張；★1–5 每星攻擊與生命 +10%、★6–10 +8%、★11–15 +6%，滿星共 +120%）。已滿星再抽到會折算金幣（凡 80／良 150／優 200／稀有 300／史詩 800／傳說 2,000／神話 6,000）。每抽 2% 機會得「🃏萬用卡」，升星時可代替任何同名卡。</p>
- <p class="sub">積分招募：每抽一次 +1 積分（萬用卡也算），累積 ${PTGOAL} 分可從 ${ids.length} 位神話武將中自選 1 位，積分可累積多次。新手福利：建立存檔後的前 ${NEWDAYS} 天，每天可自選 1 位神話武將。選到已擁有的武將會轉為同名卡。</p></div></div>`;
+ <p class="sub"><span style="color:${RAR.UR.c}">傳說 3%</span>（${RAR.UR.ids.length} 位）・<span style="color:${RAR.SSR.c}">史詩 17%</span>（${RAR.SSR.ids.length} 位）・<span style="color:${RAR.SR.c}">稀有 25%</span>（${RAR.SR.ids.length} 位）・<span style="color:${RAR.Y.c}">優 20%</span>（${RAR.Y.ids.length} 位）・<span style="color:${RAR.R.c}">良 15%</span>（${RAR.R.ids.length} 位）・<span style="color:${RAR.N.c}">凡 20%</span>（${RAR.N.ids.length} 位）；每 10 抽至少一張史詩以上。稀有度依「資質」劃分：傳說 95、史詩 92–93、稀有 89–91、優 83、良 75、凡 65。五個陣營各有 3 傳說、3 史詩、3 稀有、2 優、2 良、2 凡，機率完全相同。</p>
+ <p class="sub">抽到新武將就能上陣；重複抽到的變成「同名卡」，到武將詳情花費同名卡與金幣升星（最高 ★15；★1 需 1 張，越高需要越多，★15 需 10 張；★1–5 每星攻擊與生命 +10%、★6–10 +8%、★11–15 +6%，滿星共 +120%）。已滿星再抽到會折算金幣（凡 80／良 150／優 200／稀有 300／史詩 800／傳說 2,000）。每抽 2% 機會得「🃏萬用卡」，升星時可代替任何同名卡。</p>
+ <p class="sub">積分招募：每抽一次 +1 積分（萬用卡也算），累積 ${PTGOAL} 分可從 ${PKIDS.length} 位傳說、史詩武將（任一陣營）中自選 1 位，積分可累積多次。新手福利：建立存檔後的前 ${NEWDAYS} 天，每天可自選 1 位。選到已擁有的武將會轉為同名卡。</p></div></div>`;
  if(PICK){const nw=PICK.kind==='new';h+=`<div class="gpk"><div class="gpp"><div class="shh"><b>${nw?'🎁 新手選將':'🏅 積分招募'}</b><button data-g="pkx" style="flex:none;width:44px;padding:6px 0">✕</button></div>
-  <p class="sub">${nw?`新手福利第 ${Math.min(NEWDAYS,bornDay()+1)}/${NEWDAYS} 天：今天可自選 1 位資質 99 神話武將。`:`積分 ${pts}/${PTGOAL}：${ptsReady()?'已達標，請選擇 1 位資質 99 神話武將。':`還差 ${PTGOAL-pts} 分（每抽一次 +1）。`}`}</p>
-  <div class="pkg">${ids.map(id=>{const hh=H.find(x=>x.id===id);return `<div class="pk${PICK.sel===id?' on':''}" data-g="pk" data-id="${id}"><div class="cwr"><div class="cw" data-id="${id}"></div></div><div class="pkn">${hh.n}${S.own[id]?'<small>（已擁有→同名卡）</small>':'<small>未擁有</small>'}</div></div>`}).join('')}</div>
-  ${PICK.sel?`<div class="pkd"><b>${H.find(x=>x.id===PICK.sel).sk}</b>　${H.find(x=>x.id===PICK.sel).ds}</div>`:''}
+  <p class="sub">${nw?`新手福利第 ${Math.min(NEWDAYS,bornDay()+1)}/${NEWDAYS} 天：今天可自選 1 位傳說或史詩武將。`:`積分 ${pts}/${PTGOAL}：${ptsReady()?'已達標，請選擇 1 位傳說或史詩武將。':`還差 ${PTGOAL-pts} 分（每抽一次 +1）。`}`}</p>
+  <div class="pkg">${PKIDS.map(id=>{const hh=H.find(x=>x.id===id);return `<div class="pk${PICK.sel===id?' on':''}" data-g="pk" data-id="${id}"><div class="cwr"><div class="cw" data-id="${id}"></div></div><div class="pkn">${hh.n}${S.own[id]?'<small>（已擁有→同名卡）</small>':'<small>未擁有</small>'}</div></div>`}).join('')}</div>
+  ${PICK.sel?`<div class="pkd"><b>${H.find(x=>x.id===PICK.sel).sk}</b>　${skHtml(H.find(x=>x.id===PICK.sel),S.star[PICK.sel]||0)}</div>`:''}
   <div class="btns" style="margin-top:10px"><button data-g="pkok" ${PICK.sel&&(nw?newLeft():ptsReady())?'':'disabled'}>確認選擇</button></div></div></div>`}
  if(GR){h+=`<div class="gpk"><div class="gpp"><div class="sec">${GR.title}</div><div class="sub">${GR.sum}</div><div id="gres">${GR.cards.map(o=>`<div class="gc"><div class="cw" data-id="${o.id}"></div><div class="tg">${o.tag}</div></div>`).join('')}</div><div class="btns"><button data-g="rx">確定</button></div></div></div>`}
  h+='</div>';
  $('gBody').innerHTML=h;
  $('gBody').querySelectorAll('.cw').forEach(w=>{if(w.dataset.id==='wild'){const d=document.createElement('div');d.className='card';d.style.cssText='background:linear-gradient(135deg,#f2d07a,#b070ff,#4aa3ff);border-color:#ffd23a;display:flex;align-items:center;justify-content:center;font-size:34px';d.textContent='🃏';w.replaceWith(d);return}const hh=H.find(x=>x.id===w.dataset.id);const c=cardEl({id:hh.id,n:hh.n,f:hh.f,lv:LV(hh.id)},true);w.replaceWith(c)});
- stageApply();clearInterval(GST);GST=setInterval(()=>{if(!$('gacha').classList.contains('on')){clearInterval(GST);return}GI=(GI+1)%RAR.SP.ids.length;stageApply()},3200)}
+ stageApply();clearInterval(GST);GST=setInterval(()=>{if(!$('gacha').classList.contains('on')){clearInterval(GST);return}GI=(GI+1)%RAR.UR.ids.length;stageApply()},3200)}
 function pickGo(){if(!PICK||!PICK.sel)return;const nw=PICK.kind==='new';if(nw?!newLeft():!ptsReady())return;const id=PICK.sel;
  if(nw){if(!S.test)S.nd=today()}else S.pts-=PTGOAL;
  const o=addCard(id);saveS();const tag=o.isNew?'新武將！':o.coin?`已滿星 +${o.coin}💰`:'同名卡 +1';
- GR={title:nw?'新手選將':'積分招募',sum:`${nw?'新手福利':'積分獎勵'}：${hname(id)}（資質 99・神話）`,cards:[{id,tag}]};PICK=null;sfx('win');if(!busy)refreshPl();render();renderGacha()}
+ GR={title:nw?'新手選將':'積分招募',sum:`${nw?'新手福利':'積分獎勵'}：${hname(id)}`,cards:[{id,tag}]};PICK=null;sfx('win');if(!busy)refreshPl();render();renderGacha()}
 function doPull(n){au();n=n==='all'?(S.test?10:pullLeft()):Math.min(n,pullLeft());if(n<=0)return;const rs=[],cnt={SP:0,UR:0,SSR:0,SR:0,Y:0,R:0,N:0};let nw=0,cd=0,coin=0,wc=0;
  for(let i=0;i<n;i++){const o=pullOne();if(o.wild){wc++;rs.push(o);continue}o.r=rarOf(o.id);cnt[o.r]++;if(o.isNew)nw++;else if(o.coin)coin+=o.coin;else cd++;rs.push(o)}
  S.pts=(S.pts||0)+n;if(!S.test){const dl=Math.max(0,PULLMAX-S.d.pull),us=Math.min(n,dl);S.d.pull+=us;S.bp=Math.max(0,(S.bp||0)-(n-us))}saveS();
  const tag=o=>o.wild?'萬用卡 +1':o.isNew?'新武將！':o.coin?`已滿星 +${o.coin}💰`:'同名卡 +1';
- GR={title:'抽卡結果',sum:`${cnt.SP?`神話 ${cnt.SP}・`:''}傳說 ${cnt.UR}・史詩 ${cnt.SSR}・稀有 ${cnt.SR}・優 ${cnt.Y}・良 ${cnt.R}・凡 ${cnt.N}${wc?`｜🃏萬用卡 +${wc}`:''}｜新武將 ${nw} 位｜同名卡 +${cd}${coin?`｜折算 💰${coin.toLocaleString()}`:''}`,cards:rs.map(o=>({id:o.id,tag:tag(o)}))};
+ GR={title:'抽卡結果',sum:`傳說 ${cnt.UR}・史詩 ${cnt.SSR}・稀有 ${cnt.SR}・優 ${cnt.Y}・良 ${cnt.R}・凡 ${cnt.N}${wc?`｜🃏萬用卡 +${wc}`:''}｜新武將 ${nw} 位｜同名卡 +${cd}${coin?`｜折算 💰${coin.toLocaleString()}`:''}`,cards:rs.map(o=>({id:o.id,tag:tag(o)}))};
  sfx(cnt.UR||cnt.SP?'win':cnt.SSR?'crit':'hit');if(!busy)refreshPl();render();renderGacha();$('gacha').scrollTop=0}
 $('gBody').onclick=e=>{const b=e.target.closest('[data-g],[data-n]');if(!b)return;const g=b.dataset.g;
  if(g==='x'){$('gacha').classList.remove('on');clearInterval(GST)}
@@ -1333,7 +1748,7 @@ function brkHtml(id){const b=(S.brk||{})[id]||0,lv=LV(id);let h=`突破 <b>${b}/
 function brkUp(id){S.brk=S.brk||{};const b=S.brk[id]||0;if(b>=BRKMAX||LV(id)<MAXLV||(S.bst||0)<BRK_S[b]||S.coins<BRK_G[b])return;S.bst-=BRK_S[b];S.coins-=BRK_G[b];S.brk[id]=b+1;saveS();if(!busy)refreshPl();sfx('win');toast(`${hname(id)} 突破到第 ${b+1} 階！`);renderHero();render()}
 /* ---- 爬塔排行榜・全服里程碑 ---- */
 const MS=[[100,{coins:200000,pill:50000}],[200,{coins:500000,pill:150000,wc:3}],[350,{coins:1000000,bst:10,UR:10}],[500,{coins:2000000,bst:20,SP:10}],[750,{coins:3000000,bst:30,SP:20}],[1000,{coins:5000000,bst:50,SP:30}],[1250,{coins:6000000,bst:60,SP:40}],[1500,{coins:8000000,bst:80,SP:50}],[1750,{coins:10000000,bst:100,SP:60}],[2000,{coins:20000000,bst:150,SP:100}]];
-const MSTXT=r=>[r.coins&&'💰'+r.coins.toLocaleString(),r.pill&&'🔮'+r.pill.toLocaleString(),r.wc&&'🃏萬用卡 '+r.wc,r.bst&&'💎突破石 '+r.bst,r.UR&&'🟠傳說碎片 '+r.UR,r.SP&&'🌟神話碎片 '+r.SP].filter(Boolean).join('、');
+const MSTXT=r=>[r.coins&&'💰'+r.coins.toLocaleString(),r.pill&&'🔮'+r.pill.toLocaleString(),r.wc&&'🃏萬用卡 '+r.wc,r.bst&&'💎突破石 '+r.bst,r.UR&&'🟠傳說碎片 '+r.UR,r.SP&&'🟠傳說碎片 '+r.SP].filter(Boolean).join('、');
 var HUBV='main',TRK={rank:[],ms:[],max:0,msg:''},TST=0;
 const towerFloors=()=>{const o={};['exp','eq','gold','frag','harem'].forEach(k=>{const T=S.tw[k];o[k]=T.done?NF:T.f});o.best=Math.max(o.exp,o.eq,o.gold,o.frag,o.harem);return o};
 function towerSync(){if(!SB||!ME)return;clearTimeout(TST);TST=setTimeout(async()=>{try{const o=towerFloors();await SB.from('tower_progress').upsert({user_id:ME.id,name:(S.lord.n||'無名').slice(0,8),...o,updated_at:new Date().toISOString()});
@@ -1343,13 +1758,13 @@ async function trkLoad(){if(!SB||!ME)return;try{const[r,m]=await Promise.all([SB
 const msReached=fl=>TRK.ms.find(x=>x.floor===fl);
 const msClaimable=()=>MS.filter(([fl])=>msReached(fl)&&!(S.mcl||{})[fl]).length;
 function msClaim(fl){const m=MS.find(x=>x[0]===fl);if(!m||!msReached(fl)||(S.mcl||{})[fl])return;S.mcl=S.mcl||{};S.mcl[fl]=1;const r=m[1],F=frg();
- if(r.coins)S.coins+=r.coins;if(r.pill)S.pill+=r.pill;if(r.wc)S.wc=(S.wc||0)+r.wc;if(r.bst)S.bst=(S.bst||0)+r.bst;if(r.UR)F.UR+=r.UR;if(r.SP)F.SP+=r.SP;
+ if(r.coins)S.coins+=r.coins;if(r.pill)S.pill+=r.pill;if(r.wc)S.wc=(S.wc||0)+r.wc;if(r.bst)S.bst=(S.bst||0)+r.bst;if(r.UR)F.UR+=r.UR;if(r.SP)F.UR+=r.SP;
  saveS();sfx('win');toast(`已領取第 ${fl} 層里程碑：${MSTXT(r)}`);render();renderHub()}
 /* ---- 爬塔分頁・名將碎片 ---- */
 const FRK=['n','SR','SSR','UR','SP'],FRN={n:'一般碎片',SR:'稀有碎片',SSR:'史詩碎片',UR:'傳說碎片',SP:'神話碎片'},FRI={n:'⚪',SR:'🔷',SSR:'🟣',UR:'🟠',SP:'🌟'};
 const FSYN={SR:20,SSR:30,UR:40,SP:60},FUP={SR:['n',5],SSR:['SR',3],UR:['SSR',3],SP:['UR',3]},DECV={N:1,R:2,Y:3,SR:5};
 const frg=()=>{if(!S.frag)S.frag={n:0,SR:0,SSR:0,UR:0,SP:0};return S.frag};
-const fragTier=f=>f<150?'SR':f<400?'SSR':f<800?'UR':'SP';
+const fragTier=f=>f<150?'SR':f<400?'SSR':'UR';
 function fragReward(f,boss,win){const F=frg(),g=Math.round((2+Math.floor(f/20))*(win?1:.25))*(boss&&win?2:1);F.n+=g;let t='',c=0;
  if(win){t=fragTier(f);c=Math.min(5,1+Math.floor(f/250))*(boss?2:1);F[t]+=c}
  return `${FRI.n} 一般碎片 +${g}`+(c?`<br>${FRI[t]} ${FRN[t]} +${c}`:'')+'<br>（到「🗼 爬塔 → 🧩 名將碎片」合成武將）'}
@@ -1358,14 +1773,14 @@ function fragOpen(){if(busy)return;FRMSG='';$('fragv').classList.add('on');rende
 function renderFrag(){const F=frg();let h=`<div class="shh"><b>🧩 名將碎片</b><button data-q="x" style="flex:none;width:44px;padding:6px 0">✕</button></div>
  <div class="sub" style="font-size:13px">${FRK.map(k=>`${FRI[k]} ${FRN[k]} <b>${F[k].toLocaleString()}</b>`).join('　')}</div>
  <div class="btns" style="margin:8px 0">${[['syn','合成名將'],['up','碎片升級'],['dec','分解武將']].map(([k,n])=>`<button class="g${FTAB===k?' on':''}" data-qt="${k}">${n}</button>`).join('')}</div>`;
- if(FTAB==='syn'){h+=`<p class="sub">用同稀有度的碎片合成該稀有度的任一武將：稀有 ${FSYN.SR}、史詩 ${FSYN.SSR}、傳說 ${FSYN.UR}、神話 ${FSYN.SP} 片。已擁有的會變成同名卡（可升星）。</p>
-  <div class="btns" style="margin:6px 0">${['SR','SSR','UR','SP'].map(k=>`<button class="g${FSR===k?' on':''}" data-qr="${k}" style="color:${RAR[k].c}">${RAR[k].n}</button>`).join('')}</div>
+ if(FTAB==='syn'){h+=`<p class="sub">用同稀有度的碎片合成該稀有度的任一武將：稀有 ${FSYN.SR}、史詩 ${FSYN.SSR}、傳說 ${FSYN.UR} 片。已擁有的會變成同名卡（可升星）。</p>
+  <div class="btns" style="margin:6px 0">${['SR','SSR','UR'].map(k=>`<button class="g${FSR===k?' on':''}" data-qr="${k}" style="color:${RAR[k].c}">${RAR[k].n}</button>`).join('')}</div>
   <div class="sub">${FRI[FSR]} ${FRN[FSR]}：<b>${F[FSR]}</b> / 每位 ${FSYN[FSR]}</div><div id="fsg" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px">`;
   RAR[FSR].ids.map(id=>H.find(x=>x.id===id)).sort((a,b)=>b.q-a.q).forEach(x=>{const own=!!S.own[x.id],st=S.star[x.id]||0;
    h+=`<div style="text-align:center;font-size:11px"><div class="cwr"><div class="cw" data-id="${x.id}"></div></div><div style="margin-top:3px">${own?'★'+st+'・同名卡 '+(S.cp[x.id]||0):'未擁有'}</div><button data-qs="${x.id}" style="width:100%;margin-top:3px;padding:5px 0" ${F[FSR]>=FSYN[FSR]?'':'disabled'}>合成</button></div>`});
   h+='</div>'}
  else if(FTAB==='up'){h+='<p class="sub">低階碎片可以升級成高一階的碎片。</p>';
-  ['SR','SSR','UR','SP'].forEach(k=>{const[fr,n]=FUP[k],mx=Math.floor(F[fr]/n);h+=`<div class="it"><div class="in" style="flex:1"><b>${n} ${FRN[fr]} → 1 ${FRN[k]}</b><small style="display:block;opacity:.8">目前 ${FRI[fr]} ${F[fr].toLocaleString()}，最多可換 ${mx.toLocaleString()} 片</small></div><button data-qu="${k}" data-n="1" ${mx>=1?'':'disabled'}>×1</button><button data-qu="${k}" data-n="10" ${mx>=10?'':'disabled'}>×10</button><button class="g" data-qu="${k}" data-n="all" ${mx>=1?'':'disabled'}>全部</button></div>`})}
+  ['SR','SSR','UR'].forEach(k=>{const[fr,n]=FUP[k],mx=Math.floor(F[fr]/n);h+=`<div class="it"><div class="in" style="flex:1"><b>${n} ${FRN[fr]} → 1 ${FRN[k]}</b><small style="display:block;opacity:.8">目前 ${FRI[fr]} ${F[fr].toLocaleString()}，最多可換 ${mx.toLocaleString()} 片</small></div><button data-qu="${k}" data-n="1" ${mx>=1?'':'disabled'}>×1</button><button data-qu="${k}" data-n="10" ${mx>=10?'':'disabled'}>×10</button><button class="g" data-qu="${k}" data-n="all" ${mx>=1?'':'disabled'}>全部</button></div>`})}
  else{const L=H.filter(x=>x.q<89&&(S.cp[x.id]||0)>0).sort((a,b)=>b.q-a.q),tot=L.reduce((a,x)=>a+(S.cp[x.id]||0)*DECV[rarOf(x.id)],0);
   h+=`<p class="sub">只有資質 <b>89 以下</b>的武將可以分解，分解的是多出來的「同名卡」（不會刪掉武將本身）。每張可得一般碎片：凡 ${DECV.N}、良 ${DECV.R}、優 ${DECV.Y}、稀有 ${DECV.SR}。</p>
   <div class="btns" style="margin:6px 0"><button data-qd="all" ${L.length?'':'disabled'}>一鍵分解全部（+${tot.toLocaleString()} 一般碎片）</button></div>`;
@@ -1457,7 +1872,7 @@ function rstHtml(id){const c=lvSpent(id),st=S.star[id]||0,sc=starSpent(id);
 function navDots(){const d=(id,on)=>{const e=$(id);if(e){if(on)e.setAttribute('data-dot','');else e.removeAttribute('data-dot')}};try{const td=today();
  d('mHarem',BEA.some(x=>{const b=(S.hrm||{})[x.id];return b&&b.chat!==td}));d('bHeroes',H.some(h=>starReady(h.id)===2));
  d('mGacha',(typeof newLeft==='function'&&newLeft())||(typeof ptsReady==='function'&&ptsReady()));d('mTower',typeof msClaimable==='function'&&msClaimable()>0);
- const F=S.frag||{};d('sFrag',['SR','SSR','UR','SP'].some(k=>(F[k]||0)>=FSYN[k]));
+ const F=S.frag||{};d('sFrag',['SR','SSR','UR'].some(k=>(F[k]||0)>=FSYN[k]));
  ['mPvp','mTower'].forEach(id=>$(id).classList.toggle('on',(id==='mPvp')===(MODE==='pvp')))}catch(e){}}
 $('sHJ').onclick=()=>hjOpen();$('sFrag').onclick=()=>fragOpen();
 document.querySelectorAll('.pfb').forEach(g=>g.onclick=e=>{const b=e.target.closest('button');if(!b)return;PF=b.dataset.pf;render();if($('form').classList.contains('on'))renderForm()});
@@ -1477,58 +1892,26 @@ async function cine(u,mine){if(SKIP)return;const d=document.createElement('div')
 $('anim').onclick=()=>{ANIM=ANIM==='full'?'short':ANIM==='short'?'off':'full';try{localStorage.setItem('sgAnim',ANIM)}catch(e){}$('anim').textContent=ANL[ANIM][0];toast(ANL[ANIM][1])};
 $('anim').textContent=ANL[ANIM][0];
 
-async function act(u,mine,basic){
- const ec=mine?en:pl,es=mine?'e':'p',ac=mine?pl:en,c=cellOf(u);
- const foes=alive(ec);if(!foes.length)return;if(u.tfN>0&&u.tf&&u.tf.hp>0&&!(u.imm>0)){u.tfN=0;await tauntAtk(u,mine);return}
- const useSk=!basic&&u.rage>=100;CUR=u;CSK=useSk;let pat=useSk?u.pat:'single';CAOE=useSk&&!['single','assn','snipe','heal'].includes(pat);
- if(pat==='heal'&&!useSk)pat='single';
- c.classList.add('act');if(u.id==='zhangchunhua')mkSet(u,ec);
- const base=u.atk*(useSk?u.m:.6)*(0.9+Math.random()*.2),crit=useSk&&Math.random()<Math.min(.6,.2+.003*(u.lv-1)+(u.cr||0)),dm=base*(crit?1.5:1)*(1+(u.db||0));
- if(useSk){u.rage-=100;upd(u,c);if(ANIM==='full')await cine(u,mine);else banner(`${u.n}・${u.sk}`)}else if(!basic)u.rage+=50;sfx(useSk?pat:'single');
- if(useSk)u.rage=Math.max(0,u.rage);
- const dir=mine?-1:1;
- if(useSk&&CSK_[u.id]){await CSK_[u.id](u,mine,ec,es,ac,c,dm,crit)}
- else if(u.id==='huatuo'&&!useSk){await jump(c,c,false,false,mine);const a=alive(ac).sort((x,y)=>x.hp/x.mhp-y.hp/y.mhp)[0];if(a){const amt=Math.round(a.mhp*.04*(a.f==='魔'?TRC.mheal:1)*(a.hr>0?.75:1));a.hp=Math.min(a.mhp,a.hp+(a.ql>0?0:Math.round(amt*(a.qc>0?1.15:1))));const cc=cellOf(a);spawn(cc,'fx-h','+'+amt,'g');cc.classList.add('heal');setTimeout(()=>cc.classList.remove('heal'),700);upd(a,cc)}await sleep(450)}
- else if(pat==='single'||pat==='assn'){
-  const t=pat==='assn'&&useSk?back(es,ec):front(es,ec);
-  if(pat==='assn'&&useSk){c.style.opacity=.3;spawn(c,'fx-a');await sleep(250);c.style.opacity=1;await jump(c,cellOf(t),true,true,mine)}
-  else await jump(c,cellOf(t),true,useSk,mine);
-  await hurt(t,dm,FX[pat],crit);
-  if(useSk&&u.id==='caoren'){u.sh+=u.mhp*.25;upd(u,c)}
-  await sleep(300);c.style.transform=''}
- else if(pat==='snipe'){const tg=vis(alive(ec)).sort((a,b)=>a.hp-b.hp)[0];await jump(c,cellOf(tg),false,true,mine);await fly(c,cellOf(tg),'snipe');await hurt(tg,dm,'fx-n',crit);await sleep(350)}
- else if(pat==='volley'){await jump(c,cellOf(alive(ec)[0]),false,useSk,mine);for(let k=0;k<3;k++){const al=alive(ec);if(!al.length)break;const tg=al[Math.floor(Math.random()*al.length)];fly(c,cellOf(tg),'volley');await sleep(180);await hurt(tg,dm*.62,'fx-v',crit);await sleep(60)}await sleep(300)}
- else if(pat==='heal'){
-  await jump(c,c,false,true,mine);const al=alive(ac);for(const a of al){const amt=Math.round(a.mhp*u.m*(a.f==='魔'?TRC.mheal:1)*(a.hr>0?.75:1));a.hp=Math.min(a.mhp,a.hp+(a.ql>0?0:Math.round(amt*(a.qc>0?1.15:1))));const cc=cellOf(a);
-   spawn(cc,'fx-h','+'+amt,'g');cc.classList.add('heal');setTimeout(()=>cc.classList.remove('heal'),700);upd(a,cc)}
-  await sleep(700)}
- else{
-  const t=front(es,ec),idx=ec.indexOf(t),r=Math.floor(idx/3),col=idx%3,gid=mine?'ge':'gp',br=es==='e'?0:2;let L=[];
-  if(pat==='pierce')for(let k=0;k<3;k++)L.push([k*3+col,k*110]);
-  else if(pat==='sweep')for(let k=0;k<3;k++)L.push([r*3+k,k*170]);
-  else if(pat==='cross'){L.push([idx,0]);if(r>0)L.push([idx-3,200]);if(r<2)L.push([idx+3,200]);if(col>0)L.push([idx-1,200]);if(col<2)L.push([idx+1,200])}
-  else if(pat==='xshape'){L.push([idx,0]);[[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([a,b])=>{const rr=r+a,cc=col+b;if(rr>=0&&rr<3&&cc>=0&&cc<3)L.push([rr*3+cc,220])})}
-  else if(pat==='backrow'){for(let k=0;k<3;k++)L.push([br*3+k,k*150])}
-  else for(let k=0;k<9;k++)L.push([k,k*70]);
-  await jump(c,$(gid+(pat==='aoe'?4:pat==='backrow'?br*3+1:idx)),false,useSk,mine);await fly(c,$(gid+(pat==='backrow'?br*3+1:idx)),pat);
-  if(useSk&&u.id==='zhangjiao')await SPA.zhangjiao(mine,ec);
-  beam(gid,pat,idx,pat==='backrow'?br:r,col);
-  await Promise.all(L.map(async([i,d])=>{await sleep(d);const x=ec[i];if(x&&x.hp>0){await hurt(x,dm,FX[pat],crit);if(useSk&&u.id==='zhangjiao'&&x.hp>0&&!(x.imm>0)){x.lz=2;if(!x.lzs){x.lzs=Math.round(x.spd*.1);x.spd-=x.lzs}spawn(cellOf(x),'fx-i','雷澤');if(Math.random()<.5)mgApply(x,u);if(Math.random()<.3){const L=[()=>hrApply(x),()=>adApply(x),()=>bnApply(x,u),()=>mgApply(x,u)].sort(()=>Math.random()-.5);L[0]();L[1]()}upd(x,cellOf(x))}}else spawn($(gid+i),FX[pat])}));
-  await sleep(500)}
- c.classList.remove('act');upd(u,c);
- if(u.f==='蜀'&&!basic&&u.hp>0&&alive(ec).length&&Math.random()<Math.min(TRC.cbMax,TRC.cb0+TRC.cb1*tpow(u))*(u.jt||1)){spawn(c,'fx-c','連擊');await sleep(260);await act(u,mine,true)}}
 async function battle(){
  SKIP=!!AUTOC;spdUI();
- au();busy=true;sel=-1;if(MODE!=='tower'){buildOpp();dayCheck();if(!S.test&&!OPP.fr){S.d.pvp++;saveS()}};if(MODE==='tower')pl.forEach(u=>{if(u&&!u.bf){u.bf=1;u.rage=100;u.mhp=u.hp=Math.round(u.hp*1.25)}});applySyn(pl);applySyn(en);[...pl,...en].forEach(u=>{if(u){u.fz=0;u.bn=0;u.fi=0;u.mg=0;u.lz=0;u.wind=0;u.hid=0;u.sg=0;u.nr=0;u.rv=0;u.steal=null;u.zm=0;u.zt=0;u.imm=0;u.zl=0;u.zh=0;u.tl=0;u.zatk=0;u.zdb=0;u.t2=0;u.dqi=0;u.qc=0;u.fp=null;u.yhc=0;u.mk=null;u.jy=0;u.ad=0;u.ads=0;u.hr=0;u.gl=null;u.gs=0;u.ws=0;u.wsh=0;u.ql=0;u.zs=0;u.zsrc=null;u.zsd=0;u.dmk=0;u.dms=null;u.dmd=0;u.hh=0;u.fu=0;u.qz=0;u.tf=null;u.tfN=0;u.el=null;u.mq=0;u.zc=0;u.stl=0;u.stt=0}});lbInit();tlInit2();dcInit();document.body.classList.add('full','bt');render();layout();stealInit();$('info').textContent='戰鬥開始！';
- let round=0;
- while(alive(pl).length&&alive(en).length&&round<MAXR()){
-  round++;glLink();$('info').textContent=`${MODE==='tower'?`${TKN[TK]}第 ${FLOOR+1} 層・`:''}第 ${round}/${MAXR()} 回合`;
-  roundStart();const order=[...alive(pl).map(u=>[u,1]),...alive(en).map(u=>[u,0])].sort((a,b)=>b[0].spd-a[0].spd);
-  for(const[u,m]of order){if(u.hp<=0)continue;if(!alive(pl).length||!alive(en).length)break;
-   if(u.ql>0){u.ql=0;const qc=cellOf(u);spawn(qc,'fx-c','青龍印記');upd(u,qc);await sleep(260);continue}
-   if(u.fz>0){u.fz--;const fc=cellOf(u);spawn(fc,'fx-i','凍結');if(u.fz<=0){u.fz=0;u.fi=1}upd(u,fc);await sleep(260);continue}
-   await act(u,!!m);u.fi=0;zmGain(u);if(u.hp>0&&u.id==='zhangchunhua')await shang(u);if(u.hp>0&&u.id==='diaochan')await dcBy(u,!!m);if(u.hp>0&&u.id==='machao'){await mcSg(u);await mcChase(u,!!m)}if(u.hp>0&&u.id==='bulianshi')trDebuff(u,!!m);await sleep(120)}await burnTick();await poison()}
+ au();busy=true;sel=-1;if(MODE!=='tower'){buildOpp();dayCheck();if(!S.test&&!OPP.fr){S.d.pvp++;saveS()}};if(MODE==='tower')pl.forEach(u=>{if(u&&!u.bf){u.bf=1;u.rage=100;u.mhp=u.hp=Math.round(u.hp*1.25)}});applySyn(pl);applySyn(en);
+ battleInit();document.body.classList.add('full','bt');render();layout();$('info').textContent='戰鬥開始！';
+ ROUND=0;FUQ=[];
+ while(alive(pl).length&&alive(en).length&&ROUND<MAXR()){
+  ROUND++;$('info').textContent=`${MODE==='tower'?`${TKN[TK]}第 ${FLOOR+1} 層・`:''}第 ${ROUND}/${MAXR()} 回合`;
+  await roundStartV2();await flushFU();
+  const order=[...alive(pl).map(u=>[u,1]),...alive(en).map(u=>[u,0])].sort((a,b)=>(b[0].X.first&&ROUND===1?1e9:0)-(a[0].X.first&&ROUND===1?1e9:0)||spdOf(b[0])-spdOf(a[0]));
+  for(let oi=0;oi<order.length;oi++){const[u,m]=order[oi];if(u.hp<=0)continue;if(!alive(pl).length||!alive(en).length)break;u.X.moved=1;
+   if(has(u,'fx')){LBL(u,'放逐中','fx-c');await sleep(200);continue}
+   if(has(u,'qn')&&Math.random()<.5){LBL(u,'怯懦失敗','fx-c');delete u.ST.qn;upd(u);await sleep(220);continue}
+   const ctl=['ql','kd','fz'].find(k=>has(u,k));
+   if(ctl){if(BLOG){BLOG.skip=BLOG.skip||[0,0];BLOG.skip[m?0:1]++}const s=u.ST[ctl];s.t--;LBL(u,STD[ctl].n,ctl==='fz'?'fx-i':'fx-c');if(s.t<=0){delete u.ST[ctl];if(ctl==='fz')u.fi=1}upd(u);await sleep(240);continue}
+   await act(u,!!m);u.fi=0;
+   if(u.X.again&&u.hp>0&&alive(foeOf(u)).length){u.X.again=0;LBL(u,'再行動','fx-c');await act(u,!!m,false,{extra:1})}
+   await sleep(100)}
+  await roundEndV2();await poison();await flushFU()}
  finish()}
+
 function reset(){if(OPP.arena)OPP={d:1,list:[]};applyDL();sel=-1;busy=false;FLOOR=MODE==='tower'?S.tw[TK].f:0;MODE==='tower'?towerEnemy():(OPP.fr?buildOpp():newOpp());$('mask').classList.remove('on');document.body.classList.remove('full','bt');layout();render();setInfo()}
 $('bAuto').onclick=()=>{if(busy)return;autoBest(false);render();toast('已上陣最強陣容（本場；要存成預設請到「布陣」）')};
 $('bForm').onclick=()=>openForm();
