@@ -2609,7 +2609,7 @@ function cityAct(a){
  const b=$(a);if(b)b.click()}
 function cityBind(){
  $('city').onclick=e=>{const t=e.target.closest('[data-c]');if(!t)return;const a=t.dataset.c;
-  if(a==='av'){cshOpen('set');return}if(a==='hero'){$('bHeroes').click();return}if(a==='war'||a==='set'){sceneOpen(a);return}
+  if(a==='av'){sceneOpen('set');return}if(a==='hero'){$('bHeroes').click();return}if(a==='war'||a==='set'){sceneOpen(a);return}
   if(a==='home'){cshClose();return}if(a==='bag'){TAB='bag';BAGSEL=null;$('shT').textContent='背包';renderShop();$('shop').classList.add('on');return}
   if(a==='shop'){$('mShop').click();return}if(a==='dt'){$('cDT').click();return}if(a==='idle'){$('cIdle').click();return}
   if(a==='friend'){$('bFriend').click();return}if(a==='rank'){hubOpen();HUBV='rank';renderHub();return}
