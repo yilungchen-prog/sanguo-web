@@ -2805,7 +2805,7 @@ async function battle(){
 function reset(){if(OPP.arena)OPP={d:1,list:[]};applyDL();sel=-1;busy=false;FLOOR=MODE==='tower'?S.tw[TK].f:0;MODE==='tower'?towerEnemy():(OPP.fr?buildOpp():newOpp());$('mask').classList.remove('on');document.body.classList.remove('full','bt');layout();render();setInfo()}
 $('bAuto').onclick=()=>{if(busy)return;autoBest(false);render();toast('已上陣最強陣容（本場；要存成預設請到「布陣」）')};
 $('bForm').onclick=()=>openForm();
-$('bHeroes').onclick=()=>{if(busy)return;$('heroes').classList.add('on');render();if(!S.artPref&&S.lord.n)setTimeout(()=>{if(!S.artPref&&!document.querySelector('.vmod'))artModal(true)},400)};
+$('bHeroes').onclick=()=>{if(busy)return;$('heroes').classList.add('on');render();if(!S.artPref&&S.lord.n)setTimeout(()=>{if(!S.artPref&&!document.querySelector('.vmod')&&$('heroes').classList.contains('on')&&!document.querySelector('#fragv.on,#hjv.on,#hero.on,#form.on'))artModal(true)},400)};
 $('hX').onclick=()=>$('heroes').classList.remove('on');$('hForm').onclick=()=>openForm();$('hStar').onclick=()=>{STW=false;starAllOpen()};$('hArt').onclick=()=>artModal(false);
 function spdUI(){const b=$('bSpd'),k=$('bSkip');if(b)b.innerHTML='⏩<br>'+BSPD+'x';if(k)k.disabled=SKIP}
 $('bSpd').onclick=()=>{BSPD=BSPD>=3?1:BSPD+1;try{localStorage.setItem('sgSpd',BSPD)}catch(e){}spdUI()};
