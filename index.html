@@ -714,11 +714,26 @@ body.bt #spdBar{top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) +
  #hero .hvsk{top:31%!important;scale:.86;transform-origin:right top}#hero .hvn{font-size:40px!important}#hero .hvnav{top:calc(env(safe-area-inset-top,0px) + 180px)}
  #hero .hvst{bottom:calc(env(safe-area-inset-bottom,0px) + 82px)!important}#hero .hvpw b{font-size:28px!important}#hero .hvg{font-size:15px!important}#hero .hvbig{width:100px!important;height:100px!important}}
 @media (max-height:700px){#hero .hvl1 button:nth-child(2){display:none}#hero .hvsk{scale:.76}}
+.hhb{position:relative}
+#tmT [data-m]{display:none!important}#tmT>div{margin-top:0!important}#tmT{margin:8px 8px 6px!important}#tmT button{font-size:16px!important;min-height:46px}#tmT b{font-size:16px!important;white-space:nowrap}
+#tmH{font-size:24px!important}
+#thub.scn{background:#cdb48a;overflow:hidden}#thub.scn .pan{max-width:none;padding:0!important;height:100%}
+.twsc{position:fixed;inset:0;max-width:560px;margin:0 auto;background:center/cover no-repeat}
+.twsh{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 16px;background:linear-gradient(#1c1915dd,#1c191500);z-index:3}.twsh b{font:900 30px 'LXGW WenKai TC',serif;letter-spacing:6px;color:#ffd27a;text-shadow:0 2px 4px #000}
+.twpl{position:absolute;transform:translate(-50%,-100%);margin-top:-130px;background:none!important;border:none!important;box-shadow:none!important;padding:0;min-height:0;display:flex;flex-direction:column;align-items:center;gap:4px;z-index:2}
+.twpn{font:900 20px/1.2 'LXGW WenKai TC',serif;color:#ffe9b0;padding:10px 7px 12px;background:linear-gradient(90deg,#4a2412,#7a3e1e 50%,#4a2412);border:2px solid var(--tc);border-radius:4px;box-shadow:0 4px 10px #0007,0 0 10px var(--tc);text-shadow:0 1px 2px #000;animation:cplw 4s ease-in-out infinite}
+.twpf{font:900 15px 'LXGW WenKai TC',serif;white-space:nowrap;color:#fff;background:#1a120ce0;border:1px solid var(--tc);border-radius:10px;padding:1px 9px}
+.twpl[data-dot]::after{right:-8px;top:-8px}
+.twsb{position:absolute;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 40px);display:flex;gap:10px;z-index:3}.twsb button{position:relative;width:70px;height:70px;min-height:0;padding:0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font:900 14px 'LXGW WenKai TC',serif;background:radial-gradient(circle at 40% 35%,#2c5a52,#0c201c 72%)!important;border:3px solid #d9b25a!important;color:#f3e6c4}.twsb i{font-style:normal;font-size:24px}
+.twtip{position:absolute;left:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);margin:0;font-size:13px;color:#f3e6c4;text-shadow:0 1px 2px #000}
+.pnew{position:absolute;left:50%;transform:translateX(-50%);top:34%;font-style:normal;font:900 12px 'LXGW WenKai TC',serif;white-space:nowrap;background:#2a6a8aee;color:#fff;border-radius:8px;padding:1px 7px;z-index:3}
+.hvl1 button .dot{position:absolute;right:2px;top:0}
+.hmug small{font-size:12px;background:#b0261c;border-radius:6px;padding:0 5px;margin-left:4px}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029x</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029y</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -1239,7 +1254,7 @@ function render(){
 function fillPool(pp){const PW={};H.forEach(h=>PW[h.id]=powOf(h));
  const list=H.filter(h=>PF==='all'||h.f===PF).sort((a,b)=>(!!S.own[b.id]-!!S.own[a.id])||(heroDot(b.id)-heroDot(a.id))||PW[b.id]-PW[a.id]);const st=pp.parentNode.parentNode.scrollTop;pp.innerHTML='';
  list.forEach(h=>{const has=!!S.own[h.id];const e=document.createElement('div');e.className='pc'+(has?'':' lock')+(has&&starReady(h.id)==2?' ready':'');
-  e.appendChild(cardEl(h,true));e.insertAdjacentHTML('beforeend',has?(heroDot(h.id)?`<i class="pdot">!</i><em class="pwhy">${heroWhy(h.id)}</em>`:''):'<div class="st">未獲得</div>');
+  e.appendChild(cardEl(h,true));e.insertAdjacentHTML('beforeend',has?(heroDot(h.id)?`<i class="pdot">!</i><em class="pwhy">${heroWhy(h.id)}</em>`:'')+(ugcIsNew('hero',h.id)?'<em class="pnew">🎨 新圖</em>':''):'<div class="st">未獲得</div>');
   e.onclick=()=>{if(!busy)openHero(h.id)};pp.appendChild(e)});
  {const ds=H.filter(h=>heroDot(h.id)),ns=ds.filter(h=>starReady(h.id)===2).length;$('hCnt').innerHTML=`已獲得 ${H.filter(h=>S.own[h.id]).length}/${H.length}`+(ds.length?`　<b class="hwhy">● ${ns?ns+' 位可升星':''}${ns&&ds.length>ns?'、':''}${ds.length>ns?(ds.length-ns)+' 位上陣武將可培養':''}（已排在最前面）</b>`:'');$('hFrag').toggleAttribute('data-dot',fragDot())}pp.parentNode.parentNode.scrollTop=st}
 const BEST=[1,0,2,4,3,5,7,6,8];
@@ -1661,17 +1676,18 @@ function burstAt(el,t){const r=el.getBoundingClientRect();for(let i=0;i<8;i++){c
 function navDots2(){const d=(id,on)=>{const e=$(id);if(e){if(on)e.setAttribute('data-dot','');else e.removeAttribute('data-dot')}};try{d('cDT',dtReady());const r=idleCalc();d('cIdle',r.ms>=3600e3);const ce=$('cIdle');if(ce)ce.classList.toggle('full',r.ms>=IDLEMAX)}catch(e){}}
 
 /* ===================== 玩家圖鑑（上傳、喜歡、檢舉、自由選用） ===================== */
-let UGC_TOP={},UGV={kind:'hero',ref:null,list:[],msg:'',busy:false,prev:null};
+let UGC_NEW={},UGC_TOP={},UGV={kind:'hero',ref:null,list:[],msg:'',busy:false,prev:null};
 const ugcUrl=p=>`${SB_URL}/storage/v1/object/public/ugc/${p}`;
 const ugcKey=(k,r)=>k+':'+r;
 function ugcRecalc(){UGC_SEL={};const pick=S.ugc||{};const ids=[...H.map(h=>['hero',h.id]),...(typeof BEA!=='undefined'?BEA.map(b=>['bea',b.id]):[])];
  for(const[k,id]of ids){const v=pick[ugcKey(k,id)];if(v==='ink')continue;if(v){UGC_SEL[id]=v;continue}const t=UGC_TOP[ugcKey(k,id)];if(t)UGC_SEL[id]=t}}
-async function ugcLoadTop(){if(!SB)return;try{const{data}=await SB.from('ugc_art').select('kind,ref,path,likes').in('kind',['hero','bea','eq']).gte('likes',1).order('likes',{ascending:false}).limit(1500);
- const T={};(data||[]).forEach(r=>{const k=ugcKey(r.kind,r.ref);if(!T[k])T[k]=ugcUrl(r.path)});UGC_TOP=T;ugcRecalc();if(!busy)render()}catch(e){}}
+const ugcIsNew=(kind,ref)=>{const k=ugcKey(kind,ref),t=UGC_NEW[k]||0;return t>Math.max(S.ugcBase||Date.now(),(S.ugcSeen||{})[k]||0)};
+async function ugcLoadTop(){if(!SB)return;try{const{data}=await SB.from('ugc_art').select('kind,ref,path,likes,owner,created_at').in('kind',['hero','bea','eq']).order('likes',{ascending:false}).order('created_at',{ascending:false}).limit(3000);
+ const T={},N={};(data||[]).forEach(r=>{const k=ugcKey(r.kind,r.ref);if(!T[k])T[k]=ugcUrl(r.path);if(!(ME&&r.owner===ME.id)){const t=Date.parse(r.created_at)||0;if(!N[k]||t>N[k])N[k]=t}});UGC_TOP=T;UGC_NEW=N;if(!S.ugcBase){S.ugcBase=Date.now();saveS()}ugcRecalc();if(!busy)render()}catch(e){}}
 function ugcPrompt(k,ref){if(k==='lord')return{zh:'古風主公頭像，水墨國風插畫，正方形，人物胸像置中，背景簡單偏暗，無文字',en:'ancient Chinese lord portrait, ink wash painting style, square, bust centered, simple dark background, no text'};
  const h=k==='bea'?((BEA.find(b=>b.id===ref))||{n:ref}):H.find(x=>x.id===ref)||{n:ref};const w={blade:'青龍偃月刀',spear:'長槍',sword:'寶劍',halberd:'方天畫戟',axe:'大斧',bow:'長弓',fan:'羽扇',qin:'古琴',staff:'法杖',dagger:'雙短刃',shield:'大盾',gourd:'葫蘆',flower:'花枝',brush:'毛筆',scroll:'竹簡',seal:'玉璽'}[WPN[ref]]||'兵器';
  return{zh:`三國${h.n}${h.f?`，${h.f}陣營${h.job||''}`:''}，手持${k==='bea'?'團扇':w}，水墨國風插畫，直式 3:4 比例，人物在畫面上方約 75%，下方 25% 為較素淨的背景，畫面內不要有任何文字或外框，背景偏暗、人物突出，高細節`,en:`${h.n}, Three Kingdoms ${k==='bea'?'beauty':'general'}, holding ${k==='bea'?'a round fan':'a weapon'}, Chinese ink wash illustration, vertical 3:4, character in upper 75%, plain lower 25%, no text, no frame, dark background, highly detailed`}}
-async function ugcOpen(ref,kind){UGV={kind:kind||'hero',ref,list:[],msg:'載入中…',busy:false,prev:null,q:null};ugcClean();renderUGC();$('ugv').classList.add('on');await ugcFetch()}
+async function ugcOpen(ref,kind){S.ugcSeen=S.ugcSeen||{};S.ugcSeen[ugcKey(kind||'hero',ref)]=Date.now();saveS();UGV={kind:kind||'hero',ref,list:[],msg:'載入中…',busy:false,prev:null,q:null};ugcClean();renderUGC();$('ugv').classList.add('on');await ugcFetch()}
 async function ugcFetch(){if(!SB){UGV.msg='目前無法連線，無法載入玩家上傳的圖。';renderUGC();return}
  try{let q=SB.from('ugc_art').select('id,kind,ref,path,owner,owner_name,likes,created_at').eq('kind',UGV.kind);q=UGV.kind==='lord'?q.eq('owner',ME?ME.id:'00000000-0000-0000-0000-000000000000'):q.eq('ref',UGV.ref);
   const{data,error}=await q.order('likes',{ascending:false}).limit(30);UGV.list=data||[];if(error)UGV.msg='載入失敗：'+error.message;else if(UGV.msg==='載入中…')UGV.msg='';
@@ -1911,6 +1927,7 @@ function towerResult(from,win,msg,rs,next){const k=TK,to=S.tw[k].f;MAPK=k;MAPSEL
  $('tmap').classList.add('on');renderMap(false,{cl:from,cur:from,at:from});
  setTimeout(()=>{const adv=win&&to>from;moveTok(from,adv?to:from,()=>{MAPRES.ready=true;MAPSEL=S.tw[k].done&&!adv?NF-1:to;const sc=$('tmS'),y=sc.scrollTop;renderMap(true);$('tmS').scrollTop=y;})},700)}
 function openMap(k){MAPRES=null;$('tmR').style.display='none';MAPK=k||(MODE==='tower'?TK:'exp');const tw=S.tw[MAPK];MAPSEL=tw.done?NF-1:tw.f;$('tmap').classList.add('on');$('tmBt').innerHTML=mapBtns();renderMap()}
+{let sx=0,sy=0;$('tmS').addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});$('tmS').addEventListener('touchend',e=>{if(AUTOC||MAPRES)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)>80&&Math.abs(dy)<45){const L=TOWERS,i=L.indexOf(MAPK);MAPK=L[(i+(dx<0?1:-1)+L.length)%L.length];const tw=S.tw[MAPK];MAPSEL=tw.done?NF-1:tw.f;renderMap();toast(TKN[MAPK])}},{passive:true})}
 $('tmap').onclick=e=>{if(AUTOC){const z=e.target.closest('[data-a]');if(z&&(z.dataset.a==='stop'||z.dataset.a==='x')){AUTOC.stop=true;$('tmI').innerHTML='<b style="color:#ffd27a">打完這一層就停止…</b>'}return}
  const fin=()=>{if(MAPRES){MAPRES=null;$('tmR').style.display='none'}if(busy||document.body.classList.contains('full')){$('mask').classList.remove('on');reset()}};
  if(e.target.closest('[data-a="auto"]')){fin();$('tmap').classList.add('on');autoClimb(MAPK);return}
@@ -1918,7 +1935,7 @@ const m=e.target.closest('[data-m]');if(m){if(MAPRES)return;MAPK=m.dataset.m;con
  const n=e.target.closest('.mn');if(n&&MAPRES){if(MAPRES.ready&&+n.dataset.f===S.tw[MAPK].f){$('tmap').classList.remove('on');MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}return}
  if(n){MAPSEL=+n.dataset.f;const sc=$('tmS'),y=sc.scrollTop;renderMap(true);$('tmS').scrollTop=y;return}
  const a=e.target.closest('[data-a]');if(!a)return;if(a.dataset.a==='cp'||a.dataset.a==='cn'){if(MAPRES)return;const tw=S.tw[MAPK],cur=tw.done?NF-1:tw.f,nb=Math.max(0,Math.min(NF-1,MAPCB+(a.dataset.a==='cn'?CHN:-CHN)));MAPSEL=Math.floor(cur/CHN)*CHN===nb?cur:nb;renderMap();return}
- if(a.dataset.a==='x'){$('tmap').classList.remove('on');if(MAPRES){MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}}
+ if(a.dataset.a==='x'){$('tmap').classList.remove('on');if(MAPRES||busy||document.body.classList.contains('full')){MAPRES=null;$('tmR').style.display='none';$('mask').classList.remove('on');reset()}hubOpen()}
  else if(a.dataset.a==='next'){$('tmap').classList.remove('on');MAPRES=null;$('tmR').style.display='none';$('bAgain').click()}
  else if(a.dataset.a==='view'){$('tmap').classList.remove('on');MAPRES=null;$('tmR').style.display='none';$('mask').classList.add('on')}
  else if(a.dataset.a==='go'){fin();$('tmap').classList.remove('on');if(!busy&&!(MODE==='tower'&&TK===MAPK))setMode('tower',MAPK);prepOpen('tower')}};
@@ -2084,7 +2101,7 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  <div class="hvbg" style="background-image:url(${heroBgOf(h.id)})" data-a="${HVIEW?'view':''}"></div><div class="hvsh"></div>
  <button class="xb hvxb" data-a="x">←</button><b class="hvtt">武將</b><span class="hvres">${res}</span>
  <div class="hvname"><div class="hvn">${h.n}</div><div class="hvq"><span style="background:${r.c}">${r.n}</span><b>資質 ${h.q}</b></div><div class="hvtags"><span style="background:${FC[h.f]}">${h.f}</span><span>${JB[h.job].ic}${h.job}</span><span class="st">★${st}</span>${brk?`<span>突破 ${brk}</span>`:''}</div></div>
- <div class="hvl1"><button data-a="tab" data-t="rst" ${own?'':'disabled'}><b>♻️</b><span>重生</span></button><button data-a="view"><b>👁</b><span>觀賞</span></button><button data-a="tab" data-t="det"><b>🔍</b><span>詳情</span></button><button data-a="ugc"><b>🎨</b><span>圖鑑</span></button>${own?`<button data-a="dep"><b>${dep?'⬇️':'⚔️'}</b><span>${dep?'卸下':'上陣'}</span></button>`:''}</div>
+ <div class="hvl1"><button data-a="tab" data-t="rst" ${own?'':'disabled'}><b>♻️</b><span>重生</span></button><button data-a="view"><b>👁</b><span>觀賞</span></button><button data-a="tab" data-t="det"><b>🔍</b><span>詳情</span></button><button data-a="ugc"${ugcIsNew('hero',h.id)?' data-dot':''}><b>🎨</b><span>圖鑑</span>${ugcIsNew('hero',h.id)?'<i class="dot"></i>':''}</button>${own?`<button data-a="dep"><b>${dep?'⬇️':'⚔️'}</b><span>${dep?'卸下':'上陣'}</span></button>`:''}</div>
  <div class="hvsk">${sks.map((x,i)=>`<button class="hvo${HSK===i?' on':''}" data-a="sk" data-i="${i}" style="--sc:${({天賦:'#d9a520',絕技:'#d0402a',被動:'#2a9a8a',怒氣:'#9a3ad0'})[x.l]||'#888'}"><u>${x.l[0]}<i>${x.lv}</i></u><span>${x.n.length>5?x.n.slice(0,5):x.n}</span></button>`).join('')}</div>
  <div class="hvnav"><button class="hvar l" data-a="prev">‹</button><span>左右滑動切換</span><button class="hvar r" data-a="next">›</button></div>
  ${bub}
@@ -2449,7 +2466,7 @@ function renderHarem(){const G=hgf(),F=hfr(),B=hrm(),hb=haremBonus(),td=today();
    h+=`<div data-hs="${x.id}" style="text-align:center;font-size:11px;cursor:pointer"><div class="cwr"><div class="card" style="background-image:url(${BART[x.id][0]});border-color:${RAR[rarOf2(x.q)].c};${b?'':'filter:grayscale(1) brightness(.55)'}"><span class="zhen" style="background:${RAR[rarOf2(x.q)].c};color:#111">${x.q}</span><span class="nm">${x.n}</span>${dot?'<span class="upd ok">💬 可聊天</span>':''}</div>${dot?'<i class="pdot">!</i>':''}</div>
    <div style="margin-top:3px">${b?`好感 Lv.${b.l}・★${b.s}`:'未招入'}</div><div style="opacity:.8">信物 ${fr}${need?' / '+need:''}</div></div>`});h+='</div>'}
  else{const x=BEA.find(y=>y.id===HSEL),b=B[x.id],fr=F[x.id]||0,m=b?bMul(b):1;
-  h+=`${HMSG?`<div class="it" style="display:block;border:1px solid #ff9ad5">${HMSG}</div>`:''}<div class="hth"><b>${x.n}</b><span style="color:${RAR[rarOf2(x.q)].c}">${RAR[rarOf2(x.q)].n}・資質 ${x.q}</span></div><div class="hmimg"><img class="big" src="${BART[x.id][1]}" alt="${x.n}"><button class="hmug" data-h="ugc">🎨 圖鑑</button></div><div class="sub" style="font-size:13px">${x.t}　最愛：${GIFT[x.fav].ic}${GIFT[x.fav].n}（好感 ×1.5）</div>
+  h+=`${HMSG?`<div class="it" style="display:block;border:1px solid #ff9ad5">${HMSG}</div>`:''}<div class="hth"><b>${x.n}</b><span style="color:${RAR[rarOf2(x.q)].c}">${RAR[rarOf2(x.q)].n}・資質 ${x.q}</span></div><div class="hmimg"><img class="big" src="${BART[x.id][1]}" alt="${x.n}"><button class="hmug" data-h="ugc"${ugcIsNew('bea',x.id)?' data-dot':''}>🎨 圖鑑${ugcIsNew('bea',x.id)?' <small>新圖</small>':''}</button></div><div class="sub" style="font-size:13px">${x.t}　最愛：${GIFT[x.fav].ic}${GIFT[x.fav].n}（好感 ×1.5）</div>
   <div class="sec">加成（全體武將）</div><div class="skb">${Object.keys(x.st).map(k=>`${BSTN[k]} +${pct(x.st[k]*m)}${b&&(b.l<BMAXLV||b.s<BMAXST)?'':''}`).join('、')}<div style="font-size:11px;opacity:.8">基礎 ${Object.keys(x.st).map(k=>BSTN[k]+' '+pct(x.st[k])).join('、')} × 好感倍率 ${(1+.02*((b?b.l:1)-1)).toFixed(2)} × 星級倍率 ${(1+.1*(b?b.s:0)).toFixed(1)}</div></div>`;
   if(!b){const need=bUnlock(x.q);h+=`<div class="sec">招入後宮</div><div class="rq ${fr>=need?'good':'bad'}"><span>${x.n} 信物</span><b>${fr} / ${need}</b><i>${fr>=need?'✓':'✗'}</i></div><button data-h="unlock" style="width:100%;margin-top:6px" ${fr>=need?'':'disabled'}>招入後宮</button>`}
   else{h+=`<div class="sec">好感 Lv.${b.l}${b.l>=BMAXLV?'（滿級）':`　${b.e}/${bNeed(b.l)}`}</div><div class="xp"><i style="width:${b.l>=BMAXLV?100:b.e/bNeed(b.l)*100}%"></i></div>
@@ -2548,7 +2565,33 @@ const TWIC={};function towerArt(k){if(TWIC[k])return TWIC[k];const W=320,Hh=150,
   x.fillStyle=i===4?ac:'#2f3438';x.beginPath();x.moveTo(cx-bw*.6,y+4);x.quadraticCurveTo(cx-bw*.3,y-1,cx-bw*.2,y-9);x.lineTo(cx+bw*.2,y-9);x.quadraticCurveTo(cx+bw*.3,y-1,cx+bw*.6,y+4);x.closePath();x.fill();y-=8;bw*=.86}
  x.strokeStyle='#2b2622';x.lineWidth=2;x.beginPath();x.moveTo(cx,y);x.lineTo(cx,y-16);x.stroke();
  return TWIC[k]=c.toDataURL('image/jpeg',.85)}
-function renderHub(){const nc=msClaimable();let h=`<div class="shh"><b>🗼 爬塔</b><button data-y="x" style="flex:none;width:44px;padding:6px 0">✕</button></div><div class="btns" style="margin:6px 0">${[['main','🗼 五座塔'],['rank','🏆 排行榜'],['ms','🎁 全服里程碑'+(nc?'（'+nc+'）':'')]].map(([k,n])=>`<button class="g${HUBV===k?' on':''}" data-y="v" data-v="${k}"${k==='ms'&&nc?' data-dot':''}>${n}</button>`).join('')}</div>`;
+/* ===================== 五塔水墨場景 ===================== */
+const TWSP={exp:{x:.2,y:.47,c:'#5fb8a0',r:'#2f6a5e'},eq:{x:.8,y:.45,c:'#d06a4a',r:'#7a2f22'},gold:{x:.5,y:.38,c:'#e0b030',r:'#8a6410'},frag:{x:.27,y:.72,c:'#9a7ad8',r:'#4a2f7a'},harem:{x:.74,y:.7,c:'#e88ab4',r:'#8a3a62'}};
+let TWBG='';
+function towerSceneArt(W,Hh){const c=document.createElement('canvas'),dpr=Math.min(2,devicePixelRatio||1);c.width=W*dpr;c.height=Hh*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);let sd=4242;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647,s=Math.min(W/390,Hh/700);
+ let g=x.createLinearGradient(0,0,0,Hh);g.addColorStop(0,'#f1e6cc');g.addColorStop(1,'#cdb48a');x.fillStyle=g;x.fillRect(0,0,W,Hh);for(let i=0;i<1500;i++){x.fillStyle=`rgba(90,65,35,${rnd()*.06})`;x.fillRect(rnd()*W,rnd()*Hh,1.5,1)}
+ g=x.createRadialGradient(W*.84,Hh*.13,0,W*.84,Hh*.13,W*.09);g.addColorStop(0,'rgba(200,70,55,.55)');g.addColorStop(1,'rgba(200,70,55,0)');x.fillStyle=g;x.beginPath();x.arc(W*.84,Hh*.13,W*.09,0,7);x.fill();
+ [[.24,.1,.16,1],[.32,.08,.24,3.3],[.5,.07,.2,5.1],[.78,.06,.22,2.2]].forEach(([b,a,al,ph])=>{x.beginPath();x.moveTo(0,Hh);for(let xx=0;xx<=W;xx+=3){const t=xx/W;x.lineTo(xx,Hh*b-Hh*a*(Math.abs(Math.sin(t*3.3+ph))*.9+Math.sin(t*10+ph)*.2))}x.lineTo(W,Hh);x.closePath();const gg=x.createLinearGradient(0,Hh*(b-a*1.5),0,Hh*(b+.14));gg.addColorStop(0,`rgba(43,38,34,${al})`);gg.addColorStop(1,'rgba(43,38,34,0)');x.fillStyle=gg;x.fill()});
+ // 山徑
+ x.strokeStyle='rgba(90,60,30,.35)';x.lineWidth=6*s;x.setLineDash([2*s,9*s]);x.lineCap='round';x.beginPath();const P=['frag','exp','gold','eq','harem'].map(k=>[TWSP[k].x*W,TWSP[k].y*Hh]);x.moveTo(W*.5,Hh*.98);P.forEach(([a,b])=>x.lineTo(a,b+10*s));x.stroke();x.setLineDash([]);
+ for(const k in TWSP){const T=TWSP[k],cx=T.x*W,by=T.y*Hh,lv=k==='gold'?7:6;let y=by,bw=62*s;
+  x.fillStyle='rgba(43,38,34,.25)';x.beginPath();x.ellipse(cx,by+4*s,48*s,9*s,0,0,7);x.fill();
+  for(let i=0;i<lv;i++){const bh=(i?15:19)*s;x.fillStyle='#f3ead4';x.fillRect(cx-bw*.34,y-bh,bw*.68,bh);x.strokeStyle='#2b2622';x.lineWidth=1.1;x.strokeRect(cx-bw*.34,y-bh,bw*.68,bh);x.fillStyle=T.r;x.fillRect(cx-3*s,y-bh*.75,6*s,bh*.75);y-=bh;
+   x.fillStyle=i===lv-1?T.c:'#2f3438';x.beginPath();x.moveTo(cx-bw*.62,y+3*s);x.quadraticCurveTo(cx-bw*.3,y-1,cx-bw*.2,y-8*s);x.lineTo(cx+bw*.2,y-8*s);x.quadraticCurveTo(cx+bw*.3,y-1,cx+bw*.62,y+3*s);x.closePath();x.fill();y-=7*s;bw*=.87}
+  x.strokeStyle='#2b2622';x.lineWidth=2;x.beginPath();x.moveTo(cx,y);x.lineTo(cx,y-16*s);x.stroke();
+  // 塔旁點綴
+  const gl=x.createRadialGradient(cx,by-60*s,0,cx,by-60*s,70*s);gl.addColorStop(0,T.c+'55');gl.addColorStop(1,T.c+'00');x.fillStyle=gl;x.beginPath();x.arc(cx,by-60*s,70*s,0,7);x.fill();
+  if(k==='harem')for(let i=0;i<26;i++){x.fillStyle=`rgba(232,138,180,${.5+rnd()*.4})`;x.beginPath();x.arc(cx-55*s+rnd()*110*s,by-20*s-rnd()*50*s,(1.5+rnd()*2.5)*s,0,7);x.fill()}
+  if(k==='exp'){x.fillStyle='rgba(255,255,255,.55)';for(let i=0;i<3;i++){x.beginPath();x.ellipse(cx-30*s+i*30*s,by-70*s-i*14*s,26*s,6*s,0,0,7);x.fill()}}}
+ g=x.createLinearGradient(0,Hh*.86,0,Hh);g.addColorStop(0,'rgba(20,16,12,0)');g.addColorStop(1,'rgba(20,16,12,.8)');x.fillStyle=g;x.fillRect(0,Hh*.86,W,Hh*.14);
+ return c.toDataURL('image/jpeg',.85)}
+function towerScene(){const W=Math.min(innerWidth,560),Hh=innerHeight,s=Math.min(W/390,Hh/700),nc=typeof msClaimable==='function'?msClaimable():0;
+ if(!TWBG||TWBG.w!==W||TWBG.h!==Hh)TWBG={w:W,h:Hh,u:towerSceneArt(W,Hh)};
+ return `<div class="twsc" style="background-image:url(${TWBG.u})"><div class="twsh"><button class="xb" data-y="x">←</button><b>試煉塔</b></div>
+ ${TOWERS.map(k=>{const T=S.tw[k],P=TWSP[k],f=T.done?NF:T.f+1;return `<button class="twpl" data-y="map" data-k="${k}" style="left:${P.x*100}%;top:${P.y*100}%;--tc:${P.c}"><span class="twpn">${TKN[k].split('').join('<br>')}</span><span class="twpf">${T.done?'登頂':`第 ${f} 層`}</span></button>`}).join('')}
+ <div class="twsb"><button data-y="v" data-v="rank"><i>🏆</i>排行榜</button><button data-y="v" data-v="ms"${nc?' data-dot':''}><i>🎁</i>里程碑</button><button data-y="frag"${fragDot()?' data-dot':''}><i>🧩</i>碎片</button></div>
+ <p class="twtip">點塔進入爬塔地圖・一鍵爬塔最多到第 ${AUTOMAX} 層</p></div>`}
+function renderHub(){$('thub').classList.toggle('scn',HUBV==='main');if(HUBV==='main'){$('thBody').innerHTML=towerScene();return}const nc=msClaimable();let h=`<div class="shh"><b>🗼 爬塔</b><button data-y="x" style="flex:none;width:44px;padding:6px 0">✕</button></div><div class="btns" style="margin:6px 0">${[['main','🗼 五座塔'],['rank','🏆 排行榜'],['ms','🎁 全服里程碑'+(nc?'（'+nc+'）':'')]].map(([k,n])=>`<button class="g${HUBV===k?' on':''}" data-y="v" data-v="${k}"${k==='ms'&&nc?' data-dot':''}>${n}</button>`).join('')}</div>`;
  if(HUBV!=='main'){$('thBody').innerHTML=h+hubSub();return}
  const TRS={exp:'🔮 經驗丹',eq:'🛡 裝備',gold:'💰 金幣',frag:'🧩 名將碎片',harem:'🌸 紅顏信物'};
  h+=`<p class="sub" style="font-size:15px">點方格看塔圖；一鍵爬塔最多到第 ${AUTOMAX} 層。</p><div class="twg">`;
@@ -2618,7 +2661,7 @@ function navDots(){const d=(id,on)=>{const e=$(id);if(e){if(on)e.setAttribute('d
  d('mGacha',(typeof newLeft==='function'&&newLeft())||(typeof ptsReady==='function'&&ptsReady()));d('mTower',typeof msClaimable==='function'&&msClaimable()>0);
  const F=S.frag||{};d('sFrag',['SR','SSR','UR'].some(k=>(F[k]||0)>=FSYN[k]));
  ['mPvp','mTower'].forEach(id=>$(id).classList.toggle('on',(id==='mPvp')===(MODE==='pvp')))}catch(e){}navDots2()}
-$('sHJ').onclick=()=>hjOpen();$('mQM').onclick=()=>qmOpen();qmBind();dtBind();idleBind();ugcBind();ugcRecalc();setTimeout(ugcLoadTop,1500);$('cDT').onclick=()=>{if(!busy)dtOpen()};$('cIdle').onclick=()=>{if(!busy)idleOpen()};setInterval(navDots2,30000);$('sFrag').onclick=()=>fragOpen();
+$('sHJ').onclick=()=>hjOpen();$('mQM').onclick=()=>qmOpen();qmBind();dtBind();idleBind();ugcBind();ugcRecalc();setTimeout(ugcLoadTop,1500);setInterval(()=>{if(!busy)ugcLoadTop()},600000);$('cDT').onclick=()=>{if(!busy)dtOpen()};$('cIdle').onclick=()=>{if(!busy)idleOpen()};setInterval(navDots2,30000);$('sFrag').onclick=()=>fragOpen();
 document.querySelectorAll('.pfb').forEach(g=>g.onclick=e=>{const b=e.target.closest('button');if(!b||!b.dataset.pf)return;PF=b.dataset.pf;render();if($('form').classList.contains('on'))renderForm()});
 let ANIM=(()=>{try{return localStorage.getItem('sgAnim')||'full'}catch(e){return 'full'}})();
 const ANL={full:['🎬','動畫：完整（技能特寫＋跳躍攻擊）'],short:['⚡','動畫：簡短（只有跳躍攻擊）'],off:['⏹','動畫：關閉（只有特效）']};
@@ -2810,7 +2853,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261029x';
+const CVER='20261029y';
 function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);$('cBlds').innerHTML=CITYB.map(b=>`<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${b.x*100}%;top:${b.y*100}%;width:${b.w*s}px;height:${b.h*s}px"><span class="cpl">${[...b.n].join('<br>')}</span></button>`).join('');
  CITYB.forEach(b=>{const e=$('cb_'+b.k);e.querySelector('.cpl').style.top=(b.k==='jj'?-40:b.k==='sp'?-60:-30)*s+'px'});cityBind()}
 
@@ -2976,6 +3019,7 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261029y',d:'10/29',t:['試煉塔改成五座塔的水墨山景，點塔進入爬塔地圖；地圖頁更大，也可以左右滑動換塔','玩家上傳的圖就算只有一張也會直接取代水墨畫；有新圖時武將會標「🎨 新圖」，看過就消失','修正武將列表右上角找不到來源的紅點（其實是「碎片」可以合成）']},
  {v:'20261029x',d:'10/29',t:['全新立體水墨戰場：演武場背景、武將立牌與遠近透視、待機呼吸動作','五國各自的命中特效：蜀刀光、魏冰晶、吳火焰、神金芒、魔紫霧','戰鬥上方顯示雙方名字、奇謀與回合；下方出手順序條；右側新增「狀態」查看全場','大招特寫改成半身滑入，顯示名字、等級、怒氣','武將頁的切換箭頭移到名字下方，也可以左右滑動切換；小螢幕不再重疊']},
  {v:'20261029w',d:'10/29',t:['修正爬塔打完後按「挑戰這一層」或「一鍵爬塔」會卡住','紅點一路可追：武將列表會把有紅點的武將排最前面並寫出原因，碎片、里程碑、後宮聊天也都標得到','放大招的特寫畫面加上技能說明、攻擊範圍、目標、生命與加成']},
  {v:'20261029v',d:'10/29',t:['點主公頭像改成「個人中心」：大圖背景、資料、戰績、陣容展示，設定收進「設置」','新增更新公告（就是你正在看的這張）與「新手指南」','武將頁的返回鈕統一到左上角']},
