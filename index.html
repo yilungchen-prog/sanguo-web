@@ -583,11 +583,13 @@ body.auto #app,body.auto #mask{visibility:hidden!important}
 .stl{max-height:46vh;overflow-y:auto;margin:6px 0}.stl div{display:grid;grid-template-columns:1fr auto;gap:0 8px;padding:8px 6px;border-bottom:1px solid #ffffff1a}.stl b{font:900 18px 'LXGW WenKai TC',serif}.stl span{color:#ffd27a;font-weight:900;font-size:17px}.stl small{grid-column:1/3;font-size:13px;opacity:.75}
 .stfx{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%);z-index:120;background:#1a120ce8;border:3px solid #ffd27a;border-radius:16px;padding:16px 22px;display:flex;flex-direction:column;align-items:center;gap:4px;animation:hvpop .3s ease;box-shadow:0 0 40px #ffb02e88;pointer-events:none}.stfx b{font:900 26px 'LXGW WenKai TC',serif;color:#ffe08a;text-shadow:0 0 10px #ff9a2a}.stfx span{font-size:16px}
 #heroes .shh{gap:6px;flex-wrap:wrap!important}#heroes .shh b{font-size:24px}#hCnt{order:9;flex:0 0 100%!important;font-size:14px;padding-left:66px;margin-top:-8px}.hhb{padding:6px 9px!important;font-size:15px!important}
+.hmimg{position:relative}.hmug{position:absolute;right:calc(50% - min(50%,165px) + 8px);bottom:16px;min-height:44px;padding:6px 14px;font:900 17px 'LXGW WenKai TC',serif;border-radius:22px;background:#1a120ce0!important;border:2px solid #d9b25a!important;color:#ffe9b0!important}
+#heroes .hpf{z-index:20!important}.hform{z-index:21!important}#heroes .pc{z-index:auto}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029t</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029u</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -1575,7 +1577,7 @@ async function ugcSend(){if(!UGV.prev||!SB||!ME||UGV.busy)return;const L0=ugcLef
   S.ugc=S.ugc||{};S.ugc[ugcKey(UGV.kind,UGV.kind==='lord'?'me':UGV.ref)]=ugcUrl(path);saveS();ugcRecalc();UGV.prev=null;UGV.msg='上傳成功！已自動套用。';sfx('win')}
  catch(e){const m=String(e.message||e).replace(/^.*?UGC_(DAY|REF):/,'');UGV.msg='上傳失敗：'+m;ugAlert('上傳失敗：'+m)}UGV.busy=false;await ugcFetch();if(!busy)render()}
 function ugcBind(){$('ugBody').onclick=async e=>{const b=e.target.closest('[data-u]');if(!b||b.disabled)return;const k=b.dataset.u,V=UGV;
- if(k==='x'){$('ugv').classList.remove('on');if($('hero').classList.contains('on'))renderHero();render();return}
+ if(k==='x'){$('ugv').classList.remove('on');if($('hero').classList.contains('on'))renderHero();if($('harem').classList.contains('on'))renderHarem();render();return}
  if(k==='use'){S.ugc=S.ugc||{};const key=ugcKey(V.kind,V.kind==='lord'?'me':V.ref);S.ugc[key]=b.dataset.p;saveS();ugcRecalc();for(const c of[ARTC,ART2C])delete c[V.ref];renderUGC();toast('已套用');return}
  if(k==='like'||k==='rep'){if(!ME){toast('請先登入');return}if(k==='rep'&&!b.dataset.ok){b.dataset.ok=1;b.textContent='確認?';return}const{data,error}=await SB.rpc('ugc_vote_do',{p_art:+b.dataset.i,p_kind:k==='like'?'like':'report'});if(error)toast(error.message);else{toast(k==='like'?'❤️ '+data:'已檢舉');burstAt(b,k==='like'?'❤️':'⚠')}await ugcFetch();return}
  if(k==='del'){if(!b.dataset.ok){b.dataset.ok=1;b.textContent='確認?';return}await SB.from('ugc_art').delete().eq('id',+b.dataset.i);await SB.storage.from('ugc').remove([b.dataset.p]);await ugcFetch();return}
@@ -2311,7 +2313,7 @@ function renderHarem(){const G=hgf(),F=hfr(),B=hrm(),hb=haremBonus(),td=today();
    h+=`<div data-hs="${x.id}" style="text-align:center;font-size:11px;cursor:pointer"><div class="cwr"><div class="card" style="background-image:url(${BART[x.id][0]});border-color:${RAR[rarOf2(x.q)].c};${b?'':'filter:grayscale(1) brightness(.55)'}"><span class="zhen" style="background:${RAR[rarOf2(x.q)].c};color:#111">${x.q}</span><span class="nm">${x.n}</span>${dot?'<span class="upd ok">💬</span>':''}</div></div>
    <div style="margin-top:3px">${b?`好感 Lv.${b.l}・★${b.s}`:'未招入'}</div><div style="opacity:.8">信物 ${fr}${need?' / '+need:''}</div></div>`});h+='</div>'}
  else{const x=BEA.find(y=>y.id===HSEL),b=B[x.id],fr=F[x.id]||0,m=b?bMul(b):1;
-  h+=`${HMSG?`<div class="it" style="display:block;border:1px solid #ff9ad5">${HMSG}</div>`:''}<div class="hth"><b>${x.n}</b><span style="color:${RAR[rarOf2(x.q)].c}">${RAR[rarOf2(x.q)].n}・資質 ${x.q}</span></div><img class="big" src="${BART[x.id][1]}" alt="${x.n}"><div class="sub" style="font-size:13px">${x.t}　最愛：${GIFT[x.fav].ic}${GIFT[x.fav].n}（好感 ×1.5）</div>
+  h+=`${HMSG?`<div class="it" style="display:block;border:1px solid #ff9ad5">${HMSG}</div>`:''}<div class="hth"><b>${x.n}</b><span style="color:${RAR[rarOf2(x.q)].c}">${RAR[rarOf2(x.q)].n}・資質 ${x.q}</span></div><div class="hmimg"><img class="big" src="${BART[x.id][1]}" alt="${x.n}"><button class="hmug" data-h="ugc">🎨 圖鑑</button></div><div class="sub" style="font-size:13px">${x.t}　最愛：${GIFT[x.fav].ic}${GIFT[x.fav].n}（好感 ×1.5）</div>
   <div class="sec">加成（全體武將）</div><div class="skb">${Object.keys(x.st).map(k=>`${BSTN[k]} +${pct(x.st[k]*m)}${b&&(b.l<BMAXLV||b.s<BMAXST)?'':''}`).join('、')}<div style="font-size:11px;opacity:.8">基礎 ${Object.keys(x.st).map(k=>BSTN[k]+' '+pct(x.st[k])).join('、')} × 好感倍率 ${(1+.02*((b?b.l:1)-1)).toFixed(2)} × 星級倍率 ${(1+.1*(b?b.s:0)).toFixed(1)}</div></div>`;
   if(!b){const need=bUnlock(x.q);h+=`<div class="sec">招入後宮</div><div class="rq ${fr>=need?'good':'bad'}"><span>${x.n} 信物</span><b>${fr} / ${need}</b><i>${fr>=need?'✓':'✗'}</i></div><button data-h="unlock" style="width:100%;margin-top:6px" ${fr>=need?'':'disabled'}>招入後宮</button>`}
   else{h+=`<div class="sec">好感 Lv.${b.l}${b.l>=BMAXLV?'（滿級）':`　${b.e}/${bNeed(b.l)}`}</div><div class="xp"><i style="width:${b.l>=BMAXLV?100:b.e/bNeed(b.l)*100}%"></i></div>
@@ -2322,7 +2324,7 @@ function renderHarem(){const G=hgf(),F=hfr(),B=hrm(),hb=haremBonus(),td=today();
 const rarOf2=q=>RKEYS.find(k=>q>=RAR[k].min);
 $('hmBody').onclick=e=>{const t=e.target.closest('[data-h],[data-hs],[data-gf]');if(!t)return;const B=hrm(),F=hfr(),G=hgf();
  if(t.dataset.hs){HSEL=t.dataset.hs;HMSG='';renderHarem();$('harem').scrollTop=0;return}
- const h=t.dataset.h;if(h==='x'&&HSEL){HSEL=null;HMSG='';renderHarem();$('harem').scrollTop=0;return}if(h==='x'){$('harem').classList.remove('on');render();return}if(h==='back'){HSEL=null;HMSG='';renderHarem();return}
+ const h=t.dataset.h;if(h==='ugc'&&HSEL){ugcOpen(HSEL,'bea');return}if(h==='x'&&HSEL){HSEL=null;HMSG='';renderHarem();$('harem').scrollTop=0;return}if(h==='x'){$('harem').classList.remove('on');render();return}if(h==='back'){HSEL=null;HMSG='';renderHarem();return}
  const x=BEA.find(y=>y.id===HSEL);if(!x)return;let b=B[x.id];
  if(h==='unlock'){const c=bUnlock(x.q);if(b||(F[x.id]||0)<c)return;F[x.id]-=c;B[x.id]={l:1,e:0,s:0,chat:''};HMSG=`🌸 ${x.n} 入宮了！`;sfx('win')}
  else if(h==='chat'){if(!b||b.chat===today())return;b.chat=today();const up=bExp(x.id,30);HMSG=`「${x.ln[Math.floor(Math.random()*x.ln.length)]}」<br>好感 +30${up?`，升到 Lv.${b.l}！`:''}`}
@@ -2662,7 +2664,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261029t';
+const CVER='20261029u';
 function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);$('cBlds').innerHTML=CITYB.map(b=>`<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${b.x*100}%;top:${b.y*100}%;width:${b.w*s}px;height:${b.h*s}px"><span class="cpl">${[...b.n].join('<br>')}</span></button>`).join('');
  CITYB.forEach(b=>{const e=$('cb_'+b.k);e.querySelector('.cpl').style.top=(b.k==='jj'?-40:b.k==='sp'?-60:-30)*s+'px'});cityBind()}
 
