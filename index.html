@@ -641,11 +641,84 @@ body.auto #app,body.auto #mask{visibility:hidden!important}
 .pwhy{position:absolute;left:50%;transform:translateX(-50%);bottom:30%;font-style:normal;font:900 13px 'LXGW WenKai TC',serif;white-space:nowrap;background:#b0261cee;color:#fff;border-radius:8px;padding:1px 8px;z-index:3;box-shadow:0 0 6px #000}
 #hCnt .hwhy{display:block;color:#ff9a8a;font:700 14px sans-serif!important;letter-spacing:0!important;white-space:normal}
 [data-hs]{position:relative}
+/* ===== 立體水墨戰場 ===== */
+#btBg,#btHud,#btOrd{display:none}
+body.bt #btBg{display:block;position:fixed;inset:0;z-index:0;background:#8a7656 center/cover no-repeat}
+body.bt #app{position:relative;z-index:1;background:none}
+body.full.bt .wrap{padding-top:calc(env(safe-area-inset-top,0px) + 70px)!important;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 74px)!important}
+body.bt .side{background:none!important;border:none!important;padding:0!important}
+body.bt .side .tag,body.bt .synb,body.bt #info{display:none!important}
+body.bt .board{justify-content:center!important;gap:0}
+body.bt .grid{gap:2px 6px}
+body.bt .cell{background:radial-gradient(ellipse 46% 9% at 50% 93%,color-mix(in srgb,var(--fc,#000) 55%,transparent) 0 55%,rgba(0,0,0,.35) 60%,transparent 72%)!important;border:none!important;overflow:visible!important}
+body.bt .cell .card{scale:var(--rs,1);transform-origin:50% 92%;border-radius:8px;box-shadow:0 6px 10px rgba(0,0,0,.45)!important}
+body.bt .cell:not(.dead):not(.act) .card{animation:stbob 2.8s ease-in-out infinite}
+body.bt .cell:nth-child(3n+2):not(.dead) .card{animation-delay:-.9s}body.bt .cell:nth-child(3n):not(.dead) .card{animation-delay:-1.8s}
+@keyframes stbob{0%,100%{translate:0 0}50%{translate:0 -3px}}
+body.bt .cell.hit .card{animation:hit .35s!important}
+body.bt #ge .cell:nth-child(-n+3){--rs:.78}body.bt #ge .cell:nth-child(n+4):nth-child(-n+6){--rs:.84}body.bt #ge .cell:nth-child(n+7){--rs:.9}
+body.bt #gp .cell:nth-child(-n+3){--rs:.96}body.bt #gp .cell:nth-child(n+4):nth-child(-n+6){--rs:1.01}body.bt #gp .cell:nth-child(n+7){--rs:1.06}
+body.bt.land .cell .card{scale:1}
+body.bt .cell.dead .card{opacity:.35;filter:grayscale(1) brightness(.5)}
+/* 頂部資訊 */
+body.bt #btHud{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px;position:fixed;left:0;right:0;top:0;z-index:62;padding:calc(env(safe-area-inset-top,0px) + 6px) 8px 8px;background:linear-gradient(#120d08f2,#120d08c0 70%,#120d0800);color:#f3e6c4}
+.bhs{display:flex;align-items:center;gap:6px;min-width:0}.bhs.en{justify-content:flex-end}.bhs b{font:900 17px 'LXGW WenKai TC',serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:2px 10px;border-radius:10px}.bhs.me b{background:linear-gradient(90deg,#1e4a7a,#1e4a7a00)}.bhs.en b{background:linear-gradient(270deg,#7a1e14,#7a1e1400)}
+.bqm{display:flex;align-items:center;gap:2px;flex:none;font-size:20px;background:#000a;border:1px solid #d9b25a;border-radius:14px;padding:1px 7px}.bqm small{font-size:11px;color:#ffe9b0}
+.bhr{display:flex;flex-direction:column;align-items:center;padding:2px 14px;border-radius:12px;background:radial-gradient(#3a2a12,#1a1208);border:2px solid #c9993c}.bhr span{font-size:11px;letter-spacing:2px;color:#d9c39a}.bhr b{font:900 18px serif;color:#ffd27a}
+/* 出手順序 */
+body.bt #btOrd{display:flex;flex-direction:column;align-items:center;position:fixed;left:0;right:0;bottom:0;z-index:62;padding:8px 6px calc(env(safe-area-inset-bottom,0px) + 4px);background:linear-gradient(#120d0800,#120d08d0 30%,#120d08f2)}
+.boi{display:flex;gap:4px;justify-content:center;flex-wrap:nowrap;overflow:hidden;max-width:100%}.boi span{position:relative;flex:none;width:38px;height:38px;border-radius:50%;background:center 15%/cover;border:2px solid;transition:transform .2s}.boi span.me{border-color:#4aa3ff}.boi span.en{border-color:#e0503a}
+.boi span b{position:absolute;left:-4px;right:-4px;bottom:-6px;font-size:10px;text-align:center;background:#000c;border-radius:6px;color:#fff;line-height:1.3}.boi span.ink b{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);background:none;font:900 13px 'LXGW WenKai TC',serif;color:#fff;text-shadow:0 0 3px #000}.boi span{width:34px!important;height:34px!important}
+.boi span.cur{transform:scale(1.25);box-shadow:0 0 10px #ffd23a;border-color:#ffd23a;z-index:2}
+#btOrd small{font-size:11px;color:#d9c39a;letter-spacing:2px;margin-top:4px}
+body.bt #spdBar{top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 82px)!important;gap:8px!important}
+#bStat{flex:none;width:60px;height:60px;padding:0;font-size:14px;line-height:1.2;font-weight:700;border-radius:16px;border-width:2px;box-shadow:0 3px 8px #000c;opacity:.92}
+/* 陣營命中特效 */
+.ffx{position:absolute;inset:0;pointer-events:none;z-index:8}.ffx i{position:absolute;left:50%;top:50%;font-style:normal}
+.ffx.f-shu i{width:140%;height:4px;left:-20%;border-radius:4px;background:linear-gradient(90deg,transparent,#c8ffd0,#2fd06a,transparent);box-shadow:0 0 8px #4dff88;transform:rotate(-35deg);opacity:0;animation:fshu .45s ease-out forwards}
+.ffx.f-shu i:nth-child(2){animation-delay:.07s;top:42%;opacity:0}.ffx.f-shu i:nth-child(3){animation-delay:.14s;top:58%}.ffx.f-shu i:nth-child(n+4){display:none}
+@keyframes fshu{0%{opacity:0;translate:-40% 0}30%{opacity:1}100%{opacity:0;translate:40% 0}}
+.ffx.f-wei i{width:12px;height:12px;margin:-6px;background:linear-gradient(135deg,#fff,#7fd8ff);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);filter:drop-shadow(0 0 4px #9fe3ff);animation:fwei .7s ease-out forwards}
+.ffx.f-wei i:nth-child(1){--dx:-34px;--dy:-30px}.ffx.f-wei i:nth-child(2){--dx:30px;--dy:-34px}.ffx.f-wei i:nth-child(3){--dx:38px;--dy:14px}.ffx.f-wei i:nth-child(4){--dx:-36px;--dy:20px}.ffx.f-wei i:nth-child(5){--dx:4px;--dy:-44px}.ffx.f-wei i:nth-child(6){--dx:0;--dy:36px}
+@keyframes fwei{0%{transform:scale(.3);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1.4) rotate(90deg);opacity:0}}
+.ffx.f-wu i{width:16px;height:22px;margin:-11px -8px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#fff3a0,#ff8a1a 50%,#d0300a 80%,transparent);filter:blur(.5px);animation:fwu .75s ease-out forwards}
+.ffx.f-wu i:nth-child(1){--dx:-22px}.ffx.f-wu i:nth-child(2){--dx:-8px;animation-delay:.05s}.ffx.f-wu i:nth-child(3){--dx:8px;animation-delay:.1s}.ffx.f-wu i:nth-child(4){--dx:22px;animation-delay:.03s}.ffx.f-wu i:nth-child(5){--dx:0;animation-delay:.15s}.ffx.f-wu i:nth-child(6){--dx:-14px;animation-delay:.2s}
+@keyframes fwu{0%{transform:translate(var(--dx),20px) scale(.6);opacity:1}100%{transform:translate(var(--dx),-40px) scale(1.3);opacity:0}}
+.ffx.f-shen i:first-child{width:160px;height:160px;margin:-80px;border-radius:50%;background:repeating-conic-gradient(#ffe58a 0 6deg,transparent 6deg 30deg);mask:radial-gradient(circle,transparent 18%,#000 30%,transparent 70%);-webkit-mask:radial-gradient(circle,transparent 18%,#000 30%,transparent 70%);animation:fshen .6s ease-out forwards}.ffx.f-shen i:nth-child(n+2){display:none}
+@keyframes fshen{0%{transform:scale(.3) rotate(0);opacity:1}100%{transform:scale(1.2) rotate(40deg);opacity:0}}
+.ffx.f-mo i{width:30px;height:30px;margin:-15px;border-radius:50%;background:radial-gradient(circle,#d08aff,#7a2ad0 50%,transparent 70%);filter:blur(2px);animation:fmo .8s ease-out forwards}
+.ffx.f-mo i:nth-child(1){--dx:-26px;--dy:-10px}.ffx.f-mo i:nth-child(2){--dx:24px;--dy:-16px}.ffx.f-mo i:nth-child(3){--dx:-10px;--dy:24px}.ffx.f-mo i:nth-child(4){--dx:18px;--dy:22px}.ffx.f-mo i:nth-child(5){--dx:0;--dy:-30px}.ffx.f-mo i:nth-child(6){--dx:0;--dy:0}
+@keyframes fmo{0%{transform:scale(.4);opacity:.9}100%{transform:translate(var(--dx),var(--dy)) scale(2.2);opacity:0}}
+.ffx.crit{scale:1.5}
+/* 狀態面板 */
+.bsec{font:900 18px 'LXGW WenKai TC',serif;color:#ffd27a;margin:10px 0 4px}.bsr{display:flex;gap:10px;align-items:center;padding:6px;border-radius:10px;margin:4px 0;background:#ffffff0a}.bsr.me{border-left:4px solid #4aa3ff}.bsr.en{border-left:4px solid #e0503a}
+.bsa{flex:none;width:46px;height:46px;border-radius:50%;background:center 15%/cover;border:2px solid #c9993c}.bsr>div{flex:1;min-width:0}.bsr b{font:900 16px 'LXGW WenKai TC',serif}.bsr small{margin-left:6px;opacity:.7}
+.bsb{height:7px;border-radius:4px;background:#0008;margin:3px 0;overflow:hidden}.bsb i{display:block;height:100%;background:#4ec36a}.bsb.rg i{background:#4aa3ff}.bst{display:flex;gap:4px;flex-wrap:wrap}.bst em{font-style:normal;font-size:12px;padding:0 6px;border-radius:6px;background:#1c4a2a;color:#cfe}.bst em.neg{background:#5a1a10;color:#fcc}
+/* 大招特寫：半身滑入 */
+#cine .cc{left:auto!important;right:auto!important;top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 260px)!important;height:min(56vh,560px)!important;margin:0!important;border:none!important;border-radius:0!important;box-shadow:none!important;background-size:cover!important;
+ -webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(closest-side,#000 62%,transparent 100%);animation:csl .5s cubic-bezier(.2,.8,.2,1) both!important;transform:none!important}
+#cine .cc.me{left:-8%!important}#cine .cc.en{right:-8%!important}
+@keyframes csl{from{opacity:0;translate:calc(var(--dir,1) * 40%) 0}to{opacity:1;translate:0 0}}
+#cine .cn{top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 330px)!important;left:auto!important;right:14px!important;align-items:flex-end!important;text-align:right!important}
+#cine .cn.en{right:auto!important;left:14px!important;align-items:flex-start!important;text-align:left!important}
+#cine .cn .cnm{font:900 46px 'LXGW WenKai TC',serif;letter-spacing:4px;color:#fff3d6;text-shadow:0 0 10px #000,0 3px 6px #000}
+#cine .cn .crg{display:flex;align-items:center;gap:6px;font-size:14px;color:#ffd27a}#cine .cn .crg i{display:block;width:130px;height:9px;border-radius:5px;background:#0009;overflow:hidden;border:1px solid #ffd27a88}#cine .cn .crg i u{display:block;height:100%;background:linear-gradient(90deg,#ff9a2a,#ffe08a)}
+#cine .cc.lite{bottom:calc(env(safe-area-inset-bottom,0px) + 150px)!important}
+
+/* 武將頁切換：名字下方 */
+#hero .hvnav{position:absolute;right:10px;top:calc(env(safe-area-inset-top,0px) + 196px);display:flex;align-items:center;gap:6px;z-index:3}
+#hero .hvnav span{font-size:12px;color:#f3e6c4;text-shadow:0 0 3px #000;background:#0007;border-radius:8px;padding:1px 7px}
+#hero .hvar{position:static!important;width:42px!important;height:42px!important;border-radius:50%!important;font-size:28px!important;line-height:1;background:#000a!important;border:2px solid #d9b25a!important;color:#ffe9b0}
+@media (max-height:780px){
+ #hero .hvl1{gap:2px!important}#hero .hvl1 button b{width:46px!important;height:46px!important;font-size:21px!important}#hero .hvl1 button span{font-size:14px!important}
+ #hero .hvsk{top:31%!important;scale:.86;transform-origin:right top}#hero .hvn{font-size:40px!important}#hero .hvnav{top:calc(env(safe-area-inset-top,0px) + 180px)}
+ #hero .hvst{bottom:calc(env(safe-area-inset-bottom,0px) + 82px)!important}#hero .hvpw b{font-size:28px!important}#hero .hvg{font-size:15px!important}#hero .hvbig{width:100px!important;height:100px!important}}
+@media (max-height:700px){#hero .hvl1 button:nth-child(2){display:none}#hero .hvsk{scale:.76}}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029w</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029x</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -1152,7 +1225,7 @@ function render(){
  if(MODE==='pvp'&&!busy&&OPP.list.length)buildOpp();
  [['gp',pl],['ge',en]].forEach(([id,arr])=>{const g=$(id);g.innerHTML='';
   arr.forEach((u,i)=>{const c=document.createElement('div');c.className='cell'+(id==='gp'&&sel===i?' sel':'');c.id=id+i;c.dataset.i=i;
-   if(u){c.appendChild(cardEl(u));if(u.hp<=0)c.classList.add('dead')}
+   if(u){c.appendChild(cardEl(u));c.style.setProperty('--fc',FC[u.f]||'#000');if(u.hp<=0)c.classList.add('dead')}
    if(id==='gp')c.onclick=()=>{if(busy)return;openForm(i)};
    g.appendChild(c);if(u)upd(u,c)})});
  const kf=v=>v>=1e8?(v/1e8).toFixed(1)+'億':v>=1e4?(v/1e4).toFixed(1)+'萬':v.toLocaleString();$('coin').innerHTML=`<em>💰 ${kf(S.coins)}</em><em>🔮 ${kf(S.pill)}</em>${S.wc?`<em>🃏 ${S.wc}</em>`:''}${S.bst?`<em>💎 ${S.bst}</em>`:''}`;$('lchip').innerHTML=S.lord.n?`${(S.ugc||{})['lord:me']?`<img class="lcav" src="${S.ugc['lord:me']}">`:''}<b>${S.lord.f||'👤'}</b>${esc(S.lord.n)} Lv.${S.lord.l}`:'<b>👤</b>設定主公';navDots();
@@ -1360,7 +1433,7 @@ async function hit(src,t,mult,o){o=o||{};if(!t||t.hp<=0||has(t,'fx'))return 0;co
   let db=1+(src.db||0)+(src.X.sgDb||0)+(src.X.zmDb||0)+auraSum(src,'db')+(o.kind==='fu'?src.X.fuDb||0:0)+stV(src,'by')+(o.kind==='sk'?stV(src,'qmu'):0)+(src.X.wei4&&isCtl(t)?.15:0);if(sk(src).dmgMod)db*=sk(src).dmgMod(src,t,o)||1;d*=db;
   d*=takeMul(t)*(1-rdOf(t))*ruleMul(t,o.fx||'fx-s')*(CAOE&&has(t,'hid')?.75:1);if(sk(t).takeMod)d*=sk(t).takeMod(t,src,o)||1}
  if(direct&&sk(t).dodge&&sk(t).dodge(t,src)){LBL(t,'幻影','fx-h','g');return 0}
- d=Math.max(1,d*(src.f&&BAL[src.f]||1));if(direct)src.X.lt=t;
+ d=Math.max(1,d*(src.f&&BAL[src.f]||1));if(direct){src.X.lt=t;facFx(c,src.f,crit)}
  if(direct&&has(t,'gd')){t.ST.gd.n--;if(t.ST.gd.n<=0)delete t.ST.gd;LBL(t,'格擋','fx-h','g');upd(t);return 0}
  if(has(t,'sz')){t.ST.sz.c=(t.ST.sz.c||0)+(direct?1:0);const q=qmOf(t);if(direct&&q&&!t.ST.sz.v&&t.ST.sz.c>=qmV(q,'a')){delete t.ST.sz;t.hp=0;onDeath(t,src);upd(t)}else LBL(t,'死戰','fx-c');return 0}
  if(direct||o.fix!=null){for(const g of allyA(t)){if(g===t)continue;const f=sk(g).guard&&sk(g).guard(g,t,src);if(f>0){const sv=d*f;d-=sv;guardTake(g,sv)}}
@@ -2013,7 +2086,7 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  <div class="hvname"><div class="hvn">${h.n}</div><div class="hvq"><span style="background:${r.c}">${r.n}</span><b>資質 ${h.q}</b></div><div class="hvtags"><span style="background:${FC[h.f]}">${h.f}</span><span>${JB[h.job].ic}${h.job}</span><span class="st">★${st}</span>${brk?`<span>突破 ${brk}</span>`:''}</div></div>
  <div class="hvl1"><button data-a="tab" data-t="rst" ${own?'':'disabled'}><b>♻️</b><span>重生</span></button><button data-a="view"><b>👁</b><span>觀賞</span></button><button data-a="tab" data-t="det"><b>🔍</b><span>詳情</span></button><button data-a="ugc"><b>🎨</b><span>圖鑑</span></button>${own?`<button data-a="dep"><b>${dep?'⬇️':'⚔️'}</b><span>${dep?'卸下':'上陣'}</span></button>`:''}</div>
  <div class="hvsk">${sks.map((x,i)=>`<button class="hvo${HSK===i?' on':''}" data-a="sk" data-i="${i}" style="--sc:${({天賦:'#d9a520',絕技:'#d0402a',被動:'#2a9a8a',怒氣:'#9a3ad0'})[x.l]||'#888'}"><u>${x.l[0]}<i>${x.lv}</i></u><span>${x.n.length>5?x.n.slice(0,5):x.n}</span></button>`).join('')}</div>
- <button class="hvar l" data-a="prev">‹</button><button class="hvar r" data-a="next">›</button>
+ <div class="hvnav"><button class="hvar l" data-a="prev">‹</button><span>左右滑動切換</span><button class="hvar r" data-a="next">›</button></div>
  ${bub}
  <div class="hvst"><div class="hvpw"><small>戰力</small><b>${pw(u).toLocaleString()}</b></div><div class="hvlv">Lv.${lv} / ${MAXLV}</div><div class="hvg"><span>攻擊 <b>${kf(u.atk)}</b></span><span>生命 <b>${kf(u.mhp)}</b></span><span>速度 <b>${u.spd}</b></span><span>暴擊 <b>${pct(cr)}</b></span></div></div>
  <button class="hvbig" data-a="big" data-k="${big[2]}">${big[1]}</button>
@@ -2039,6 +2112,8 @@ $('heroBody').onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;cons
  if(k==='dep'){const dep=pl.some(x=>x&&x.id===HM);if(dep)undeploy(HM);else deploy(HM);renderHero()}};
 function hvFlash(t){const v=document.querySelector('.hv');if(!v)return;const d=document.createElement('div');d.className='hvfl';d.textContent=t;v.appendChild(d);setTimeout(()=>d.remove(),1200)}
 $('hero').onclick=e=>{if(e.target.id==='hero'){$('hero').classList.remove('on');render()}};
+{let sx=0,sy=0,ok=false;$('heroBody').addEventListener('touchstart',e=>{const t=e.touches[0];ok=!e.target.closest('.hvs,.hvp,.hvb,button');sx=t.clientX;sy=t.clientY},{passive:true});
+ $('heroBody').addEventListener('touchend',e=>{if(!ok)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)>60&&Math.abs(dy)<60&&!HTAB&&!HPK){const b=document.querySelector(dx<0?'.hvar.r':'.hvar.l');if(b)b.click()}},{passive:true})}
 
 function equipSlot(hid,slot,uid){S.inv.forEach(i=>{if(i.s===slot&&i.e===hid)i.e=null});if(uid){const it=S.inv.find(i=>i.u===uid);if(it)it.e=hid}saveS();if(!busy)refreshPl();renderHero();render()}
 function equipItem(uid,hid){const it=S.inv.find(i=>i.u===uid);if(!it)return;if(hid)S.inv.forEach(i=>{if(i.s===it.s&&i.e===hid)i.e=null});it.e=hid||null;saveS();if(!busy)refreshPl();renderShop();render()}
@@ -2561,8 +2636,8 @@ async function cine(u,mine){if(SKIP)return;const d=document.createElement('div')
  const grid=(()=>{const on={single:[1],assn:[7],snipe:[7],pierce:[1,4,7],sweep:[0,1,2],cross:[1,3,4,5,7],aoe:[0,1,2,3,4,5,6,7,8],backrow:[6,7,8],xshape:[0,2,4,6,8],volley:[1,5,6],heal:[0,1,2,3,4,5,6,7,8]}[u.pat]||[1];return `<div class="cig${u.pat==='heal'?' heal':''}">${[0,1,2,3,4,5,6,7,8].map(i=>`<i class="${on.includes(i)?'on':''}"></i>`).join('')}</div>`})();
  const bonds=Object.keys(u.X&&u.X.bd||{}).map(k=>(BONDS.find(b=>b.k===k)||{}).n).filter(Boolean),buffs=Object.keys(u.ST||{}).filter(k=>STD[k]&&!STD[k].neg&&STD[k].n).map(k=>STD[k].n),tags=[...bonds,...buffs].slice(0,5);
  const hp=Math.max(0,Math.round(u.hp/u.mhp*100));
- d.innerHTML=`<div class="dk"></div><div class="cv"></div><div class="bd"></div><div class="cc${lite?' lite':''}" style="background-image:url(${ART2[u.id]});border-color:${mine?rc:'#e0402a'};box-shadow:0 0 40px ${mine?rc:'#e0402a'},0 0 90px ${FC[u.f]}"></div>
- <div class="cn"><span class="cside ${mine?'me':'en'}">${mine?'我方':'敵方'}</span>${u.f}・${u.n}<small>${r.n} ${h.q}　★${st}　第 ${ROUND} 回合</small></div>
+ d.innerHTML=`<div class="dk"></div><div class="cv"></div><div class="bd"></div><div class="cc ${mine?'me':'en'}${lite?' lite':''}" style="background-image:url(${heroBgOf(u.id)})"></div>
+ <div class="cn ${mine?'me':'en'}"><span class="cside ${mine?'me':'en'}">${mine?'我方':'敵方'}・第 ${ROUND} 回合</span><span class="cnm">${u.n}</span><small>${u.f}・${r.n} ${h.q}　Lv.${u.lv}　★${st}</small><span class="crg">怒氣<i><u style="width:100%"></u></i>${Math.round(u.rage+100)}</span></div>
  <div class="cb ci"><div class="cs">必　殺　技　<b>Lv.${lv}/4</b></div><div class="ct">${u.sk}</div>${lite?`<div class="cit">→ ${tg}</div>`:`
   <div class="cirow">${grid}<div class="cid">${sk?sk[1]:''}<div class="cit">→ ${tg}</div></div></div>
   <div class="cist"><span class="cihp"><i style="width:${hp}%"></i><u>生命 ${hp}%</u></span><span>攻 <b>${Math.round(atkOf(u)).toLocaleString()}</b></span><span>暴 <b>${Math.round(critOf(u)*100)}%</b></span></div>
@@ -2735,7 +2810,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261029w';
+const CVER='20261029x';
 function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);$('cBlds').innerHTML=CITYB.map(b=>`<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${b.x*100}%;top:${b.y*100}%;width:${b.w*s}px;height:${b.h*s}px"><span class="cpl">${[...b.n].join('<br>')}</span></button>`).join('');
  CITYB.forEach(b=>{const e=$('cb_'+b.k);e.querySelector('.cpl').style.top=(b.k==='jj'?-40:b.k==='sp'?-60:-30)*s+'px'});cityBind()}
 
@@ -2901,6 +2976,7 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261029x',d:'10/29',t:['全新立體水墨戰場：演武場背景、武將立牌與遠近透視、待機呼吸動作','五國各自的命中特效：蜀刀光、魏冰晶、吳火焰、神金芒、魔紫霧','戰鬥上方顯示雙方名字、奇謀與回合；下方出手順序條；右側新增「狀態」查看全場','大招特寫改成半身滑入，顯示名字、等級、怒氣','武將頁的切換箭頭移到名字下方，也可以左右滑動切換；小螢幕不再重疊']},
  {v:'20261029w',d:'10/29',t:['修正爬塔打完後按「挑戰這一層」或「一鍵爬塔」會卡住','紅點一路可追：武將列表會把有紅點的武將排最前面並寫出原因，碎片、里程碑、後宮聊天也都標得到','放大招的特寫畫面加上技能說明、攻擊範圍、目標、生命與加成']},
  {v:'20261029v',d:'10/29',t:['點主公頭像改成「個人中心」：大圖背景、資料、戰績、陣容展示，設定收進「設置」','新增更新公告（就是你正在看的這張）與「新手指南」','武將頁的返回鈕統一到左上角']},
  {v:'20261029u',d:'10/29',t:['後宮紅顏可以到「🎨 圖鑑」上傳自己的圖，或選用其他玩家的圖','武將列表底部篩選列不再被「升星」標籤蓋住']},
@@ -2966,7 +3042,49 @@ function pcBind(){$('pcBody').onclick=async e=>{const b=e.target.closest('[data-
  new MutationObserver(()=>{if($('pcv').classList.contains('on')&&!$('lord').classList.contains('on')&&!$('ugv').classList.contains('on'))renderPC()}).observe($('lord'),{attributes:true,attributeFilter:['class']});
  new MutationObserver(()=>{if($('pcv').classList.contains('on')&&!$('ugv').classList.contains('on'))renderPC()}).observe($('ugv'),{attributes:true,attributeFilter:['class']})}
 
-migrate();daily();setMode('pvp');sbInit();cityInit();prepBind();sceneBind();cityIcons();recBind();pcBind();$('fRec').onclick=recOpen;cityShow();if(!S.lord.n){verMark();guideOpen(true)}else setTimeout(verCheck,600);
+/* ===================== 立體水墨戰場：背景、頂部資訊、出手順序、陣營特效、狀態面板 ===================== */
+let ARENA_BG='';
+function arenaArt(){if(ARENA_BG)return ARENA_BG;const W=540,Hh=1170,c=document.createElement('canvas');c.width=W;c.height=Hh;const x=c.getContext('2d');let sd=919;const rnd=()=>(sd=(sd*16807)%2147483647)/2147483647;
+ let g=x.createLinearGradient(0,0,0,Hh);g.addColorStop(0,'#e9dcc0');g.addColorStop(.32,'#ddcca8');g.addColorStop(.33,'#c9b48c');g.addColorStop(1,'#8a7656');x.fillStyle=g;x.fillRect(0,0,W,Hh);
+ for(let i=0;i<2600;i++){x.fillStyle=`rgba(70,50,30,${rnd()*.07})`;x.fillRect(rnd()*W,rnd()*Hh,1+rnd()*2,1)}
+ // 遠山
+ [[.2,.08,.18,1.2],[.26,.06,.3,3.7]].forEach(([b,a,al,ph])=>{x.beginPath();x.moveTo(0,Hh*.34);for(let xx=0;xx<=W;xx+=4){const t=xx/W;x.lineTo(xx,Hh*b-Hh*a*(Math.abs(Math.sin(t*3.1+ph))*.9+Math.sin(t*9+ph)*.2))}x.lineTo(W,Hh*.34);x.closePath();x.fillStyle=`rgba(43,38,34,${al})`;x.fill()});
+ g=x.createRadialGradient(W*.78,Hh*.1,0,W*.78,Hh*.1,W*.09);g.addColorStop(0,'rgba(200,70,55,.6)');g.addColorStop(1,'rgba(200,70,55,0)');x.fillStyle=g;x.beginPath();x.arc(W*.78,Hh*.1,W*.09,0,7);x.fill();
+ // 城樓
+ const cx=W/2,wy=Hh*.31;x.fillStyle='#7d7568';x.fillRect(0,wy-40,W,40);x.fillStyle='#6a6356';for(let i=0;i<W;i+=16)x.fillRect(i,wy-48,10,8);x.strokeStyle='#2b2622';x.lineWidth=1.5;x.strokeRect(-2,wy-40,W+4,40);
+ x.fillStyle='#8d867a';x.fillRect(cx-70,wy-70,140,70);x.strokeRect(cx-70,wy-70,140,70);x.fillStyle='#2b2622';x.beginPath();x.moveTo(cx-22,wy);x.lineTo(cx-22,wy-26);x.arc(cx,wy-26,22,Math.PI,0);x.lineTo(cx+22,wy);x.fill();
+ const roof=(y,w,h)=>{x.fillStyle='#2f3438';x.beginPath();x.moveTo(cx-w*.68,y);x.quadraticCurveTo(cx-w*.4,y-h*.2,cx-w*.3,y-h);x.lineTo(cx+w*.3,y-h);x.quadraticCurveTo(cx+w*.4,y-h*.2,cx+w*.68,y);x.closePath();x.fill()};
+ x.fillStyle='#efe5cf';x.fillRect(cx-50,wy-110,100,40);x.strokeRect(cx-50,wy-110,100,40);x.strokeStyle='#8b3a2a';x.lineWidth=3;for(let i=0;i<=4;i++){x.beginPath();x.moveTo(cx-50+25*i,wy-110);x.lineTo(cx-50+25*i,wy-70);x.stroke()}
+ roof(wy-108,150,26);x.fillStyle='#efe5cf';x.fillRect(cx-32,wy-150,64,24);x.strokeStyle='#2b2622';x.lineWidth=1.5;x.strokeRect(cx-32,wy-150,64,24);roof(wy-148,104,24);
+ // 旗
+ const flag=(fx,fy,h,col,d)=>{x.strokeStyle='#2b2622';x.lineWidth=3;x.beginPath();x.moveTo(fx,fy);x.lineTo(fx,fy-h);x.stroke();x.fillStyle=col;x.beginPath();x.moveTo(fx,fy-h);x.lineTo(fx+d*h*.32,fy-h*.96);x.lineTo(fx+d*h*.28,fy-h*.5);x.lineTo(fx,fy-h*.55);x.closePath();x.fill()};
+ [[40,'#a8382c',1],[95,'#2f4f6a',1],[W-40,'#a8382c',-1],[W-95,'#2f4f6a',-1]].forEach(([fx,c2,d],i)=>flag(fx,Hh*.36+i%2*10,150,c2,d));
+ // 地面：透視石板
+ const vy=Hh*.12,gy=Hh*.33;x.strokeStyle='rgba(43,38,34,.22)';x.lineWidth=1.2;for(let i=-10;i<=10;i++){x.beginPath();x.moveTo(cx+i*18,gy);x.lineTo(cx+i*120,Hh);x.stroke()}
+ for(let k=1;k<16;k++){const t=Math.pow(k/16,1.7),y=gy+(Hh-gy)*t;x.globalAlpha=.25;x.beginPath();x.moveTo(0,y);x.lineTo(W,y);x.stroke()}x.globalAlpha=1;
+ // 中央圓形紋
+ x.save();x.translate(cx,Hh*.58);x.scale(1,.42);x.strokeStyle='rgba(60,40,24,.35)';[230,190,120].forEach((r,i)=>{x.lineWidth=i?2:5;x.beginPath();x.arc(0,0,r,0,7);x.stroke()});
+ x.lineWidth=3;for(let i=0;i<8;i++){x.beginPath();x.arc(0,0,155,i*Math.PI/4,i*Math.PI/4+.5);x.stroke()}x.restore();
+ // 墨暈
+ g=x.createRadialGradient(cx,Hh*.6,W*.3,cx,Hh*.6,W*1.1);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(20,14,8,.65)');x.fillStyle=g;x.fillRect(0,0,W,Hh);
+ return ARENA_BG=c.toDataURL('image/jpeg',.82)}
+function btSideName(mine){return mine?esc(S.lord.n||'我方'):OPP.arena||OPP.fr?esc(OPP.name||'對手'):MODE==='tower'?`${FLOOR+1}層`:`${DIFFS[OPP.d].n}`}
+function btQm(i){const q=typeof QMS!=='undefined'&&QMS[i];const d=q&&QMD.find(z=>z.id===q.id);return d?`<span class="bqm" title="${d.n}">${d.ic}<small>${d.n}</small></span>`:''}
+function btHud(){const h=$('btHud');if(!h)return;h.innerHTML=`<div class="bhs me"><b>${btSideName(true)}</b>${btQm(0)}</div><div class="bhr"><span>回合</span><b>${ROUND}/${MAXR()}</b></div><div class="bhs en">${btQm(1)}<b>${btSideName(false)}</b></div>`}
+function btOrder(){const o=$('btOrd');if(!o)return;const L=[...alive(pl).map(u=>[u,1]),...alive(en).map(u=>[u,0])].sort((a,b)=>spdOf(b[0])-spdOf(a[0]));
+ o.innerHTML=`<div class="boi">${L.map(([u,m])=>`${UGC_SEL&&UGC_SEL[u.id]?`<span class="${m?'me':'en'}${u===CUR?' cur':''}" style="background-image:url(${ART[u.id]})"><b>${u.n.slice(-2)}</b></span>`:`<span class="${m?'me':'en'}${u===CUR?' cur':''} ink" style="background:${FC[u.f]}"><b>${u.n.slice(-2)}</b></span>`}`).join('')}</div><small>速度決定出手順序</small>`}
+let BTT=0;function btTick(){if(!document.body.classList.contains('bt'))return;btHud();btOrder()}
+const FFXC={蜀:'shu',魏:'wei',吳:'wu',神:'shen',魔:'mo'};
+function facFx(c,f,crit){if(SKIP||ANIM==='off'||!c)return;const k=FFXC[f];if(!k)return;const d=document.createElement('div');d.className='ffx f-'+k+(crit?' crit':'');d.innerHTML='<i></i><i></i><i></i><i></i><i></i><i></i>';c.appendChild(d);setTimeout(()=>d.remove(),900)}
+function btStat(){const d=document.createElement('div');d.className='bgp';const row=(u,m)=>{const hp=Math.max(0,Math.round(u.hp/u.mhp*100)),st=Object.keys(u.ST||{}).filter(k=>STD[k]&&STD[k].n).map(k=>`<em class="${STD[k].neg?'neg':''}">${STD[k].n}</em>`).join('');return `<div class="bsr ${m?'me':'en'}"><span class="bsa${UGC_SEL&&UGC_SEL[u.id]?'':' ink'}" style="background-image:url(${ART[u.id]})"></span><div><b>${u.n}</b><small>Lv.${u.lv}</small><div class="bsb"><i style="width:${hp}%"></i></div><div class="bsb rg"><i style="width:${Math.min(100,u.rage)}%"></i></div>${st?`<div class="bst">${st}</div>`:''}</div></div>`};
+ d.innerHTML=`<div class="bgpp" style="text-align:left;max-height:80vh;overflow-y:auto"><h3 style="text-align:center">戰場狀態・第 ${ROUND} 回合</h3><div class="bsec">我方</div>${pl.filter(Boolean).map(u=>row(u,1)).join('')}<div class="bsec">敵方</div>${en.filter(Boolean).map(u=>row(u,0)).join('')}<div class="bgpb"><button class="g" data-x="1">關閉</button></div></div>`;
+ d.onclick=e=>{if(e.target===d||e.target.closest('[data-x]'))d.remove()};document.body.appendChild(d)}
+function arenaInit(){const bg=document.createElement('div');bg.id='btBg';document.body.appendChild(bg);const h=document.createElement('div');h.id='btHud';document.body.appendChild(h);const o=document.createElement('div');o.id='btOrd';document.body.appendChild(o);
+ const sb=document.createElement('button');sb.id='bStat';sb.innerHTML='☰<br>狀態';sb.onclick=btStat;$('spdBar').appendChild(sb);
+ new MutationObserver(()=>{if(document.body.classList.contains('bt')){if(!bg.style.backgroundImage)bg.style.backgroundImage=`url(${arenaArt()})`;btTick()}}).observe(document.body,{attributes:true,attributeFilter:['class']});
+ setInterval(btTick,250)}
+
+migrate();daily();setMode('pvp');sbInit();cityInit();prepBind();sceneBind();cityIcons();recBind();pcBind();arenaInit();$('fRec').onclick=recOpen;cityShow();if(!S.lord.n){verMark();guideOpen(true)}else setTimeout(verCheck,600);
 {const _si=setInfo;setInfo=function(){_si();if(MODE==='tower'&&!document.body.classList.contains('full'))$('info').textContent+='｜點上方塔名可開啟塔圖';requestAnimationFrame(layout)}}addEventListener('load',layout);layout();
 </script></body></html>
 
