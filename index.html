@@ -2201,7 +2201,7 @@ function renderHarem(){const G=hgf(),F=hfr(),B=hrm(),hb=haremBonus(),td=today();
    h+=`<div data-hs="${x.id}" style="text-align:center;font-size:11px;cursor:pointer"><div class="cwr"><div class="card" style="background-image:url(${BART[x.id][0]});border-color:${RAR[rarOf2(x.q)].c};${b?'':'filter:grayscale(1) brightness(.55)'}"><span class="zhen" style="background:${RAR[rarOf2(x.q)].c};color:#111">${x.q}</span><span class="nm">${x.n}</span>${dot?'<span class="upd ok">💬</span>':''}</div></div>
    <div style="margin-top:3px">${b?`好感 Lv.${b.l}・★${b.s}`:'未招入'}</div><div style="opacity:.8">信物 ${fr}${need?' / '+need:''}</div></div>`});h+='</div>'}
  else{const x=BEA.find(y=>y.id===HSEL),b=B[x.id],fr=F[x.id]||0,m=b?bMul(b):1;
-  h+=`<div class="btns" style="margin:6px 0"><button class="g" data-h="back">◀ 返回</button></div>${HMSG?`<div class="it" style="display:block;border:1px solid #ff9ad5">${HMSG}</div>`:''}<div class="hth"><b>${x.n}</b><span style="color:${RAR[rarOf2(x.q)].c}">${RAR[rarOf2(x.q)].n}・資質 ${x.q}</span></div><img class="big" src="${BART[x.id][1]}" alt="${x.n}"><div class="sub" style="font-size:13px">${x.t}　最愛：${GIFT[x.fav].ic}${GIFT[x.fav].n}（好感 ×1.5）</div>
+  h+=`${HMSG?`<div class="it" style="display:block;border:1px solid #ff9ad5">${HMSG}</div>`:''}<div class="hth"><b>${x.n}</b><span style="color:${RAR[rarOf2(x.q)].c}">${RAR[rarOf2(x.q)].n}・資質 ${x.q}</span></div><img class="big" src="${BART[x.id][1]}" alt="${x.n}"><div class="sub" style="font-size:13px">${x.t}　最愛：${GIFT[x.fav].ic}${GIFT[x.fav].n}（好感 ×1.5）</div>
   <div class="sec">加成（全體武將）</div><div class="skb">${Object.keys(x.st).map(k=>`${BSTN[k]} +${pct(x.st[k]*m)}${b&&(b.l<BMAXLV||b.s<BMAXST)?'':''}`).join('、')}<div style="font-size:11px;opacity:.8">基礎 ${Object.keys(x.st).map(k=>BSTN[k]+' '+pct(x.st[k])).join('、')} × 好感倍率 ${(1+.02*((b?b.l:1)-1)).toFixed(2)} × 星級倍率 ${(1+.1*(b?b.s:0)).toFixed(1)}</div></div>`;
   if(!b){const need=bUnlock(x.q);h+=`<div class="sec">招入後宮</div><div class="rq ${fr>=need?'good':'bad'}"><span>${x.n} 信物</span><b>${fr} / ${need}</b><i>${fr>=need?'✓':'✗'}</i></div><button data-h="unlock" style="width:100%;margin-top:6px" ${fr>=need?'':'disabled'}>招入後宮</button>`}
   else{h+=`<div class="sec">好感 Lv.${b.l}${b.l>=BMAXLV?'（滿級）':`　${b.e}/${bNeed(b.l)}`}</div><div class="xp"><i style="width:${b.l>=BMAXLV?100:b.e/bNeed(b.l)*100}%"></i></div>
@@ -2212,7 +2212,7 @@ function renderHarem(){const G=hgf(),F=hfr(),B=hrm(),hb=haremBonus(),td=today();
 const rarOf2=q=>RKEYS.find(k=>q>=RAR[k].min);
 $('hmBody').onclick=e=>{const t=e.target.closest('[data-h],[data-hs],[data-gf]');if(!t)return;const B=hrm(),F=hfr(),G=hgf();
  if(t.dataset.hs){HSEL=t.dataset.hs;HMSG='';renderHarem();$('harem').scrollTop=0;return}
- const h=t.dataset.h;if(h==='x'){$('harem').classList.remove('on');render();return}if(h==='back'){HSEL=null;HMSG='';renderHarem();return}
+ const h=t.dataset.h;if(h==='x'&&HSEL){HSEL=null;HMSG='';renderHarem();$('harem').scrollTop=0;return}if(h==='x'){$('harem').classList.remove('on');render();return}if(h==='back'){HSEL=null;HMSG='';renderHarem();return}
  const x=BEA.find(y=>y.id===HSEL);if(!x)return;let b=B[x.id];
  if(h==='unlock'){const c=bUnlock(x.q);if(b||(F[x.id]||0)<c)return;F[x.id]-=c;B[x.id]={l:1,e:0,s:0,chat:''};HMSG=`🌸 ${x.n} 入宮了！`;sfx('win')}
  else if(h==='chat'){if(!b||b.chat===today())return;b.chat=today();const up=bExp(x.id,30);HMSG=`「${x.ln[Math.floor(Math.random()*x.ln.length)]}」<br>好感 +30${up?`，升到 Lv.${b.l}！`:''}`}
