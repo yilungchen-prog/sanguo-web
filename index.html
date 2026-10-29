@@ -795,6 +795,7 @@ body.bt #spdBar{top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) +
 .cres{position:absolute;right:10px;top:calc(env(safe-area-inset-top,0px) + 80px);flex-direction:row!important;gap:6px!important}.cres span{font-size:13px!important;padding:2px 8px!important}
 .ctop{padding-bottom:4px!important}
 .cl{top:calc(env(safe-area-inset-top,0px) + 124px)!important;gap:18px!important;transition:transform .3s,opacity .3s}
+@media (max-height:760px){.cl{top:calc(env(safe-area-inset-top,0px) + 112px)!important;gap:6px!important}}
 .cl .cic i,.csoc .cic i{width:54px!important;height:54px!important}.cl .cic span,.csoc .cic span{font-size:14px!important}
 .cact{position:absolute;right:10px;top:calc(env(safe-area-inset-top,0px) + 118px);z-index:3}
 .csoc{position:absolute;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 150px);display:flex;gap:16px;align-items:flex-end;z-index:4;transition:opacity .3s}
@@ -864,11 +865,18 @@ body.bt #ge.er0 .cell:nth-child(-n+3),body.bt #ge.er1 .cell:nth-child(n+4):nth-c
 .cell.s-hh::before{content:'🔥';position:absolute;left:50%;top:-12%;transform:translateX(-50%);font-size:calc(var(--ch,80px)*.16);filter:hue-rotate(160deg);animation:pftw 1s ease-in-out infinite alternate;z-index:7}
 .cell.s-gd .card{outline:2px solid #9fd0ff;outline-offset:1px}
 body.lite .pfx{display:none}
+
+/* 等級移到底部資訊列（右上角讓給人物） */
+.card .lv{top:auto!important;right:2px!important;bottom:36px!important;left:auto!important}
+#heroes .pc .card .lv{bottom:31px!important;font-size:13px!important}
+#heroes .pc .card .upd{bottom:54px!important}.card .upd{bottom:56px!important}
+#heroes .pwhy{bottom:auto!important;top:3px;left:auto!important;right:12px;transform:none!important;font-size:11px!important;padding:0 5px!important;line-height:17px}
+.card .lv small{font-size:.85em}body.bt .card .lv small{display:none}body.bt .card .lv{left:auto!important;right:2px!important;top:2px!important;bottom:auto!important;padding:0 3px!important;font-size:calc(var(--ch,80px)*.1)!important}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261030i</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261030j</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -1628,7 +1636,7 @@ const mkP=h=>{const u=mk(h,LV(h.id),gearBonus(h.id));u.st=S.star[h.id]||0;return
 function cardEl(u,full){
  const d=document.createElement('div');d.className='card'+(artHasName(u.id)?' ink':'');d.style.backgroundImage=`url(${ART[u.id]})`;d.style.borderColor=FC[u.f]||'#d9b25a';d.style.boxShadow=`inset 0 0 7px 1px ${FC[u.f]||'#d9b25a'}aa`;
  const st=full?(S.star[u.id]||0):(u.st||0),sr=full?starReady(u.id):0;
- d.innerHTML=`<span class="zhen" style="background:${RAR[rarOf(u.id)].c};color:#111">${H.find(x=>x.id===u.id).q}</span><span class="lv">Lv.${u.lv||LV(u.id)}</span>${(st||(full&&S.own[u.id]))?`<span class="str">★${st}</span>`:''}${sr?`<span class="upd${sr==2?' ok':''}">⬆ 升星</span>`:''}<span class="nm">${u.n}</span><span class="fac" style="background:${FC[u.f]}">${u.f}</span>${JB[u.job]?`<span class="job">${JB[u.job].ic}</span>`:''}`+
+ d.innerHTML=`<span class="zhen" style="background:${RAR[rarOf(u.id)].c};color:#111">${H.find(x=>x.id===u.id).q}</span><span class="lv"><small>Lv.</small>${u.lv||LV(u.id)}</span>${(st||(full&&S.own[u.id]))?`<span class="str">★${st}</span>`:''}${sr?`<span class="upd${sr==2?' ok':''}">⬆ 升星</span>`:''}<span class="nm">${u.n}</span><span class="fac" style="background:${FC[u.f]}">${u.f}</span>${JB[u.job]?`<span class="job">${JB[u.job].ic}</span>`:''}`+
  (full?'':'<div class="shield"></div><div class="bar hp"><i></i></div><div class="bars"><div class="bar rg"><i></i></div></div>');
  return d}
 function render(){
@@ -2122,7 +2130,7 @@ function renderUGC(){const V=UGV,key=ugcKey(V.kind,V.ref),cur=(S.ugc||{})[key]||
   <div class="ugb"><button data-u="use" data-p="${u}" class="ugu${using?' on':''}">${using?'使用中':'使用'}</button>${V.kind!=='lord'?`<button data-u="like" data-i="${r.id}">❤️</button><button data-u="rep" data-i="${r.id}">⚠</button>`:''}</div>${mine||adm?`<div class="ugb ugb2">${mine?`<button data-u="del" data-i="${r.id}" data-p="${r.path}">🗑 刪除</button>`:''}${adm?`<button data-u="adm" data-i="${r.id}">🛑 管理刪除</button>`:''}</div>`:''}</div>`}).join('')}</div>
  ${V.msg?`<p class="sub" style="color:#ffd27a">${V.msg}</p>`:''}
  ${V.prev?`<div class="ugpv"><div class="ugi" style="aspect-ratio:${ratio};background-image:url(${V.prev.url})"></div><div class="btns"><button data-u="send" ${V.busy?'disabled':''}>${V.busy?'上傳中…':'確認上傳'}</button><button class="g" data-u="pvx">取消</button></div></div>`:''}
- <div class="sec">上傳新圖</div>${ME?(()=>{const L=ugcLeft();return V.kind==='lord'||!V.q?'':`<p class="ugq${L.n<=0?' no':''}">${L.n<=0?'⛔ '+L.why:`今日還可上傳 <b>${L.d}</b> 張（這位還可 <b>${L.r}</b> 張）`}</p>`})()+(V.kind!=='lord'&&ugcLeft().n<=0?'<label class="ugup dis">📤 今日已達上限</label>':`<label class="ugup">📤 選擇圖片<input type="file" accept="image/*" id="ugf" hidden></label>`)+`<p class="sub" style="font-size:11px">會自動裁成 ${ratio.replace('/',':')}、壓縮到約 ${V.kind==='scene'?300:100}KB。每天最多 20 張、同一個項目每天 3 張（頭像不限，每天 00:00 重置）。請上傳自己畫或 AI 生成的圖，<b>禁止上傳其他遊戲的原圖或不雅內容</b>，被 3 人檢舉會自動隱藏。</p>`:'<p class="sub">上傳、喜歡與檢舉需要登入（到「競技」用 Email 登入）。</p>'}
+ <div class="sec">上傳新圖</div>${ME?(()=>{const L=ugcLeft();return V.kind==='lord'||!V.q||V.q.nolimit?'':`<p class="ugq${L.n<=0?' no':''}">${L.n<=0?'⛔ '+L.why:`今日還可上傳 <b>${L.d}</b> 張（這位還可 <b>${L.r}</b> 張）`}</p>`})()+(V.kind!=='lord'&&ugcLeft().n<=0?'<label class="ugup dis">📤 今日已達上限</label>':`<label class="ugup">📤 選擇圖片<input type="file" accept="image/*" id="ugf" hidden></label>`)+`<p class="sub" style="font-size:11px">會自動裁成 ${ratio.replace('/',':')}、壓縮到約 ${V.kind==='scene'?300:100}KB。目前暫時不限上傳張數。請上傳自己畫或 AI 生成的圖，<b>禁止上傳其他遊戲的原圖或不雅內容</b>，被 3 人檢舉會自動隱藏。</p>`:'<p class="sub">上傳、喜歡與檢舉需要登入（到「競技」用 Email 登入）。</p>'}
  <details class="ugtip"><summary>🖌 畫圖規格與提示詞</summary><ul>${V.kind==='scene'?'<li>直式 9:16，至少 720×1280</li><li>中間偏下留給武將或按鈕，構圖不要太雜</li>':V.kind==='eq'||V.kind==='qm'?'<li>正方形，物件置中</li><li>背景簡單，縮小後也看得清楚</li>':`<li>${V.kind==='lord'?'正方形，臉在中間':'直式 3:4，至少 600×800'}</li><li>人物放在上方約 75%，最下方 25% 要素一點（會蓋名字與血條）</li>`}<li>畫面內不要有文字、不要有外框</li><li>背景暗一點，人物比較突出</li></ul>
  <div class="ugpr"><b>中文提示詞</b><p>${P.zh}</p><button data-u="cp" data-t="zh">複製</button></div><div class="ugpr"><b>English prompt</b><p>${P.en}</p><button data-u="cp" data-t="en">Copy</button></div></details>
  <details class="ugtip"><summary>🛡 管理員</summary><input id="ugAdm" placeholder="管理員密碼" value="${esc(adm)}"><button data-u="admset">儲存</button></details>`;
@@ -2430,7 +2438,7 @@ function starAllOpen(){const P=starPlan(STW),tg=P.reduce((a,x)=>a+x.ug,0),tc=P.r
 function starReady(id){const st=S.star[id]||0;if(!S.own[id]||st>=MAXSTAR||(S.cp[id]||0)<STAR_COST[st])return 0;return S.coins>=STAR_GOLD[st]?2:1}
 const isDep=id=>pl.some(u=>u&&u.id===id)||(Array.isArray(S.dl)&&S.dl.includes(id));
 const heroDot=id=>!!S.own[id]&&(starReady(id)===2||(isDep(id)&&((typeof canLv==='function'&&canLv(id))||(typeof eqBetter==='function'&&eqBetter(id)))));
-const heroWhy=id=>starReady(id)===2?'可升星':isDep(id)&&typeof canLv==='function'&&canLv(id)?'可升級':'有更好的裝備';
+const heroWhy=id=>starReady(id)===2?'可升星':isDep(id)&&typeof canLv==='function'&&canLv(id)?'可升級':'可換裝備';
 const fragDot=()=>{try{const F=S.frag||{};return ['SR','SSR','UR'].some(k=>(F[k]||0)>=FSYN[k])}catch(e){return false}};
 function lvCost(id,k){const o=S.lv[id]||{l:1,e:0};k=Math.min(k,MAXLV-o.l);if(k<=0)return 0;let c=-o.e;for(let j=0;j<k;j++)c+=NEED(o.l+j);return c}
 function migrate(){
@@ -3344,7 +3352,8 @@ function cityArt(cv){
  const pine=(px,py,sz,al)=>{x.save();x.globalAlpha=al||1;x.strokeStyle=INK;x.lineWidth=sz*.06;x.lineCap='round';x.beginPath();x.moveTo(px,py);x.quadraticCurveTo(px-sz*.15,py-sz*.45,px+sz*.05,py-sz*.9);x.stroke();
   for(let i=0;i<5;i++){const yy=py-sz*(.35+i*.15),ww=sz*(.62-i*.09),xx=px+(i%2?-1:1)*sz*.08;x.fillStyle=`rgba(32,40,34,${.55+rnd()*.25})`;x.beginPath();x.ellipse(xx,yy,ww/2,sz*.07,(rnd()-.5)*.25,0,7);x.fill()}x.restore()};
  const willow=(px,py,sz)=>{x.strokeStyle=INK;x.lineWidth=sz*.05;x.beginPath();x.moveTo(px,py);x.quadraticCurveTo(px+sz*.08,py-sz*.5,px-sz*.05,py-sz*.85);x.stroke();x.strokeStyle='rgba(70,95,60,.55)';x.lineWidth=1;for(let i=0;i<22;i++){const a=px-sz*.35+rnd()*sz*.7,b=py-sz*(.6+rnd()*.3);x.beginPath();x.moveTo(a,b);x.quadraticCurveTo(a+sz*.05,b+sz*.25,a+(rnd()-.5)*sz*.1,b+sz*(.35+rnd()*.25));x.stroke()}};
- const at=k=>{const b=CITYB.find(z=>z.k===k);return[b.x*W,b.y*Hh]};
+ const at=k=>{const b=CITYB.find(z=>z.k===k);return k==='dj'?djPos(W,Hh,s):[b.x*W,b.y*Hh]};
+ {const p=djPos(W,Hh,s),e=$('cb_dj'),s2=Math.min(innerWidth/390,innerHeight/700);if(e){e.style.left=p[0]+'px';e.style.top=(p[1]+14*s*DJK)+'px';e.style.height=(96*DJK+14)*s+'px';const l=e.querySelector('.cpl');if(l)l.style.top=(-26*s-(14*s-14*s2))+'px'}}
  // 城牆
  { const wy=Hh*.75,th=26*s;x.fillStyle='#8d867a';x.fillRect(0,wy-th,W,th);x.fillStyle='rgba(43,38,34,.25)';for(let i=0;i<W/14;i++){x.fillRect(i*14*s,wy-th+((i%2)?6:13)*s,12*s,1)}
   x.fillStyle='#7a7366';for(let xx=0;xx<W;xx+=12*s)x.fillRect(xx,wy-th-6*s,7*s,6*s);x.strokeStyle=INK;x.lineWidth=1.3;x.beginPath();x.moveTo(0,wy-th);x.lineTo(W,wy-th);x.moveTo(0,wy);x.lineTo(W,wy);x.stroke();
@@ -3386,8 +3395,11 @@ function cityArt(cv){
   const R2=inkRng('go');for(let i=0;i<26;i++){const u=(1+Math.floor(R2()*8))/N,v=(1+Math.floor(R2()*8))/N,[sx,sy]=P(u,v),z=1-v*.35;x.fillStyle='rgba(0,0,0,.25)';x.beginPath();x.ellipse(sx+1,sy+1.5,5*s*z,2.8*s*z,0,0,7);x.fill();x.fillStyle=i%2?'#14110e':'#f8f4ea';x.beginPath();x.ellipse(sx,sy,5*s*z,3*s*z,0,0,7);x.fill();x.strokeStyle='rgba(0,0,0,.4)';x.lineWidth=.6;x.stroke()}
   [[.44,.44],[.56,.56],[.33,.67]].forEach(([u,v])=>{const[sx,sy]=P(u,v),gl=x.createRadialGradient(sx,sy,0,sx,sy,14*s);gl.addColorStop(0,'rgba(255,230,140,.95)');gl.addColorStop(1,'rgba(255,200,80,0)');x.fillStyle=gl;x.beginPath();x.arc(sx,sy,14*s,0,7);x.fill();x.fillStyle='#14110e';x.beginPath();x.ellipse(sx,sy,5*s,3*s,0,0,7);x.fill()});
   Q('simayi',cx+bw2*.28,top+8*s,44*s,1);Q('zhugeliang',cx-fw*.36,by+16*s,60*s,0)}
+ // 前景墨暈
+ g=x.createLinearGradient(0,Hh*.78,0,Hh);g.addColorStop(0,'rgba(43,38,34,0)');g.addColorStop(.35,'rgba(43,38,34,.35)');g.addColorStop(1,'rgba(20,18,16,.92)');x.fillStyle=g;x.fillRect(0,Hh*.78,W,Hh*.22);
+ x.fillStyle='rgba(30,27,24,.75)';x.beginPath();x.moveTo(0,Hh);x.lineTo(0,Hh*.86);for(let xx=0;xx<=W;xx+=6)x.lineTo(xx,Hh*.87-Math.abs(Math.sin(xx/W*4+1))*Hh*.04-Math.sin(xx/W*13)*Hh*.008);x.lineTo(W,Hh);x.fill();
  // 豪傑書：書案上的大書，名將從書頁走出
- {const[cx,by]=at('dj');x.save();x.translate(cx,by);x.scale(.8,.8);x.translate(-cx,-by);x.fillStyle='#6a4426';x.fillRect(cx-74*s,by-12*s,148*s,10*s);x.fillRect(cx-64*s,by-2*s,7*s,16*s);x.fillRect(cx+57*s,by-2*s,7*s,16*s);x.strokeStyle=INK;x.lineWidth=1;x.strokeRect(cx-74*s,by-12*s,148*s,10*s);
+ {const[cx,by]=at('dj');x.save();x.translate(cx,by);x.scale(DJK,DJK);x.translate(-cx,-by);x.fillStyle='#6a4426';x.fillRect(cx-74*s,by-12*s,148*s,10*s);x.fillRect(cx-64*s,by-2*s,7*s,16*s);x.fillRect(cx+57*s,by-2*s,7*s,16*s);x.strokeStyle=INK;x.lineWidth=1;x.strokeRect(cx-74*s,by-12*s,148*s,10*s);
   const gl=x.createRadialGradient(cx,by-60*s,0,cx,by-60*s,90*s);gl.addColorStop(0,'rgba(255,226,140,.75)');gl.addColorStop(1,'rgba(255,200,80,0)');x.fillStyle=gl;x.beginPath();x.arc(cx,by-60*s,90*s,0,7);x.fill();
   [-1,1].forEach(d=>{x.fillStyle='#f6eedb';x.strokeStyle=INK;x.lineWidth=1.3;x.beginPath();x.moveTo(cx,by-14*s);x.quadraticCurveTo(cx+d*32*s,by-28*s,cx+d*68*s,by-18*s);x.lineTo(cx+d*64*s,by-60*s);x.quadraticCurveTo(cx+d*32*s,by-70*s,cx,by-56*s);x.closePath();x.fill();x.stroke();
    x.strokeStyle='rgba(43,38,34,.45)';x.lineWidth=1;for(let i=0;i<6;i++){const xx=cx+d*(10+i*9)*s;x.beginPath();x.moveTo(xx,by-56*s-i*.8*s);x.lineTo(xx,by-24*s-i*.6*s);x.stroke()}});
@@ -3395,20 +3407,19 @@ function cityArt(cv){
   [['caocao',-36,64,0],['guanyu',0,78,0],['sunquan',36,64,1]].forEach(([id,dx,lift,f])=>Q(id,cx+dx*s,by-lift*s+40*s,44*s,f));
   for(let i=0;i<20;i++){x.fillStyle=`rgba(255,230,140,${.4+rnd()*.5})`;x.beginPath();x.arc(cx-70*s+rnd()*140*s,by-150*s+rnd()*110*s,(1+rnd()*2)*s,0,7);x.fill()}
   const sx=cx+92*s;for(let i=0;i<3;i++){x.fillStyle='#d8b878';x.strokeStyle=INK;x.lineWidth=1;x.beginPath();x.roundRect(sx-16*s,by-14*s-i*9*s,32*s,9*s,3*s);x.fill();x.stroke()}x.restore()}
- // 前景墨暈
- g=x.createLinearGradient(0,Hh*.78,0,Hh);g.addColorStop(0,'rgba(43,38,34,0)');g.addColorStop(.35,'rgba(43,38,34,.35)');g.addColorStop(1,'rgba(20,18,16,.92)');x.fillStyle=g;x.fillRect(0,Hh*.78,W,Hh*.22);
- x.fillStyle='rgba(30,27,24,.75)';x.beginPath();x.moveTo(0,Hh);x.lineTo(0,Hh*.86);for(let xx=0;xx<=W;xx+=6)x.lineTo(xx,Hh*.87-Math.abs(Math.sin(xx/W*4+1))*Hh*.04-Math.sin(xx/W*13)*Hh*.008);x.lineTo(W,Hh);x.fill();
  // 梅枝（左上）
  x.strokeStyle=INK;x.lineCap='round';const br=(a,b,len,ang,w,d)=>{if(d>4||w<.6)return;const c=a+Math.cos(ang)*len,e=b+Math.sin(ang)*len;x.lineWidth=w;x.beginPath();x.moveTo(a,b);x.quadraticCurveTo((a+c)/2+(rnd()-.5)*8,(b+e)/2+(rnd()-.5)*8,c,e);x.stroke();
   if(d>1)for(let i=0;i<3;i++){x.fillStyle=`rgba(${205+rnd()*40|0},${70+rnd()*40|0},${85+rnd()*40|0},.85)`;x.beginPath();x.arc(c+(rnd()-.5)*10*s,e+(rnd()-.5)*10*s,(2+rnd()*2.5)*s,0,7);x.fill()}
   br(c,e,len*.72,ang+(rnd()-.3)*.8,w*.65,d+1);if(rnd()<.7)br(c,e,len*.6,ang-(rnd()+.2)*.7,w*.55,d+1)};
  br(-6,Hh*.11,58*s,-.15,7*s,0);br(-6,Hh*.2,44*s,.25,5*s,1)}
 
+let DJK=.92;function djPos(W,Hh,s){let cb=0;try{const c=document.querySelector('#city .cl');if(c&&c.offsetHeight){const r=c.getBoundingClientRect(),o=($('cCv')||document.body).getBoundingClientRect();cb=r.bottom-o.top}}catch(e){}
+ DJK=Math.max(.72,Math.min(.92,cb?(Hh-118-40*s-cb-4)/(96*s):.92));return[.18*W,Hh-118-14*s*DJK]}
 const CITYB=[
  {k:'zx',n:'招募',x:.5,y:.42,w:250,h:150,ic:'🎴',d:'招募武將'},
  {k:'hg',n:'後宮',x:.3,y:.615,w:170,h:100,ic:'🌸',d:'紅顏'},
  {k:'jj',n:'奇謀',x:.77,y:.615,w:170,h:100,ic:'📜',d:'奇謀'},
- {k:'dj',n:'豪傑書',x:.2,y:.84,w:130,h:110,ic:'🎖',d:'武將'},
+ {k:'dj',n:'豪傑書',x:.18,y:.84,w:130,h:110,ic:'🎖',d:'武將'},
  {k:'sp',hide:1,n:'商城',x:.73,y:.72,w:140,h:70,ic:'🏪',d:'商城'}];
 let CSH=null,CWP=0;
 function cityPow(){let p=0;pl.forEach(u=>{if(u){const h=H.find(z=>z.id===u.id);if(h)p+=powOf(h)}});return p}
@@ -3457,8 +3468,8 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261030i';
-function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${b.x*100}%;top:${b.y*100}%;width:${b.w*s}px;height:${b.h*s}px"><span class="cpl">${b.n}</span></button>`).join('');
+const CVER='20261030j';
+function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);const cvH=($('cCv')||{}).clientHeight||innerHeight,cvW=($('cCv')||{}).clientWidth||innerWidth;$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>{const dj=b.k==='dj',p=dj?djPos(cvW,cvH,s):null,bh=dj?(96*DJK+14)*s:b.h*s;return `<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${dj?p[0]+'px':b.x*100+'%'};top:${dj?(p[1]+14*s*DJK)+'px':b.y*100+'%'};width:${b.w*s}px;height:${bh}px"><span class="cpl">${b.n}</span></button>`}).join('');
  CITYB.filter(b=>!b.hide).forEach(b=>{const e=$('cb_'+b.k);e.querySelector('.cpl').style.top=(b.k==='zx'?-36:-26)*s+'px'});if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityBind()}
 
 /* ===================== 出征確認（各種戰鬥的最後一步） ===================== */
@@ -3638,6 +3649,7 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261030j',d:'10/30',t:['武將卡等級移到底部資訊列，人物臉部不再被擋；戰場卡片等級縮小放在右上角','武將列表的「可升級／可換裝備」提示移到右上角','主城「豪傑書」的書移到招牌正下方、放大，不再被底部按鈕擋住','圖鑑上傳暫時不限張數']},
  {v:'20261030i',d:'10/30',t:['一鍵爬塔新增完整結算畫面：起訖層數、各項獎勵圖示（裝備依品階分色）、通過的關主與謀略關、新達成的里程碑；受阻時顯示該層規則與敵我戰力，並可直接調整布陣、看推薦陣容或培養武將','爬塔進行中的資訊放大，獎勵累計改成一排圖示','武將卡右上角的等級改成亮金色粗體加深色底，更容易看清楚']},
  {v:'20261030h',d:'10/30',t:['積分招募可選的武將增加到 46 位（加入稀有），分級收費：傳說 50 分、史詩 30 分、稀有 15 分；積分不夠的會變灰','積分招募與新手選將改成跟武將列表一樣：可分陣營、分稀有度，左右滑動換頁，未擁有的排前面，選定前會再確認一次','有人申請好友或有禮物可收時，主城的「好友」會亮紅點（社交列收起時「☰」也會亮）']},
  {v:'20261030g',d:'10/30',t:['主城改成四個場景：招賢台（英雄從金光陣走出）、後宮花園（荷花池、拱橋、涼亭佳人）、奇謀大棋盤（諸葛亮對弈司馬懿）、豪傑書（名將從書頁走出），招牌改為橫匾、不再擋到人物','五座塔改成「主題在前、塔在後」：紅顏塔美女更清楚、金幣塔堆滿元寶金幣、經驗塔丹爐與丹藥、裝備塔兵器架與鍛爐、名將塔碎片環繞成卡','征戰頁五個功能改成大圓形徽章，各有圖案、字更大','修正：戰鬥中按過「跳過」後，回到其他畫面一直沒有音效','領取里程碑、段位、每日任務、好友禮物有專屬的「領獎」音效','戰鬥結果、競技場「挑戰」、里程碑「領取」等按鈕加大']},
