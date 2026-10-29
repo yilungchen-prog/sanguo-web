@@ -585,11 +585,50 @@ body.auto #app,body.auto #mask{visibility:hidden!important}
 #heroes .shh{gap:6px;flex-wrap:wrap!important}#heroes .shh b{font-size:24px}#hCnt{order:9;flex:0 0 100%!important;font-size:14px;padding-left:66px;margin-top:-8px}.hhb{padding:6px 9px!important;font-size:15px!important}
 .hmimg{position:relative}.hmug{position:absolute;right:calc(50% - min(50%,165px) + 8px);bottom:16px;min-height:44px;padding:6px 14px;font:900 17px 'LXGW WenKai TC',serif;border-radius:22px;background:#1a120ce0!important;border:2px solid #d9b25a!important;color:#ffe9b0!important}
 #heroes .hpf{z-index:20!important}.hform{z-index:21!important}#heroes .pc{z-index:auto}
+
+/* 武將頁返回鈕 */
+.hvxb{position:absolute;left:10px;top:calc(env(safe-area-inset-top,0px) + 10px);z-index:5}
+.hvtt{left:58px!important;width:150px!important;font-size:36px!important}
+.hvtabs{grid-template-columns:repeat(5,1fr)!important;gap:6px!important}.hvt{width:min(64px,100%)!important;font-size:20px!important}
+.hvl1{top:calc(env(safe-area-inset-top,0px) + 118px)!important}
+/* 更新公告 */
+.vmod{z-index:150}.vpp{text-align:left!important;max-height:80vh;display:flex;flex-direction:column}.vh{text-align:center;font:900 26px 'LXGW WenKai TC',serif;color:#ffd27a;letter-spacing:4px;margin-bottom:6px}
+.vl{overflow-y:auto}.vc{padding:8px 4px;border-bottom:1px solid #ffffff1a}.vc b{font:900 19px 'LXGW WenKai TC',serif;color:#fff3d6}.vc small{margin-left:8px;opacity:.6}.vc ul{margin:4px 0;padding-left:22px}.vc li{margin:3px 0;font-size:16px;line-height:1.55}
+/* 新手指南 */
+.gdv{position:fixed;inset:0;z-index:160;background:radial-gradient(ellipse at 50% 20%,#3a3024,#120e0b 75%);color:#f3e6c4}
+.gdt{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}.gdt::-webkit-scrollbar{display:none}
+.gdt section{flex:0 0 100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 26px 110px;text-align:center}
+.gdi{font-size:70px;line-height:1.1;margin-bottom:8px}.gdt h2{font:900 30px 'LXGW WenKai TC',serif;color:#ffd27a;letter-spacing:3px;margin:6px 0 14px}.gdp{font-size:18px;line-height:1.8;max-width:420px}
+.gfc{display:flex;flex-direction:column;gap:8px;margin:0 auto 14px;align-items:flex-start}.gfc span{display:flex;align-items:center;gap:10px;font-size:19px}.gfc i{font-style:normal;width:36px;height:36px;line-height:36px;border-radius:50%;color:#fff;font:900 18px 'LXGW WenKai TC',serif}
+.gls{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px;text-align:left}.gls span{font-size:18px}.gls b{display:inline-block;width:32px}
+.gst{text-align:left;font-size:18px;line-height:1.8;padding-left:24px}.gift{color:#ffd27a;font-size:17px}
+.gdgo{margin-top:22px;min-height:56px;padding:0 30px;font:900 21px 'LXGW WenKai TC',serif;background:radial-gradient(circle at 40% 35%,#d0453b,#7a1810)!important;border:2px solid #f0c66a!important}
+.gdsk{position:absolute;right:14px;top:calc(env(safe-area-inset-top,0px) + 14px);min-height:40px;padding:4px 16px;font-size:16px;background:#0008!important;border:1px solid #c9993c!important}
+.gdd{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 40px);display:flex;justify-content:center;gap:10px}.gdd i{width:10px;height:10px;border-radius:50%;background:#ffffff44}.gdd i.on{background:#ffd27a;width:26px;border-radius:5px}
+.gdn{position:absolute;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 26px);min-height:44px;padding:4px 16px;font-size:17px}
+/* 個人中心 */
+#pcv{background:#000;overflow:hidden}#pcBody{position:fixed;inset:0;max-width:560px;margin:0 auto;color:#fff}
+.pcbg{position:absolute;inset:0;background:center 25%/cover no-repeat}.pcsh{position:absolute;inset:0;background:linear-gradient(90deg,#0b0907ee 0,#0b0907b0 45%,#0b090722 75%),linear-gradient(#000a,#0000 18%,#0000 75%,#000c)}
+.pch{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top,0px) + 10px) 10px 0}.pch b{font:900 30px 'LXGW WenKai TC',serif;letter-spacing:4px;color:#ffd27a;text-shadow:0 2px 4px #000}
+.pcres{margin-left:auto;display:flex;gap:6px}.pcres em{font-style:normal;font-size:14px;background:#000a;border:1px solid #c9a55a;border-radius:14px;padding:3px 10px}
+.pcbgb{position:absolute;right:10px;top:calc(env(safe-area-inset-top,0px) + 62px);min-height:40px;padding:4px 12px;font-size:15px;background:#000a!important;border:1px solid #c9a55a!important}
+.pcl{position:absolute;left:12px;top:calc(env(safe-area-inset-top,0px) + 74px);width:min(66%,300px);bottom:calc(env(safe-area-inset-bottom,0px) + 110px);overflow-y:auto;font-size:16px;text-shadow:0 1px 3px #000}
+.pcme{display:flex;gap:12px;align-items:center;margin-bottom:10px}.pcav{position:relative;flex:none;width:76px;height:76px;min-height:0;padding:0;border-radius:50%;border:3px solid #d9b25a;background:#3a2e22 center/cover;font:900 34px 'LXGW WenKai TC',serif;color:#f3e6c4}.pcav i{position:absolute;left:-4px;top:-4px;font-style:normal;font-size:13px;min-width:28px;height:28px;line-height:24px;border-radius:14px;background:#7a1c10;border:2px solid #d9b25a;color:#fff}
+.pcn{display:flex;align-items:center;gap:6px}.pcn b{font:900 24px 'LXGW WenKai TC',serif}.pced{min-height:0;width:34px;height:34px;padding:0;border-radius:50%;font-size:17px;background:#000a!important;border:1px solid #c9a55a!important}
+.pcpw{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font:900 italic 22px serif;color:#ffcf5a}.pcpw small{font:900 14px sans-serif;font-style:normal;background:#a8382c;border-radius:50%;width:26px;height:26px;line-height:26px;text-align:center;color:#fff}
+.pcrow{display:flex;align-items:center;gap:10px;padding:7px 10px;margin:5px 0;border-radius:8px;background:#000a;border:1px solid #c9a55a55}.pcrow span{color:#d9c39a;width:2.6em}.pcrow b{flex:1;font-size:17px}.pccp{min-height:0;padding:3px 10px;font-size:14px}
+.pcf{font-style:normal;color:#fff;border-radius:10px;padding:1px 10px}.pcxp{position:relative;height:16px!important}.pcxp u{position:absolute;inset:0;text-align:center;font-size:12px;text-decoration:none;line-height:16px}
+.pcsec{margin:14px 0 6px;font:900 19px 'LXGW WenKai TC',serif;color:#ffd27a;letter-spacing:2px;border-left:4px solid #c9993c;padding-left:8px}
+.pcst{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.pcst span{display:flex;flex-direction:column;align-items:center;padding:8px 2px;border-radius:10px;background:#000a;border:1px solid #c9a55a55;font-size:13px}.pcst b{font:900 20px serif;color:#fff3d6}
+.pcdl{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.pcdl span{position:relative;aspect-ratio:3/4;border-radius:8px;border:2px solid;background:center top/cover}.pcdl b{position:absolute;left:0;right:0;bottom:0;font-size:12px;text-align:center;background:#000b}.pcdl span.ink b{display:none}.pcdl i{position:absolute;left:3px;bottom:16px;background:#000a;border-radius:4px;padding:0 3px;font-style:normal;font-size:12px;color:#ffd23a}
+.pcbt{position:absolute;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);display:flex;gap:10px}.pcbt button{width:78px;height:78px;min-height:0;padding:0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font:900 14px 'LXGW WenKai TC',serif;background:radial-gradient(circle at 40% 35%,#2c5a52,#0c201c 72%)!important;border:3px solid #d9b25a!important;color:#f3e6c4}.pcbt i{font-style:normal;font-size:26px;line-height:1.1}
+.pcpk{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-height:50vh;overflow-y:auto}.pcpk button{aspect-ratio:3/4;min-height:0;padding:0;border-radius:8px;background:center top/cover!important;border:2px solid #555!important;position:relative}.pcpk button.on{border-color:#ffd27a!important}.pcpk b{position:absolute;left:0;right:0;bottom:0;font-size:12px;background:#000b}
+.spp h3{font:900 26px 'LXGW WenKai TC',serif;color:#ffd27a;margin:0 0 8px}.spr{display:flex;width:100%;align-items:center;justify-content:space-between;min-height:58px;margin:6px 0;padding:6px 16px;font-size:19px;border-radius:12px;background:linear-gradient(160deg,#3a3024,#17120d)!important;border:2px solid #c9993c!important}.spr b{color:#ffd27a;font-size:17px}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029u</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029v</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -611,7 +650,7 @@ body.auto #app,body.auto #mask{visibility:hidden!important}
 <div class="cnav"><button class="cnb cur" data-c="home"><i>🏯</i><span>主城</span></button><button class="cnb" id="cnHero" data-c="hero"><i>🎖</i><span>武將</span></button><button class="cnb" data-c="bag"><i>🎒</i><span>背包</span></button><button class="cwar" id="cWar" data-c="war"><b>征</b><b>戰</b></button></div>
 </div>
 <div id="scn"><canvas id="scnCv"></canvas><div class="cpet dust"><i></i><i></i><i></i><i></i><i></i></div><div class="scnh"><button class="xb" data-c="x">←</button><b>征戰</b></div><div id="scnB"></div></div><div class="ov" id="csh"><div id="cshB"></div></div>
-<div class="ov" id="prep"><div id="ppB"></div></div><div class="ov" id="heroes"><div class="pan"><div class="shh"><b>武將</b><span id="hCnt"></span><button id="hFrag" class="g hhb">碎片</button><button id="hHJ" class="g hhb">豪傑書</button><button id="hStar" class="hhb hstar">一鍵升星</button><button id="hX" style="flex:none;width:44px;padding:6px 0">✕</button></div><button id="hForm" class="hform"><svg viewBox="0 0 30 30" width="30" height="30"><g fill="#f3e6c4"><rect x="2" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="20.6" width="7.6" height="7.6" rx="1.6"/></g></svg><span>布陣</span></button><div class="btns pfb hpf"><button class="g on" data-pf="all">全</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="hpool"></div></div></div>
+<div class="ov" id="pcv"><div id="pcBody"></div></div><div class="ov" id="prep"><div id="ppB"></div></div><div class="ov" id="heroes"><div class="pan"><div class="shh"><b>武將</b><span id="hCnt"></span><button id="hFrag" class="g hhb">碎片</button><button id="hHJ" class="g hhb">豪傑書</button><button id="hStar" class="hhb hstar">一鍵升星</button><button id="hX" style="flex:none;width:44px;padding:6px 0">✕</button></div><button id="hForm" class="hform"><svg viewBox="0 0 30 30" width="30" height="30"><g fill="#f3e6c4"><rect x="2" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="20.6" width="7.6" height="7.6" rx="1.6"/></g></svg><span>布陣</span></button><div class="btns pfb hpf"><button class="g on" data-pf="all">全</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="hpool"></div></div></div>
 <div class="ov" id="form"><div class="pan"><div class="shh"><b>📋 布陣（預設陣容）</b><span id="fCnt"></span></div>
 <div class="sub" style="font-size:12px;margin:2px 0 0">拖曳武將可換位置，拖出格子外或按 ✕ 卸下；點下方武將上陣（長按可拖進指定格）。上方為前排。</div>
 <div class="fg" id="fg"></div><div id="fSyn"></div><div class="btns pfb"><button class="g on" data-pf="all">全部</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="fpool"></div>
@@ -1948,7 +1987,7 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  const bub=HSK>=0&&sks[HSK]?`<div class="hvb" data-a="skx"><b>${sks[HSK].l}・${sks[HSK].n}</b> <small>Lv.${sks[HSK].lv}/${sks[HSK].mx}</small><br>${sks[HSK].d}</div>`:'';
  $('heroBody').innerHTML=`<div class="hv${HVIEW?' view':''}${own?'':' lock'}" style="--fc:${FC[h.f]};--rc:${r.c}">
  <div class="hvbg" style="background-image:url(${heroBgOf(h.id)})" data-a="${HVIEW?'view':''}"></div><div class="hvsh"></div>
- <b class="hvtt">武將</b><span class="hvres">${res}</span>
+ <button class="xb hvxb" data-a="x">←</button><b class="hvtt">武將</b><span class="hvres">${res}</span>
  <div class="hvname"><div class="hvn">${h.n}</div><div class="hvq"><span style="background:${r.c}">${r.n}</span><b>資質 ${h.q}</b></div><div class="hvtags"><span style="background:${FC[h.f]}">${h.f}</span><span>${JB[h.job].ic}${h.job}</span><span class="st">★${st}</span>${brk?`<span>突破 ${brk}</span>`:''}</div></div>
  <div class="hvl1"><button data-a="tab" data-t="rst" ${own?'':'disabled'}><b>♻️</b><span>重生</span></button><button data-a="view"><b>👁</b><span>觀賞</span></button><button data-a="tab" data-t="det"><b>🔍</b><span>詳情</span></button><button data-a="ugc"><b>🎨</b><span>圖鑑</span></button>${own?`<button data-a="dep"><b>${dep?'⬇️':'⚔️'}</b><span>${dep?'卸下':'上陣'}</span></button>`:''}</div>
  <div class="hvsk">${sks.map((x,i)=>`<button class="hvo${HSK===i?' on':''}" data-a="sk" data-i="${i}" style="--sc:${({天賦:'#d9a520',絕技:'#d0402a',被動:'#2a9a8a',怒氣:'#9a3ad0'})[x.l]||'#888'}"><u>${x.l[0]}<i>${x.lv}</i></u><span>${x.n.length>5?x.n.slice(0,5):x.n}</span></button>`).join('')}</div>
@@ -1956,7 +1995,7 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  ${bub}
  <div class="hvst"><div class="hvpw"><small>戰力</small><b>${pw(u).toLocaleString()}</b></div><div class="hvlv">Lv.${lv} / ${MAXLV}</div><div class="hvg"><span>攻擊 <b>${kf(u.atk)}</b></span><span>生命 <b>${kf(u.mhp)}</b></span><span>速度 <b>${u.spd}</b></span><span>暴擊 <b>${pct(cr)}</b></span></div></div>
  <button class="hvbig" data-a="big" data-k="${big[2]}">${big[1]}</button>
- <div class="hvtabs"><button class="hvx0" data-a="x">⟵</button>${tab('lv','⬆','培養',canLv(h.id),!own)}${tab('adv','★','進階',canAdv(h.id),!own)}${tab('eq','🛡','裝備',eqBetter(h.id),!own)}${tab('sk','📜','技能',0,0)}${tab('bd','🤝','羈絆',0,0)}</div>
+ <div class="hvtabs">${tab('lv','⬆','培養',canLv(h.id),!own)}${tab('adv','★','進階',canAdv(h.id),!own)}${tab('eq','🛡','裝備',eqBetter(h.id),!own)}${tab('sk','📜','技能',0,0)}${tab('bd','🤝','羈絆',0,0)}</div>
  <div class="hvs${HTAB?' on':''}"><button class="hvsx" data-a="tabx">▾</button><div class="hvsc">${sheet}</div></div>${pk}</div>`}
 $('heroBody').onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;const k=a.dataset.a;
  if(k==='x'){$('hero').classList.remove('on');render();return}
@@ -2652,7 +2691,7 @@ function cityAct(a){
  const b=$(a);if(b)b.click()}
 function cityBind(){
  $('city').onclick=e=>{const t=e.target.closest('[data-c]');if(!t)return;const a=t.dataset.c;
-  if(a==='av'){sceneOpen('set');return}if(a==='hero'){$('bHeroes').click();return}if(a==='war'||a==='set'){sceneOpen(a);return}
+  if(a==='av'){pcOpen();return}if(a==='hero'){$('bHeroes').click();return}if(a==='war'||a==='set'){sceneOpen(a);return}
   if(a==='home'){cshClose();return}if(a==='bag'){TAB='bag';BAGSEL=null;$('shT').textContent='背包';renderShop();$('shop').classList.add('on');return}
   if(a==='shop'){$('mShop').click();return}if(a==='dt'){$('cDT').click();return}if(a==='idle'){$('cIdle').click();return}
   if(a==='friend'){$('bFriend').click();return}if(a==='rank'){hubOpen();HUBV='rank';renderHub();return}
@@ -2664,7 +2703,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261029u';
+const CVER='20261029v';
 function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);$('cBlds').innerHTML=CITYB.map(b=>`<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${b.x*100}%;top:${b.y*100}%;width:${b.w*s}px;height:${b.h*s}px"><span class="cpl">${[...b.n].join('<br>')}</span></button>`).join('');
  CITYB.forEach(b=>{const e=$('cb_'+b.k);e.querySelector('.cpl').style.top=(b.k==='jj'?-40:b.k==='sp'?-60:-30)*s+'px'});cityBind()}
 
@@ -2828,7 +2867,73 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
   if(!$('form').classList.contains('on'))openForm();FL=L2;renderForm();$('recv').classList.remove('on');toast(`已套用「${REC[RECSEL].n}」${miss.length?`（${miss.filter(x=>x[1]).length} 位用替代人選）`:''}，記得按「保存」`);return}
  if(k==='auto'){if(busy)return;autoBest(false);render();RECMSG='✓ 已配好，下方是說明。滿意的話到布陣按「保存」。';renderRec();return}}}
 
-migrate();daily();setMode('pvp');sbInit();cityInit();prepBind();sceneBind();cityIcons();recBind();$('fRec').onclick=recOpen;cityShow();if(!S.lord.n)openLord();
+/* ===================== 更新公告、新手指南、個人中心 ===================== */
+const CHANGES=[
+ {v:'20261029v',d:'10/29',t:['點主公頭像改成「個人中心」：大圖背景、資料、戰績、陣容展示，設定收進「設置」','新增更新公告（就是你正在看的這張）與「新手指南」','武將頁的返回鈕統一到左上角']},
+ {v:'20261029u',d:'10/29',t:['後宮紅顏可以到「🎨 圖鑑」上傳自己的圖，或選用其他玩家的圖','武將列表底部篩選列不再被「升星」標籤蓋住']},
+ {v:'20261029t',d:'10/29',t:['新增「一鍵升星」：一次升完所有能升星的武將','紅點只提示「可升星」與「上陣武將可升級」，不再滿版紅點','武將卡的陣營、職業、星級移到底部，名字不再被擋住','App 從背景回來後，點一下就恢復音效']},
+ {v:'20261029s',d:'10/29',t:['修正一鍵爬塔時畫面一直跳動','預設陣容可以上陣 6 位']},
+ {v:'20261029r',d:'10/29',t:['新武將「黃忠」加入蜀國，五虎上將湊滿五人（周倉移除並退還資源）','背包改成分類大圖示：道具、裝備、碎片、信物','新增「建議陣容」：推薦範本、幫我配、新手小教室','底部導覽改為主城、武將、背包＋征戰']},
+ {v:'20261029q',d:'10/29',t:['好友系統正式版：6 位數 ID、申請、切磋、戰報、每日互贈','征戰改成「沙場」場景，主城木牌直接寫功能名','武將列表放大成每排 4 張','後宮換回原版紅顏圖']},
+ {v:'20261029p',d:'10/29',t:['征戰流程重整：各種戰鬥最後都進「出征確認」頁','五座塔改成大方格，塔圖固定不跳','所有頁面統一左上角返回鈕']},
+ {v:'20261029n',d:'10/29',t:['武將頁改版：書法標題、圓形功能鈕、技能珠、水墨直式背景']},
+ {v:'20261029m',d:'10/29',t:['新主城：水墨背景、建築入口、征戰大按鈕','玩家圖鑑每天可上傳 20 張，錯誤會跳出提示']},
+ {v:'20261029k',d:'10/29',t:['遊戲改名「墨戰三國」','75 位武將全新技能、27 組羈絆、五國平衡','新增奇謀、每日任務、掛機收益、陣營招募、玩家上傳圖鑑']}];
+const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
+function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
+function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>
+ <div class="bgpb">${isNew?'<button class="g" data-v="all">更新紀錄</button>':''}<button data-v="x">知道了</button></div></div>`;
+ d.onclick=e=>{const b=e.target.closest('[data-v]');if(e.target!==d&&!b)return;verMark();d.remove();if(b&&b.dataset.v==='all')verShow(CHANGES,false)};document.body.appendChild(d)}
+/* 新手指南（5 頁） */
+const GUIDE=[
+ {h:'歡迎來到墨戰三國',ic:'🏯',p:'九宮格自動戰鬥的三國卡牌。<br>排好陣、選好奇謀，剩下交給你的武將。'},
+ {h:'五國各有特色，彼此平衡',ic:'⚖️',p:`<div class="gfc">${[['蜀','連擊追擊'],['魏','冰凍控場'],['吳','灼燒延燒'],['神','天威爆發'],['魔','吸血續戰']].map(([f,t])=>`<span><i style="background:${FC[f]}">${f}</i>${t}</span>`).join('')}</div>五國經過大量對戰模擬調整平衡，選你喜歡的陣營就好，哪一國都打得贏。`},
+ {h:'畫出你自己的武將',ic:'🎨',p:'每位武將與紅顏都能上傳自己畫的圖或 AI 圖。<br>所有玩家都能自由選用別人的圖，按讚最多的會成為大家看到的預設圖。<br>主公頭像也能換成你自己的。'},
+ {h:'玩法一覽',ic:'📜',p:`<div class="gls">${[['🎴','招募'],['⬆','升級・升星'],['▦','布陣・羈絆'],['📜','奇謀'],['🗼','試煉塔'],['🏟️','競技場'],['👥','好友切磋'],['🌸','後宮'],['📋','每日任務'],['⏳','掛機收益']].map(([a,b])=>`<span><b>${a}</b>${b}</span>`).join('')}</div>`},
+ {h:'新手三步驟',ic:'🚩',p:'<ol class="gst"><li>選陣營、取名字</li><li>到「布陣」按 <b>💡 建議</b>，挑一套推薦陣容一鍵套用</li><li>按右下角 <b>征戰</b>，從關卡對戰或經驗塔開始</li></ol><p class="gift">新手禮：💰50 萬、🎴100 抽、🃏萬用卡 5 張</p>'}];
+let GDFIRST=false;
+function guideOpen(first){GDFIRST=!!first;const d=document.createElement('div');d.className='gdv';d.id='gdv';
+ d.innerHTML=`<div class="gdt">${GUIDE.map((g,i)=>`<section><div class="gdi">${g.ic}</div><h2>${g.h}</h2><div class="gdp">${g.p}</div>${i===GUIDE.length-1?`<button class="gdgo" data-g="end">${first?'開始建立主公':'知道了'}</button>`:''}</section>`).join('')}</div>
+ <button class="gdsk" data-g="end">跳過</button><div class="gdd">${GUIDE.map((g,i)=>`<i data-g="dot" data-i="${i}"></i>`).join('')}</div><button class="gdn" data-g="next">下一頁 ›</button>`;
+ document.body.appendChild(d);const T=d.querySelector('.gdt'),upd=()=>{const i=Math.round(T.scrollLeft/T.clientWidth);d.querySelectorAll('.gdd i').forEach((x,k)=>x.classList.toggle('on',k===i));d.querySelector('.gdn').style.visibility=i>=GUIDE.length-1?'hidden':'visible'};T.onscroll=upd;upd();
+ d.onclick=e=>{const b=e.target.closest('[data-g]');if(!b)return;const k=b.dataset.g;
+  if(k==='next'){T.scrollTo({left:T.scrollLeft+T.clientWidth,behavior:'smooth'});return}if(k==='dot'){T.scrollTo({left:T.clientWidth*+b.dataset.i,behavior:'smooth'});return}
+  if(k==='end'){d.remove();if(GDFIRST&&!S.lord.n)openLord()}}}
+/* 個人中心 */
+function pcHero(){const own=H.filter(h=>S.own[h.id]);if(S.pcHero&&S.own[S.pcHero])return S.pcHero;const dep=pl.filter(Boolean).map(u=>H.find(h=>h.id===u.id)).filter(Boolean);const L=dep.length?dep:own;return L.length?L.sort((a,b)=>powOf(b)-powOf(a))[0].id:H[0].id}
+let PCPICK=false;
+function pcOpen(){PCPICK=false;renderPC();$('pcv').classList.add('on')}
+function renderPC(){const L=S.lord||{},av=(S.ugc||{})['lord:me'],kf=v=>v>=1e8?(v/1e8).toFixed(1)+'億':v>=1e4?(v/1e4).toFixed(1)+'萬':String(v),hid=pcHero(),need=typeof LNEED==='function'?LNEED(L.l||1):0;
+ const best=Math.max(...['exp','eq','gold','frag','harem'].map(k=>S.tw[k]?(S.tw[k].done?NF:S.tw[k].f):0)),dl=(Array.isArray(S.dl)?S.dl:[]).filter(id=>id&&S.own[id]).slice(0,6);
+ let h=`<div class="pcbg" style="background-image:url(${heroBgOf(hid)})"></div><div class="pcsh"></div>
+ <div class="pch"><button class="xb" data-p="x">←</button><b>個人中心</b><span class="pcres"><em>💰 ${kf(S.coins||0)}</em><em>📜 ${kf(qms().jian||0)}</em></span></div>
+ <button class="pcbgb" data-p="bg">🖼 換背景</button>
+ <div class="pcl"><div class="pcme"><button class="pcav" data-p="av" style="${av?`background-image:url(${av})`:''}">${av?'':esc((L.n||'主')[0])}<i>${L.l||1}</i></button>
+  <div><div class="pcn"><b>${esc(L.n||'主公')}</b><button class="pced" data-p="name">✎</button></div><div class="pcpw"><small>戰</small>${cityPow().toLocaleString()}</div></div></div>
+  <div class="pcrow"><span>ID</span><b>${S.pid||(typeof FR!=='undefined'&&FR.me)||'登入後取得'}</b>${S.pid?'<button class="pccp" data-p="cp">複製</button>':''}</div>
+  <div class="pcrow"><span>陣營</span><b><i class="pcf" style="background:${FC[L.f]||'#555'}">${L.f||'—'}</i></b></div>
+  <div class="pcrow"><span>等級</span><b>${L.l||1}${(L.l||1)>=LMAX?'（滿級）':''}</b></div>${(L.l||1)<LMAX&&need?`<div class="xp pcxp"><i style="width:${Math.min(100,(L.e||0)/need*100)}%"></i><u>${(L.e||0).toLocaleString()} / ${need.toLocaleString()}</u></div>`:''}
+  <div class="pcsec">戰績資訊</div><div class="pcst"><span><b>${typeof AR!=='undefined'&&AR.me?AR.me.score:'—'}</b>競技積分</span><span><b>${best}</b>最高塔層</span><span><b>${H.filter(x=>S.own[x.id]).length}/${H.length}</b>武將收集</span></div>
+  <div class="pcsec">陣容展示</div><div class="pcdl">${dl.length?dl.map(id=>{const x=H.find(z=>z.id===id);return `<span class="${UGC_SEL&&UGC_SEL[id]?'':'ink'}" style="background-image:url(${ART[id]});border-color:${FC[x.f]}"><b>${x.n}</b><i>★${S.star[id]||0}</i></span>`}).join(''):'<p class="sub">還沒有預設陣容</p>'}</div></div>
+ <div class="pcbt"><button data-p="ver"><i>📰</i>更新紀錄</button><button data-p="guide"><i>🧭</i>新手指南</button><button data-p="set"><i>⚙️</i>設置</button></div>`;
+ if(PCPICK){const own=H.filter(x=>S.own[x.id]).sort((a,b)=>b.q-a.q);h+=`<div class="bgp" data-p="pkx"><div class="bgpp"><h3>選擇背景武將</h3><div class="pcpk">${own.map(x=>`<button data-p="pk" data-i="${x.id}" class="${x.id===hid?'on':''}" style="background-image:url(${ART[x.id]})"><b>${x.n}</b></button>`).join('')}</div><div class="bgpb"><button class="g" data-p="pkx">關閉</button></div></div></div>`}
+ $('pcBody').innerHTML=h}
+function setPanel(){const d=document.createElement('div');d.className='bgp';const row=(k,n,v)=>`<button class="spr" data-s="${k}"><span>${n}</span><b>${v}</b></button>`;
+ const draw=()=>{d.innerHTML=`<div class="bgpp spp"><h3>設置</h3>${row('snd','音效',MUTE?'關閉':'開啟')}${row('anim','戰鬥動畫',({full:'完整',short:'簡短',off:'關閉'})[ANIM])}${row('acc','雲端存檔',ME?'已登入':'未登入')}${row('test','測試模式',S.test?'開':'關')}${row('wipe','清除存檔',CWIPE?'再按一次確認':'重置全部進度')}<p class="sub" style="text-align:center">墨戰三國　版本 ${CVER}</p><div class="bgpb"><button class="g" data-s="x">關閉</button></div></div>`};draw();
+ d.onclick=e=>{const b=e.target.closest('[data-s]');if(e.target===d){d.remove();return}if(!b)return;const k=b.dataset.s;
+  if(k==='x'){d.remove();return}if(k==='snd')$('snd').click();else if(k==='anim')$('anim').click();else if(k==='test'){$('bTest').click();cityUpd()}else if(k==='acc'){d.remove();arenaOpen();return}
+  else if(k==='wipe'){if(!CWIPE){CWIPE=1;setTimeout(()=>{CWIPE=0;if(d.isConnected)draw()},4000)}else{$('bWipe').click();$('bWipe').click();return}}draw()};document.body.appendChild(d)}
+function pcBind(){$('pcBody').onclick=async e=>{const b=e.target.closest('[data-p]');if(!b)return;const k=b.dataset.p;
+ if(k==='x'){$('pcv').classList.remove('on');cityUpd();return}
+ if(k==='bg'){PCPICK=true;renderPC();return}if(k==='pkx'){if(e.target===b||b.tagName==='BUTTON'){PCPICK=false;renderPC()}return}
+ if(k==='pk'){S.pcHero=b.dataset.i;saveS();PCPICK=false;renderPC();return}
+ if(k==='av'){ugcOpen('me','lord');return}if(k==='name'){openLord();return}
+ if(k==='cp'){try{await navigator.clipboard.writeText(String(S.pid));toast('已複製 ID')}catch(er){toast('ID：'+S.pid)}return}
+ if(k==='ver'){verShow(CHANGES,false);return}if(k==='guide'){guideOpen(false);return}if(k==='set'){setPanel();return}};
+ new MutationObserver(()=>{if($('pcv').classList.contains('on')&&!$('lord').classList.contains('on')&&!$('ugv').classList.contains('on'))renderPC()}).observe($('lord'),{attributes:true,attributeFilter:['class']});
+ new MutationObserver(()=>{if($('pcv').classList.contains('on')&&!$('ugv').classList.contains('on'))renderPC()}).observe($('ugv'),{attributes:true,attributeFilter:['class']})}
+
+migrate();daily();setMode('pvp');sbInit();cityInit();prepBind();sceneBind();cityIcons();recBind();pcBind();$('fRec').onclick=recOpen;cityShow();if(!S.lord.n){verMark();guideOpen(true)}else setTimeout(verCheck,600);
 {const _si=setInfo;setInfo=function(){_si();if(MODE==='tower'&&!document.body.classList.contains('full'))$('info').textContent+='｜點上方塔名可開啟塔圖';requestAnimationFrame(layout)}}addEventListener('load',layout);layout();
 </script></body></html>
 
