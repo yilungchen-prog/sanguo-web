@@ -668,7 +668,7 @@ body.bt #btHud{display:grid;grid-template-columns:1fr auto 1fr;align-items:cente
 /* 出手順序 */
 body.bt #btOrd{display:flex;flex-direction:column;align-items:center;position:fixed;left:0;right:0;bottom:0;z-index:62;padding:8px 6px calc(env(safe-area-inset-bottom,0px) + 4px);background:linear-gradient(#120d0800,#120d08d0 30%,#120d08f2)}
 .boi{display:flex;gap:4px;justify-content:center;flex-wrap:nowrap;overflow:hidden;max-width:100%}.boi span{position:relative;flex:none;width:38px;height:38px;border-radius:50%;background:center 15%/cover;border:2px solid;transition:transform .2s}.boi span.me{border-color:#4aa3ff}.boi span.en{border-color:#e0503a}
-.boi span b{position:absolute;left:-4px;right:-4px;bottom:-6px;font-size:10px;text-align:center;background:#000c;border-radius:6px;color:#fff;line-height:1.3}.boi span.ink b{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);background:none;font:900 13px 'LXGW WenKai TC',serif;color:#fff;text-shadow:0 0 3px #000}.boi span{width:34px!important;height:34px!important}
+.boi span b{position:absolute;left:-4px;right:-4px;bottom:-6px;font-size:10px;text-align:center;background:#000c;border-radius:6px;color:#fff;line-height:1.3}.boi span.ink b{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);background:none;font:900 13px 'LXGW WenKai TC',serif;color:#fff;text-shadow:0 0 3px #000}.boi span{width:var(--bs,34px)!important;height:var(--bs,34px)!important}.boi{gap:3px!important}
 .boi span.cur{transform:scale(1.25);box-shadow:0 0 10px #ffd23a;border-color:#ffd23a;z-index:2}
 #btOrd small{font-size:11px;color:#d9c39a;letter-spacing:2px;margin-top:4px}
 body.bt #spdBar{top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 82px)!important;gap:8px!important}
@@ -755,6 +755,11 @@ body.bt #spdBar{top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) +
 .pzh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.pzh span{font:900 14px 'LXGW WenKai TC',serif;letter-spacing:3px;background:#b0261c;color:#fff;border-radius:6px;padding:1px 8px}.pzh b{font:900 24px 'LXGW WenKai TC',serif;color:#ffd27a}.pzh em{font-style:normal;font-size:14px;color:#ff9a8a}
 .pzr{margin-top:4px}.pzt{color:#cfe;font-size:15px}.pze{color:#ff9a8a;font-weight:700;margin-top:4px}.pzo{color:#7fe08a;margin-top:4px}.pzb{margin-top:6px}.pzb button{width:100%;min-height:46px;font-size:17px}.pzw{font-size:13px;opacity:.75;margin-top:4px}
 /* 換圖 */
+.artm .bgpp{max-height:92vh;overflow-y:auto}
+.artsm{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin:4px 0 8px}.artsm span{font-size:14px;opacity:.75}.artsm button{min-height:34px;white-space:nowrap;padding:2px 8px;font-size:15px;border-radius:16px;background:#3a2c1c;color:#e8d8b0;border:1px solid #6a5434}.artsm button.on{background:#c9993c;color:#1a1208;border-color:#ffd27a}
+.arsg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0}.arsg button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px;border-radius:12px;background:#2a2016;border:2px solid #5a4630;color:#f3e6c4}
+.arsg button.on{border-color:#ffd27a;box-shadow:0 0 14px #ffd27a88;background:#3a2c18}.arsg span{position:relative;width:100%;aspect-ratio:3/4;border-radius:8px;background:center/cover}
+.arsg em{position:absolute;left:4px;top:4px;font:900 12px sans-serif;font-style:normal;background:#b0261ce8;color:#fff;border-radius:8px;padding:1px 6px}.arsg b{font:900 18px 'LXGW WenKai TC',serif}.arsg small{font-size:13px;opacity:.75}
 .arts{display:flex;gap:14px;justify-content:center;margin:8px 0}.arts div{display:flex;flex-direction:column;align-items:center;gap:4px}.arts span{width:110px;aspect-ratio:3/4;border-radius:10px;border:2px solid #c9993c;background:center top/cover}.arts b{font:900 16px 'LXGW WenKai TC',serif}
 .artb{display:flex;flex-direction:column;gap:8px;margin:8px 0}.artb button{min-height:60px;font:900 18px 'LXGW WenKai TC',serif;display:flex;flex-direction:column;align-items:center;justify-content:center}.artb small{font:400 13px sans-serif;opacity:.8;margin-top:2px}
 #hCnt{flex:1 1 60%!important}#hArt{order:10;flex:none!important;margin-top:-8px}
@@ -786,23 +791,33 @@ body.cfold .cl{transform:translateX(-130%);opacity:0;pointer-events:none}body.cf
 .ugm{font-size:14px!important;padding:6px 8px!important}.ugm b{font-size:15px}
 .ugb{gap:6px!important;padding:0 6px 6px!important}.ugb button,.ugc>button{min-height:44px!important;font-size:16px!important;padding:0!important;border-radius:10px}.ugb .ugu{flex:2!important}.ugc>button{margin:auto 6px 6px!important;flex:none!important}.ugb2 button{font-size:14px!important;min-height:38px!important}
 /* 戰場敵我分隔、空排收攏 */
-body.bt .side.e{position:relative}body.bt .side.e::after{content:'';position:absolute;left:4%;right:4%;bottom:-6px;height:3px;border-radius:2px;background:linear-gradient(90deg,transparent,#2b2622aa 20%,#a8382caa 50%,#2b2622aa 80%,transparent);box-shadow:0 0 10px #a8382c66}
-body.bt .side.p{margin-top:14px!important}
+body.bt .side.e,body.bt .side.p{position:relative}
+body.bt:not(.land) .side.e::after{content:'';position:absolute;left:-2%;right:-2%;bottom:calc(-1*(var(--ch,80px)*.17 + 5px));transform:translateY(50%);height:calc(var(--ch,80px)*.1);border-radius:50%;background:linear-gradient(90deg,transparent,#1a120cb0 10%,#2b1d14f0 35%,#7a1e14f0 50%,#2b1d14f0 65%,#1a120cb0 90%,transparent);box-shadow:0 0 14px #c8382c88;z-index:2;pointer-events:none}
+body.bt:not(.land) .side.p{margin-top:calc(var(--ch,80px)*.34 + 10px)!important}
+body.bt:not(.land) .side.p::before{content:'戰';position:absolute;left:50%;top:calc(-1*(var(--ch,80px)*.17 + 5px));transform:translate(-50%,-50%) rotate(-6deg);width:calc(var(--ch,80px)*.3);aspect-ratio:1;display:flex;align-items:center;justify-content:center;font:900 calc(var(--ch,80px)*.22) 'LXGW WenKai TC',serif;color:#f6e7cf;background:#b3261e;border:2px solid #f6e7cf;border-radius:6px;box-shadow:0 0 0 2px #b3261e,0 0 12px #000;z-index:3;pointer-events:none}
+body.bt:not(.land) .side.e{background:radial-gradient(ellipse 75% 65% at 50% 55%,rgba(210,50,30,.24),transparent 78%)!important}
+body.bt:not(.land) .side.p{background:radial-gradient(ellipse 75% 65% at 50% 45%,rgba(40,120,230,.22),transparent 78%)!important}
+body.bt #ge .cell:not(.dead) .card{outline:2px solid #ff6a4acc;outline-offset:1px}body.bt #gp .cell:not(.dead) .card{outline:2px solid #5ab4ffcc;outline-offset:1px}
+body.bt #ge .cell{background:radial-gradient(ellipse 46% 9% at 50% 93%,#d0402acc 0 55%,rgba(0,0,0,.35) 60%,transparent 72%)!important}body.bt #gp .cell{background:radial-gradient(ellipse 46% 9% at 50% 93%,#3a8adccc 0 55%,rgba(0,0,0,.35) 60%,transparent 72%)!important}
+body.bt .cell.dead{background:none!important}body.bt .cell.dead .card{opacity:.42!important;filter:grayscale(1) brightness(.6)!important;animation:none!important;box-shadow:none!important}
+body.bt .cell.dead::after{content:'陣亡';position:absolute;left:50%;top:45%;transform:translate(-50%,-50%) rotate(-12deg);font:900 calc(var(--ch,80px)*.2) 'LXGW WenKai TC',serif;color:#e8d8c0;border:2px solid #e8d8c0aa;border-radius:6px;padding:0 .25em;background:#1a120ccc;z-index:5;pointer-events:none;white-space:nowrap}
+.num{top:46%!important;left:16%!important;font-size:calc(var(--ch,80px)*.21)!important;-webkit-text-stroke:1px #000;text-shadow:0 0 4px #000,0 2px 2px #000!important}.num.crit{font-size:calc(var(--ch,80px)*.27)!important}
+@keyframes fl{0%{transform:translateY(0) scale(1.25)}15%{transform:translateY(-4px) scale(1)}100%{transform:translateY(-22px);opacity:0}}
 body.bt #ge.er0 .cell:nth-child(-n+3),body.bt #ge.er1 .cell:nth-child(n+4):nth-child(-n+6){height:calc(var(--ch,80px)*.3)!important}
 
 /* ===== 戰鬥狀態：小圖示列 ===== */
 .stx{left:auto!important;right:auto!important;top:auto!important;bottom:calc(var(--ch,80px)*.2)!important;left:50%!important;transform:translateX(-50%);flex-direction:row!important;gap:2px!important;font-size:calc(var(--ch,80px)*.1)!important;white-space:nowrap}
 .stx i{position:relative;display:flex;align-items:center;justify-content:center;min-width:1.6em;height:1.6em;padding:0 .15em;border-radius:.8em;font-style:normal;background:#000b;border:1px solid #fff5;text-shadow:none;font-size:1em;letter-spacing:-.05em}
-.stx i.ng{background:#6a1410e0;border-color:#ff8a7a}.stx i.ps{background:#145a2ae0;border-color:#7fe08a}.stx i.more{background:#000c;color:#ffe9b0;font-weight:900}
+.stx{flex-wrap:wrap;justify-content:center;width:96%;row-gap:1px!important}.stx i{font:900 calc(var(--ch,80px)*.095) 'LXGW WenKai TC',sans-serif!important;color:#fff;height:1.55em!important;padding:0 .3em!important;border-width:1.5px!important;box-shadow:0 1px 3px #000;letter-spacing:0!important}.stx i.ng{background:#b3261e!important;border-color:#ffd0c8!important}.stx i.ps{background:#1d7a3a!important;border-color:#c8ffd0!important}.stx i.more{background:#000c;color:#ffe9b0;font-weight:900}
 .stx i b{position:absolute;right:-.35em;bottom:-.35em;font-size:.75em;min-width:1.1em;height:1.1em;line-height:1.1em;text-align:center;border-radius:50%;background:#ffd23a;color:#2a1a00}
 /* ===== 控制圓圈 ===== */
 .ring{position:absolute;left:50%;top:48%;width:118%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;z-index:6}
 .ring i{position:absolute;inset:0;border-radius:50%;border:3px dashed var(--rc);box-shadow:0 0 12px var(--rc),inset 0 0 14px var(--rc);animation:rspin 4s linear infinite}
 .ring::before{content:'';position:absolute;inset:9%;border-radius:50%;border:2px solid var(--rc);opacity:.7;animation:rspin 6s linear infinite reverse}
-.ring b{position:absolute;left:50%;top:-4%;transform:translateX(-50%);font:900 calc(var(--ch,80px)*.13) 'LXGW WenKai TC',serif;color:#fff;background:var(--rc);border-radius:8px;padding:0 .4em;white-space:nowrap;box-shadow:0 0 6px #000}
+.ring b{position:absolute;left:50%;top:-6%;transform:translateX(-50%);font:900 calc(var(--ch,80px)*.15) 'LXGW WenKai TC',serif;color:#fff;background:#140c06ee;border:2px solid var(--rc);border-radius:9px;padding:.05em .45em;white-space:nowrap;box-shadow:0 0 8px var(--rc),0 2px 4px #000;text-shadow:0 0 4px var(--rc)}
 @keyframes rspin{to{transform:rotate(360deg)}}
 .ring.blk i{animation:rspin 4s linear infinite,rblk .5s ease}@keyframes rblk{30%{box-shadow:0 0 30px var(--rc),inset 0 0 30px var(--rc);border-width:6px}}
-.r-fx{--rc:#e0b030}.r-fz{--rc:#7fd8ff}.r-kd{--rc:#9a55d6}.r-sl{--rc:#8a8a8a}.r-tf{--rc:#e0402a}.r-ql{--rc:#2fd06a}
+.r-fx{--rc:#ffcc33}.r-fz{--rc:#8fe4ff}.r-kd{--rc:#c58aff}.r-sl{--rc:#d8d8d8}.r-tf{--rc:#ff5a3c}.r-ql{--rc:#4dff8a}.ring i{border-width:4px!important;filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 1.5px #000)}
 .ring.r-fz i{border-style:solid;background:radial-gradient(circle,#bff0ff22,#7fd8ff11 60%,transparent 70%)}.ring.r-kd i{border-style:dotted}.ring.r-tf i{border-style:double;border-width:5px}
 .cell:has(.r-fx) .card{opacity:.45;filter:sepia(.6) brightness(.8);scale:.9}
 .cell:has(.r-kd) .card{animation:shk .25s linear infinite}@keyframes shk{25%{translate:-1.5px 0}75%{translate:1.5px 0}}
@@ -837,7 +852,7 @@ body.lite .pfx{display:none}
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261030d</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261030e</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -859,7 +874,7 @@ body.lite .pfx{display:none}
 <div class="cnav"><button class="cnb cur" data-c="home"><i>🏯</i><span>主城</span></button><button class="cnb" id="cnHero" data-c="hero"><i>🎖</i><span>武將</span></button><button class="cnb" data-c="bag"><i>🎒</i><span>背包</span></button><button class="cwar" id="cWar" data-c="war"><b>征</b><b>戰</b></button></div>
 </div>
 <div id="scn"><canvas id="scnCv"></canvas><div id="sUbg" class="ubg"></div><div class="cpet dust"><i></i><i></i><i></i><i></i><i></i></div><div class="scnh"><button class="xb" data-c="x">←</button><b>征戰</b><button class="ugbtn" id="sUg" data-c="ugw">🎨</button></div><div id="scnB"></div></div><div class="ov" id="csh"><div id="cshB"></div></div>
-<div class="ov" id="pcv"><div id="pcBody"></div></div><div class="ov" id="prep"><div id="ppB"></div></div><div class="ov" id="heroes"><div class="pan"><div class="shh"><b>武將</b><span id="hCnt"></span><button id="hFrag" class="g hhb">碎片</button><button id="hHJ" class="g hhb">豪傑書</button><button id="hStar" class="hhb hstar">一鍵升星</button><button id="hArt" class="g hhb">🎨 換圖</button><button id="hX" style="flex:none;width:44px;padding:6px 0">✕</button></div><button id="hForm" class="hform"><svg viewBox="0 0 30 30" width="30" height="30"><g fill="#f3e6c4"><rect x="2" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="20.6" width="7.6" height="7.6" rx="1.6"/></g></svg><span>布陣</span></button><div class="btns pfb hpf"><button class="g on" data-pf="all">全</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="hpool"></div></div></div>
+<div class="ov" id="pcv"><div id="pcBody"></div></div><div class="ov" id="prep"><div id="ppB"></div></div><div class="ov" id="heroes"><div class="pan"><div class="shh"><b>武將</b><span id="hCnt"></span><button id="hFrag" class="g hhb">碎片</button><button id="hHJ" class="g hhb">豪傑書</button><button id="hStar" class="hhb hstar">一鍵升星</button><button id="hArt" class="g hhb">🎨 畫風</button><button id="hX" style="flex:none;width:44px;padding:6px 0">✕</button></div><button id="hForm" class="hform"><svg viewBox="0 0 30 30" width="30" height="30"><g fill="#f3e6c4"><rect x="2" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="20.6" width="7.6" height="7.6" rx="1.6"/></g></svg><span>布陣</span></button><div class="btns pfb hpf"><button class="g on" data-pf="all">全</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="hpool"></div></div></div>
 <div class="ov" id="form"><div class="pan"><div class="shh"><b>📋 布陣（預設陣容）</b><span id="fCnt"></span></div>
 <div class="sub" style="font-size:12px;margin:2px 0 0">拖曳武將可換位置，拖出格子外或按 ✕ 卸下；點下方武將上陣（長按可拖進指定格）。上方為前排。</div>
 <div class="fg" id="fg"></div><div id="fSyn"></div><div class="btns pfb"><button class="g on" data-pf="all">全部</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="fpool"></div>
@@ -938,11 +953,250 @@ function heroBgOf(id){const o=UGC_SEL&&UGC_SEL[id];if(o)return o;if(HBGC[id])ret
  const v=x.createRadialGradient(W/2,Hh*.45,W*.4,W/2,Hh*.5,W*1.1);v.addColorStop(0,'#0000');v.addColorStop(1,'#2a1a0a88');x.fillStyle=v;x.fillRect(0,0,W,Hh);
  return HBGC[id]=c.toDataURL('image/jpeg',.85)}
 const BEAIMG=new Set(['xishi','zhaojun','banjieyu','feiyan','yuhuan','waner','shishi','wenjun','yuji']);
-function artOf(id,big){const o=UGC_SEL&&UGC_SEL[id];if(o)return o;if(BEAIMG.has(id))return `bea/${id}_${big?'b':'s'}.jpg`;const h=H.find(x=>x.id===id)||BEA_H(id);if(!h)return '';const C=big?ART2C:ARTC;if(!C[id])C[id]=inkDraw(h,big?480:240,big?640:320);return C[id]}
+function artOf(id,big){const o=UGC_SEL&&UGC_SEL[id];if(o)return o;if(BEAIMG.has(id)&&(curStyle()==='ink'||S.beaOrig))return `bea/${id}_${big?'b':'s'}.jpg`;return artOfInk(id,big)}
 const BEA_H=id=>{const b=(typeof BEA!=='undefined')&&BEA.find(x=>x.id===id);return b?{id:b.id,n:b.n,f:'艷',q:95}:null};
 var UGC_SEL={};
 const ART=new Proxy({},{get:(o,id)=>typeof id==='string'?artOf(id,false):undefined});
 const ART2=new Proxy({},{get:(o,id)=>typeof id==='string'?artOf(id,true):undefined});
+/* ===================== 多畫風：水墨／Q版／工筆重彩／皮影戲 ===================== */
+const STYLES=[['ink','水墨畫'],['q','Q版'],['gb','工筆重彩'],['sh','皮影戲']];
+let STYLE_TOP=null,STYLE_CNT={};
+function curStyle(){try{return S.artStyle||STYLE_TOP||'ink'}catch(e){return 'ink'}}
+const FCB={艷:'#ec6aa2',蜀:'#36b05a',魏:'#3aa6e0',吳:'#e4553f',神:'#e8b830',魔:'#9a5ae0',群:'#a08a5a',魂:'#d0609a',靈:'#4a80d8'};
+const FEMS=new Set(['mayunlu','zhangxingcai','xinxianying','zhenmi','daqiao','sunshangxiang','xiaoqiao','caiwenji','diaochan','zhurong','zhangchunhua','bulianshi','lvlingqi']);
+const HTR={guanyu:{sk:'#d9543c',bd:'long',hat:'turban',hc:'#2f9a5a'},guan:{sk:'#d9543c',bd:'long',hat:'turban',hc:'#e8b830'},guanping:{bd:'none',hat:'turban',hc:'#2f9a5a'},
+ zhangfei:{sk:'#8a5a3a',bd:'full',hat:'helm'},liubei:{bd:'goatee',hat:'crown'},zhaoyun:{bd:'none',hat:'helm',hc:'#e8eef2'},machao:{bd:'none',hat:'helm',hc:'#e8eef2'},
+ huangzhong:{bd:'long',bc:'#ece8e0',hat:'helm',brow:'#e0ddd6'},zhugeliang:{bd:'goatee',hat:'scholar'},shenzhuge:{bd:'goatee',hat:'scholar',hc:'#c89a20'},xushu:{bd:'stache',hat:'scholar'},
+ liaohua:{bd:'full',hat:'helm'},maliang:{bd:'none',hat:'scholar',brow:'#f4f4f4'},jianyong:{bd:'goatee',hat:'scholar'},madai:{bd:'stache',hat:'helm'},
+ caocao:{sk:'#f4d8bc',bd:'goatee',hat:'crown'},simayi:{bd:'goatee',hat:'scholar',hc:'#2a2a3a'},xiahoudun:{bd:'full',hat:'helm',patch:1},zhangliao:{bd:'stache',hat:'helm'},
+ guojia:{bd:'none',hat:'scholar'},caoren:{bd:'full',hat:'helm'},xuchu:{sk:'#e2a878',bd:'stache',hat:'bald'},xiahouyuan:{bd:'goatee',hat:'helm'},xuhuang:{bd:'full',hat:'helm'},
+ yangxiu:{bd:'none',hat:'scholar'},xunyou:{bd:'goatee',hat:'scholar'},yuejin:{bd:'stache',hat:'helm'},caoxiu:{bd:'none',hat:'helm'},
+ sunquan:{bd:'goatee',bc:'#6a2a5a',hat:'crown'},luxun:{bd:'none',hat:'scholar'},ganning:{bd:'stache',hat:'bandana'},zhouyu:{bd:'none',hat:'scholar'},sunce:{bd:'none',hat:'helm'},
+ taishici:{bd:'stache',hat:'helm'},zhoutai:{sk:'#d8a078',bd:'full',hat:'helm'},zhugejin:{bd:'goatee',hat:'scholar'},zhangzhao:{bd:'long',bc:'#e8e4dc',hat:'scholar',brow:'#e0ddd6'},
+ chengpu:{bd:'full',bc:'#9a9a9a',hat:'helm'},lingtong:{bd:'none',hat:'helm'},xusheng:{bd:'stache',hat:'helm'},
+ huatuo:{bd:'long',bc:'#ece8e0',hat:'taoist',hair:'#d8d4cc',brow:'#e0ddd6'},yuanshao:{bd:'goatee',hat:'crown'},zuoci:{bd:'long',bc:'#f2f0ea',hat:'taoist',hair:'#e0dcd4',brow:'#eee'},
+ menghuo:{sk:'#9a6a40',bd:'full',hat:'feather'},zhurong:{sk:'#d49a6a',hat:'feather'},pangde:{bd:'full',hat:'helm'},jushou:{bd:'goatee',hat:'scholar'},mateng:{bd:'full',bc:'#a8a8a8',hat:'helm'},
+ taoqian:{bd:'long',bc:'#e0dcd4',hat:'crown'},guanlu:{bd:'goatee',bc:'#cfcac0',hat:'taoist'},yuji:{bd:'long',bc:'#f2f0ea',hat:'taoist',hair:'#e0dcd4',brow:'#eee'},
+ lubu:{bd:'none',hat:'pheasant'},lvlingqi:{hat:'pheasant'},zhangjiao:{bd:'long',hat:'yellow'},zhangbao:{bd:'goatee',hat:'yellow'},zhangliang:{bd:'full',hat:'yellow'},
+ dianwei:{sk:'#a87448',bd:'full',hat:'bandana'},dongzhuo:{sk:'#ecb492',bd:'full',hat:'crown'},liru:{bd:'goatee',hat:'scholar',hc:'#3a2a3a'},yuanshu:{bd:'stache',hat:'crown'},
+ tianfeng:{bd:'goatee',hat:'scholar'},guosi:{bd:'stache',hat:'helm'},panfeng:{bd:'full',hat:'helm'},lijue:{bd:'goatee',hat:'helm'},diaochan:{hat:'bun',fl:1},daqiao:{fl:1},xiaoqiao:{fl:1}};
+function shade(c,f){const n=parseInt(c.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const t=f<0?0:255,p=Math.abs(f);r=Math.round((t-r)*p+r);g=Math.round((t-g)*p+g);b=Math.round((t-b)*p+b);return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1)}
+function trOf(h){const t=HTR[h.id]||{},fem=h.f==='艷'||FEMS.has(h.id),R=inkRng(h.id+'tr'),war=['戰士','坦克'].includes(h.job);
+ return{fem,war,col:FCB[h.f]||'#888',sk:t.sk||(fem?'#fbdcc8':'#f2c9a2'),bd:fem?'none':(t.bd||(war?['stache','full','goatee','none'][Math.floor(R()*4)]:['goatee','long','stache'][Math.floor(R()*3)])),
+  bc:t.bc||'#1c1410',hair:t.hair||'#1c1410',brow:t.brow||'#24140e',hat:t.hat||(fem?(war?'fhelm':'bun'):(war?'helm':'scholar')),hc:t.hc,patch:t.patch,fl:t.fl,
+  wpn:WPN[h.id]||(fem?'rfan':'scroll'),god:h.f==='神',demon:h.f==='魔'}}
+const SP=(x,f)=>{x.beginPath();f(x)};
+/* 兵器：原點為握把，向上為負 */
+function drawWpn(x,k,st){const s=st.L/440,T=-.74*st.L,F=(f,c)=>{x.fillStyle=c;SP(x,f);x.fill();if(st.lw){x.strokeStyle=st.o;x.lineWidth=st.lw;x.stroke()}};x.lineJoin='round';x.lineCap='round';
+ const pole=(top=T,bot=.28*st.L,w=13*s)=>F(x=>x.rect(-w/2,top,w,bot-top),st.wood);
+ const tassel=y=>F(x=>{x.moveTo(0,y);x.lineTo(-17*s,y+44*s);x.lineTo(17*s,y+44*s);x.closePath()},st.red);
+ const head=(y,l=70)=>F(x=>{x.moveTo(0,y-l*s);x.quadraticCurveTo(18*s,y-l*s*.45,0,y);x.quadraticCurveTo(-18*s,y-l*s*.45,0,y-l*s)},st.metal);
+ if(k==='blade'){pole();F(x=>{x.moveTo(2*s,T+40*s);x.quadraticCurveTo(-92*s,T+50*s,-82*s,T-62*s);x.quadraticCurveTo(-30*s,T-12*s,10*s,T-22*s);x.quadraticCurveTo(14*s,T+12*s,2*s,T+40*s)},st.metal);F(x=>x.arc(0,T+44*s,15*s,0,7),st.acc2||'#46a06b');tassel(T+58*s)}
+ else if(k==='spear'){pole();head(T);tassel(T+4*s)}
+ else if(k==='halberd'){pole();head(T,80);[-1,1].forEach(d=>F(x=>{x.moveTo(0,T-4*s);x.quadraticCurveTo(d*44*s,T-34*s,d*48*s,T+10*s);x.quadraticCurveTo(d*26*s,T-2*s,0,T+12*s)},st.metal));tassel(T+14*s)}
+ else if(k==='axe'){const t2=-.58*st.L;pole(t2);F(x=>{x.moveTo(0,t2+8*s);x.lineTo(-26*s,t2);x.quadraticCurveTo(-96*s,t2+6*s,-90*s,t2+78*s);x.quadraticCurveTo(-60*s,t2+64*s,-26*s,t2+86*s);x.lineTo(0,t2+76*s);x.closePath()},st.metal);head(t2,40)}
+ else if(k==='sword'){F(x=>{x.moveTo(-8*s,-20*s);x.lineTo(-8*s,-.6*st.L);x.lineTo(0,-.66*st.L);x.lineTo(8*s,-.6*st.L);x.lineTo(8*s,-20*s);x.closePath()},st.metal);F(x=>x.rect(-30*s,-26*s,60*s,12*s),st.gold);F(x=>x.rect(-6*s,-14*s,12*s,44*s),st.wood);F(x=>x.arc(0,34*s,9*s,0,7),st.gold)}
+ else if(k==='fan'){F(x=>x.rect(-6*s,-70*s,12*s,100*s),st.wood);F(x=>x.ellipse(0,-160*s,62*s,96*s,0,0,7),st.white);x.strokeStyle=st.o;x.lineWidth=Math.max(1,st.lw*.5);for(let i=-3;i<=3;i++){SP(x,x=>{x.moveTo(0,-70*s);x.lineTo(i*18*s,-245*s)});x.stroke()}F(x=>x.ellipse(0,-72*s,22*s,10*s,0,0,7),st.gold)}
+ else if(k==='rfan'){F(x=>x.rect(-5*s,-70*s,10*s,110*s),st.wood);F(x=>x.arc(0,-140*s,72*s,0,7),st.silk);x.fillStyle=st.red;for(let i=0;i<5;i++){SP(x,x=>x.arc(Math.cos(i*1.256)*14*s,-150*s+Math.sin(i*1.256)*14*s,10*s,0,7));x.fill()}x.fillStyle=st.gold;SP(x,x=>x.arc(0,-150*s,7*s,0,7));x.fill();x.strokeStyle=st.gold;x.lineWidth=5*s;SP(x,x=>x.arc(0,-140*s,72*s,0,7));x.stroke()}
+ else if(k==='bow'){x.lineWidth=16*s;x.strokeStyle=st.o;SP(x,x=>{x.moveTo(40*s,-.48*st.L);x.quadraticCurveTo(-70*s,0,40*s,.42*st.L)});x.stroke();x.lineWidth=9*s;x.strokeStyle=st.wood;x.stroke();x.lineWidth=2;x.strokeStyle=st.o;SP(x,x=>{x.moveTo(40*s,-.48*st.L);x.lineTo(40*s,.42*st.L)});x.stroke()}
+ else if(k==='shield'){F(x=>x.arc(0,-30*s,92*s,0,7),st.acc);F(x=>x.arc(0,-30*s,66*s,0,7),shade(st.acc,-.25));F(x=>x.arc(0,-30*s,22*s,0,7),st.gold);x.fillStyle=st.gold;for(let i=0;i<8;i++){SP(x,x=>x.arc(Math.cos(i*.785)*80*s,-30*s+Math.sin(i*.785)*80*s,6*s,0,7));x.fill()}}
+ else if(k==='dagger'){[-.45,.45].forEach(r=>{x.save();x.rotate(r);F(x=>{x.moveTo(-7*s,-10*s);x.lineTo(0,-150*s);x.lineTo(7*s,-10*s);x.closePath()},st.metal);F(x=>x.rect(-18*s,-14*s,36*s,8*s),st.gold);F(x=>x.rect(-5*s,-6*s,10*s,34*s),st.wood);x.restore()})}
+ else if(k==='qin'){x.save();x.rotate(-.35);F(x=>x.roundRect(-34*s,-230*s,68*s,320*s,20*s),st.wood);x.strokeStyle=st.white;x.lineWidth=1.5;for(let i=-2;i<=2;i++){SP(x,x=>{x.moveTo(i*10*s,-215*s);x.lineTo(i*10*s,75*s)});x.stroke()}x.fillStyle=st.gold;for(let i=0;i<7;i++){SP(x,x=>x.arc(-26*s,-190*s+i*36*s,3.5*s,0,7));x.fill()}x.restore()}
+ else if(k==='gourd'){pole(T*.9);F(x=>{x.arc(-34*s,T*.9+70*s,22*s,0,7)},st.gold2||'#e0a040');F(x=>x.arc(-34*s,T*.9+112*s,32*s,0,7),st.gold2||'#e0a040');x.strokeStyle=st.red;x.lineWidth=4*s;SP(x,x=>{x.moveTo(0,T*.9+30*s);x.lineTo(-34*s,T*.9+48*s)});x.stroke()}
+ else if(k==='staff'){pole(T*.95);x.strokeStyle=st.gold;x.lineWidth=8*s;SP(x,x=>x.arc(0,T*.95-26*s,28*s,0,7));x.stroke();[-1,1].forEach(d=>{SP(x,x=>x.arc(d*28*s,T*.95-10*s,9*s,0,7));x.stroke()})}
+ else if(k==='seal'){F(x=>x.roundRect(-34*s,-80*s,68*s,58*s,6*s),'#5ab08a');F(x=>x.arc(0,-92*s,18*s,0,7),'#5ab08a');x.strokeStyle=st.red;x.lineWidth=4*s;SP(x,x=>{x.moveTo(0,-22*s);x.quadraticCurveTo(10*s,10*s,-4*s,40*s)});x.stroke()}
+ else if(k==='flower'){x.strokeStyle=st.wood;x.lineWidth=7*s;SP(x,x=>{x.moveTo(0,20*s);x.quadraticCurveTo(-30*s,-120*s,10*s,-260*s)});x.stroke();x.lineWidth=4*s;SP(x,x=>{x.moveTo(-14*s,-110*s);x.quadraticCurveTo(-60*s,-150*s,-70*s,-190*s)});x.stroke();
+  [[10,-260],[-70,-190],[-18,-170],[6,-210],[-46,-150]].forEach(([a,b])=>{x.fillStyle=st.pink;for(let i=0;i<5;i++){SP(x,x=>x.arc(a*s+Math.cos(i*1.256)*9*s,b*s+Math.sin(i*1.256)*9*s,8*s,0,7));x.fill()}x.fillStyle=st.gold;SP(x,x=>x.arc(a*s,b*s,4*s,0,7));x.fill()})}
+ else if(k==='brush'){F(x=>x.rect(-7*s,-250*s,14*s,280*s),st.wood);F(x=>{x.moveTo(-11*s,-250*s);x.quadraticCurveTo(0,-330*s,11*s,-250*s);x.closePath()},st.o||'#1a1410');F(x=>x.rect(-9*s,-254*s,18*s,10*s),st.gold)}
+ else{F(x=>x.roundRect(-24*s,-150*s,48*s,170*s,8*s),st.bamboo||'#d8b878');x.strokeStyle=st.o;x.lineWidth=Math.max(1,st.lw*.5);for(let i=1;i<9;i++){SP(x,x=>{x.moveTo(-24*s,-150*s+i*19*s);x.lineTo(24*s,-150*s+i*19*s)});x.stroke()}x.strokeStyle=st.red;x.lineWidth=4*s;SP(x,x=>{x.moveTo(-24*s,-60*s);x.lineTo(24*s,-60*s)});x.stroke()}}
+/* 頭部共用：髮、冠、帽（u,v 為臉半寬半高） */
+function hatDraw(x,T,HX,HY,u,v,st,layer){const F=(f,c)=>{x.fillStyle=c;SP(x,f);x.fill();if(st.lw){x.strokeStyle=st.o;x.lineWidth=st.lw;x.stroke()}},X=a=>HX+a*u,Y=b=>HY+b*v,hat=T.hat,hc=T.hc;
+ const cap=()=>F(x=>{x.moveTo(X(-1.03),Y(.08));x.quadraticCurveTo(X(-1.06),Y(-1.08),X(0),Y(-1.11));x.quadraticCurveTo(X(1.06),Y(-1.08),X(1.03),Y(.08));x.quadraticCurveTo(X(.77),Y(-.47),X(0),Y(-.48));x.quadraticCurveTo(X(-.77),Y(-.47),X(-1.03),Y(.08))},T.hair);
+ const flower=(a,b,r,c)=>{x.fillStyle=c;for(let i=0;i<5;i++){SP(x,x=>x.arc(X(a)+Math.cos(i*1.256)*r,Y(b)+Math.sin(i*1.256)*r,r*.85,0,7));x.fill()}x.fillStyle=st.gold;SP(x,x=>x.arc(X(a),Y(b),r*.45,0,7));x.fill()};
+ const femHair=()=>{if(layer==='back'){F(x=>{x.moveTo(X(-1.02),Y(-.3));x.quadraticCurveTo(X(-1.45),Y(1.3),X(-.85),Y(st.hl||2.2));x.lineTo(X(.85),Y(st.hl||2.2));x.quadraticCurveTo(X(1.45),Y(1.3),X(1.02),Y(-.3));x.closePath()},T.hair);return}
+  if(st.oneBun)F(x=>x.ellipse(X(0),Y(-1.32),u*.55,v*.4,0,0,7),T.hair);else[-1,1].forEach(d=>F(x=>x.arc(X(d*.62),Y(-1.02),u*.36,0,7),T.hair));
+  cap();x.fillStyle=T.hair;for(let i=-4;i<=4;i++){SP(x,x=>x.arc(X(i*.19),Y(-.5),u*.14,0,Math.PI));x.fill()}
+  x.strokeStyle=st.gold;x.lineWidth=Math.max(2,u*.05);SP(x,x=>{x.moveTo(X(.35),Y(-1.25));x.lineTo(X(1.05),Y(-.75))});x.stroke();
+  if(st.beads){x.lineWidth=1;for(let i=0;i<3;i++){SP(x,x=>{x.moveTo(X(1.0-i*.08),Y(-.78));x.lineTo(X(1.0-i*.08),Y(-.3+i*.05))});x.stroke();x.fillStyle=i%2?st.red:st.gold;SP(x,x=>x.arc(X(1.0-i*.08),Y(-.28+i*.05),u*.05,0,7));x.fill()}}
+  flower(.82,-.9,u*.12,T.fl?st.pink:T.col);if(T.fl)flower(-.7,-.95,u*.1,st.pink)};
+ if(hat==='feather'&&layer==='back'){['#e04838','#f0c030','#40a060','#e04838','#f0c030'].forEach((c,i)=>{const a=(i-2)*.32;F(x=>x.ellipse(X(Math.sin(a)*.95),Y(-1.3-Math.cos(a)*.35),u*.13,v*.55,a,0,7),c)})}
+ if(hat==='pheasant'&&layer==='back'){[-1,1].forEach(d=>{x.lineWidth=u*.16;x.strokeStyle=st.o;SP(x,x=>{x.moveTo(X(d*.25),Y(-1.1));x.bezierCurveTo(X(d*.35),Y(-2.6),X(d*1.1),Y(-3.1),X(d*1.75),Y(-2.5))});x.stroke();x.lineWidth=u*.1;x.strokeStyle='#d8743a';x.stroke();x.setLineDash([u*.08,u*.12]);x.strokeStyle='#5a2a14';x.stroke();x.setLineDash([])})}
+ if(T.fem&&(hat==='bun'||hat==='fhelm'||hat==='pheasant'||hat==='feather')){femHair();if(layer==='back')return}
+ if(layer==='back')return;
+ if(hat==='turban'){F(x=>{x.moveTo(X(-1.12),Y(.05));x.quadraticCurveTo(X(-1.1),Y(-1.15),X(0),Y(-1.18));x.quadraticCurveTo(X(1.1),Y(-1.15),X(1.12),Y(.05));x.quadraticCurveTo(X(.7),Y(-.4),X(0),Y(-.42));x.quadraticCurveTo(X(-.7),Y(-.4),X(-1.12),Y(.05))},hc);
+  [[1.35,.35],[1.15,.6]].forEach(([a,b])=>F(x=>{x.moveTo(X(.95),Y(-.4));x.quadraticCurveTo(X(a+.15),Y(b-.5),X(a),Y(b));x.quadraticCurveTo(X(a-.25),Y(b-.4),X(.92),Y(-.25))},hc));
+  F(x=>{x.moveTo(X(0),Y(-.92));x.lineTo(X(.13),Y(-.74));x.lineTo(X(0),Y(-.56));x.lineTo(X(-.13),Y(-.74));x.closePath()},st.gold)}
+ else if(hat==='helm'){const c=hc||shade(T.col,-.2);[-1,1].forEach(d=>F(x=>{x.moveTo(X(d*1.1),Y(-.15));x.lineTo(X(d*1.2),Y(.38));x.quadraticCurveTo(X(d*1.02),Y(.5),X(d*.9),Y(.32));x.lineTo(X(d*.88),Y(-.2));x.closePath()},c));
+  x.strokeStyle=st.o;x.lineWidth=Math.max(2,u*.05);SP(x,x=>{x.moveTo(X(0),Y(-1.3));x.lineTo(X(0),Y(-1.62))});x.stroke();F(x=>x.ellipse(X(0),Y(-1.68),u*.17,v*.2,0,0,7),st.red);
+  F(x=>{x.moveTo(X(-1.1),Y(-.05));x.quadraticCurveTo(X(-1.08),Y(-1.25),X(0),Y(-1.3));x.quadraticCurveTo(X(1.08),Y(-1.25),X(1.1),Y(-.05));x.quadraticCurveTo(X(0),Y(-.55),X(-1.1),Y(-.05))},c);
+  x.strokeStyle=st.gold;x.lineWidth=Math.max(2,u*.07);SP(x,x=>{x.moveTo(X(-1.06),Y(-.12));x.quadraticCurveTo(X(0),Y(-.6),X(1.06),Y(-.12))});x.stroke();
+  F(x=>{x.moveTo(X(0),Y(-1.08));x.quadraticCurveTo(X(.22),Y(-.82),X(0),Y(-.58));x.quadraticCurveTo(X(-.22),Y(-.82),X(0),Y(-1.08))},st.gold)}
+ else if(hat==='crown'||hat==='pheasant'){if(!T.fem)cap();const c=hat==='pheasant'?'#b060d0':st.gold;F(x=>{x.moveTo(X(-.42),Y(-.9));x.lineTo(X(-.48),Y(-1.32));x.lineTo(X(-.2),Y(-1.12));x.lineTo(X(0),Y(-1.45));x.lineTo(X(.2),Y(-1.12));x.lineTo(X(.48),Y(-1.32));x.lineTo(X(.42),Y(-.9));x.closePath()},c);F(x=>x.arc(X(0),Y(-1.06),u*.09,0,7),hat==='pheasant'?st.gold:st.red)}
+ else if(hat==='scholar'){cap();const c=hc||'#34495e';x.strokeStyle=c;x.lineWidth=u*.12;SP(x,x=>{x.moveTo(X(.45),Y(-.95));x.quadraticCurveTo(X(1.1),Y(-.6),X(1.25),Y(.3))});x.stroke();
+  F(x=>{x.moveTo(X(-.55),Y(-.82));x.lineTo(X(-.5),Y(-1.45));x.quadraticCurveTo(X(0),Y(-1.62),X(.5),Y(-1.45));x.lineTo(X(.55),Y(-.82));x.quadraticCurveTo(X(0),Y(-.94),X(-.55),Y(-.82))},c);
+  x.strokeStyle=shade(c,.3);x.lineWidth=Math.max(1,u*.03);[-.25,0,.25].forEach(a=>{SP(x,x=>{x.moveTo(X(a),Y(-.9));x.lineTo(X(a),Y(-1.5))});x.stroke()})}
+ else if(hat==='taoist'){cap();F(x=>x.arc(X(0),Y(-1.22),u*.3,0,7),T.hair);x.strokeStyle=st.gold;x.lineWidth=Math.max(2,u*.06);SP(x,x=>{x.moveTo(X(-.55),Y(-1.3));x.lineTo(X(.55),Y(-1.18))});x.stroke();F(x=>{x.moveTo(X(-.2),Y(-1.0));x.lineTo(X(-.25),Y(-1.25));x.lineTo(X(0),Y(-1.12));x.lineTo(X(.25),Y(-1.25));x.lineTo(X(.2),Y(-1.0));x.closePath()},st.gold)}
+ else if(hat==='yellow'||hat==='bandana'||hat==='feather'){if(!T.fem)cap();const c=hat==='yellow'?'#f2c81e':'#d0392b';F(x=>{x.moveTo(X(-1.05),Y(-.35));x.quadraticCurveTo(X(0),Y(-.72),X(1.05),Y(-.35));x.lineTo(X(1.04),Y(-.12));x.quadraticCurveTo(X(0),Y(-.5),X(-1.04),Y(-.12));x.closePath()},c);
+  if(hat==='feather'){x.fillStyle='#f6f0e0';for(let i=-3;i<=3;i++){SP(x,x=>{x.moveTo(X(i*.25-.06),Y(-.4-Math.cos(i*.3)*.12));x.lineTo(X(i*.25),Y(-.62-Math.cos(i*.3)*.12));x.lineTo(X(i*.25+.06),Y(-.4-Math.cos(i*.3)*.12))});x.fill()}}
+  else[[-1.35,.35],[-1.2,.55]].forEach(([a,b])=>F(x=>{x.moveTo(X(-.98),Y(-.3));x.quadraticCurveTo(X(a-.1),Y(b-.5),X(a),Y(b));x.quadraticCurveTo(X(a+.25),Y(b-.4),X(-.95),Y(-.15))},c));
+  if(hat==='bandana'){x.fillStyle=st.gold;[[-1.3,.45],[-1.15,.62]].forEach(([a,b])=>{SP(x,x=>x.arc(X(a),Y(b),u*.08,0,7));x.fill()})}}
+ else if(hat==='bald'){F(x=>x.arc(X(0),Y(-1.02),u*.17,0,7),T.hair)}
+ else if(hat==='fhelm'&&T.fem){F(x=>{x.moveTo(X(-1.02),Y(-.4));x.quadraticCurveTo(X(0),Y(-.8),X(1.02),Y(-.4));x.lineTo(X(1.0),Y(-.22));x.quadraticCurveTo(X(0),Y(-.6),X(-1.0),Y(-.22));x.closePath()},T.col);F(x=>x.arc(X(0),Y(-.6),u*.1,0,7),st.gold);
+  [[1.4,.3],[1.25,.55]].forEach(([a,b])=>F(x=>{x.moveTo(X(.95),Y(-.35));x.quadraticCurveTo(X(a+.1),Y(b-.5),X(a),Y(b));x.quadraticCurveTo(X(a-.25),Y(b-.4),X(.92),Y(-.2))},T.col))}
+ else if(!T.fem)cap()}
+function beardPath(x,T,HX,HY,u,v,bl){const X=a=>HX+a*u,Y=b=>HY+(b>.6?.6+(b-.6)*bl:b)*v;
+ if(T.bd==='long'){x.moveTo(X(-.46),Y(.4));x.quadraticCurveTo(X(-.36),Y(.99),X(-.11),Y(1.47));x.quadraticCurveTo(X(0),Y(1.7),X(0),Y(1.84));x.quadraticCurveTo(X(0),Y(1.7),X(.11),Y(1.47));x.quadraticCurveTo(X(.36),Y(.99),X(.46),Y(.4));x.quadraticCurveTo(X(.23),Y(.61),X(0),Y(.6));x.quadraticCurveTo(X(-.23),Y(.61),X(-.46),Y(.4));return true}
+ if(T.bd==='full'){const n=15;x.moveTo(X(.95),Y(.15));for(let i=0;i<=n;i++){const a=.08*Math.PI+i/n*.84*Math.PI,r=i%2?1.08:1.28;x.lineTo(X(Math.cos(a)*r*.98),Y(.15+Math.sin(a)*r*.95))}x.lineTo(X(-.95),Y(.15));x.quadraticCurveTo(X(-.6),Y(.5),X(-.3),Y(.5));x.quadraticCurveTo(X(0),Y(.62),X(.3),Y(.5));x.quadraticCurveTo(X(.6),Y(.5),X(.95),Y(.15));return true}
+ return false}
+function stache(x,T,HX,HY,u,v,F){const X=a=>HX+a*u,Y=b=>HY+b*v;if(T.bd==='goatee'||T.bd==='stache'){[-1,1].forEach(d=>F(x=>{x.moveTo(X(0),Y(.48));x.quadraticCurveTo(X(d*.32),Y(.4),X(d*.48),Y(.62));x.quadraticCurveTo(X(d*.26),Y(.53),X(0),Y(.56));x.closePath()},T.bc))}
+ if(T.bd==='goatee')F(x=>{x.moveTo(X(-.14),Y(.74));x.quadraticCurveTo(X(0),Y(.7),X(.14),Y(.74));x.lineTo(X(0),Y(1.12));x.closePath()},T.bc)}
+const QST={o:'#3b2318',lw:5,metal:'#dfe8ec',wood:'#9a6434',gold:'#f2c44e',red:'#e64a42',white:'#fbf8f0',silk:'#fff4f0',pink:'#ff9ab8',acc:'#888',L:420};
+/* ---------- Q版 ---------- */
+function drawQ(x,T){const HX=240,HY=262,R=128,O=QST.o,st={...QST,acc:T.col};x.lineJoin='round';x.lineCap='round';
+ const F=(f,c,w)=>{x.fillStyle=c;SP(x,f);x.fill();x.strokeStyle=O;x.lineWidth=w||5;x.stroke()};
+ const g=x.createRadialGradient(HX,250,40,HX,300,440);g.addColorStop(0,'#fffaf0');g.addColorStop(1,shade(T.col,.5));x.fillStyle=g;x.fillRect(0,0,480,640);
+ const r=inkRng(T.col+T.hat);x.fillStyle='rgba(255,255,255,.75)';for(let i=0;i<22;i++){const px=r()*480,py=r()*640,s=3+r()*6;SP(x,x=>{x.moveTo(px,py-s);x.lineTo(px+s*.3,py-s*.3);x.lineTo(px+s,py);x.lineTo(px+s*.3,py+s*.3);x.lineTo(px,py+s);x.lineTo(px-s*.3,py+s*.3);x.lineTo(px-s,py);x.lineTo(px-s*.3,py-s*.3)});x.fill()}
+ x.fillStyle='rgba(0,0,0,.12)';SP(x,x=>x.ellipse(HX,606,170,24,0,0,7));x.fill();
+ if(T.god){x.strokeStyle='#f6c838';x.lineWidth=12;x.globalAlpha=.75;SP(x,x=>x.arc(HX,HY-20,178,0,7));x.stroke();x.lineWidth=4;for(let i=0;i<24;i++){const a=i/24*6.283;SP(x,x=>{x.moveTo(HX+Math.cos(a)*192,HY-20+Math.sin(a)*192);x.lineTo(HX+Math.cos(a)*222,HY-20+Math.sin(a)*222)});x.stroke()}x.globalAlpha=1}
+ if(T.demon){x.globalAlpha=.55;for(let i=0;i<9;i++){const a=Math.PI*(1.1+i*.1),cx=HX+Math.cos(a)*165,cy=HY+Math.sin(a)*165;x.fillStyle=i%2?'#9a40e0':'#5a1a8a';SP(x,x=>{x.moveTo(cx-26,cy+20);x.quadraticCurveTo(cx-10,cy-40,cx+Math.cos(a)*40,cy+Math.sin(a)*70);x.quadraticCurveTo(cx+14,cy-20,cx+26,cy+20);x.closePath()});x.fill()}x.globalAlpha=1}
+ hatDraw(x,T,HX,HY,R,R,{...st,hl:2.4},'back');
+ x.save();x.translate(380,470);drawWpn(x,T.wpn,st);x.restore();
+ const dk=shade(T.col,-.3);
+ if(T.fem){F(x=>{x.moveTo(170,420);x.lineTo(310,420);x.quadraticCurveTo(350,520,360,596);x.quadraticCurveTo(240,612,120,596);x.quadraticCurveTo(130,520,170,420)},T.col);F(x=>{x.moveTo(200,420);x.lineTo(240,476);x.lineTo(280,420)},'#fff6ee',4);F(x=>x.rect(168,486,144,20),QST.gold,4);
+  x.strokeStyle=shade(T.col,.45);x.lineWidth=10;SP(x,x=>{x.moveTo(150,440);x.quadraticCurveTo(110,520,140,590)});x.stroke()}
+ else{F(x=>{x.moveTo(150,592);x.quadraticCurveTo(140,450,190,420);x.lineTo(290,420);x.quadraticCurveTo(340,450,330,592);x.quadraticCurveTo(240,606,150,592)},T.col);
+  if(T.war){F(x=>x.roundRect(180,440,120,64,18),shade(T.col,-.15),4);x.strokeStyle=QST.gold;x.lineWidth=3;for(let i=0;i<3;i++){SP(x,x=>{x.moveTo(190,456+i*16);x.quadraticCurveTo(240,466+i*16,290,456+i*16)});x.stroke()}}
+  else F(x=>{x.moveTo(205,420);x.lineTo(240,480);x.lineTo(275,420)},'#fff6ee',4);
+  F(x=>x.rect(160,505,160,22),QST.gold);F(x=>x.arc(HX,516,13,0,7),QST.red)}
+ [-1,1].forEach(d=>F(x=>x.ellipse(HX+d*92,470,34,46,d*.3,0,7),T.war&&!T.fem?shade(T.col,-.2):dk));
+ if(T.war&&!T.fem)[-1,1].forEach(d=>F(x=>x.ellipse(HX+d*86,432,40,24,d*.4,0,7),QST.gold,4));
+ F(x=>x.arc(372,470,22,0,7),T.sk);
+ [-1,1].forEach(d=>F(x=>x.ellipse(HX+d*45,598,34,15,0,0,7),'#4a2f22'));
+ F(x=>x.arc(HX,HY,R,0,7),T.sk,6);
+ hatDraw(x,T,HX,HY,R,R,st,'front');
+ // 五官
+ const ey=HY+16;
+ if(T.fem){x.strokeStyle=T.brow;x.lineWidth=5;[-1,1].forEach(d=>{SP(x,x=>{x.moveTo(HX+d*30,ey-38);x.quadraticCurveTo(HX+d*55,ey-50,HX+d*80,ey-40)});x.stroke()});
+  [-1,1].forEach(d=>{x.fillStyle='#2a1610';SP(x,x=>x.ellipse(HX+d*52,ey,17,22,0,0,7));x.fill();x.fillStyle='#7a3a2a';SP(x,x=>x.ellipse(HX+d*52,ey+5,11,13,0,0,7));x.fill();x.fillStyle='#fff';SP(x,x=>x.arc(HX+d*52+5,ey-8,6.5,0,7));x.fill();SP(x,x=>x.arc(HX+d*52-6,ey+8,3,0,7));x.fill();
+   x.strokeStyle='#2a1610';x.lineWidth=4;for(let i=0;i<3;i++){SP(x,x=>{x.moveTo(HX+d*(62+i*5),ey-16+i*4);x.lineTo(HX+d*(74+i*6),ey-24+i*5)});x.stroke()}
+   x.fillStyle='rgba(255,140,150,.55)';SP(x,x=>x.ellipse(HX+d*86,ey+36,20,11,0,0,7));x.fill()});
+  x.fillStyle='#e8505a';SP(x,x=>{x.moveTo(HX-12,ey+50);x.quadraticCurveTo(HX,ey+44,HX+12,ey+50);x.quadraticCurveTo(HX,ey+62,HX-12,ey+50)});x.fill();
+  x.fillStyle='#e8505a';SP(x,x=>{x.moveTo(HX,ey-74);x.lineTo(HX+7,ey-64);x.lineTo(HX,ey-54);x.lineTo(HX-7,ey-64);x.closePath()});x.fill()}
+ else{x.strokeStyle=T.brow;x.lineWidth=11;[-1,1].forEach(d=>{SP(x,x=>{x.moveTo(HX+d*22,ey-30);x.quadraticCurveTo(HX+d*55,ey-50,HX+d*88,ey-36)});x.stroke()});
+  [-1,1].forEach(d=>{if(T.patch&&d<0){x.fillStyle='#1a1410';SP(x,x=>x.ellipse(HX-52,ey,24,22,0,0,7));x.fill();x.strokeStyle='#1a1410';x.lineWidth=5;SP(x,x=>{x.moveTo(HX-110,ey-50);x.lineTo(HX+120,ey+20)});x.stroke();return}
+   x.fillStyle='#24140e';SP(x,x=>x.ellipse(HX+d*52,ey,15,19,0,0,7));x.fill();x.fillStyle='#fff';SP(x,x=>x.arc(HX+d*52+5,ey-7,6,0,7));x.fill();SP(x,x=>x.arc(HX+d*52-5,ey+7,2.5,0,7));x.fill();
+   x.fillStyle='rgba(255,150,140,.55)';SP(x,x=>x.ellipse(HX+d*88,ey+34,20,11,0,0,7));x.fill()});
+  SP(x,x=>beardPath(x,T,HX,HY,R,R,1));if(T.bd==='long'||T.bd==='full'){x.fillStyle=T.bc;x.fill();x.strokeStyle=O;x.lineWidth=5;x.stroke();x.strokeStyle='rgba(255,255,255,.28)';x.lineWidth=3;
+   [[-24,.85,-8,1.5],[0,.8,0,1.65],[24,.85,8,1.5]].forEach(([a,b,c,d])=>{SP(x,x=>{x.moveTo(HX+a,HY+b*R);x.quadraticCurveTo(HX+(a+c)/2+4,HY+(b+d)/2*R,HX+c,HY+d*R)});x.stroke()})}
+  else{x.strokeStyle=O;x.lineWidth=5;SP(x,x=>{x.moveTo(HX-16,HY+70);x.quadraticCurveTo(HX,HY+82,HX+16,HY+70)});x.stroke()}
+  stache(x,T,HX,HY,R,R,(f,c)=>{x.fillStyle=c;SP(x,f);x.fill();x.strokeStyle=O;x.lineWidth=3;x.stroke()})}}
+/* ---------- 工筆重彩（亮色） ---------- */
+const GBST={o:'#3a2a1e',lw:1.6,metal:'#eef3f2',wood:'#a8703a',gold:'#f0c040',red:'#e03a2e',white:'#fffdf6',silk:'#fff0f0',pink:'#ff8fb0',L:440,beads:1,oneBun:1,hl:3};
+function drawGB(x,T){const HX=240,HY=292,u=60,v=76,L=GBST.o,st={...GBST,acc:T.col};
+ const F=(f,c,w)=>{x.fillStyle=c;SP(x,f);x.fill();x.strokeStyle=L;x.lineWidth=w||1.6;x.lineJoin='round';x.stroke()};
+ let g=x.createLinearGradient(0,0,0,640);g.addColorStop(0,'#fff6e2');g.addColorStop(1,'#f6dcb0');x.fillStyle=g;x.fillRect(0,0,480,640);
+ g=x.createRadialGradient(HX,260,20,HX,260,300);g.addColorStop(0,shade(T.col,.55)+'cc');g.addColorStop(1,shade(T.col,.55)+'00');x.fillStyle=g;x.fillRect(0,0,480,640);
+ const r=inkRng(T.col+'gb');for(let i=0;i<120;i++){x.fillStyle=`rgba(230,170,40,${.2+r()*.4})`;SP(x,x=>x.arc(r()*480,r()*640,.6+r()*1.6,0,7));x.fill()}
+ // 梅枝
+ x.strokeStyle='#6a4a32';x.lineWidth=5;SP(x,x=>{x.moveTo(-10,90);x.quadraticCurveTo(70,70,120,120);x.quadraticCurveTo(150,150,170,140)});x.stroke();x.lineWidth=3;SP(x,x=>{x.moveTo(60,82);x.quadraticCurveTo(80,40,110,30)});x.stroke();
+ [[120,120],[110,30],[80,62],[168,140],[30,80],[145,128]].forEach(([a,b])=>{x.fillStyle='#ff9ab8';for(let i=0;i<5;i++){SP(x,x=>x.arc(a+Math.cos(i*1.256)*7,b+Math.sin(i*1.256)*7,6,0,7));x.fill()}x.fillStyle='#f0c040';SP(x,x=>x.arc(a,b,2.5,0,7));x.fill()});
+ if(T.god){x.strokeStyle='#f0b820';x.lineWidth=3;for(let i=0;i<3;i++){SP(x,x=>x.arc(HX,HY-30,118+i*10,0,7));x.globalAlpha=.6-i*.15;x.stroke()}x.globalAlpha=1}
+ if(T.demon){x.globalAlpha=.4;for(let i=0;i<7;i++){x.fillStyle=i%2?'#a050e0':'#6a2aa0';const a=Math.PI*(1.15+i*.12),cx=HX+Math.cos(a)*125,cy=HY-30+Math.sin(a)*125;SP(x,x=>{x.moveTo(cx-18,cy+14);x.quadraticCurveTo(cx,cy-40,cx+Math.cos(a)*30,cy+Math.sin(a)*50);x.quadraticCurveTo(cx+10,cy-14,cx+18,cy+14);x.closePath()});x.fill()}x.globalAlpha=1}
+ x.save();x.translate(-52,-50);x.scale(1.2,1.2);hatDraw(x,T,HX,HY,u,v,st,'back');
+ x.save();x.translate(412,470);drawWpn(x,T.wpn,st);x.restore();
+ const robe=T.fem?x=>{x.moveTo(84,640);x.lineTo(122,470);x.quadraticCurveTo(152,400,206,386);x.lineTo(274,386);x.quadraticCurveTo(328,400,358,470);x.lineTo(396,640);x.closePath()}:x=>{x.moveTo(70,640);x.lineTo(100,450);x.quadraticCurveTo(130,392,196,382);x.lineTo(284,382);x.quadraticCurveTo(350,392,380,450);x.lineTo(410,640);x.closePath()};
+ g=x.createLinearGradient(0,380,0,640);g.addColorStop(0,shade(T.col,.12));g.addColorStop(1,shade(T.col,-.22));F(robe,g,2);
+ x.save();SP(x,robe);x.clip();x.strokeStyle='#f6d060';x.lineWidth=1.8;const cloud=(cx,cy)=>{SP(x,x=>{x.arc(cx,cy,7,Math.PI*.2,Math.PI*1.9);x.arc(cx+12,cy-2,6,Math.PI,Math.PI*2.2);x.arc(cx+21,cy+2,5,Math.PI*1.2,Math.PI*2.6)});x.stroke()};
+ for(let yy=480;yy<640;yy+=42)for(let xx=90+((yy/42)%2)*30;xx<400;xx+=60)cloud(xx,yy);x.fillStyle='#f6d060';x.fillRect(60,610,380,10);x.restore();
+ F(x=>{x.moveTo(196,384);x.lineTo(240,470);x.lineTo(284,384);x.lineTo(266,384);x.lineTo(240,440);x.lineTo(214,384);x.closePath()},T.fem?'#fff6ee':GBST.red);
+ x.strokeStyle='#f6d060';x.lineWidth=1.4;SP(x,x=>{x.moveTo(205,388);x.lineTo(240,458);x.lineTo(275,388)});x.stroke();
+ if(T.fem){x.strokeStyle=shade(T.col,.6);x.lineWidth=12;x.globalAlpha=.85;SP(x,x=>{x.moveTo(150,430);x.bezierCurveTo(90,520,170,560,120,640)});x.stroke();SP(x,x=>{x.moveTo(330,430);x.bezierCurveTo(390,520,310,560,360,640)});x.stroke();x.globalAlpha=1;F(x=>x.rect(160,500,160,18),GBST.gold)}
+ else if(T.war){[0,1].forEach(j=>{const p=j?x=>{x.moveTo(380,452);x.quadraticCurveTo(362,396,290,388);x.quadraticCurveTo(300,440,330,470);x.quadraticCurveTo(360,476,380,452)}:x=>{x.moveTo(100,452);x.quadraticCurveTo(118,396,190,388);x.quadraticCurveTo(180,440,150,470);x.quadraticCurveTo(120,476,100,452)};
+  const sg=x.createLinearGradient(j?290:100,390,j?380:190,470);sg.addColorStop(0,'#ffe08a');sg.addColorStop(1,'#c8902e');F(p,sg);x.save();SP(x,p);x.clip();x.strokeStyle='rgba(120,70,20,.55)';x.lineWidth=1;for(let rr=0;rr<6;rr++)for(let c=0;c<8;c++){SP(x,x=>x.arc((j?280:96)+c*13+(rr%2)*6,394+rr*13,7,0,Math.PI));x.stroke()}x.restore()});F(x=>x.rect(150,520,180,16),GBST.gold)}
+ F(x=>{x.moveTo(212,340);x.lineTo(212,390);x.lineTo(268,390);x.lineTo(268,340);x.closePath()},shade(T.sk,-.08));
+ g=x.createRadialGradient(HX-12,HY-12,8,HX,HY,90);g.addColorStop(0,shade(T.sk,.12));g.addColorStop(1,shade(T.sk,-.12));F(x=>x.ellipse(HX,HY,u,v,0,0,7),g);
+ if(T.fem){x.fillStyle='rgba(255,120,140,.35)';[-1,1].forEach(d=>{SP(x,x=>x.ellipse(HX+d*34,HY+22,13,8,0,0,7));x.fill()})}
+ hatDraw(x,T,HX,HY,u,v,st,'front');
+ // 五官細描
+ x.strokeStyle=L;x.lineCap='round';
+ [-1,1].forEach(d=>{if(!T.fem){x.strokeStyle=T.brow;for(let k=0;k<7;k++){x.lineWidth=1.3;SP(x,x=>{x.moveTo(HX+d*(10+k*6),HY-22-k*1.4);x.lineTo(HX+d*(16+k*6),HY-28-k*1.4)});x.stroke()}}
+  else{x.strokeStyle=T.brow;x.lineWidth=1.8;SP(x,x=>{x.moveTo(HX+d*12,HY-20);x.quadraticCurveTo(HX+d*30,HY-30,HX+d*48,HY-22)});x.stroke()}
+  x.strokeStyle=L;if(T.patch&&d<0){x.fillStyle='#1a1410';SP(x,x=>x.ellipse(HX-30,HY-2,14,11,0,0,7));x.fill();x.lineWidth=2;SP(x,x=>{x.moveTo(HX-62,HY-24);x.lineTo(HX+62,HY+6)});x.stroke();return}
+  x.lineWidth=1.6;SP(x,x=>{x.moveTo(HX+d*12,HY);x.quadraticCurveTo(HX+d*28,HY-12,HX+d*46,HY-10)});x.stroke();SP(x,x=>{x.moveTo(HX+d*14,HY+1);x.quadraticCurveTo(HX+d*30,HY+5,HX+d*42,HY-6)});x.stroke();
+  x.fillStyle='#1a1410';SP(x,x=>x.ellipse(HX+d*28,HY-3,4.2,4.8,0,0,7));x.fill();if(T.fem){x.lineWidth=1.2;SP(x,x=>{x.moveTo(HX+d*44,HY-10);x.lineTo(HX+d*50,HY-15)});x.stroke()}});
+ x.strokeStyle=L;x.lineWidth=1.4;SP(x,x=>{x.moveTo(HX-3,HY);x.quadraticCurveTo(HX-7,HY+20,HX-5,HY+27);x.quadraticCurveTo(HX,HY+31,HX+6,HY+26)});x.stroke();
+ x.fillStyle=T.fem?'#e0303e':'#a0382a';SP(x,x=>{x.moveTo(HX-(T.fem?9:13),HY+40);x.quadraticCurveTo(HX,HY+35,HX+(T.fem?9:13),HY+40);x.quadraticCurveTo(HX,HY+46,HX-(T.fem?9:13),HY+40)});x.fill();
+ if(T.fem){x.fillStyle='#e0303e';SP(x,x=>{x.moveTo(HX,HY-44);x.lineTo(HX+5,HY-37);x.lineTo(HX,HY-30);x.lineTo(HX-5,HY-37);x.closePath()});x.fill()}
+ if(T.bd==='long'||T.bd==='full'){const rr=inkRng(T.bd+T.bc);x.strokeStyle=T.bc;x.globalAlpha=.9;x.lineWidth=.9;const len=T.bd==='long'?3.6:1.9;
+  x.save();SP(x,x=>beardPath(x,T,HX,HY,u,v,len));x.fillStyle=T.bc;x.globalAlpha=.35;x.fill();x.clip();x.globalAlpha=.9;
+  for(let i=0;i<170;i++){const t=rr(),sx=HX-60+t*120,sy=HY+20+rr()*30,ex=HX+(t-.5)*(T.bd==='long'?40:120),ey=HY+(T.bd==='long'?150+rr()*130:70+rr()*40);SP(x,x=>{x.moveTo(sx,sy);x.bezierCurveTo(sx,sy+40,ex+(rr()-.5)*16,ey-40,ex,ey)});x.stroke()}x.restore();x.globalAlpha=1}
+ stache(x,T,HX,HY,u,v,(f,c)=>{x.fillStyle=c;SP(x,f);x.fill()});
+ F(x=>x.ellipse(412,470,24,20,0,0,7),T.sk);x.restore()}
+/* ---------- 皮影戲（側面） ---------- */
+function drawSH(x,T){const g=x.createRadialGradient(240,280,30,240,300,460);g.addColorStop(0,'#fbe3a6');g.addColorStop(.6,'#e9a64f');g.addColorStop(1,'#8a4a1c');x.fillStyle=g;x.fillRect(0,0,480,640);
+ const c=document.createElement('canvas');c.width=480;c.height=640;const f=c.getContext('2d');f.lineJoin='round';
+ const A=a=>`rgba(${parseInt(a.slice(1,3),16)},${parseInt(a.slice(3,5),16)},${parseInt(a.slice(5,7),16)},.9)`;const col=A(shade(T.col,-.15)),red='rgba(178,48,30,.92)',blk='rgba(30,24,20,.92)',gold='rgba(220,170,60,.92)';
+ const part=(cl,path,holes)=>{f.save();f.fillStyle=cl;SP(f,path);f.fill();if(holes){f.clip();f.globalCompositeOperation='destination-out';f.fillStyle='#000';holes(f)}f.restore();f.strokeStyle='#2a140a';f.lineWidth=2.5;SP(f,path);f.stroke()};
+ const dots=(x,x0,y0,x1,y1,step,r)=>{for(let yy=y0;yy<y1;yy+=step)for(let xx=x0+((yy/step)%2)*step/2;xx<x1;xx+=step){SP(x,x=>x.arc(xx,yy,r,0,7));x.fill()}};
+ const moons=(x,x0,y0,x1,y1,step)=>{for(let yy=y0;yy<y1;yy+=step)for(let xx=x0;xx<x1;xx+=step){SP(x,x=>{x.arc(xx,yy,step*.3,0,Math.PI);x.arc(xx,yy-step*.08,step*.22,Math.PI,0,true)});x.fill()}};
+ const hair=T.hair==='#1c1410'?blk:'rgba(220,215,205,.92)';
+ if(T.fem)part(hair,x=>{x.moveTo(200,170);x.quadraticCurveTo(170,260,186,360);x.lineTo(206,360);x.quadraticCurveTo(200,260,216,190);x.closePath()});
+ if(T.hat==='pheasant')[0,1].forEach(i=>{f.lineWidth=9-i*2;f.strokeStyle='#2a140a';SP(f,x=>{x.moveTo(228,124);x.bezierCurveTo(200-i*20,40,120-i*30,40,90-i*20,110+i*20)});f.stroke();f.lineWidth=5-i;f.strokeStyle='rgba(216,116,58,.95)';f.stroke()});
+ if(T.hat==='feather')['#e04838','#f0c030','#40a060'].forEach((cc,i)=>part(A(cc),x=>x.ellipse(206+i*16,108-i*6,9,40,-.5+i*.25,0,7)));
+ // 兵器
+ f.save();f.translate(330,322);f.rotate(.12);drawWpn(f,T.wpn,{o:'#2a140a',lw:2.5,metal:'rgba(205,215,195,.92)',wood:'rgba(74,58,42,.95)',gold:gold,red:red,white:'rgba(245,240,225,.9)',silk:'rgba(255,230,220,.9)',pink:'rgba(240,120,150,.92)',acc:shade(T.col,-.15),L:400});f.restore();
+ // 身
+ if(T.fem||!T.war){part(col,x=>{x.moveTo(186,270);x.lineTo(256,270);x.quadraticCurveTo(278,330,284,420);x.lineTo(318,600);x.lineTo(126,600);x.lineTo(166,420);x.quadraticCurveTo(168,330,186,270)},x=>{dots(x,150,300,300,590,26,5);moons(x,165,330,300,580,40)});
+  part(gold,x=>x.rect(166,400,118,18),x=>{for(let i=0;i<6;i++){SP(x,x=>{x.moveTo(176+i*19,409);x.lineTo(184+i*19,403);x.lineTo(192+i*19,409);x.lineTo(184+i*19,415)});x.fill()}});
+  if(T.fem){f.strokeStyle=A(shade(T.col,.5));f.lineWidth=7;SP(f,x=>{x.moveTo(190,290);x.bezierCurveTo(140,360,200,440,150,560)});f.stroke()}
+  part('rgba(30,30,30,.9)',x=>{x.moveTo(140,598);x.lineTo(196,598);x.lineTo(196,616);x.lineTo(130,616);x.closePath()});part('rgba(30,30,30,.9)',x=>{x.moveTo(250,598);x.lineTo(316,598);x.lineTo(326,616);x.lineTo(250,616);x.closePath()})}
+ else{part(blk,x=>{x.moveTo(190,470);x.lineTo(176,600);x.lineTo(140,610);x.lineTo(140,624);x.lineTo(200,620);x.lineTo(214,476);x.closePath()});part(blk,x=>{x.moveTo(250,470);x.lineTo(280,600);x.lineTo(320,612);x.lineTo(320,626);x.lineTo(262,622);x.lineTo(232,478);x.closePath()});
+  part(col,x=>{x.moveTo(184,270);x.lineTo(258,270);x.quadraticCurveTo(282,330,286,420);x.lineTo(300,520);x.lineTo(150,520);x.lineTo(168,400);x.quadraticCurveTo(170,320,184,270)},x=>{dots(x,160,300,300,510,26,5);moons(x,175,330,300,500,40)});
+  part(gold,x=>x.rect(160,410,138,22),x=>{for(let i=0;i<7;i++){SP(x,x=>{x.moveTo(170+i*19,421);x.lineTo(178+i*19,414);x.lineTo(186+i*19,421);x.lineTo(178+i*19,428)});x.fill()}});
+  part(gold,x=>{x.moveTo(176,276);x.quadraticCurveTo(150,290,156,330);x.lineTo(200,320);x.quadraticCurveTo(204,290,196,276);x.closePath()},x=>dots(x,160,288,200,326,10,2.5))}
+ part(col,x=>{x.moveTo(250,290);x.lineTo(300,350);x.lineTo(300,372);x.lineTo(240,318);x.closePath()},x=>dots(x,250,310,300,370,14,3));part(col,x=>{x.moveTo(296,352);x.lineTo(330,300);x.lineTo(346,310);x.lineTo(306,372);x.closePath()});
+ const skc=T.sk==='#f2c9a2'||T.sk==='#fbdcc8'?null:A(T.sk);
+ part(skc||'rgba(255,240,215,.35)',x=>x.arc(336,300,13,0,7));
+ part(col,x=>{x.moveTo(186,290);x.lineTo(160,370);x.lineTo(178,378);x.lineTo(204,300);x.closePath()},x=>dots(x,165,300,205,375,14,3));part(col,x=>{x.moveTo(164,372);x.lineTo(200,410);x.lineTo(210,396);x.lineTo(178,362);x.closePath()});
+ part(skc||'rgba(255,240,215,.35)',x=>x.arc(210,404,13,0,7));
+ // 頭：一般角色為「空臉」，紅、黑臉等為實色
+ const nose=T.fem?[272,226,262,232]:[278,228,264,236];
+ const headP=x=>{x.moveTo(196,170);x.quadraticCurveTo(240,150,258,190);x.lineTo(262,214);x.lineTo(nose[0],nose[1]);x.lineTo(nose[2],nose[3]);x.lineTo(266,250);x.lineTo(258,258);x.quadraticCurveTo(246,276,222,276);x.quadraticCurveTo(190,262,192,222);x.closePath()};
+ part(skc||'rgba(255,242,220,.28)',headP,skc?x=>{SP(x,x=>{x.moveTo(226,206);x.quadraticCurveTo(240,196,256,202);x.quadraticCurveTo(242,212,226,206)});x.fill()}:null);
+ f.strokeStyle='#2a140a';f.lineWidth=T.fem?2:4;SP(f,x=>{x.moveTo(222,192);x.quadraticCurveTo(240,182,258,188)});f.stroke();if(!skc){f.lineWidth=2.5;SP(f,x=>{x.moveTo(228,206);x.quadraticCurveTo(242,198,256,203);x.quadraticCurveTo(242,210,228,206)});f.stroke()}
+ if(T.patch){f.fillStyle='#1a1410';SP(f,x=>x.ellipse(244,204,12,9,0,0,7));f.fill()}
+ if(T.fem){f.fillStyle='rgba(200,40,40,.9)';SP(f,x=>x.ellipse(262,246,5,3,0,0,7));f.fill()}
+ // 冠帽
+ const H=T.hat,hc=T.hc?A(T.hc):col,capP=x=>{x.moveTo(190,200);x.quadraticCurveTo(186,140,236,136);x.quadraticCurveTo(262,140,266,176);x.quadraticCurveTo(236,160,200,196);x.closePath()};
+ if(T.fem){part(hair,capP);part(hair,x=>x.ellipse(206,140,28,22,-.4,0,7));f.strokeStyle=gold;f.lineWidth=3;SP(f,x=>{x.moveTo(190,124);x.lineTo(246,150)});f.stroke();part(A(T.fl?'#ff8fb0':shade(T.col,.3)),x=>x.arc(244,148,9,0,7));
+  if(H==='fhelm'||H==='feather')part(H==='feather'?red:col,x=>{x.moveTo(196,176);x.quadraticCurveTo(230,160,262,170);x.lineTo(262,180);x.quadraticCurveTo(230,170,198,186);x.closePath()});if(H==='pheasant')part('rgba(176,96,208,.92)',x=>{x.moveTo(214,140);x.lineTo(222,118);x.lineTo(236,132);x.lineTo(248,120);x.lineTo(250,146);x.closePath()})}
+ else if(H==='helm'||H==='turban'){part(hc,x=>{x.moveTo(186,190);x.quadraticCurveTo(188,130,236,128);x.quadraticCurveTo(262,132,266,176);x.quadraticCurveTo(230,160,196,186);x.closePath()},x=>dots(x,200,140,260,175,13,3));
+  if(H==='helm'){part(hc,x=>{x.moveTo(190,170);x.quadraticCurveTo(150,190,152,262);x.quadraticCurveTo(170,222,196,200);x.closePath()});part(red,x=>x.arc(232,118,14,0,7))}else part(hc,x=>{x.moveTo(190,176);x.bezierCurveTo(150,190,170,250,140,280);x.lineTo(150,284);x.bezierCurveTo(184,250,170,210,198,190);x.closePath()})}
+ else if(H==='scholar'){part(blk,capP);part(hc===col?'rgba(52,73,94,.92)':hc,x=>{x.moveTo(204,160);x.lineTo(206,96);x.quadraticCurveTo(232,86,256,100);x.lineTo(256,156);x.quadraticCurveTo(230,150,204,160)},x=>{for(let i=0;i<3;i++){SP(x,x=>x.rect(214+i*13,108,4,40));x.fill()}});f.strokeStyle='rgba(52,73,94,.92)';f.lineWidth=6;SP(f,x=>{x.moveTo(206,150);x.quadraticCurveTo(160,190,150,260)});f.stroke()}
+ else if(H==='taoist'||H==='bald'){part(hair,capP);part(hair,x=>x.arc(214,134,H==='bald'?14:22,0,7));if(H==='taoist'){f.strokeStyle=gold;f.lineWidth=4;SP(f,x=>{x.moveTo(186,128);x.lineTo(244,140)});f.stroke()}}
+ else{part(hair,capP);if(H==='crown'||H==='pheasant')part(H==='pheasant'?'rgba(176,96,208,.92)':gold,x=>{x.moveTo(214,140);x.lineTo(218,112);x.lineTo(232,126);x.lineTo(244,106);x.lineTo(252,132);x.lineTo(256,150);x.quadraticCurveTo(232,138,214,140)},x=>{SP(x,x=>x.arc(236,132,4,0,7));x.fill()});
+  if(H==='yellow'||H==='bandana'||H==='feather')part(H==='yellow'?'rgba(242,200,30,.92)':red,x=>{x.moveTo(194,180);x.quadraticCurveTo(230,160,262,170);x.lineTo(262,182);x.quadraticCurveTo(230,172,196,192);x.closePath();x.moveTo(196,184);x.bezierCurveTo(170,200,180,240,160,262);x.lineTo(168,266);x.bezierCurveTo(190,240,182,206,200,192)});
+  if(H==='crown')f.strokeStyle=gold,f.lineWidth=3,SP(f,x=>{x.moveTo(214,146);x.bezierCurveTo(190,170,196,220,176,250)}),f.stroke()}
+ // 鬍
+ const bc=T.bc==='#1c1410'?blk:A(T.bc);
+ if(T.bd==='long')part(bc,x=>{x.moveTo(222,262);x.quadraticCurveTo(262,262,268,250);x.quadraticCurveTo(272,320,252,390);x.quadraticCurveTo(244,350,236,330);x.quadraticCurveTo(230,300,222,262)},x=>{x.lineWidth=2;x.strokeStyle='#000';for(let i=0;i<4;i++){SP(x,x=>{x.moveTo(236+i*7,272);x.quadraticCurveTo(248+i*5,320,246+i*3,370)});x.stroke()}});
+ else if(T.bd==='full')part(bc,x=>{x.moveTo(200,236);x.quadraticCurveTo(198,300,236,312);x.lineTo(246,300);x.lineTo(256,312);x.quadraticCurveTo(272,290,268,252);x.lineTo(258,256);x.quadraticCurveTo(240,270,222,262);x.quadraticCurveTo(212,250,206,232);x.closePath()},x=>{x.lineWidth=1.5;x.strokeStyle='#000';for(let i=0;i<5;i++){SP(x,x=>{x.moveTo(212+i*9,262);x.lineTo(216+i*9,296)});x.stroke()}});
+ else if(T.bd==='goatee'){part(bc,x=>{x.moveTo(246,264);x.quadraticCurveTo(258,270,256,300);x.quadraticCurveTo(250,284,240,272);x.closePath()});part(bc,x=>{x.moveTo(262,242);x.quadraticCurveTo(268,248,272,258);x.quadraticCurveTo(262,252,256,248);x.closePath()})}
+ else if(T.bd==='stache')part(bc,x=>{x.moveTo(262,242);x.quadraticCurveTo(272,250,276,262);x.quadraticCurveTo(262,254,254,250);x.closePath()});
+ [[196,296],[170,370],[248,296],[300,360],[200,476],[244,476]].forEach(([a,b])=>{f.fillStyle='#e8c060';SP(f,x=>x.arc(a,b,4,0,7));f.fill();f.strokeStyle='#2a140a';f.lineWidth=1.5;f.stroke()});
+ f.strokeStyle='rgba(40,25,15,.85)';f.lineWidth=3;[[210,404,150,640],[336,300,360,640],[230,300,236,640]].forEach(([a,b,c2,d])=>{SP(f,x=>{x.moveTo(a,b);x.lineTo(c2,d)});f.stroke()});
+ x.save();x.shadowColor='rgba(60,25,5,.45)';x.shadowBlur=14;x.shadowOffsetX=8;x.shadowOffsetY=6;x.drawImage(c,0,0);x.restore();
+ if(T.god||T.demon){x.globalAlpha=.35;x.fillStyle=T.god?'#fff2a0':'#b070ff';SP(x,x=>x.arc(228,200,90,0,7));x.globalCompositeOperation='destination-over';x.fill();x.globalCompositeOperation='source-over';x.globalAlpha=1}
+ x.fillStyle='#a8261b';const b=20;x.fillRect(0,0,480,b);x.fillRect(0,640-b,480,b);x.fillRect(0,0,b,640);x.fillRect(480-b,0,b,640);
+ x.fillStyle='#fbe3a6';for(let i=b;i<480-b;i+=20){SP(x,x=>{x.moveTo(i,b);x.lineTo(i+10,b-10);x.lineTo(i+20,b)});x.fill();SP(x,x=>{x.moveTo(i,640-b);x.lineTo(i+10,640-b+10);x.lineTo(i+20,640-b)});x.fill()}
+ for(let i=b;i<640-b;i+=20){SP(x,x=>{x.moveTo(b,i);x.lineTo(b-10,i+10);x.lineTo(b,i+20)});x.fill();SP(x,x=>{x.moveTo(480-b,i);x.lineTo(480-b+10,i+10);x.lineTo(480-b,i+20)});x.fill()}}
+function styleDraw(h,style,W,Hh){const c=document.createElement('canvas');c.width=W;c.height=Hh;const x=c.getContext('2d');x.scale(W/480,Hh/640);const T=trOf(h);
+ try{(style==='q'?drawQ:style==='gb'?drawGB:drawSH)(x,T)}catch(e){console.error(e)}return c.toDataURL('image/jpeg',.86)}
+const artHasName=id=>!(UGC_SEL&&UGC_SEL[id])&&curStyle()==='ink';
+async function styleLoad(){if(!SB)return;try{const{data}=await SB.rpc('style_rank');if(!data)return;STYLE_CNT=data.counts||{};const top=Object.entries(STYLE_CNT).sort((a,b)=>b[1]-a[1])[0];const old=curStyle();STYLE_TOP=top?top[0]:null;
+ if(data.mine&&!S.artStyle){S.artStyle=data.mine;saveS()}if(curStyle()!==old){artClear();if(!busy)render()}}catch(e){}}
+function artClear(){for(const c of[ARTC,ART2C])for(const k in c)delete c[k]}
+
 const P={single:'單體前排',pierce:'直線貫穿',sweep:'橫排掃蕩',cross:'十字爆裂',aoe:'全場群攻',heal:'全體治療',assn:'後排刺殺',xshape:'X字斬',volley:'亂箭連射',snipe:'定點狙擊',backrow:'後排轟炸'};
 const DESC={single:'衝向敵方前排，對單一目標造成重擊。',pierce:'鎖定目標所在整欄，貫穿三格。',sweep:'橫掃目標所在整排三格。',cross:'以目標為中心，十字形波及上下左右。',aoe:'敵方九格全部受到攻擊。',heal:'恢復我方全體存活單位的生命。',assn:'瞬移到敵方後排，刺殺血量最低者。',xshape:'以目標為中心，沿四個斜角呈 X 字攻擊。',volley:'連射三箭，隨機攻擊敵人（可重複命中，每箭傷害較低）。',snipe:'無視站位，狙擊全場血量最低的敵人。',backrow:'流星墜落，轟擊敵方整個後排三格。'};
 /* ===================== 武將資料（75 位，五國各 15） ===================== */
@@ -1335,7 +1589,7 @@ const mk=(h,lv=1,gb=null)=>jobFix(mk0(h,lv,gb));
 const mk0=(h,lv=1,gb=null)=>{const g=gb||{atk:0,hp:0,spd:0,crit:0},k=(1+.06*(lv-1))*(1+.15*(g.brk||0)),qm=qmul(h),hp=Math.round(h.hp*k*qm*(1+g.hp));return{...h,lv,hp,mhp:hp,atk:Math.round(h.atk*k*qm*(1+g.atk)),spd:Math.round(h.spd*(1+.004*Math.min(lv-1,99)+.001*Math.max(0,lv-100))*(1+g.spd)),m:+lvmOf(lv).toFixed(3),cr:g.crit,rage:50,sh:0}};
 const mkP=h=>{const u=mk(h,LV(h.id),gearBonus(h.id));u.st=S.star[h.id]||0;return u};
 function cardEl(u,full){
- const d=document.createElement('div');d.className='card'+(UGC_SEL&&UGC_SEL[u.id]?'':' ink');d.style.backgroundImage=`url(${ART[u.id]})`;d.style.borderColor=FC[u.f]||'#d9b25a';d.style.boxShadow=`inset 0 0 7px 1px ${FC[u.f]||'#d9b25a'}aa`;
+ const d=document.createElement('div');d.className='card'+(artHasName(u.id)?' ink':'');d.style.backgroundImage=`url(${ART[u.id]})`;d.style.borderColor=FC[u.f]||'#d9b25a';d.style.boxShadow=`inset 0 0 7px 1px ${FC[u.f]||'#d9b25a'}aa`;
  const st=full?(S.star[u.id]||0):(u.st||0),sr=full?starReady(u.id):0;
  d.innerHTML=`<span class="zhen" style="background:${RAR[rarOf(u.id)].c};color:#111">${H.find(x=>x.id===u.id).q}</span><span class="lv">Lv.${u.lv||LV(u.id)}</span>${(st||(full&&S.own[u.id]))?`<span class="str">★${st}</span>`:''}${sr?`<span class="upd${sr==2?' ok':''}">⬆ 升星</span>`:''}<span class="nm">${u.n}</span><span class="fac" style="background:${FC[u.f]}">${u.f}</span>${JB[u.job]?`<span class="job">${JB[u.job].ic}</span>`:''}`+
  (full?'':'<div class="shield"></div><div class="bar hp"><i></i></div><div class="bars"><div class="bar rg"><i></i></div></div>');
@@ -1452,12 +1706,13 @@ function upd(u,c){c=c||cellOf(u);if(!c)return;const hp=c.querySelector('.hp'),rg
  rg.firstChild.style.width=Math.min(100,u.rage)+'%';rg.classList.toggle('full',u.rage>=100);const lv=u.hp>0,H2=k=>lv&&has(u,k);
  c.classList.toggle('sh',lv&&u.sh>0);c.classList.toggle('dead',!lv);c.classList.toggle('ice',H2('fz'));c.classList.toggle('burn',H2('bn'));c.classList.toggle('hid',H2('hid'));c.classList.toggle('ql',H2('ql'));
  c.classList.toggle('thz',H2('lz'));c.classList.toggle('zfire',H2('zt'));c.classList.toggle('sgl',lv&&!!u.X&&(u.X.sg||0)>=3);c.classList.toggle('mkd',lv&&[...pl,...en].some(z=>z&&z.X&&z.X.mk===u&&z.hp>0));
- let ic='';if(lv&&u.ST){const ks=Object.keys(u.ST).filter(k=>STI[k]&&!RINGK.includes(k)&&has(u,k)).sort((a,b)=>(!!STD[b].neg)-(!!STD[a].neg));const sh=ks.slice(0,4);ic=sh.map(k=>`<i class="${STD[k].neg?'ng':'ps'}" title="${STD[k].n}">${STI[k]}${STD[k].mx&&stN(u,k)>1?`<b>${stN(u,k)}</b>`:''}</i>`).join('')+(ks.length>4?`<i class="more">+${ks.length-4}</i>`:'')}
+ let ic='';if(lv&&u.ST){const ks=Object.keys(u.ST).filter(k=>STI[k]&&!RINGK.includes(k)&&has(u,k)).sort((a,b)=>(!!STD[b].neg)-(!!STD[a].neg));const sh=ks.slice(0,4);ic=sh.map(k=>`<i class="${STD[k].neg?'ng':'ps'}" title="${STD[k].n}">${STS[k]||STD[k].n.slice(0,2)}${STD[k].mx&&stN(u,k)>1?`<b>${stN(u,k)}</b>`:''}</i>`).join('')+(ks.length>4?`<i class="more">+${ks.length-4}</i>`:'')}
  let s=c.querySelector('.stx');if(!s){s=document.createElement('div');s.className='stx';c.appendChild(s)}if(s.innerHTML!==ic)s.innerHTML=ic;
- const rk=lv?RINGK.find(k=>has(u,k)):null;let rn=c.querySelector('.ring');if(rk){if(!rn){rn=document.createElement('div');c.appendChild(rn)}if(!rn.classList.contains('r-'+rk)){rn.className='ring r-'+rk;rn.innerHTML=`<i></i><b>${STD[rk].n}</b>`}}else if(rn)rn.remove();
+ const rk=lv?RINGK.find(k=>has(u,k)):null;let rn=c.querySelector('.ring');if(rk){if(!rn){rn=document.createElement('div');c.appendChild(rn)}const rl=(u.ST[rk]&&u.ST[rk].lb)||STD[rk].n;if(!rn.classList.contains('r-'+rk)||rn.dataset.l!==rl){rn.className='ring r-'+rk;rn.dataset.l=rl;rn.innerHTML=`<i></i><b>${rl}</b>`}}else if(rn)rn.remove();
  const pk=lv?PTK.filter(k=>has(u,k)).map(k=>k+':'+Math.min(3,stN(u,k))).join(','):'';let pf=c.querySelector('.pfx');if(pk){if(!pf){pf=document.createElement('div');pf.className='pfx';c.appendChild(pf)}if(pf.dataset.k!==pk){pf.dataset.k=pk;pf.innerHTML=pk.split(',').map(x=>{const[k,n]=x.split(':');return `<span class="pf-${k} n${n}">${'<i></i>'.repeat(3+2*n)}</span>`}).join('')}}else if(pf)pf.remove();
  ['imm','sz','by','bz','hh','gd'].forEach(k=>c.classList.toggle('s-'+k,H2(k)))}
 const RINGK=['fx','fz','kd','sl','tf','ql'],PTK=['bn','mg','tw','sw','hs','lz','yc'];
+const STS={mg:'魔蠱',yc:'音顫',tw:'天威',sw:'神威',dd:'易傷',pz:'破綻',hs:'寒霜',zsh:'震懾',lz:'雷澤',ad:'攻↓',hr:'療↓',qz:'傾折',dm:'死印',zs:'斬殺',nr:'禁復',sd:'減速',rdn:'防↓',xj:'先機',bz:'八陣',fu:'撫愉',qc:'傾城',wd:'療風',hh:'回魂',hid:'隱匿',imm:'免疫',au:'攻↑',su:'速↑',ru:'防↑',zt:'戰魔',qx:'七星',cdu:'暴傷↑',by:'暴虐',qn:'怯懦',gd:'格擋',sz:'死戰',qmu:'怒↑',bn:'灼燒'};
 const STI={mg:'🪲',yc:'🎵',tw:'☀',sw:'🌟',dd:'💢',pz:'🎯',hs:'❆',zsh:'⚡',lz:'🌩',ad:'⚔↓',hr:'✚↓',qz:'🪓',dm:'💀',zs:'⚰',nr:'⛔',sd:'🐌',rdn:'🛡↓',xj:'🔰',bz:'☯',fu:'🎐',qc:'🌸',wd:'🍃',hh:'🔥',hid:'🌫',imm:'✨',au:'⚔↑',su:'💨',ru:'🛡↑',zt:'👹',qx:'⭐',cdu:'💥',by:'😤',qn:'😰',gd:'🛡',sz:'☠',qmu:'📜',bn:'🔥'};
 const cellOf=u=>{let i=pl.indexOf(u);if(i>=0)return $('gp'+i);i=en.indexOf(u);return i>=0?$('ge'+i):null};
 const alive=a=>a.filter(u=>u&&u.hp>0);
@@ -1719,7 +1974,7 @@ async function qmRoundStart(){for(const[a,i]of[[pl,0],[en,1]]){const q=QMS[i];if
   if(q.id==='dlj'&&odd){fxQM(a,q);alive(foes).forEach(e=>{if(Math.random()<qmV(q,'a')&&loseRage(e,30))LBL(e,'斷糧 −30')})}
   if(q.id==='smcg'&&odd){fxQM(a,q);alive(a).forEach(u=>addSt(u,'by',{t:1,v:qmV(q,'a')},u))}
   if(q.id==='mtgh'&&!odd){fxQM(a,q);alive(a).forEach(u=>{addShield(u,u.mhp*qmV(q,'a'),2,'',u);addSt(u,'ru',{t:2,v:qmV(q,'b'),lbl:false},u)});const c=qmV(q,'c');if(c)byLowPct(alive(a)).slice(0,c).forEach(u=>addSt(u,'gd',{t:2,n:1},u))}
-  if(q.id==='wwjz'){const al=alive(foes).filter(e=>!has(e,'fx'));if(al.length>=(q.lv>=5?2:3)&&Math.random()<qmV(q,'a')){const t=byHiAtk(al).find(e=>!e.X.fxd);if(t){t.X.fxd=1;fxQM(a,q);t.ST.fx={t:1,n:1,v:0,s:null};LBL(t,'放逐','fx-c');if(q.lv>=6)loseRage(t,30);upd(t)}}}}}
+  if(q.id==='wwjz'){const al=alive(foes).filter(e=>!has(e,'fx'));if(al.length>=(q.lv>=5?2:3)&&Math.random()<qmV(q,'a')){const t=byHiAtk(al).find(e=>!e.X.fxd);if(t){t.X.fxd=1;fxQM(a,q);t.ST.fx={t:1,n:1,v:0,s:null,lb:'圍魏救趙'};LBL(t,'圍魏救趙・放逐','fx-c');{const c=cellOf(t);if(c&&!SKIP){const n=document.createElement('div');n.className='stpop r-fx';n.textContent='圍魏救趙！';c.appendChild(n);setTimeout(()=>n.remove(),1100)}}if(q.lv>=6)loseRage(t,30);upd(t)}}}}}
 async function qmRoundEnd(){for(const[a,i]of[[pl,0],[en,1]]){const q=QMS[i];if(!q)continue;
   if(q.id==='gbyz'&&ROUND%2===1){fxQM(a,q);alive(a).sort((x,y)=>x.rage-y.rage).slice(0,qmV(q,'a')).forEach(u=>addRage(u,30));const b=qmV(q,'b');if(b)alive(a).forEach(u=>addSt(u,'qmu',{t:2,v:b,lbl:false},u))}
   if(q.id==='qszh'){alive(a).forEach(u=>heal(u,u,u.mhp*qmV(q,'a'),{nob:1,quiet:1}));const b=qmV(q,'b');if(b){for(const u of byLowPct(alive(a))){if(u.hp>=u.mhp*.5||(q.u.c||0)>=qmV(q,'c'))break;q.u.c=(q.u.c||0)+1;heal(u,u,u.mhp*b,{nob:1})}}}
@@ -1809,7 +2064,7 @@ function renderUGC(){const V=UGV,key=ugcKey(V.kind,V.ref),cur=(S.ugc||{})[key]||
  const nm=V.kind==='lord'?'主公頭像':V.kind==='bea'?((BEA.find(b=>b.id===V.ref)||{}).n||'')+'・紅顏圖鑑':['scene','eq','qm'].includes(V.kind)?ugcName(V.kind,V.ref):hname(V.ref)+'・圖鑑',P=ugcPrompt(V.kind,V.ref),ratio=V.kind==='lord'||V.kind==='eq'||V.kind==='qm'?'1/1':V.kind==='scene'?'9/16':'3/4';
  let h=`<div class="shh"><b>🎨 ${nm}</b><button data-u="x" style="flex:none;width:44px;padding:6px 0">✕</button></div>
  <p class="sub">${V.kind==='lord'?'上傳你自己的主公頭像（只有你使用）。':'所有玩家上傳的圖都能自由選用；點「使用」只改變你自己看到的圖。沒有選的玩家會看到最多人喜歡的那張。每個項目保留前 10 名，新圖有 7 天保護期。'}</p>
- <div class="ugg" style="--ar:${ratio}">${V.kind!=='lord'?`<div class="ugc${cur==='ink'?' cur':''}"><div class="ugi" style="background-image:url(${V.kind==='bea'&&BEAIMG.has(V.ref)?`bea/${V.ref}_s.jpg`:V.kind==='scene'?(V.ref==='arena'?arenaArt():V.ref.startsWith('tw_')?twOneArt(V.ref.slice(3),270,480):''):['eq','qm'].includes(V.kind)?'':inkDrawCached(V)})">${V.kind==='eq'?`<span class="ugdef">${SLN(V.ref.slice(0,2)).ic}</span>`:V.kind==='qm'?`<span class="ugdef">${(QMD.find(q=>q.id===V.ref)||{}).ic||''}</span>`:V.kind==='scene'&&!['arena'].includes(V.ref)&&!V.ref.startsWith('tw_')?'<span class="ugdef">🖼</span>':''}</div><div class="ugm"><b>${V.kind==='bea'?'原版預設':['scene','eq','qm'].includes(V.kind)?'遊戲預設':'水墨預設'}</b></div><button data-u="use" data-p="ink" class="${cur==='ink'?'on':''}">${cur==='ink'?'使用中':'使用'}</button></div>`:''}
+ <div class="ugg" style="--ar:${ratio}">${V.kind!=='lord'?`<div class="ugc${cur==='ink'?' cur':''}"><div class="ugi" style="background-image:url(${V.kind==='bea'&&BEAIMG.has(V.ref)&&(curStyle()==='ink'||S.beaOrig)?`bea/${V.ref}_s.jpg`:V.kind==='scene'?(V.ref==='arena'?arenaArt():V.ref.startsWith('tw_')?twOneArt(V.ref.slice(3),270,480):''):['eq','qm'].includes(V.kind)?'':inkDrawCached(V)})">${V.kind==='eq'?`<span class="ugdef">${SLN(V.ref.slice(0,2)).ic}</span>`:V.kind==='qm'?`<span class="ugdef">${(QMD.find(q=>q.id===V.ref)||{}).ic||''}</span>`:V.kind==='scene'&&!['arena'].includes(V.ref)&&!V.ref.startsWith('tw_')?'<span class="ugdef">🖼</span>':''}</div><div class="ugm"><b>${V.kind==='bea'&&BEAIMG.has(V.ref)&&(curStyle()==='ink'||S.beaOrig)?'原版預設':['scene','eq','qm'].includes(V.kind)?'遊戲預設':styleName()+'預設'}</b></div><button data-u="use" data-p="ink" class="${cur==='ink'?'on':''}">${cur==='ink'?'使用中':'使用'}</button></div>`:''}
  ${V.list.map(r=>{const u=ugcUrl(r.path),mine=ME&&r.owner===ME.id,using=cur===u;return `<div class="ugc${using?' cur':''}"><div class="ugi" style="background-image:url(${u})">${using?'<em class="ugcur">使用中</em>':''}</div><div class="ugm"><b>❤️ ${r.likes}</b><small>${esc(r.owner_name||'玩家')}</small></div>
   <div class="ugb"><button data-u="use" data-p="${u}" class="ugu${using?' on':''}">${using?'使用中':'使用'}</button>${V.kind!=='lord'?`<button data-u="like" data-i="${r.id}">❤️</button><button data-u="rep" data-i="${r.id}">⚠</button>`:''}</div>${mine||adm?`<div class="ugb ugb2">${mine?`<button data-u="del" data-i="${r.id}" data-p="${r.path}">🗑 刪除</button>`:''}${adm?`<button data-u="adm" data-i="${r.id}">🛑 管理刪除</button>`:''}</div>`:''}</div>`}).join('')}</div>
  ${V.msg?`<p class="sub" style="color:#ffd27a">${V.msg}</p>`:''}
@@ -1821,7 +2076,7 @@ function renderUGC(){const V=UGV,key=ugcKey(V.kind,V.ref),cur=(S.ugc||{})[key]||
  $('ugBody').innerHTML=h;const f=$('ugf');if(f)f.onchange=()=>ugcPick(f.files[0]);
  const g=$('ugBody').querySelector('.ugg');if(g){const cs=[...g.children].map(c=>c.outerHTML),per=V.kind==='scene'?2:4;g.outerHTML=`<div class="ugg2" style="--ar:${ratio}">${pager(chunk(cs,per).map(c=>`<div class="uggp${V.kind==='scene'?' sc':''}">${c.join('')}</div>`),'ugpg','ug'+key)}</div>`;requestAnimationFrame(()=>pgRestore($('ugBody')))}}
 function inkDrawCached(V){return V.kind==='bea'?artOfInk(V.ref,true):artOfInk(V.ref,true)}
-function artOfInk(id,big){const h=H.find(x=>x.id===id)||BEA_H(id);if(!h)return '';const C=big?ART2C:ARTC,k='ink_'+id;if(!C[k])C[k]=inkDraw(h,big?480:240,big?640:320);return C[k]}
+function artOfInk(id,big,st){st=st||curStyle();const h=H.find(x=>x.id===id)||BEA_H(id);if(!h)return '';const C=big?ART2C:ARTC,k=st+'_'+id,W=big?480:240,Hh=big?640:320;if(!C[k])C[k]=st==='ink'?inkDraw(h,W,Hh):styleDraw(h,st,W,Hh);return C[k]}
 async function ugcPick(file){if(!file)return;try{const bm=await createImageBitmap(file);const lord=UGV.kind==='lord'||UGV.kind==='eq'||UGV.kind==='qm',scn=UGV.kind==='scene',W=scn?720:lord?400:600,Hh=scn?1280:lord?400:800,c=document.createElement('canvas');c.width=W;c.height=Hh;const x=c.getContext('2d');
  const r=W/Hh,sr=bm.width/bm.height;let sw,sh;if(sr>r){sh=bm.height;sw=sh*r}else{sw=bm.width;sh=sw/r}x.drawImage(bm,(bm.width-sw)/2,(bm.height-sh)/2*(lord?1:.4),sw,sh,0,0,W,Hh);
  let q=.85,blob;for(let i=0;i<5;i++){blob=await new Promise(res=>c.toBlob(res,'image/jpeg',q));if(blob.size<=(scn?300000:160000))break;q-=.12}
@@ -1875,7 +2130,7 @@ let LAND=false;
 function layout(){const W=innerWidth,H=innerHeight,full=document.body.classList.contains('full');LAND=full&&W>H*1.1;document.body.classList.toggle('land',LAND);const r=document.documentElement.style;
  if(!full){mainLayout(r);return}
  const ap=$('app'),cs=getComputedStyle(ap),pv=(parseFloat(cs.paddingTop)||0)+(parseFloat(cs.paddingBottom)||0),ph=(parseFloat(cs.paddingLeft)||0)+(parseFloat(cs.paddingRight)||0),AH=Math.min(ap.clientHeight||H,H)-pv;
- let ch=LAND?Math.min((AH-68)/3,(((W-28-ph)/2-34)/3)/.75):Math.min((AH-70)/6,((W-ph-34)/3)/.75);
+ let ch=LAND?Math.min((AH-68)/3,(((W-28-ph)/2-34)/3)/.75):Math.min((AH-70)/(document.body.classList.contains('bt')?6.32:6),((W-ph-34)/3)/.75);
  ch=Math.max(50,Math.min(ch,300));r.setProperty('--ch',ch+'px');place();
  for(let i=0;i<60&&ch>50&&ap.scrollHeight>ap.clientHeight+1;i++){ch-=3;r.setProperty('--ch',ch+'px')}}
 function mainLayout(r){r.setProperty('--ch','40px');place();const ap=$('app'),bd=document.querySelector('.stage .board'),de=document.documentElement,cs=getComputedStyle(de);
@@ -2842,7 +3097,7 @@ function navDots(){const d=(id,on)=>{const e=$(id);if(e){if(on)e.setAttribute('d
  d('mGacha',(typeof newLeft==='function'&&newLeft())||(typeof ptsReady==='function'&&ptsReady()));d('mTower',typeof msClaimable==='function'&&msClaimable()>0);
  const F=S.frag||{};d('sFrag',['SR','SSR','UR'].some(k=>(F[k]||0)>=FSYN[k]));
  ['mPvp','mTower'].forEach(id=>$(id).classList.toggle('on',(id==='mPvp')===(MODE==='pvp')))}catch(e){}navDots2()}
-$('sHJ').onclick=()=>hjOpen();$('mQM').onclick=()=>qmOpen();qmBind();dtBind();idleBind();ugcBind();ugcRecalc();setTimeout(ugcLoadTop,1500);setInterval(()=>{if(!busy)ugcLoadTop()},600000);$('cDT').onclick=()=>{if(!busy)dtOpen()};$('cIdle').onclick=()=>{if(!busy)idleOpen()};setInterval(navDots2,30000);$('sFrag').onclick=()=>fragOpen();
+$('sHJ').onclick=()=>hjOpen();$('mQM').onclick=()=>qmOpen();qmBind();dtBind();idleBind();ugcBind();ugcRecalc();setTimeout(ugcLoadTop,1500);setTimeout(styleLoad,1200);setInterval(()=>{if(!busy)ugcLoadTop()},600000);$('cDT').onclick=()=>{if(!busy)dtOpen()};$('cIdle').onclick=()=>{if(!busy)idleOpen()};setInterval(navDots2,30000);$('sFrag').onclick=()=>fragOpen();
 document.querySelectorAll('.pfb').forEach(g=>g.onclick=e=>{const b=e.target.closest('button');if(!b||!b.dataset.pf)return;PF=b.dataset.pf;render();if($('form').classList.contains('on'))renderForm()});
 let ANIM=(()=>{try{return localStorage.getItem('sgAnim')||'full'}catch(e){return 'full'}})();
 const ANL={full:['🎬','動畫：完整（技能特寫＋跳躍攻擊）'],short:['⚡','動畫：簡短（只有跳躍攻擊）'],off:['⏹','動畫：關閉（只有特效）']};
@@ -3034,7 +3289,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261030d';
+const CVER='20261030e';
 function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${b.x*100}%;top:${b.y*100}%;width:${b.w*s}px;height:${b.h*s}px"><span class="cpl">${[...b.n].join('<br>')}</span></button>`).join('');
  CITYB.filter(b=>!b.hide).forEach(b=>{const e=$('cb_'+b.k);e.querySelector('.cpl').style.top=(b.k==='jj'?-40:-30)*s+'px'});if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityBind()}
 
@@ -3044,7 +3299,7 @@ const upow=u=>Math.round(u.mhp*.5+u.atk*4+u.spd*6);
 function prepOpen(o){if(o)ORIGIN=o;if(busy)return;render();try{setInfo()}catch(e){}renderPrep();$('prep').classList.add('on')}
 function prepClose(){$('prep').classList.remove('on')}
 function miniRow(arr){const us=arr.filter(Boolean);if(!us.length)return '<div class="pp0">尚未上陣</div>';
- return `<div class="pprow">${us.map(u=>`<div class="ppc${UGC_SEL&&UGC_SEL[u.id]?'':' ink'}" style="background-image:url(${ART[u.id]});border-color:${FC[u.f]}"><i style="background:${FC[u.f]}">${u.f}</i><b>${u.n}</b><small>Lv.${u.lv}</small></div>`).join('')}</div>`}
+ return `<div class="pprow">${us.map(u=>`<div class="ppc${artHasName(u.id)?' ink':''}" style="background-image:url(${ART[u.id]});border-color:${FC[u.f]}"><i style="background:${FC[u.f]}">${u.f}</i><b>${u.n}</b><small>Lv.${u.lv}</small></div>`).join('')}</div>`}
 function facChips(arr){const c={};arr.filter(Boolean).forEach(u=>c[u.f]=(c[u.f]||0)+1);return Object.keys(c).map(f=>`<span class="ppf" style="background:${FC[f]}">${f}${c[f]}</span>`).join('')}
 function renderPrep(){const ep=en.filter(Boolean).reduce((a,u)=>a+upow(u),0),mp=pl.filter(Boolean).reduce((a,u)=>a+upow(u),0);
  let title='',sub='',rows=[],extra='';
@@ -3204,6 +3459,7 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261030e',d:'10/30',t:['武將新增四種畫風：水墨畫、Q版、工筆重彩、皮影戲，每位武將與紅顏都有專屬造型（臉色、冠帽、鬍子、兵器），套用到全遊戲','武將列表「🎨 畫風」可切換並投票，得票最高的畫風會成為新玩家的預設；可選擇讓玩家上傳圖優先、紅顏維持原畫','戰場敵我中間留出分界與「戰」字印章，敵方紅光、我方藍光，一眼分清','狀態圖示改成文字標籤（灼燒、攻↓、免疫…），控制圓圈的名稱更清楚；圍魏救趙會直接顯示「圍魏救趙」','傷害數字不再蓋住名字；陣亡武將改成灰色並蓋上「陣亡」；出手順序條人多時自動縮小，不再被切掉']},
  {v:'20261030d',d:'10/30',t:['戰鬥狀態全面視覺化：放逐、凍結、恫嚇、沉默、嘲諷會有旋轉的圓圈框住武將，輪到他時閃一下「無法行動」','灼燒、魔蠱、天威、寒霜、雷澤、音顫有身上的粒子動畫','其他增減益在卡片下方顯示彩色小圖示（綠＝增益、紅＝減益），超過 4 個顯示「+N」；負面免疫、八陣圖、死戰等有專屬外框','戰鬥速度 2 倍以上或動畫簡短時自動精簡特效']},
  {v:'20261030c',d:'10/30',t:['圖鑑頁的「使用、❤️、⚠」按鈕放大，改成左右滑動分頁（背景每頁 2 張、其他每頁 4 張），使用中的圖會加金框','背景、圖示圖鑑的說明改成對應的比例與大小','戰場：敵方後排不再縮那麼小，敵我中間加分隔線，敵方腳下改成紅光，敵方空排自動收攏']},
  {v:'20261030b',d:'10/30',t:['主城重新分區：左側商城、任務、收益、公告；右下好友、排行、圖鑑；按鈕拉開距離，右下「×」可以收起按鈕欣賞主城','東西多的頁面改成左右滑動分頁：武將列表（每頁 16 位）、圖鑑總覽、好友、戰報、碎片合成、更新紀錄、戰場狀態；商城改成分類分頁']},
@@ -3257,7 +3513,7 @@ function renderPC(){const L=S.lord||{},av=(S.ugc||{})['lord:me'],kf=v=>v>=1e8?(v
   <div class="pcrow"><span>陣營</span><b><i class="pcf" style="background:${FC[L.f]||'#555'}">${L.f||'—'}</i></b></div>
   <div class="pcrow"><span>等級</span><b>${L.l||1}${(L.l||1)>=LMAX?'（滿級）':''}</b></div>${(L.l||1)<LMAX&&need?`<div class="xp pcxp"><i style="width:${Math.min(100,(L.e||0)/need*100)}%"></i><u>${(L.e||0).toLocaleString()} / ${need.toLocaleString()}</u></div>`:''}
   <div class="pcsec">戰績資訊</div><div class="pcst"><span><b>${typeof AR!=='undefined'&&AR.me?AR.me.score:'—'}</b>競技積分</span><span><b>${best}</b>最高塔層</span><span><b>${H.filter(x=>S.own[x.id]).length}/${H.length}</b>武將收集</span></div>
-  <div class="pcsec">陣容展示</div><div class="pcdl">${dl.length?dl.map(id=>{const x=H.find(z=>z.id===id);return `<span class="${UGC_SEL&&UGC_SEL[id]?'':'ink'}" style="background-image:url(${ART[id]});border-color:${FC[x.f]}"><b>${x.n}</b><i>★${S.star[id]||0}</i></span>`}).join(''):'<p class="sub">還沒有預設陣容</p>'}</div></div>
+  <div class="pcsec">陣容展示</div><div class="pcdl">${dl.length?dl.map(id=>{const x=H.find(z=>z.id===id);return `<span class="${artHasName(id)?'ink':''}" style="background-image:url(${ART[id]});border-color:${FC[x.f]}"><b>${x.n}</b><i>★${S.star[id]||0}</i></span>`}).join(''):'<p class="sub">還沒有預設陣容</p>'}</div></div>
  <div class="pcbt"><button data-p="ugh"><i>🎨</i>圖鑑總覽</button><button data-p="ver"><i>📰</i>更新紀錄</button><button data-p="guide"><i>🧭</i>新手指南</button><button data-p="set"><i>⚙️</i>設置</button></div>`;
  if(PCPICK){const own=H.filter(x=>S.own[x.id]).sort((a,b)=>b.q-a.q);h+=`<div class="bgp" data-p="pkx"><div class="bgpp"><h3>選擇背景武將</h3><div class="pcpk">${own.map(x=>`<button data-p="pk" data-i="${x.id}" class="${x.id===hid?'on':''}" style="background-image:url(${ART[x.id]})"><b>${x.n}</b></button>`).join('')}</div><div class="bgpb"><button class="g" data-p="pkx">關閉</button></div></div></div>`}
  $('pcBody').innerHTML=h}
@@ -3306,11 +3562,11 @@ function btSideName(mine){return mine?esc(S.lord.n||'我方'):OPP.arena||OPP.fr?
 function btQm(i){const q=typeof QMS!=='undefined'&&QMS[i];const d=q&&QMD.find(z=>z.id===q.id);return d?`<span class="bqm" title="${d.n}">${qmIc(d.id)}<small>${d.n}</small></span>`:''}
 function btHud(){const h=$('btHud');if(!h)return;h.innerHTML=`<div class="bhs me"><b>${btSideName(true)}</b>${btQm(0)}</div><div class="bhr"><span>回合</span><b>${ROUND}/${MAXR()}</b></div><div class="bhs en">${btQm(1)}<b>${btSideName(false)}</b></div>`}
 function btOrder(){const o=$('btOrd');if(!o)return;const L=[...alive(pl).map(u=>[u,1]),...alive(en).map(u=>[u,0])].sort((a,b)=>spdOf(b[0])-spdOf(a[0]));
- o.innerHTML=`<div class="boi">${L.map(([u,m])=>`${UGC_SEL&&UGC_SEL[u.id]?`<span class="${m?'me':'en'}${u===CUR?' cur':''}" style="background-image:url(${ART[u.id]})"><b>${u.n.slice(-2)}</b></span>`:`<span class="${m?'me':'en'}${u===CUR?' cur':''} ink" style="background:${FC[u.f]}"><b>${u.n.slice(-2)}</b></span>`}`).join('')}</div><small>速度決定出手順序</small>`}
+ o.style.setProperty('--bs',Math.max(22,Math.min(34,Math.floor((Math.min(innerWidth,560)-16)/Math.max(1,L.length))-4))+'px');o.innerHTML=`<div class="boi">${L.map(([u,m])=>`${!artHasName(u.id)?`<span class="${m?'me':'en'}${u===CUR?' cur':''}" style="background-image:url(${ART[u.id]})"><b>${u.n.slice(-2)}</b></span>`:`<span class="${m?'me':'en'}${u===CUR?' cur':''} ink" style="background:${FC[u.f]}"><b>${u.n.slice(-2)}</b></span>`}`).join('')}</div><small>速度決定出手順序</small>`}
 let BTT=0;function btTick(){if(!document.body.classList.contains('bt'))return;btHud();btOrder()}
 const FFXC={蜀:'shu',魏:'wei',吳:'wu',神:'shen',魔:'mo'};
 function facFx(c,f,crit){if(SKIP||ANIM==='off'||!c)return;const k=FFXC[f];if(!k)return;const d=document.createElement('div');d.className='ffx f-'+k+(crit?' crit':'');d.innerHTML='<i></i><i></i><i></i><i></i><i></i><i></i>';c.appendChild(d);setTimeout(()=>d.remove(),900)}
-function btStat(){const d=document.createElement('div');d.className='bgp';const row=(u,m)=>{const hp=Math.max(0,Math.round(u.hp/u.mhp*100)),st=Object.keys(u.ST||{}).filter(k=>STD[k]&&STD[k].n).map(k=>`<em class="${STD[k].neg?'neg':''}">${STD[k].n}</em>`).join('');return `<div class="bsr ${m?'me':'en'}"><span class="bsa${UGC_SEL&&UGC_SEL[u.id]?'':' ink'}" style="background-image:url(${ART[u.id]})"></span><div><b>${u.n}</b><small>Lv.${u.lv}</small><div class="bsb"><i style="width:${hp}%"></i></div><div class="bsb rg"><i style="width:${Math.min(100,u.rage)}%"></i></div>${st?`<div class="bst">${st}</div>`:''}</div></div>`};
+function btStat(){const d=document.createElement('div');d.className='bgp';const row=(u,m)=>{const hp=Math.max(0,Math.round(u.hp/u.mhp*100)),st=Object.keys(u.ST||{}).filter(k=>STD[k]&&STD[k].n).map(k=>`<em class="${STD[k].neg?'neg':''}">${STD[k].n}</em>`).join('');return `<div class="bsr ${m?'me':'en'}"><span class="bsa${artHasName(u.id)?' ink':''}" style="background-image:url(${ART[u.id]})"></span><div><b>${u.n}</b><small>Lv.${u.lv}</small><div class="bsb"><i style="width:${hp}%"></i></div><div class="bsb rg"><i style="width:${Math.min(100,u.rage)}%"></i></div>${st?`<div class="bst">${st}</div>`:''}</div></div>`};
  d.innerHTML=`<div class="bgpp" style="text-align:left;max-height:80vh;overflow-y:auto"><h3 style="text-align:center">戰場狀態・第 ${ROUND} 回合</h3><button class="g" data-ug="1" style="width:100%;min-height:44px;margin-bottom:6px">🎨 更換戰場背景（玩家上傳）</button>${pager([`<div class="bsec">我方</div>${pl.filter(Boolean).map(u=>row(u,1)).join('')}`,`<div class="bsec">敵方</div>${en.filter(Boolean).map(u=>row(u,0)).join('')}`],'bspg')}<div class="bgpb"><button class="g" data-x="1">關閉</button></div></div>`;
  d.onclick=e=>{if(e.target.closest('[data-ug]')){d.remove();ugcOpen('arena','scene');return}if(e.target===d||e.target.closest('[data-x]'))d.remove()};document.body.appendChild(d)}
 function arenaInit(){const bg=document.createElement('div');bg.id='btBg';document.body.appendChild(bg);const h=document.createElement('div');h.id='btHud';document.body.appendChild(h);const o=document.createElement('div');o.id='btOrd';document.body.appendChild(o);
@@ -3367,16 +3623,30 @@ function artApply(mode,mine){S.ugc=S.ugc||{};let n=0;
   if(mode==='top'){if(cur)delete S.ugc[key];if(top&&cur!==top)n++}
   else{if(cur!=='ink'&&(top||custom))n++;delete S.ugc[key]}}
  if(mode!=='new')S.artPref=mode;artMarkSeen();saveS();ugcRecalc();for(const c of[ARTC,ART2C])for(const k in c)delete c[k];if(!busy)render();return n}
-function artModal(first){const st=artStats(),d=document.createElement('div');d.className='bgp vmod';const sample=H.find(h=>UGC_TOP[ugcKey('hero',h.id)])||H[0];
+function styleName(k){k=k||curStyle();return (STYLES.find(z=>z[0]===k)||[0,'水墨畫'])[1]}
+function artModal(first){const st=artStats(),d=document.createElement('div');d.className='bgp vmod artm';let sel=curStyle(),smp='guanyu',up=S.artPref!=='ink',bo=!!S.beaOrig;
  const hasCustom=artKeys().some(([k,id])=>{const v=(S.ugc||{})[ugcKey(k,id)];return v&&v!=='ink'});
- d.innerHTML=`<div class="bgpp"><h3>${first?'選擇武將圖卡風格':'一鍵換圖'}</h3>
- <div class="arts"><div><span style="background-image:url(${UGC_TOP[ugcKey('hero',sample.id)]||artOfInk(sample.id,false)})"></span><b>玩家票選</b></div><div><span style="background-image:url(${artOfInk(sample.id,false)})"></span><b>水墨畫</b></div></div>
- <p class="sub" style="text-align:center">目前圖庫：${st.hs} 位武將、${st.bs} 位紅顏有玩家上傳的圖${st.nw?`，其中 <b style="color:#ffd27a">${st.nw}</b> 位有新圖`:''}</p>
- ${!first&&hasCustom?'<label class="stwc"><input type="checkbox" id="artMine"> 連我自己在圖鑑挑過的也一起換</label>':''}
- <div class="artb"><button data-a="top">🏆 使用玩家票選第一名<small>沒人上傳的維持水墨畫，之後有新圖會自動換上</small></button><button class="g" data-a="ink">🖌 全部使用水墨畫<small>之後有新圖只會提示，不會自動換</small></button>${!first?`<button class="g" data-a="new" ${st.nw?'':'disabled'}>✨ 只換有新圖的（${st.nw}）<small>其他維持現狀</small></button>`:''}</div>
- <p class="sub" style="text-align:center">${first?'之後可以在武將列表的「🎨 換圖」隨時更改。':''}</p>${first?'':'<div class="bgpb"><button class="g" data-a="x">關閉</button></div>'}</div>`;
- d.onclick=e=>{const b=e.target.closest('[data-a]');if(!b){if(e.target===d&&!first)d.remove();return}const a=b.dataset.a;if(a==='x'){d.remove();return}
-  const mine=!!(d.querySelector('#artMine')||{}).checked,n=artApply(a,mine);d.remove();toast(a==='ink'?`已改用水墨畫（${n} 位）`:`已更換 ${n} 位圖卡`)};document.body.appendChild(d)}
+ const smpArt=(id,k)=>BEAIMG.has(id)&&(k==='ink'||bo)?`bea/${id}_s.jpg`:artOfInk(id,false,k);
+ const read=()=>{const u=d.querySelector('#artUp'),o=d.querySelector('#artBo');if(u)up=u.checked;if(o)bo=o.checked};
+ const draw=()=>{const top=Object.entries(STYLE_CNT).sort((a,b)=>b[1]-a[1])[0];
+  d.innerHTML=`<div class="bgpp"><h3>${first?'選擇武將畫風':'畫風與換圖'}</h3>
+ <div class="artsm"><span>範例</span>${[['guanyu','關羽'],['zhangfei','張飛'],['zhugeliang','諸葛亮'],['diaochan','貂蟬'],['xishi','西施']].map(([id,n])=>`<button data-s="${id}" class="${smp===id?'on':''}">${n}</button>`).join('')}</div>
+ <div class="arsg">${STYLES.map(([k,n])=>`<button data-k="${k}" class="${sel===k?'on':''}"><span style="background-image:url(${smpArt(smp,k)})">${top&&top[0]===k&&top[1]>0?'<em>🏆 票選第一</em>':''}</span><b>${n}</b><small>${STYLE_CNT[k]||0} 票</small></button>`).join('')}</div>
+ <p class="sub" style="text-align:center">按「確定」就算投你選的畫風一票，之後可以隨時改。<br>得票最高的畫風會成為新玩家的預設畫風。</p>
+ <label class="stwc"><input type="checkbox" id="artUp" ${up?'checked':''}> 有玩家上傳圖的武將，優先用票選第一名的圖${st.hs+st.bs?`（目前 ${st.hs+st.bs} 位）`:''}</label>
+ <label class="stwc"><input type="checkbox" id="artBo" ${bo?'checked':''}> 紅顏維持原畫</label>
+ ${!first&&hasCustom?'<label class="stwc"><input type="checkbox" id="artMine"> 連我在圖鑑自己挑過的也一起換</label>':''}
+ <div class="bgpb"><button data-a="ok">確定</button>${first?'':`<button class="g" data-a="new" ${st.nw?'':'disabled'}>只換新圖（${st.nw}）</button><button class="g" data-a="x">關閉</button>`}</div>
+ ${first?'<p class="sub" style="text-align:center">之後可以在武將列表的「🎨 畫風」隨時更改。</p>':''}</div>`};
+ draw();
+ d.onclick=e=>{if(e.target.closest('input,label'))return;const s2=e.target.closest('[data-s]'),k=e.target.closest('[data-k]'),b=e.target.closest('[data-a]');
+  if(s2){read();smp=s2.dataset.s;draw();return}if(k){read();sel=k.dataset.k;draw();return}
+  if(!b){if(e.target===d&&!first)d.remove();return}const a=b.dataset.a;if(a==='x'){d.remove();return}read();
+  const mine=!!(d.querySelector('#artMine')||{}).checked;
+  if(a==='new'){const n=artApply('new',mine);d.remove();toast(`已更換 ${n} 位圖卡`);return}
+  S.artStyle=sel;S.beaOrig=bo;artApply(up?'top':'ink',mine);d.remove();toast(`已改用「${styleName(sel)}」畫風`);
+  if(SB&&typeof ME!=='undefined'&&ME)SB.rpc('style_vote_do',{p_style:sel}).then(({data})=>{if(data&&data.counts){STYLE_CNT=data.counts;const t=Object.entries(STYLE_CNT).sort((a,b)=>b[1]-a[1])[0];STYLE_TOP=t?t[0]:null}},()=>{})};
+ document.body.appendChild(d)}
 
 /* ===================== 分頁左右滑 ===================== */
 const chunk=(a,n)=>{const o=[];for(let i=0;i<a.length;i+=n)o.push(a.slice(i,i+n));return o};
