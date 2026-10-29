@@ -656,8 +656,8 @@ body.bt .cell:not(.dead):not(.act) .card{animation:stbob 2.8s ease-in-out infini
 body.bt .cell:nth-child(3n+2):not(.dead) .card{animation-delay:-.9s}body.bt .cell:nth-child(3n):not(.dead) .card{animation-delay:-1.8s}
 @keyframes stbob{0%,100%{translate:0 0}50%{translate:0 -3px}}
 body.bt .cell.hit .card{animation:hit .35s!important}
-body.bt #ge .cell:nth-child(-n+3){--rs:.78}body.bt #ge .cell:nth-child(n+4):nth-child(-n+6){--rs:.84}body.bt #ge .cell:nth-child(n+7){--rs:.9}
-body.bt #gp .cell:nth-child(-n+3){--rs:.96}body.bt #gp .cell:nth-child(n+4):nth-child(-n+6){--rs:1.01}body.bt #gp .cell:nth-child(n+7){--rs:1.06}
+body.bt #ge .cell:nth-child(-n+3){--rs:.9}body.bt #ge .cell:nth-child(n+4):nth-child(-n+6){--rs:.93}body.bt #ge .cell:nth-child(n+7){--rs:.96}
+body.bt #gp .cell:nth-child(-n+3){--rs:.98}body.bt #gp .cell:nth-child(n+4):nth-child(-n+6){--rs:1}body.bt #gp .cell:nth-child(n+7){--rs:1.02}
 body.bt.land .cell .card{scale:1}
 body.bt .cell.dead .card{opacity:.35;filter:grayscale(1) brightness(.5)}
 /* 頂部資訊 */
@@ -740,7 +740,7 @@ body.bt #spdBar{top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) +
 .tw1b{position:absolute;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 128px);display:grid;grid-template-columns:1.2fr 1.2fr .8fr;gap:8px;z-index:3}.tw1b button{min-height:56px;font:900 18px 'LXGW WenKai TC',serif}
 .tw1d{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 108px);display:flex;justify-content:center;gap:8px;z-index:3}.tw1d i{width:10px;height:10px;border-radius:50%;background:#ffffff55}.tw1d i.on{width:28px;border-radius:5px;background:var(--tc)}
 .tw1 .twsb{left:12px;right:12px;justify-content:space-between;bottom:calc(env(safe-area-inset-bottom,0px) + 18px)}.tw1 .twsb button{width:82px;height:76px}
-.ugb{margin-left:auto;flex:none;width:46px;height:46px;min-height:0;padding:0;border-radius:50%;font-size:22px;background:#000a!important;border:2px solid #d9b25a!important;position:relative}
+.ugbtn{margin-left:auto;flex:none;width:46px;height:46px;min-height:0;padding:0;border-radius:50%;font-size:22px;background:#000a!important;border:2px solid #d9b25a!important;position:relative}
 .ubg{position:absolute;inset:0;background:center/cover no-repeat;display:none;z-index:0}.ubg.on{display:block}.ubg.on::after{content:'';position:absolute;inset:0;background:linear-gradient(#0003,#0000 30%,#0004)}
 #city .ubg{z-index:0}#cBlds,#city .ctop,#city .cl,#city .cr,#city .cnav{z-index:3}
 .ugdim{position:absolute;inset:0;background:#0003}
@@ -779,11 +779,21 @@ body.bt #spdBar{top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) +
 .csoc{position:absolute;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 150px);display:flex;gap:16px;align-items:flex-end;z-index:4;transition:opacity .3s}
 .cfold{width:44px;height:44px;min-height:0;padding:0;border-radius:50%;font-size:22px;font-weight:900;background:#1a120ce0!important;border:2px solid #d9b25a!important;color:#ffe9b0;align-self:center}
 body.cfold .cl{transform:translateX(-130%);opacity:0;pointer-events:none}body.cfold .csoc .cic{display:none}body.cfold .cres{opacity:.6}
+
+/* 圖鑑卡片 */
+.ugg2 .pg>section{padding:2px}.uggp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ugc.cur{border:2px solid #ffd27a!important;box-shadow:0 0 12px #ffd27a66}.ugi{position:relative}.ugcur{position:absolute;left:6px;top:6px;font-style:normal;font-size:13px;font-weight:900;background:#b08a3a;color:#fff;border-radius:8px;padding:1px 8px}
+.ugm{font-size:14px!important;padding:6px 8px!important}.ugm b{font-size:15px}
+.ugb{gap:6px!important;padding:0 6px 6px!important}.ugb button,.ugc>button{min-height:44px!important;font-size:16px!important;padding:0!important;border-radius:10px}.ugb .ugu{flex:2!important}.ugc>button{margin:auto 6px 6px!important;flex:none!important}.ugb2 button{font-size:14px!important;min-height:38px!important}
+/* 戰場敵我分隔、空排收攏 */
+body.bt .side.e{position:relative}body.bt .side.e::after{content:'';position:absolute;left:4%;right:4%;bottom:-6px;height:3px;border-radius:2px;background:linear-gradient(90deg,transparent,#2b2622aa 20%,#a8382caa 50%,#2b2622aa 80%,transparent);box-shadow:0 0 10px #a8382c66}
+body.bt .side.p{margin-top:14px!important}
+body.bt #ge.er0 .cell:nth-child(-n+3),body.bt #ge.er1 .cell:nth-child(n+4):nth-child(-n+6){height:calc(var(--ch,80px)*.3)!important}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261030b</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261030c</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -804,7 +814,7 @@ body.cfold .cl{transform:translateX(-130%);opacity:0;pointer-events:none}body.cf
 <div id="cBlds"></div>
 <div class="cnav"><button class="cnb cur" data-c="home"><i>🏯</i><span>主城</span></button><button class="cnb" id="cnHero" data-c="hero"><i>🎖</i><span>武將</span></button><button class="cnb" data-c="bag"><i>🎒</i><span>背包</span></button><button class="cwar" id="cWar" data-c="war"><b>征</b><b>戰</b></button></div>
 </div>
-<div id="scn"><canvas id="scnCv"></canvas><div id="sUbg" class="ubg"></div><div class="cpet dust"><i></i><i></i><i></i><i></i><i></i></div><div class="scnh"><button class="xb" data-c="x">←</button><b>征戰</b><button class="ugb" id="sUg" data-c="ugw">🎨</button></div><div id="scnB"></div></div><div class="ov" id="csh"><div id="cshB"></div></div>
+<div id="scn"><canvas id="scnCv"></canvas><div id="sUbg" class="ubg"></div><div class="cpet dust"><i></i><i></i><i></i><i></i><i></i></div><div class="scnh"><button class="xb" data-c="x">←</button><b>征戰</b><button class="ugbtn" id="sUg" data-c="ugw">🎨</button></div><div id="scnB"></div></div><div class="ov" id="csh"><div id="cshB"></div></div>
 <div class="ov" id="pcv"><div id="pcBody"></div></div><div class="ov" id="prep"><div id="ppB"></div></div><div class="ov" id="heroes"><div class="pan"><div class="shh"><b>武將</b><span id="hCnt"></span><button id="hFrag" class="g hhb">碎片</button><button id="hHJ" class="g hhb">豪傑書</button><button id="hStar" class="hhb hstar">一鍵升星</button><button id="hArt" class="g hhb">🎨 換圖</button><button id="hX" style="flex:none;width:44px;padding:6px 0">✕</button></div><button id="hForm" class="hform"><svg viewBox="0 0 30 30" width="30" height="30"><g fill="#f3e6c4"><rect x="2" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="20.6" width="7.6" height="7.6" rx="1.6"/></g></svg><span>布陣</span></button><div class="btns pfb hpf"><button class="g on" data-pf="all">全</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="hpool"></div></div></div>
 <div class="ov" id="form"><div class="pan"><div class="shh"><b>📋 布陣（預設陣容）</b><span id="fCnt"></span></div>
 <div class="sub" style="font-size:12px;margin:2px 0 0">拖曳武將可換位置，拖出格子外或按 ✕ 卸下；點下方武將上陣（長按可拖進指定格）。上方為前排。</div>
@@ -1290,9 +1300,9 @@ function render(){
  if(MODE==='pvp'&&!busy&&OPP.list.length)buildOpp();
  [['gp',pl],['ge',en]].forEach(([id,arr])=>{const g=$(id);g.innerHTML='';
   arr.forEach((u,i)=>{const c=document.createElement('div');c.className='cell'+(id==='gp'&&sel===i?' sel':'');c.id=id+i;c.dataset.i=i;
-   if(u){c.appendChild(cardEl(u));c.style.setProperty('--fc',FC[u.f]||'#000');if(u.hp<=0)c.classList.add('dead')}
+   if(u){c.appendChild(cardEl(u));c.style.setProperty('--fc',id==='ge'?'#e0402a':FC[u.f]||'#000');if(u.hp<=0)c.classList.add('dead')}
    if(id==='gp')c.onclick=()=>{if(busy)return;openForm(i)};
-   g.appendChild(c);if(u)upd(u,c)})});
+   if(id==='ge')c.style.setProperty('--fc','#e0402a');g.appendChild(c);if(u)upd(u,c)});if(id==='ge'){[0,1,2].forEach(r=>g.classList.toggle('er'+r,!arr.slice(r*3,r*3+3).some(Boolean)))}});
  const kf=v=>v>=1e8?(v/1e8).toFixed(1)+'億':v>=1e4?(v/1e4).toFixed(1)+'萬':v.toLocaleString();$('coin').innerHTML=`<em>💰 ${kf(S.coins)}</em><em>🔮 ${kf(S.pill)}</em>${S.wc?`<em>🃏 ${S.wc}</em>`:''}${S.bst?`<em>💎 ${S.bst}</em>`:''}`;$('lchip').innerHTML=S.lord.n?`${(S.ugc||{})['lord:me']?`<img class="lcav" src="${S.ugc['lord:me']}">`:''}<b>${S.lord.f||'👤'}</b>${esc(S.lord.n)} Lv.${S.lord.l}`:'<b>👤</b>設定主公';navDots();
  if($('heroes').classList.contains('on'))fillPool($('hpool'));
  if($('form').classList.contains('on')){fillFormList()}
@@ -1749,17 +1759,18 @@ let UGCLEAN=0;async function ugcClean(){if(UGCLEAN||!SB||!ME)return;UGCLEAN=1;tr
 function renderUGC(){const V=UGV,key=ugcKey(V.kind,V.ref),cur=(S.ugc||{})[key]||'',adm=(()=>{try{return localStorage.getItem('sgAdm')||''}catch(e){return ''}})();
  const nm=V.kind==='lord'?'主公頭像':V.kind==='bea'?((BEA.find(b=>b.id===V.ref)||{}).n||'')+'・紅顏圖鑑':['scene','eq','qm'].includes(V.kind)?ugcName(V.kind,V.ref):hname(V.ref)+'・圖鑑',P=ugcPrompt(V.kind,V.ref),ratio=V.kind==='lord'||V.kind==='eq'||V.kind==='qm'?'1/1':V.kind==='scene'?'9/16':'3/4';
  let h=`<div class="shh"><b>🎨 ${nm}</b><button data-u="x" style="flex:none;width:44px;padding:6px 0">✕</button></div>
- <p class="sub">${V.kind==='lord'?'上傳你自己的主公頭像（只有你使用）。':'所有玩家上傳的圖都能自由選用；點「使用」只改變你自己看到的圖。沒有選的玩家會看到最多人喜歡的那張。每位武將保留前 10 名，新圖有 7 天保護期。'}</p>
- <div class="ugg" style="--ar:${ratio}">${V.kind!=='lord'?`<div class="ugc${!cur||cur==='ink'?'':''}"><div class="ugi" style="background-image:url(${V.kind==='bea'&&BEAIMG.has(V.ref)?`bea/${V.ref}_s.jpg`:V.kind==='scene'?(V.ref==='arena'?arenaArt():V.ref.startsWith('tw_')?twOneArt(V.ref.slice(3),270,480):''):['eq','qm'].includes(V.kind)?'':inkDrawCached(V)})">${V.kind==='eq'?`<span class="ugdef">${SLN(V.ref.slice(0,2)).ic}</span>`:V.kind==='qm'?`<span class="ugdef">${(QMD.find(q=>q.id===V.ref)||{}).ic||''}</span>`:V.kind==='scene'&&!['arena'].includes(V.ref)&&!V.ref.startsWith('tw_')?'<span class="ugdef">🖼</span>':''}</div><div class="ugm"><b>${V.kind==='bea'?'原版預設':['scene','eq','qm'].includes(V.kind)?'遊戲預設':'水墨預設'}</b></div><button data-u="use" data-p="ink" class="${cur==='ink'?'on':''}">${cur==='ink'?'使用中':'使用'}</button></div>`:''}
- ${V.list.map(r=>{const u=ugcUrl(r.path),mine=ME&&r.owner===ME.id,using=cur===u;return `<div class="ugc"><div class="ugi" style="background-image:url(${u})"></div><div class="ugm"><b>❤️ ${r.likes}</b><small>${esc(r.owner_name||'玩家')}</small></div>
-  <div class="ugb"><button data-u="use" data-p="${u}" class="${using?'on':''}">${using?'使用中':'使用'}</button>${V.kind!=='lord'?`<button data-u="like" data-i="${r.id}">❤️</button><button data-u="rep" data-i="${r.id}">⚠</button>`:''}${mine?`<button data-u="del" data-i="${r.id}" data-p="${r.path}">🗑</button>`:''}${adm?`<button data-u="adm" data-i="${r.id}">🛑</button>`:''}</div></div>`}).join('')}</div>
+ <p class="sub">${V.kind==='lord'?'上傳你自己的主公頭像（只有你使用）。':'所有玩家上傳的圖都能自由選用；點「使用」只改變你自己看到的圖。沒有選的玩家會看到最多人喜歡的那張。每個項目保留前 10 名，新圖有 7 天保護期。'}</p>
+ <div class="ugg" style="--ar:${ratio}">${V.kind!=='lord'?`<div class="ugc${cur==='ink'?' cur':''}"><div class="ugi" style="background-image:url(${V.kind==='bea'&&BEAIMG.has(V.ref)?`bea/${V.ref}_s.jpg`:V.kind==='scene'?(V.ref==='arena'?arenaArt():V.ref.startsWith('tw_')?twOneArt(V.ref.slice(3),270,480):''):['eq','qm'].includes(V.kind)?'':inkDrawCached(V)})">${V.kind==='eq'?`<span class="ugdef">${SLN(V.ref.slice(0,2)).ic}</span>`:V.kind==='qm'?`<span class="ugdef">${(QMD.find(q=>q.id===V.ref)||{}).ic||''}</span>`:V.kind==='scene'&&!['arena'].includes(V.ref)&&!V.ref.startsWith('tw_')?'<span class="ugdef">🖼</span>':''}</div><div class="ugm"><b>${V.kind==='bea'?'原版預設':['scene','eq','qm'].includes(V.kind)?'遊戲預設':'水墨預設'}</b></div><button data-u="use" data-p="ink" class="${cur==='ink'?'on':''}">${cur==='ink'?'使用中':'使用'}</button></div>`:''}
+ ${V.list.map(r=>{const u=ugcUrl(r.path),mine=ME&&r.owner===ME.id,using=cur===u;return `<div class="ugc${using?' cur':''}"><div class="ugi" style="background-image:url(${u})">${using?'<em class="ugcur">使用中</em>':''}</div><div class="ugm"><b>❤️ ${r.likes}</b><small>${esc(r.owner_name||'玩家')}</small></div>
+  <div class="ugb"><button data-u="use" data-p="${u}" class="ugu${using?' on':''}">${using?'使用中':'使用'}</button>${V.kind!=='lord'?`<button data-u="like" data-i="${r.id}">❤️</button><button data-u="rep" data-i="${r.id}">⚠</button>`:''}</div>${mine||adm?`<div class="ugb ugb2">${mine?`<button data-u="del" data-i="${r.id}" data-p="${r.path}">🗑 刪除</button>`:''}${adm?`<button data-u="adm" data-i="${r.id}">🛑 管理刪除</button>`:''}</div>`:''}</div>`}).join('')}</div>
  ${V.msg?`<p class="sub" style="color:#ffd27a">${V.msg}</p>`:''}
  ${V.prev?`<div class="ugpv"><div class="ugi" style="aspect-ratio:${ratio};background-image:url(${V.prev.url})"></div><div class="btns"><button data-u="send" ${V.busy?'disabled':''}>${V.busy?'上傳中…':'確認上傳'}</button><button class="g" data-u="pvx">取消</button></div></div>`:''}
- <div class="sec">上傳新圖</div>${ME?(()=>{const L=ugcLeft();return V.kind==='lord'||!V.q?'':`<p class="ugq${L.n<=0?' no':''}">${L.n<=0?'⛔ '+L.why:`今日還可上傳 <b>${L.d}</b> 張（這位還可 <b>${L.r}</b> 張）`}</p>`})()+(V.kind!=='lord'&&ugcLeft().n<=0?'<label class="ugup dis">📤 今日已達上限</label>':`<label class="ugup">📤 選擇圖片<input type="file" accept="image/*" id="ugf" hidden></label>`)+`<p class="sub" style="font-size:11px">會自動裁成 ${V.kind==='lord'?'1:1':'3:4'}、壓縮到約 100KB。每天最多 20 張、同一位武將每天 3 張（頭像不限）。請上傳自己畫或 AI 生成的圖，<b>禁止上傳其他遊戲的原圖或不雅內容</b>，被 3 人檢舉會自動隱藏。</p>`:'<p class="sub">上傳、喜歡與檢舉需要登入（到「競技」用 Email 登入）。</p>'}
- <details class="ugtip"><summary>🖌 畫圖規格與提示詞</summary><ul><li>${V.kind==='lord'?'正方形，臉在中間':'直式 3:4，至少 600×800'}</li><li>人物放在上方約 75%，最下方 25% 要素一點（會蓋名字與血條）</li><li>畫面內不要有文字、不要有外框</li><li>背景暗一點，人物比較突出</li></ul>
+ <div class="sec">上傳新圖</div>${ME?(()=>{const L=ugcLeft();return V.kind==='lord'||!V.q?'':`<p class="ugq${L.n<=0?' no':''}">${L.n<=0?'⛔ '+L.why:`今日還可上傳 <b>${L.d}</b> 張（這位還可 <b>${L.r}</b> 張）`}</p>`})()+(V.kind!=='lord'&&ugcLeft().n<=0?'<label class="ugup dis">📤 今日已達上限</label>':`<label class="ugup">📤 選擇圖片<input type="file" accept="image/*" id="ugf" hidden></label>`)+`<p class="sub" style="font-size:11px">會自動裁成 ${ratio.replace('/',':')}、壓縮到約 ${V.kind==='scene'?300:100}KB。每天最多 20 張、同一個項目每天 3 張（頭像不限）。請上傳自己畫或 AI 生成的圖，<b>禁止上傳其他遊戲的原圖或不雅內容</b>，被 3 人檢舉會自動隱藏。</p>`:'<p class="sub">上傳、喜歡與檢舉需要登入（到「競技」用 Email 登入）。</p>'}
+ <details class="ugtip"><summary>🖌 畫圖規格與提示詞</summary><ul>${V.kind==='scene'?'<li>直式 9:16，至少 720×1280</li><li>中間偏下留給武將或按鈕，構圖不要太雜</li>':V.kind==='eq'||V.kind==='qm'?'<li>正方形，物件置中</li><li>背景簡單，縮小後也看得清楚</li>':`<li>${V.kind==='lord'?'正方形，臉在中間':'直式 3:4，至少 600×800'}</li><li>人物放在上方約 75%，最下方 25% 要素一點（會蓋名字與血條）</li>`}<li>畫面內不要有文字、不要有外框</li><li>背景暗一點，人物比較突出</li></ul>
  <div class="ugpr"><b>中文提示詞</b><p>${P.zh}</p><button data-u="cp" data-t="zh">複製</button></div><div class="ugpr"><b>English prompt</b><p>${P.en}</p><button data-u="cp" data-t="en">Copy</button></div></details>
  <details class="ugtip"><summary>🛡 管理員</summary><input id="ugAdm" placeholder="管理員密碼" value="${esc(adm)}"><button data-u="admset">儲存</button></details>`;
- $('ugBody').innerHTML=h;const f=$('ugf');if(f)f.onchange=()=>ugcPick(f.files[0])}
+ $('ugBody').innerHTML=h;const f=$('ugf');if(f)f.onchange=()=>ugcPick(f.files[0]);
+ const g=$('ugBody').querySelector('.ugg');if(g){const cs=[...g.children].map(c=>c.outerHTML),per=V.kind==='scene'?2:4;g.outerHTML=`<div class="ugg2" style="--ar:${ratio}">${pager(chunk(cs,per).map(c=>`<div class="uggp${V.kind==='scene'?' sc':''}">${c.join('')}</div>`),'ugpg','ug'+key)}</div>`;requestAnimationFrame(()=>pgRestore($('ugBody')))}}
 function inkDrawCached(V){return V.kind==='bea'?artOfInk(V.ref,true):artOfInk(V.ref,true)}
 function artOfInk(id,big){const h=H.find(x=>x.id===id)||BEA_H(id);if(!h)return '';const C=big?ART2C:ARTC,k='ink_'+id;if(!C[k])C[k]=inkDraw(h,big?480:240,big?640:320);return C[k]}
 async function ugcPick(file){if(!file)return;try{const bm=await createImageBitmap(file);const lord=UGV.kind==='lord'||UGV.kind==='eq'||UGV.kind==='qm',scn=UGV.kind==='scene',W=scn?720:lord?400:600,Hh=scn?1280:lord?400:800,c=document.createElement('canvas');c.width=W;c.height=Hh;const x=c.getContext('2d');
@@ -2677,7 +2688,7 @@ function twOneArt(k,W,Hh){const key=k+W+'x'+Hh;if(TWART[key])return TWART[key];c
 function towerScene(){if(!TWK||!TOWERS.includes(TWK))TWK=(S.pref&&S.pref.twk)||'exp';const k=TWK,T=S.tw[k],O=TWONE[k],W=Math.min(innerWidth,560),Hh=innerHeight,nc=typeof msClaimable==='function'?msClaimable():0,i=TOWERS.indexOf(k);
  const ub=typeof ugcScene==='function'&&ugcScene('tw_'+k);
  return `<div class="twsc tw1" style="background-image:url(${ub||twOneArt(k,W,Hh)})">${ub?'<div class="ugdim"></div>':''}<div class="twcl"><i></i><i></i></div>
- <div class="twsh"><button class="xb" data-y="x">←</button><b>試煉塔</b><button class="ugb" data-y="ugs" data-r="tw_${k}"${typeof ugcIsNew==='function'&&ugcIsNew('scene','tw_'+k)?' data-dot':''}>🎨</button></div>
+ <div class="twsh"><button class="xb" data-y="x">←</button><b>試煉塔</b><button class="ugbtn" data-y="ugs" data-r="tw_${k}"${typeof ugcIsNew==='function'&&ugcIsNew('scene','tw_'+k)?' data-dot':''}>🎨</button></div>
  <button class="tw1t" data-y="map" data-k="${k}"></button>
  <div class="tw1n" style="--tc:${O.c}"><b>${O.n.split('').join('<br>')}</b><small>${O.sub.split('').join('<br>')}</small></div>
  <div class="tw1f"><span>${T.done?'已登頂':`第 <b>${T.f+1}</b> 層`}</span><small>／${NF}　${TRW[k].split('（')[0]}</small></div>
@@ -2974,7 +2985,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261030b';
+const CVER='20261030c';
 function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${b.x*100}%;top:${b.y*100}%;width:${b.w*s}px;height:${b.h*s}px"><span class="cpl">${[...b.n].join('<br>')}</span></button>`).join('');
  CITYB.filter(b=>!b.hide).forEach(b=>{const e=$('cb_'+b.k);e.querySelector('.cpl').style.top=(b.k==='jj'?-40:-30)*s+'px'});if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityBind()}
 
@@ -3144,6 +3155,7 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261030c',d:'10/30',t:['圖鑑頁的「使用、❤️、⚠」按鈕放大，改成左右滑動分頁（背景每頁 2 張、其他每頁 4 張），使用中的圖會加金框','背景、圖示圖鑑的說明改成對應的比例與大小','戰場：敵方後排不再縮那麼小，敵我中間加分隔線，敵方腳下改成紅光，敵方空排自動收攏']},
  {v:'20261030b',d:'10/30',t:['主城重新分區：左側商城、任務、收益、公告；右下好友、排行、圖鑑；按鈕拉開距離，右下「×」可以收起按鈕欣賞主城','東西多的頁面改成左右滑動分頁：武將列表（每頁 16 位）、圖鑑總覽、好友、戰報、碎片合成、更新紀錄、戰場狀態；商城改成分類分頁']},
  {v:'20261030a',d:'10/30',t:['爬塔新增「謀略關」：351 層起每 10 層一關、1000 層起每層都是，例如只能派魏將、只怕火燒、前排不能站人、5 回合內打完…；每 100 層有名將守關','謀略關出征前會顯示規則與提示，可以一鍵排出「本關推薦陣容」；首次破關送竹簡 10、萬用卡 1','修正個人中心「換背景」選單沒有顯示武將圖','武將列表新增「🎨 換圖」：一鍵改用玩家票選第一名、全部水墨畫，或只換有新圖的；新玩家第一次會詢問']},
  {v:'20261029z',d:'10/29',t:['試煉塔改成「一畫面一座塔」的大幅水墨畫，左右滑動換塔，下方直接挑戰或一鍵爬塔','遊戲會記住你上次的選擇：武將篩選的陣營、試煉塔、背包分類、武將頁分頁、建議陣容、招募陣營、好友分頁','戰場、主城、征戰、各座塔、個人中心的背景，以及裝備與奇謀圖示，都開放玩家上傳；主城新增「🎨 圖鑑總覽」','碎片頁會標出可以合成的稀有度，並從武將列表、試煉塔、背包進去時，返回會回到原來那一頁']},
