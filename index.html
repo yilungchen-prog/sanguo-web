@@ -1,19 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="墨戰三國"><meta name="theme-color" content="#1a1410"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@700&display=swap" rel="stylesheet"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.ugal{position:fixed;inset:0;z-index:200;background:#000a;display:flex;align-items:center;justify-content:center;padding:20px}.ugal>div{background:#f3e8cf;color:#2a1c10;border-radius:14px;padding:16px 18px;max-width:320px;width:100%;text-align:center;box-shadow:0 8px 30px #000;animation:hvpop .25s ease}.ugal b{font-size:19px;color:#8a1c10}.ugal p{font-size:16px;line-height:1.6;margin:10px 0 14px}.ugal button{width:100%;min-height:46px;font-size:17px}.ugq{font-size:15px;margin:6px 0;color:#bfe9c6}.ugq.no{color:#ff9a8a}.ugup.dis{opacity:.45;pointer-events:none}
 
-/* 武將頁放大版 */
-#hero .hv{font-size:15px}#hero .hvtt{font-size:24px}#hero .hvres em{font-size:13px;padding:3px 9px}#hero .hvback{width:48px;height:44px;font-size:26px}
-#hero .hvname{top:calc(env(safe-area-inset-top,0px) + 58px)}#hero .hvn{font-size:42px}#hero .hvq span{font-size:13px;padding:2px 9px}#hero .hvq b{font-size:15px}#hero .hvtags span{font-size:13px;padding:2px 10px}
-#hero .hvl1{top:calc(env(safe-area-inset-top,0px) + 64px);gap:10px}#hero .hvl1 button{width:62px;height:62px;font-size:12px}#hero .hvl1 button b{font-size:22px}
-#hero .hvsk{gap:11px}#hero .hvo{width:68px;height:68px;font-size:11px}#hero .hvo b{font-size:17px}#hero .hvo span{font-size:11px}#hero .hvo i{width:22px;height:22px;line-height:22px;font-size:12px}
-#hero .hvb{left:74px;right:86px;font-size:15px;line-height:1.6;padding:12px 14px}
-#hero .hvar{width:36px;height:66px;font-size:30px}
-#hero .hvst{bottom:calc(env(safe-area-inset-bottom,0px) + 92px)}#hero .hvpw{font-size:30px}#hero .hvpw small{font-size:15px}#hero .hvlv{font-size:15px}#hero .hvg{font-size:14px;gap:2px 16px}
-#hero .hvbig{width:104px;height:104px;font-size:19px;bottom:calc(env(safe-area-inset-bottom,0px) + 90px)}#hero .hvbig b{font-size:26px}
-#hero .hvtabs{grid-template-columns:repeat(5,1fr);gap:5px;padding:8px 6px calc(env(safe-area-inset-bottom,0px) + 8px)}#hero .hvt{padding:8px 0;min-height:64px;font-size:16px;letter-spacing:1px;justify-content:center}#hero .hvt b{font-size:22px}
-#hero .hvs{bottom:calc(env(safe-area-inset-bottom,0px) + 80px);max-height:60%}#hero .hvsx{width:80px;height:30px;font-size:18px}#hero .hvsc{font-size:15px;line-height:1.6;padding:6px 14px 14px}
-#hero .hvsc .sht{font-size:21px}#hero .hvsc .sub{font-size:14px}#hero .hvsc .sec{font-size:16px}#hero .hvsc .skr{font-size:15px;padding:9px 11px}#hero .hvsc button{min-height:48px;font-size:16px}#hero .hvsc .rq{font-size:15px}#hero .hvsc .sr{font-size:15px}
-#hero .hve{min-height:92px;font-size:14px}#hero .hve b{font-size:26px}#hero .hve small{font-size:12px}#hero .hvx{max-width:360px}
-#hero .hvi{font-size:15px;padding:10px 12px}#hero .hvpp .shh b{font-size:19px}
 </style></head><body>
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
@@ -323,46 +309,68 @@ body:not(.full) .synb{white-space:normal;overflow:visible;line-height:1.45}body:
 .cell .stx{position:absolute;left:2px;top:22%;display:flex;flex-direction:column;gap:0;font-size:calc(var(--ch,80px)*.13);z-index:7;pointer-events:none;line-height:1.05}.cell .stx i{font-style:normal;text-shadow:0 0 3px #000;color:#fff}
 .card.ink .nm{display:none}
 #hero.ov{background:#000;overflow:hidden}#hero .pan{max-width:none;padding:0;height:100%}
-.hv{position:fixed;inset:0;overflow:hidden;color:#fff;font-size:13px;max-width:560px;margin:0 auto}
-.hvbg{position:absolute;inset:0;background:center 20%/cover no-repeat;transition:filter .3s}.hv.lock .hvbg{filter:grayscale(.7) brightness(.55)}
+.hv{position:fixed;inset:0;overflow:hidden;color:#fff;font-size:16px;max-width:560px;margin:0 auto;font-family:'LXGW WenKai TC',"Noto Serif TC",serif;--cal:'LXGW WenKai TC',"Noto Serif TC",serif}
+.hv button{font-family:var(--cal)}
+.hvbg{position:absolute;inset:0;background:center 30%/cover no-repeat;transition:filter .3s}.hv.lock .hvbg{filter:grayscale(.7) brightness(.55)}
 .hvbg.inr{animation:hvinr .35s ease}.hvbg.inl{animation:hvinl .35s ease}@keyframes hvinr{from{transform:translateX(30%);opacity:0}}@keyframes hvinl{from{transform:translateX(-30%);opacity:0}}
-.hvsh{position:absolute;inset:0;background:linear-gradient(#000a,#0000 18%,#0000 52%,#000c 78%,#000e);pointer-events:none}
+.hvsh{position:absolute;inset:0;background:linear-gradient(#000b,#0000 16%,#0000 58%,#000a 74%,#000e);pointer-events:none}
 .hv.view>*:not(.hvbg){opacity:0;pointer-events:none;transition:opacity .25s}.hv.view .hvbg{filter:none}
-.hvtop{position:absolute;top:calc(env(safe-area-inset-top,0px) + 6px);left:8px;right:84px;display:flex;align-items:center;gap:8px}
-.hvback{width:40px;height:36px;padding:0;font-size:22px;flex:none}.hvtt{font:900 22px serif;letter-spacing:4px;text-shadow:0 2px 4px #000}
-.hvres{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.hvres em{font-style:normal;font-size:11px;background:#0009;border:1px solid #fff3;border-radius:10px;padding:2px 7px}
-.hvname{position:absolute;top:calc(env(safe-area-inset-top,0px) + 50px);right:10px;text-align:right;text-shadow:0 2px 6px #000}
-.hvn{font:900 34px 'LXGW WenKai TC',serif;letter-spacing:6px;color:#fff3d6}.hvq span{font-size:11px;color:#111;border-radius:8px;padding:1px 7px;margin-right:4px;font-weight:700}.hvq b{color:#ffd27a}
-.hvtags span{display:inline-block;font-size:11px;border-radius:9px;padding:1px 8px;margin:4px 0 0 4px;background:#0009;border:1px solid #fff4}.hvtags .st{color:#ffd27a}
-.hvl1{position:absolute;left:8px;top:calc(env(safe-area-inset-top,0px) + 56px);display:flex;flex-direction:column;gap:8px}
-.hvl1 button{width:50px;height:50px;border-radius:50%;padding:0;font-size:10px;line-height:1.1;background:radial-gradient(circle at 35% 30%,#3d4a46,#141c1b);border:2px solid #c9b07a88;color:#f0e2bd;display:flex;flex-direction:column;align-items:center;justify-content:center}.hvl1 button b{font-size:18px}
-.hvsk{position:absolute;right:8px;top:42%;display:flex;flex-direction:column;gap:9px;align-items:flex-end}
-.hvo{position:relative;width:58px;height:58px;border-radius:50%;padding:0;background:radial-gradient(circle at 35% 30%,var(--fc),#1a1020 75%);border:2px solid #ffd27a;box-shadow:0 0 10px var(--fc);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:#fff;animation:hvpop .4s ease backwards}
-.hvo:nth-child(2){animation-delay:.06s}.hvo:nth-child(3){animation-delay:.12s}.hvo:nth-child(4){animation-delay:.18s}.hvo b{font:900 15px 'LXGW WenKai TC',serif}.hvo span{opacity:.8;font-size:9px}
-.hvo i{position:absolute;left:-4px;top:-4px;font-style:normal;font-size:10px;width:18px;height:18px;line-height:18px;border-radius:50%;background:#111;border:1px solid #ffd27a;color:#ffd27a}.hvo.on{transform:scale(1.1);box-shadow:0 0 18px #ffd27a}
+/* 左上「武將」書法標題 */
+.hvtt{position:absolute;left:-10px;top:calc(env(safe-area-inset-top,0px) - 6px);width:170px;height:96px;display:flex;align-items:center;justify-content:center;font:900 40px var(--cal);letter-spacing:2px;color:#111;text-shadow:0 0 1px #fff,0 0 6px #fff8;
+ background:radial-gradient(ellipse 60% 50% at 45% 55%,#f3e8cf 0 60%,#f3e8cf00 72%),radial-gradient(ellipse 75% 62% at 40% 55%,#1d3a36 0 62%,#1d3a3600 75%);padding-top:4px}
+.hvres{position:absolute;right:8px;top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;gap:6px}.hvres em{font-style:normal;font-size:15px;background:linear-gradient(#0c1514e6,#1d2b29e6);border:1px solid #c9a55a;border-radius:16px;padding:4px 12px;font-family:sans-serif}
+/* 名字 */
+.hvname{z-index:1;isolation:isolate;position:absolute;top:calc(env(safe-area-inset-top,0px) + 58px);right:12px;text-align:right}
+.hvn{position:relative;display:inline-block;font:900 50px var(--cal);letter-spacing:6px;color:#fff;text-shadow:0 0 2px #000,0 3px 8px #000c;padding:0 4px 0 18px}
+.hvn::before{content:'';position:absolute;left:0;right:-6px;bottom:6px;height:26px;background:linear-gradient(90deg,#b0201800,#b02018d0 18%,#c43020 70%,#b0201800);border-radius:50% 10% 50% 10%;transform:skewX(-14deg);z-index:-1}
+.hvq{margin-top:2px;display:flex;gap:6px;align-items:center;justify-content:flex-end}.hvq span{font:900 16px var(--cal);color:#fff;border-radius:6px;padding:1px 8px;border:1px solid #fff8;text-shadow:0 1px 2px #000}.hvq b{font:900 19px var(--cal);color:#ffd27a;text-shadow:0 2px 4px #000}
+.hvtags{margin-top:6px;display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}.hvtags span{font:700 15px var(--cal);border-radius:6px;padding:2px 10px;background:#3a0c08cc;border:1.5px solid #e0603a;color:#ffe1c8;text-shadow:0 1px 2px #000}.hvtags .st{color:#ffd27a;border-color:#d9b25a;background:#2a1e08cc}
+/* 左側圓形功能鈕 */
+.hvl1{position:absolute;left:10px;top:calc(env(safe-area-inset-top,0px) + 104px);display:flex;flex-direction:column;gap:6px}
+.hvl1 button{position:relative;width:64px;height:auto;min-height:0;padding:0;background:none;border:none;box-shadow:none;display:flex;flex-direction:column;align-items:center;color:#fff}
+.hvl1 button b{display:flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;font-size:26px;background:radial-gradient(circle at 40% 35%,#3f6e66,#12302b 70%);border:2px solid #9fc7b8aa;box-shadow:0 3px 8px #000a,inset 0 0 8px #000a}
+.hvl1 button span{font:900 17px var(--cal);margin-top:-6px;letter-spacing:2px;text-shadow:0 0 3px #000,0 0 6px #000,0 2px 2px #000}
+.hvl1 button:disabled{opacity:.45}
+/* 技能珠（右側交錯） */
+.hvsk{position:absolute;right:0;top:33%;width:190px;height:280px}
+.hvo{position:absolute;width:74px;padding:0;background:none;border:none;box-shadow:none;min-height:0;display:flex;flex-direction:column;align-items:center;animation:hvpop .4s ease backwards;color:#fff}
+.hvo:nth-child(1){right:84px;top:0}.hvo:nth-child(2){right:8px;top:62px;animation-delay:.06s}.hvo:nth-child(3){right:104px;top:116px;animation-delay:.12s}.hvo:nth-child(4){right:24px;top:178px;animation-delay:.18s}
+.hvo u{position:relative;display:flex;align-items:center;justify-content:center;width:68px;height:68px;border-radius:50%;text-decoration:none;font:900 30px var(--cal);color:#fff6dc;text-shadow:0 0 6px var(--sc),0 2px 3px #000;background:radial-gradient(circle at 38% 32%,var(--sc) 0,#2a120a 72%);border:3px solid #1b120c;box-shadow:0 0 0 2px #d9b25a,0 0 14px var(--sc),inset 0 0 12px #000c}
+.hvo i{position:absolute;left:-2px;top:-2px;font:900 14px sans-serif;font-style:normal;width:24px;height:24px;line-height:22px;text-align:center;border-radius:50%;background:#1b120c;border:2px solid #d9b25a;color:#ffd27a}
+.hvo span{font:900 15px var(--cal);margin-top:3px;white-space:nowrap;letter-spacing:1px;text-shadow:0 0 3px #000,0 0 6px #000,0 2px 2px #000}
+.hvo.on u{transform:scale(1.12);box-shadow:0 0 0 3px #ffe08a,0 0 22px #ffd27a}
 @keyframes hvpop{from{transform:scale(.3);opacity:0}}
-.hvb{position:absolute;right:76px;left:64px;top:38%;background:#f3e8cfef;color:#2a1c10;border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.55;box-shadow:0 6px 20px #000a;animation:hvpop .25s ease;z-index:3}.hvb b{color:#7a1c10}
-.hvar{position:absolute;top:47%;width:28px;height:56px;padding:0;font-size:24px;background:#0006;border:1px solid #fff3;border-radius:8px}.hvar.l{left:0}.hvar.r{right:0;top:30%}
-.hvst{position:absolute;left:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);text-shadow:0 2px 4px #000}
-.hvpw{font:900 italic 26px serif;color:#ffcf5a;text-shadow:0 0 8px #a35a00,0 2px 2px #000}.hvpw small{font-size:13px;color:#fff;font-style:normal;margin-right:6px}.hvlv{font-size:13px}
-.hvg{display:grid;grid-template-columns:auto auto;gap:1px 14px;font-size:12px;color:#ddd}.hvg b{color:#fff}
-.hvbig{position:absolute;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 74px);width:92px;height:92px;border-radius:50%;padding:0;font:900 17px serif;letter-spacing:2px;background:radial-gradient(circle at 40% 35%,#d0453b,#6a1410);border:3px solid #f0c66a;box-shadow:0 0 16px #ff6a3c99;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:hvbr 2.4s ease-in-out infinite}.hvbig b{font-size:22px}
-@keyframes hvbr{50%{box-shadow:0 0 26px #ffb03ccc}}
-.hvtabs{position:absolute;left:0;right:0;bottom:0;padding:6px 6px calc(env(safe-area-inset-bottom,0px) + 6px);display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:linear-gradient(#0000,#000c 30%)}
-.hvt{position:relative;padding:6px 0;font:700 15px serif;letter-spacing:2px;background:linear-gradient(#2a3a36,#121a19);border:1px solid #c9b07a88;border-radius:10px;display:flex;flex-direction:column;align-items:center}.hvt b{font-size:16px}.hvt.on{background:linear-gradient(#7a5a20,#3a2a10);border-color:#ffd27a}
-.hvt .dot,.hvl1 .dot{position:absolute;right:8px;top:4px;width:9px;height:9px;border-radius:50%;background:#ff3b30;box-shadow:0 0 4px #f00}
-.hvs{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);max-height:56%;background:#0f1514f2;border-top:2px solid #c9b07a;border-radius:16px 16px 0 0;transform:translateY(110%);transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility .3s;display:flex;flex-direction:column;z-index:4;visibility:hidden;pointer-events:none}
-.hvs.on{transform:none;visibility:visible;pointer-events:auto}.hvsx{align-self:center;width:60px;height:22px;padding:0;margin-top:4px;font-size:14px;line-height:1}.hvsc{overflow-y:auto;padding:4px 12px 12px;-webkit-overflow-scrolling:touch}
-.sht{font:900 18px serif;letter-spacing:3px;color:#ffd27a;margin:2px 0 6px}
+.hvb{position:absolute;left:12px;right:12px;top:30%;background:#f3e8cf;color:#2a1c10;border-radius:12px;padding:14px 16px;font-size:17px;line-height:1.65;box-shadow:0 8px 24px #000c;animation:hvpop .25s ease;z-index:5;border:2px solid #8a6a30}.hvb b{color:#8a1c10;font:900 20px var(--cal)}.hvb small{color:#6a5a40}
+.hvb::after{content:'點一下關閉';display:block;text-align:right;font-size:13px;color:#8a7a60;margin-top:4px}
+.hvar{position:absolute;top:46%;width:34px;height:70px;padding:0;font-size:30px;background:#0007;border:1px solid #d9b25a66;border-radius:8px;min-height:0}.hvar.l{left:0;top:62%}.hvar.r{right:0;top:24%}
+/* 戰力與數值 */
+.hvst{position:absolute;left:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 98px);text-shadow:0 2px 4px #000}
+.hvpw{display:flex;align-items:baseline;gap:6px;padding:0 18px 0 4px;background:linear-gradient(90deg,#5a1a10dd,#5a1a1000);border-radius:4px}.hvpw small{font:900 26px var(--cal);color:#ffe3a8}.hvpw b{font:900 italic 34px serif;color:#ffcf5a;text-shadow:0 0 8px #a35a00,0 2px 2px #000}
+.hvlv{font:700 18px var(--cal);margin:4px 0 2px}.hvg{display:grid;grid-template-columns:auto auto;gap:2px 22px;font-size:17px;color:#e8d8b0}.hvg b{color:#fff;font-family:sans-serif;font-weight:700}
+.hvbig{position:absolute;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 96px);width:120px;height:120px;border-radius:50%;padding:0;min-height:0;font:900 26px/1.15 var(--cal);letter-spacing:4px;color:#fff3c4;text-shadow:0 2px 4px #000;background:radial-gradient(circle at 40% 35%,#d0453b,#6a1410);border:4px solid #f0c66a;box-shadow:0 0 18px #ff6a3c99,inset 0 0 14px #0007;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:hvbr 2.4s ease-in-out infinite}.hvbig b{font-size:26px}
+@keyframes hvbr{50%{box-shadow:0 0 28px #ffb03ccc,inset 0 0 14px #0007}}
+/* 底部書法分頁 */
+.hvtabs{position:absolute;left:0;right:0;bottom:0;padding:6px 6px calc(env(safe-area-inset-bottom,0px) + 8px);display:grid;grid-template-columns:40px repeat(5,1fr);gap:2px;align-items:center;background:linear-gradient(#0000,#0b1312ee 30%)}
+.hvx0{width:40px;height:50px;padding:0;min-height:0;font-size:30px;color:#f0c66a;background:none;border:none;box-shadow:none;text-shadow:0 0 6px #000}
+.hvt{position:relative;justify-self:center;width:min(60px,100%);aspect-ratio:1;height:auto;padding:0;min-height:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font:900 19px/1 var(--cal);letter-spacing:0;color:#fff3d6;text-shadow:0 0 4px #000,0 2px 2px #000;
+ background:radial-gradient(circle at 50% 40%,#2c4a44,#0d1f1c 72%);border:2px solid #7fa596;box-shadow:0 0 0 3px #0d1f1c,0 0 0 4px #c9a55a88,0 4px 8px #000a}
+.hvt.on{border-color:#ffd27a;background:radial-gradient(circle at 50% 40%,#7a5a20,#2a1a08 72%);box-shadow:0 0 0 3px #2a1a08,0 0 0 4px #ffd27a,0 0 14px #ffd27a88}
+.hvt:disabled{opacity:.4}
+.hvt .dot,.hvl1 .dot{position:absolute;right:0;top:0;width:20px;height:20px;border-radius:50%;background:#e0281c;border:2px solid #fff;box-shadow:0 0 6px #f00}.hvt .dot::after,.hvl1 .dot::after{content:'!';position:absolute;inset:0;font:900 13px/16px sans-serif;text-align:center;color:#fff;font-style:normal}
+/* 第二層面板 */
+.hvs{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 82px);max-height:62%;background:#0f1514f4;border-top:2px solid #c9b07a;border-radius:18px 18px 0 0;transform:translateY(120%);transition:transform .3s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;z-index:4}
+.hvs:not(.on){pointer-events:none;visibility:hidden}.hvs{transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility .3s}.hvs.on{transform:none}.hvsx{align-self:center;width:84px;height:32px;padding:0;min-height:0;margin-top:6px;font-size:18px;line-height:1}.hvsc{overflow-y:auto;padding:6px 14px 16px;-webkit-overflow-scrolling:touch;font-size:16px;line-height:1.65}
+.hvsc .sht{font:900 24px var(--cal);letter-spacing:3px;color:#ffd27a;margin:2px 0 8px}.hvsc .sub{font-size:15px}.hvsc .sec{font:900 18px var(--cal)}.hvsc .skr{font-size:16px;padding:10px 12px}.hvsc .skr b{font-family:var(--cal);font-size:18px}
+.hvsc button{min-height:50px;font-size:17px}.hvsc .rq,.hvsc .sr{font-size:16px}.hvsc .skb{font-size:16px}
 .hv2{display:grid;gap:8px}
-.hvx{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;max-width:330px;margin:6px auto}
-.hve{min-height:78px;padding:6px 4px;border-radius:12px;background:linear-gradient(#26302e,#121918);border:2px solid #555;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px}.hve b{font-size:22px}.hve small{opacity:.75;font-size:10px}
-.hvae{border-radius:50%;aspect-ratio:1;font-weight:900;background:radial-gradient(circle,#7a5a20,#2a1a08);border:2px solid #ffd27a}
-.hvp{position:absolute;inset:0;background:#000a;z-index:6;display:flex;align-items:flex-end}.hvpp{width:100%;max-height:70%;overflow-y:auto;background:#121918;border-radius:16px 16px 0 0;padding:10px 12px calc(env(safe-area-inset-bottom,0px) + 12px);animation:hvup .25s ease}
+.hvx{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;max-width:360px;margin:6px auto}
+.hve{min-height:96px;padding:6px 4px;border-radius:14px;background:linear-gradient(#26302e,#121918);border:2px solid #555;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:15px}.hve b{font-size:28px}.hve small{opacity:.8;font-size:13px}
+.hvae{border-radius:50%;aspect-ratio:1;font:900 18px var(--cal);background:radial-gradient(circle,#7a5a20,#2a1a08);border:2px solid #ffd27a}
+.hvp{position:absolute;inset:0;background:#000a;z-index:6;display:flex;align-items:flex-end}.hvpp{width:100%;max-height:72%;overflow-y:auto;background:#121918;border-radius:18px 18px 0 0;padding:12px 14px calc(env(safe-area-inset-bottom,0px) + 14px);animation:hvup .25s ease}.hvpp .shh b{font:900 21px var(--cal)}
 @keyframes hvup{from{transform:translateY(40%);opacity:0}}
-.hvl{display:flex;flex-direction:column;gap:6px}.hvi{display:grid;grid-template-columns:1fr auto;gap:2px 8px;text-align:left;padding:8px 10px;border-radius:10px;background:#1d2726;border:1px solid #fff2}.hvi small{grid-column:1/3;opacity:.7}.hvi.on{border-color:#ffd27a;background:#3a2e14}
+.hvl{display:flex;flex-direction:column;gap:8px}.hvi{display:grid;grid-template-columns:1fr auto;gap:2px 8px;text-align:left;padding:10px 12px;border-radius:12px;background:#1d2726;border:1px solid #fff2;font-size:16px}.hvi small{grid-column:1/3;opacity:.7;font-size:13px}.hvi.on{border-color:#ffd27a;background:#3a2e14}
 .skr{background:#ffffff0d;border:1px solid #ffffff1a;border-radius:8px;padding:7px 9px;margin:5px 0;line-height:1.5}.skr b{color:#ffd27a}.skr small{opacity:.7}
-.hvfl{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);font:900 40px serif;color:#ffe08a;text-shadow:0 0 12px #ff9a2a,0 0 30px #ff6a00;animation:hvfl 1.2s ease forwards;pointer-events:none;z-index:9}
+.hvfl{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);font:900 46px var(--cal);color:#ffe08a;text-shadow:0 0 12px #ff9a2a,0 0 30px #ff6a00;animation:hvfl 1.2s ease forwards;pointer-events:none;z-index:9}
 @keyframes hvfl{0%{opacity:0;transform:translate(-50%,-30%) scale(.5)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(-50%,-90%) scale(1)}}
 .gfac{margin:10px auto 4px;max-width:360px;padding:8px 10px;border-radius:12px;background:#0006;border:1px solid #c9b07a66}.gft{font-weight:900;color:#ffd27a}.gft small{font-weight:400;color:#ccc;margin-left:6px;font-size:11px}
 .gfc{display:flex;gap:6px;margin:6px 0}.gfc button{flex:1;padding:6px 0;font:900 16px serif;border:2px solid var(--c);color:var(--c);background:#0008}.gfc button.on{background:var(--c);color:#fff;box-shadow:0 0 10px var(--c)}
@@ -443,7 +451,7 @@ body.full #cBack{display:none}
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029m</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029n</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -529,6 +537,20 @@ function inkDraw(h,W,Hh){const c=document.createElement('canvas');c.width=W;c.he
  if(h.q>=95){for(let i=0;i<60;i++){x.globalAlpha=.25+R()*.5;x.fillStyle='#f7d27a';x.beginPath();x.arc(R()*W,R()*Hh*.7,.5+R()*1.6,0,7);x.fill()}x.globalAlpha=1}
  return c.toDataURL('image/jpeg',.82)}
 const ARTC={},ART2C={};
+const HBGC={};
+function heroBgOf(id){const o=UGC_SEL&&UGC_SEL[id];if(o)return o;if(HBGC[id])return HBGC[id];const h=H.find(x=>x.id===id);if(!h)return '';
+ const W=540,Hh=1170,c=document.createElement('canvas');c.width=W;c.height=Hh;const x=c.getContext('2d'),R=inkRng(h.id+'bg'),col=FC[h.f]||'#888';
+ let g=x.createLinearGradient(0,0,0,Hh);g.addColorStop(0,'#efe3c6');g.addColorStop(.6,'#e2d1ab');g.addColorStop(1,'#bfa77a');x.fillStyle=g;x.fillRect(0,0,W,Hh);
+ for(let i=0;i<1600;i++){x.globalAlpha=.04+R()*.06;x.fillStyle=R()<.5?'#a88f60':'#fff8e8';x.fillRect(R()*W,R()*Hh,1+R()*2,1+R()*2)}x.globalAlpha=1;
+ g=x.createRadialGradient(W*.7,Hh*.2,0,W*.7,Hh*.2,W*.24);g.addColorStop(0,'rgba(200,70,55,.5)');g.addColorStop(.9,'rgba(200,70,55,.42)');g.addColorStop(1,'rgba(200,70,55,0)');x.fillStyle=g;x.beginPath();x.arc(W*.7,Hh*.2,W*.24,0,7);x.fill();
+ [[.42,.1,.18],[.5,.08,.3],[.6,.06,.42]].forEach(([b,a,al],k)=>{x.beginPath();x.moveTo(0,Hh);for(let xx=0;xx<=W;xx+=4){const t=xx/W;x.lineTo(xx,Hh*b-Hh*a*(Math.abs(Math.sin(t*3+k*2.1+R()*.02))*.9+Math.sin(t*9+k)*.2))}x.lineTo(W,Hh);x.closePath();const gg=x.createLinearGradient(0,Hh*(b-a),0,Hh*(b+.12));gg.addColorStop(0,`rgba(30,40,38,${al})`);gg.addColorStop(1,'rgba(30,40,38,0)');x.fillStyle=gg;x.fill()});
+ inkBlob(x,W*.5,Hh*.42,W*.42,R,col,.5);inkBlob(x,W*.4,Hh*.58,W*.26,R,'#1b1712',.16);inkBlob(x,W*.72,Hh*.66,W*.2,R,col,.35);
+ inkStroke(x,[[W*-.05,Hh*.3],[W*.35,Hh*.18],[W*.7,Hh*.42],[W*1.05,Hh*.3]],W*.07,'#1b1712',.45,R);
+ inkStroke(x,[[W*-.05,Hh*.72],[W*.3,Hh*.64],[W*.65,Hh*.78],[W*1.05,Hh*.68]],W*.05,col,.5,R);
+ x.save();x.translate(-W*.08,Hh*.1);inkWeapon(x,WPN[h.id]||'scroll',W*1.15,Hh*.82,R,col);x.restore();
+ x.save();x.globalAlpha=.1;x.font=`900 ${W*.9}px ${INKF}`;x.textAlign='center';x.textBaseline='middle';x.fillStyle='#14110e';x.fillText(h.f==='神'||h.f==='魔'?h.f:'漢',W*.42,Hh*.5);x.restore();
+ const v=x.createRadialGradient(W/2,Hh*.45,W*.4,W/2,Hh*.5,W*1.1);v.addColorStop(0,'#0000');v.addColorStop(1,'#2a1a0a88');x.fillStyle=v;x.fillRect(0,0,W,Hh);
+ return HBGC[id]=c.toDataURL('image/jpeg',.85)}
 function artOf(id,big){const o=UGC_SEL&&UGC_SEL[id];if(o)return o;const h=H.find(x=>x.id===id)||BEA_H(id);if(!h)return '';const C=big?ART2C:ARTC;if(!C[id])C[id]=inkDraw(h,big?480:240,big?640:320);return C[id]}
 const BEA_H=id=>{const b=(typeof BEA!=='undefined')&&BEA.find(x=>x.id===id);return b?{id:b.id,n:b.n,f:'艷',q:95}:null};
 var UGC_SEL={};
@@ -1733,8 +1755,8 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  const cr=Math.min(.75,.2+.003*(lv-1)+(u.cr||0)),pw=x=>Math.round(x.mhp*.5+x.atk*4+x.spd*6),kf=v=>v>=1e8?(v/1e8).toFixed(1)+'億':v>=1e4?(v/1e4).toFixed(1)+'萬':v.toLocaleString();
  const sks=skList(h,st),hj=own&&inHJ(h.id);
  const res=HTAB==='adv'?`<em>🃏 ${S.wc||0}</em><em>💎 ${S.bst||0}</em><em>💰 ${kf(S.coins)}</em>`:`<em>🔮 ${kf(S.pill)}</em><em>💰 ${kf(S.coins)}</em>`;
- const big=!own?['🎴','去抽卡','gacha']:hj?['📖','前往豪傑書','hj']:lv<MAXLV?['⬆','升 級','lv']:canAdv(h.id)?['★','進 階','adv']:['⚔',dep?'卸 下':'上 陣','dep'];
- const tab=(k,ic,n,dot,dis)=>`<button class="hvt${HTAB===k?' on':''}" data-a="tab" data-t="${k}" ${dis?'disabled':''}>${dot?'<i class="dot"></i>':''}<b>${ic}</b>${n}</button>`;
+ const big=!own?['','前往<br>抽卡','gacha']:hj?['','前往<br>豪傑書','hj']:lv<MAXLV?['','升級','lv']:canAdv(h.id)?['','進階','adv']:['',dep?'卸下':'上陣','dep'];
+ const tab=(k,ic,n,dot,dis)=>`<button class="hvt${HTAB===k?' on':''}" data-a="tab" data-t="${k}" ${dis?'disabled':''}>${dot?'<i class="dot"></i>':''}${n}</button>`;
  let sheet='';
  if(HTAB==='lv'){sheet=`<div class="sht">⬆ 培養</div><div class="sub">Lv.${lv} / ${MAXLV}${lv>=MAXLV?'（滿級）':`　經驗 ${o.e.toLocaleString()} / ${NEED(lv).toLocaleString()}`}</div><div class="xp"><i style="width:${lv>=MAXLV?100:o.e/NEED(lv)*100}%"></i></div>
   ${hj?'<div class="sub" style="color:#ffd27a">📖 在豪傑書槽位中：等級共享為 Lv.'+lv+'，不能自行升級。</div>':lv<MAXLV?`<div class="sub">🔮 經驗丹 <b>${S.pill.toLocaleString()}</b>（1 顆 = 1 點經驗）</div><div class="btns" style="margin:6px 0"><button data-a="pill" data-k="1" ${lvCost(h.id,1)>S.pill?'disabled':''}>升 1 級<br><small>${lvCost(h.id,1).toLocaleString()}</small></button><button data-a="pill" data-k="10" ${lvCost(h.id,10)>S.pill?'disabled':''}>升 10 級<br><small>${lvCost(h.id,10).toLocaleString()}</small></button><button data-a="pill" data-k="all" ${S.pill<=0?'disabled':''}>全部使用<br><small>${Math.min(S.pill,lvCost(h.id,MAXLV)).toLocaleString()}</small></button></div>`:'<div class="sub">已滿級，可到「進階」突破。</div>'}
@@ -1756,16 +1778,16 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
   <div class="hvl">${its.length?its.map(i=>`<button class="hvi${i.e===h.id?' on':''}" data-a="eqi" data-u="${i.u}"><b style="color:${TIERS[i.t].c}">${TIERS[i.t].n}・${INAME[i.s][i.t]}</b><span>Lv${i.l}　+${pct(ibonus(i))}</span><small>${i.e===h.id?'裝備中':i.e?'｜'+hname(i.e)+' 使用中':'未使用'}</small></button>`).join(''):'<div class="sub">背包沒有這類裝備，可到商城購買或挑戰裝備塔。</div>'}</div></div></div>`}
  const bub=HSK>=0&&sks[HSK]?`<div class="hvb" data-a="skx"><b>${sks[HSK].l}・${sks[HSK].n}</b> <small>Lv.${sks[HSK].lv}/${sks[HSK].mx}</small><br>${sks[HSK].d}</div>`:'';
  $('heroBody').innerHTML=`<div class="hv${HVIEW?' view':''}${own?'':' lock'}" style="--fc:${FC[h.f]};--rc:${r.c}">
- <div class="hvbg" style="background-image:url(${ART2[h.id]})" data-a="${HVIEW?'view':''}"></div><div class="hvsh"></div>
- <div class="hvtop"><button class="hvback" data-a="x">←</button><b class="hvtt">武將</b><span class="hvres">${res}</span></div>
+ <div class="hvbg" style="background-image:url(${heroBgOf(h.id)})" data-a="${HVIEW?'view':''}"></div><div class="hvsh"></div>
+ <b class="hvtt">武將</b><span class="hvres">${res}</span>
  <div class="hvname"><div class="hvn">${h.n}</div><div class="hvq"><span style="background:${r.c}">${r.n}</span><b>資質 ${h.q}</b></div><div class="hvtags"><span style="background:${FC[h.f]}">${h.f}</span><span>${JB[h.job].ic}${h.job}</span><span class="st">★${st}</span>${brk?`<span>突破 ${brk}</span>`:''}</div></div>
- <div class="hvl1"><button data-a="tab" data-t="rst" ${own?'':'disabled'}><b>♻</b>重生</button><button data-a="view"><b>👁</b>觀賞</button><button data-a="tab" data-t="det"><b>🔍</b>詳情</button><button data-a="ugc"><b>🎨</b>圖鑑</button>${own?`<button data-a="dep"><b>${dep?'⬇':'⚔'}</b>${dep?'卸下':'上陣'}</button>`:''}</div>
- <div class="hvsk">${sks.map((x,i)=>`<button class="hvo${HSK===i?' on':''}" data-a="sk" data-i="${i}"><i>${x.lv}</i><b>${x.n.slice(0,2)}</b><span>${x.l}</span></button>`).join('')}</div>
+ <div class="hvl1"><button data-a="tab" data-t="rst" ${own?'':'disabled'}><b>♻️</b><span>重生</span></button><button data-a="view"><b>👁</b><span>觀賞</span></button><button data-a="tab" data-t="det"><b>🔍</b><span>詳情</span></button><button data-a="ugc"><b>🎨</b><span>圖鑑</span></button>${own?`<button data-a="dep"><b>${dep?'⬇️':'⚔️'}</b><span>${dep?'卸下':'上陣'}</span></button>`:''}</div>
+ <div class="hvsk">${sks.map((x,i)=>`<button class="hvo${HSK===i?' on':''}" data-a="sk" data-i="${i}" style="--sc:${({天賦:'#d9a520',絕技:'#d0402a',被動:'#2a9a8a',怒氣:'#9a3ad0'})[x.l]||'#888'}"><u>${x.l[0]}<i>${x.lv}</i></u><span>${x.n.length>5?x.n.slice(0,5):x.n}</span></button>`).join('')}</div>
  <button class="hvar l" data-a="prev">‹</button><button class="hvar r" data-a="next">›</button>
  ${bub}
- <div class="hvst"><div class="hvpw"><small>戰力</small>${pw(u).toLocaleString()}</div><div class="hvlv">Lv.${lv} / ${MAXLV}</div><div class="hvg"><span>攻擊 <b>${kf(u.atk)}</b></span><span>生命 <b>${kf(u.mhp)}</b></span><span>速度 <b>${u.spd}</b></span><span>暴擊 <b>${pct(cr)}</b></span></div></div>
- <button class="hvbig" data-a="big" data-k="${big[2]}"><b>${big[0]}</b>${big[1]}</button>
- <div class="hvtabs">${tab('lv','⬆','培養',canLv(h.id),!own)}${tab('adv','★','進階',canAdv(h.id),!own)}${tab('eq','🛡','裝備',eqBetter(h.id),!own)}${tab('sk','📜','技能',0,0)}${tab('bd','🤝','羈絆',0,0)}</div>
+ <div class="hvst"><div class="hvpw"><small>戰力</small><b>${pw(u).toLocaleString()}</b></div><div class="hvlv">Lv.${lv} / ${MAXLV}</div><div class="hvg"><span>攻擊 <b>${kf(u.atk)}</b></span><span>生命 <b>${kf(u.mhp)}</b></span><span>速度 <b>${u.spd}</b></span><span>暴擊 <b>${pct(cr)}</b></span></div></div>
+ <button class="hvbig" data-a="big" data-k="${big[2]}">${big[1]}</button>
+ <div class="hvtabs"><button class="hvx0" data-a="x">⟵</button>${tab('lv','⬆','培養',canLv(h.id),!own)}${tab('adv','★','進階',canAdv(h.id),!own)}${tab('eq','🛡','裝備',eqBetter(h.id),!own)}${tab('sk','📜','技能',0,0)}${tab('bd','🤝','羈絆',0,0)}</div>
  <div class="hvs${HTAB?' on':''}"><button class="hvsx" data-a="tabx">▾</button><div class="hvsc">${sheet}</div></div>${pk}</div>`}
 $('heroBody').onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;const k=a.dataset.a;
  if(k==='x'){$('hero').classList.remove('on');render();return}
@@ -2277,7 +2299,7 @@ $('tTxt').textContent='測試'+(S.test?'：開':'：關');
 $('bTest').onclick=()=>{S.test=!S.test;saveS();$('tTxt').textContent='測試'+(S.test?'：開':'：關');render();setInfo()};
 let wp=0;$('bWipe').onclick=()=>{if(!wp){wp=1;$('wTxt').textContent='再按確認';setTimeout(()=>{wp=0;$('wTxt').textContent='重置'},3000)}else{S=defS();migrate();saveS();wp=0;$('wTxt').textContent='重置';$('tTxt').textContent='測試：關';daily();MODE='pvp';setMode('pvp');openLord()}};
 $('snd').onclick=()=>{MUTE=!MUTE;$('snd').textContent=MUTE?'🔇':'🔊'};
-try{document.fonts.load("900 40px 'LXGW WenKai TC'",H.map(h=>h.n).join('')+'蜀魏吳神魔艷').then(()=>{for(const k in ARTC)delete ARTC[k];for(const k in ART2C)delete ART2C[k];if(!busy)render()}).catch(()=>{})}catch(e){}
+try{document.fonts.load("900 40px 'LXGW WenKai TC'",H.map(h=>h.n).join('')+'蜀魏吳神魔艷').then(()=>{for(const k in HBGC)delete HBGC[k];for(const k in ARTC)delete ARTC[k];for(const k in ART2C)delete ART2C[k];if(!busy)render()}).catch(()=>{})}catch(e){}
 /* ===================== 主城（第一層：背景＋主功能） ===================== */
 function cityArt(cv){
  const dpr=Math.min(2,window.devicePixelRatio||1),W=cv.clientWidth||390,Hh=cv.clientHeight||760;cv.width=Math.round(W*dpr);cv.height=Math.round(Hh*dpr);
@@ -2403,7 +2425,7 @@ function cityBind(){
  addEventListener('resize',()=>{if(document.body.classList.contains('city'))cityArt($('cCv'));else CWP=0});
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
-const CVER='20261029m';
+const CVER='20261029n';
 function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);$('cBlds').innerHTML=CITYB.map(b=>`<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${b.x*100}%;top:${b.y*100}%;width:${b.w*s}px;height:${b.h*s}px"><span class="cpl">${[...b.n].join('<br>')}</span></button>`).join('');
  CITYB.forEach(b=>{const e=$('cb_'+b.k);e.querySelector('.cpl').style.top=(b.k==='jj'?-40:b.k==='sp'?-60:-30)*s+'px'});cityBind()}
 
