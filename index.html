@@ -571,11 +571,23 @@ html,body{overscroll-behavior:none}
 body.auto{overflow:hidden!important;height:100%!important;position:fixed;inset:0;width:100%}
 body.auto #app,body.auto #mask{visibility:hidden!important}
 #tmap{height:100%;height:100dvh;overscroll-behavior:contain}
+
+/* 卡片徽章：陣營、職業、星級排在底部，名字整條不擋 */
+.card .fac{left:2px!important;right:auto!important;bottom:16px!important}
+.card .job{left:23px!important;right:auto!important;bottom:16px!important}
+.card .str{left:44px!important;right:auto!important;bottom:17px!important;top:auto!important}
+.card .upd{top:auto!important;right:auto!important;left:50%!important;bottom:38px!important;transform:translateX(-50%)}
+#heroes .pc .card .fac,#heroes .pc .card .job{bottom:6px!important}#heroes .pc .card .job{left:28px!important}#heroes .pc .card .str{left:54px!important;bottom:7px!important}#heroes .pc .card .upd{bottom:32px!important}
+.hstar{background:radial-gradient(circle at 40% 35%,#d0453b,#7a1810)!important;border:2px solid #f0c66a!important;color:#fff3d6!important}
+.stwc{display:flex;align-items:center;gap:8px;font-size:16px;margin:6px 0}.stwc input{width:22px;height:22px}
+.stl{max-height:46vh;overflow-y:auto;margin:6px 0}.stl div{display:grid;grid-template-columns:1fr auto;gap:0 8px;padding:8px 6px;border-bottom:1px solid #ffffff1a}.stl b{font:900 18px 'LXGW WenKai TC',serif}.stl span{color:#ffd27a;font-weight:900;font-size:17px}.stl small{grid-column:1/3;font-size:13px;opacity:.75}
+.stfx{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%);z-index:120;background:#1a120ce8;border:3px solid #ffd27a;border-radius:16px;padding:16px 22px;display:flex;flex-direction:column;align-items:center;gap:4px;animation:hvpop .3s ease;box-shadow:0 0 40px #ffb02e88;pointer-events:none}.stfx b{font:900 26px 'LXGW WenKai TC',serif;color:#ffe08a;text-shadow:0 0 10px #ff9a2a}.stfx span{font-size:16px}
+#heroes .shh{gap:6px;flex-wrap:wrap!important}#heroes .shh b{font-size:24px}#hCnt{order:9;flex:0 0 100%!important;font-size:14px;padding-left:66px;margin-top:-8px}.hhb{padding:6px 9px!important;font-size:15px!important}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029s</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261029t</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -597,7 +609,7 @@ body.auto #app,body.auto #mask{visibility:hidden!important}
 <div class="cnav"><button class="cnb cur" data-c="home"><i>🏯</i><span>主城</span></button><button class="cnb" id="cnHero" data-c="hero"><i>🎖</i><span>武將</span></button><button class="cnb" data-c="bag"><i>🎒</i><span>背包</span></button><button class="cwar" id="cWar" data-c="war"><b>征</b><b>戰</b></button></div>
 </div>
 <div id="scn"><canvas id="scnCv"></canvas><div class="cpet dust"><i></i><i></i><i></i><i></i><i></i></div><div class="scnh"><button class="xb" data-c="x">←</button><b>征戰</b></div><div id="scnB"></div></div><div class="ov" id="csh"><div id="cshB"></div></div>
-<div class="ov" id="prep"><div id="ppB"></div></div><div class="ov" id="heroes"><div class="pan"><div class="shh"><b>武將</b><span id="hCnt"></span><button id="hFrag" class="g hhb">碎片</button><button id="hHJ" class="g hhb">豪傑書</button><button id="hX" style="flex:none;width:44px;padding:6px 0">✕</button></div><button id="hForm" class="hform"><svg viewBox="0 0 30 30" width="30" height="30"><g fill="#f3e6c4"><rect x="2" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="20.6" width="7.6" height="7.6" rx="1.6"/></g></svg><span>布陣</span></button><div class="btns pfb hpf"><button class="g on" data-pf="all">全</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="hpool"></div></div></div>
+<div class="ov" id="prep"><div id="ppB"></div></div><div class="ov" id="heroes"><div class="pan"><div class="shh"><b>武將</b><span id="hCnt"></span><button id="hFrag" class="g hhb">碎片</button><button id="hHJ" class="g hhb">豪傑書</button><button id="hStar" class="hhb hstar">一鍵升星</button><button id="hX" style="flex:none;width:44px;padding:6px 0">✕</button></div><button id="hForm" class="hform"><svg viewBox="0 0 30 30" width="30" height="30"><g fill="#f3e6c4"><rect x="2" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="2" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="11.3" width="7.6" height="7.6" rx="1.6"/><rect x="2" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="11.3" y="20.6" width="7.6" height="7.6" rx="1.6"/><rect x="20.6" y="20.6" width="7.6" height="7.6" rx="1.6"/></g></svg><span>布陣</span></button><div class="btns pfb hpf"><button class="g on" data-pf="all">全</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="hpool"></div></div></div>
 <div class="ov" id="form"><div class="pan"><div class="shh"><b>📋 布陣（預設陣容）</b><span id="fCnt"></span></div>
 <div class="sub" style="font-size:12px;margin:2px 0 0">拖曳武將可換位置，拖出格子外或按 ✕ 卸下；點下方武將上陣（長按可拖進指定格）。上方為前排。</div>
 <div class="fg" id="fg"></div><div id="fSyn"></div><div class="btns pfb"><button class="g on" data-pf="all">全部</button><button class="g" data-pf="魏">魏</button><button class="g" data-pf="蜀">蜀</button><button class="g" data-pf="吳">吳</button><button class="g" data-pf="神">神</button><button class="g" data-pf="魔">魔</button></div><div class="pool" id="fpool"></div>
@@ -1096,7 +1108,7 @@ function render(){
 function fillPool(pp){const PW={};H.forEach(h=>PW[h.id]=powOf(h));
  const list=H.filter(h=>PF==='all'||h.f===PF).sort((a,b)=>(!!S.own[b.id]-!!S.own[a.id])||PW[b.id]-PW[a.id]);const st=pp.parentNode.parentNode.scrollTop;pp.innerHTML='';
  list.forEach(h=>{const has=!!S.own[h.id];const e=document.createElement('div');e.className='pc'+(has?'':' lock')+(has&&starReady(h.id)==2?' ready':'');
-  e.appendChild(cardEl(h,true));e.insertAdjacentHTML('beforeend',has?(starReady(h.id)===2||canLv(h.id)?'<i class="pdot">!</i>':''):'<div class="st">未獲得</div>');
+  e.appendChild(cardEl(h,true));e.insertAdjacentHTML('beforeend',has?(starReady(h.id)===2||(isDep(h.id)&&canLv(h.id))?'<i class="pdot">!</i>':''):'<div class="st">未獲得</div>');
   e.onclick=()=>{if(!busy)openHero(h.id)};pp.appendChild(e)});
  $('hCnt').textContent=`已獲得 ${H.filter(h=>S.own[h.id]).length}/${H.length}`;pp.parentNode.parentNode.scrollTop=st}
 const BEST=[1,0,2,4,3,5,7,6,8];
@@ -1804,7 +1816,28 @@ function pullOne(fac){if(Math.random()*100<2){S.wc=(S.wc||0)+1;return{wild:true,
  let ids=RAR[r].ids;if(fac)ids=ids.filter(id=>(H.find(h=>h.id===id)||{}).f===fac);return addCard(ids[Math.floor(Math.random()*ids.length)])}
 function starUp(id){const st=S.star[id]||0;if(!S.own[id]||st>=MAXSTAR)return;const c=STAR_COST[st],g=STAR_GOLD[st];if((S.cp[id]||0)+(S.wc||0)<c){toast('同名卡不足（萬用卡可代替）');return}if(S.coins<g){toast('金幣不足');return}
  const uc=Math.min(S.cp[id]||0,c),uw=c-uc;S.cp[id]=(S.cp[id]||0)-uc;S.wc=(S.wc||0)-uw;S.coins-=g;S.star[id]=st+1;saveS();if(!busy)refreshPl();toast(`${hname(id)} 升到 ★${st+1}${uw?`（用了 ${uw} 張萬用卡）`:''}`);sfx('win');renderHero();render()}
-function starReady(id){const st=S.star[id]||0;if(!S.own[id]||st>=MAXSTAR||(S.cp[id]||0)+(S.wc||0)<STAR_COST[st])return 0;return S.coins>=STAR_GOLD[st]?2:1}
+/* ---- 一鍵升星 ---- */
+let STW=false;
+function starPlan(useWc){let coins=S.coins,wc=S.wc||0;const cp={...S.cp},out=[];
+ const L=H.filter(h=>S.own[h.id]).sort((a,b)=>(isDep(b.id)-isDep(a.id))||b.q-a.q||powOf(b)-powOf(a));
+ for(const h of L){let st=S.star[h.id]||0;const s0=st;let ucp=0,uwc=0,ug=0;
+  while(st<MAXSTAR){const c=STAR_COST[st],g=STAR_GOLD[st],own=cp[h.id]||0,need=Math.max(0,c-own);if(coins<g)break;if(need>0&&(!useWc||wc<need))break;
+   const u1=Math.min(own,c);cp[h.id]=own-u1;wc-=need;coins-=g;ucp+=u1;uwc+=need;ug+=g;st++}
+  if(st>s0)out.push({id:h.id,n:h.n,s0,s1:st,ucp,uwc,ug})}return out}
+function starAllOpen(){const P=starPlan(STW),tg=P.reduce((a,x)=>a+x.ug,0),tc=P.reduce((a,x)=>a+x.ucp,0),tw=P.reduce((a,x)=>a+x.uwc,0);
+ const d=document.createElement('div');d.className='bgp';d.id='starAll';
+ d.innerHTML=`<div class="bgpp" style="text-align:left"><h3 style="text-align:center">一鍵升星</h3>
+ <label class="stwc"><input type="checkbox" id="stWc" ${STW?'checked':''}> 不足時使用萬用卡（目前 🃏${S.wc||0}）</label>
+ ${P.length?`<div class="stl">${P.map(x=>`<div><b>${x.n}</b><span>★${x.s0} → ★${x.s1}</span><small>同名卡 ${x.ucp}${x.uwc?`＋🃏${x.uwc}`:''}・💰${x.ug.toLocaleString()}</small></div>`).join('')}</div>
+ <p class="bgc" style="text-align:center">共 ${P.length} 位、花費 💰${tg.toLocaleString()}、同名卡 ${tc}${tw?`、萬用卡 ${tw}`:''}</p>`:'<p class="bgc" style="text-align:center">目前沒有可以升星的武將'+(STW?'':'<br><small>（可以試試勾選使用萬用卡）</small>')+'</p>'}
+ <div class="bgpb">${P.length?'<button data-sa="go">確認升星</button>':''}<button class="g" data-sa="x">關閉</button></div></div>`;
+ d.onclick=e=>{if(e.target===d){d.remove();return}const b=e.target.closest('[data-sa]');if(e.target.id==='stWc'){STW=e.target.checked;d.remove();starAllOpen();return}if(!b)return;
+  if(b.dataset.sa==='x'){d.remove();return}
+  const P2=starPlan(STW);P2.forEach(x=>{S.cp[x.id]=(S.cp[x.id]||0)-x.ucp;S.star[x.id]=x.s1});S.wc=(S.wc||0)-P2.reduce((a,x)=>a+x.uwc,0);S.coins-=P2.reduce((a,x)=>a+x.ug,0);saveS();if(!busy)refreshPl();sfx('win');d.remove();
+  const f=document.createElement('div');f.className='stfx';f.innerHTML=`<b>★ 升星完成 ★</b>${P2.slice(0,8).map(x=>`<span>${x.n} ★${x.s1}</span>`).join('')}${P2.length>8?`<span>…等 ${P2.length} 位</span>`:''}`;document.body.appendChild(f);setTimeout(()=>f.remove(),2600);render()};
+ document.body.appendChild(d)}
+function starReady(id){const st=S.star[id]||0;if(!S.own[id]||st>=MAXSTAR||(S.cp[id]||0)<STAR_COST[st])return 0;return S.coins>=STAR_GOLD[st]?2:1}
+const isDep=id=>pl.some(u=>u&&u.id===id)||(Array.isArray(S.dl)&&S.dl.includes(id));
 function lvCost(id,k){const o=S.lv[id]||{l:1,e:0};k=Math.min(k,MAXLV-o.l);if(k<=0)return 0;let c=-o.e;for(let j=0;j<k;j++)c+=NEED(o.l+j);return c}
 function migrate(){
  if(!S.v5&&S.own){S.v5=1;let rp=0,rc=0;for(const id of REMOVED){if(S.own[id]){rp+=lvSpent(id);rc+=(S.cp[id]||0)+starSpent(id)}delete S.own[id];delete S.lv[id];delete S.star[id];delete S.cp[id];if(S.brk)delete S.brk[id];(S.inv||[]).forEach(x=>{if(x.e===id)x.e=null});if(Array.isArray(S.dl))S.dl=S.dl.map(x=>x===id?null:x);if(S.hj&&S.hj.sl)S.hj.sl=S.hj.sl.map(x=>x===id?null:x)}S.pill=(S.pill||0)+rp;S.wc=(S.wc||0)+rc;if(S.frag&&S.frag.SP){S.frag.UR=(S.frag.UR||0)+S.frag.SP*3;S.frag.SP=0}if(rp||rc)S.v5msg=`武將名單調整：退還 🔮${rp.toLocaleString()}、🃏萬用卡 ${rc} 張`}
@@ -1823,7 +1856,9 @@ const pvpLeft=()=>{dayCheck();return S.test?99:Math.max(0,PVPMAX-S.d.pvp)};
 const pullLeft=()=>{dayCheck();return S.test?9999:Math.max(0,PULLMAX-S.d.pull)+(S.bp||0)};
 function gain(id,x){if(!S.own[id])return;const o=S.lv[id]||(S.lv[id]={l:1,e:0});if(o.l>=MAXLV)return;o.e+=x;while(o.l<MAXLV&&o.e>=NEED(o.l)){o.e-=NEED(o.l);o.l++}if(o.l>=MAXLV)o.e=0}
 let AC=null,MUTE=false,LH=0;
-function au(){try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){}return AC}
+function au(){try{if(AC&&(AC.state==='closed'||AC.state==='interrupted')){try{AC.close()}catch(e){}AC=null}if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended'){const a=AC;a.resume().catch(()=>{});setTimeout(()=>{if(AC===a&&a.state!=='running'){try{a.close()}catch(e){}AC=null}},400)}}catch(e){AC=null}return AC}
+let AUFIX=0;document.addEventListener('visibilitychange',()=>{if(!document.hidden)AUFIX=1;else if(AC&&AC.state==='running'){try{AC.suspend()}catch(e){}}});addEventListener('pageshow',()=>{AUFIX=1});
+['touchend','click'].forEach(ev=>document.addEventListener(ev,()=>{if(AUFIX||(AC&&AC.state!=='running')){AUFIX=0;au()}},true));
 function tone(f0,f1,d,ty,v,t0){const a=au();if(!a||MUTE)return;t0=t0||0;const o=a.createOscillator(),g=a.createGain(),n=a.currentTime+t0;o.type=ty;o.frequency.setValueAtTime(f0,n);o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),n+d);g.gain.setValueAtTime(v,n);g.gain.exponentialRampToValueAtTime(.001,n+d);o.connect(g);g.connect(a.destination);o.start(n);o.stop(n+d+.02)}
 function noise(d,f0,f1,v,t0){const a=au();if(!a||MUTE)return;const n=a.currentTime+(t0||0),len=Math.floor(a.sampleRate*d),b=a.createBuffer(1,len,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<len;i++)x[i]=Math.random()*2-1;
  const s=a.createBufferSource(),fl=a.createBiquadFilter(),g=a.createGain();s.buffer=b;fl.type='bandpass';fl.frequency.setValueAtTime(f0,n);fl.frequency.exponentialRampToValueAtTime(f1,n+d);g.gain.setValueAtTime(v,n);g.gain.exponentialRampToValueAtTime(.001,n+d);s.connect(fl);fl.connect(g);g.connect(a.destination);s.start(n)}
@@ -2441,7 +2476,7 @@ function resetStar(id){const st=S.star[id]||0;if(!st)return;const c=starSpent(id
 function rstHtml(id){const c=lvSpent(id),st=S.star[id]||0,sc=starSpent(id);
  return `<div class="sec">歸零</div><div class="btns" style="margin:4px 0"><button class="g" data-a="rlv" ${c>0&&!inHJ(id)?'':'disabled'}>${RSTC==='lv'+id?'再按一次確認':'等級歸零'}<br><small>返還 🔮${c.toLocaleString()}</small></button><button class="g" data-a="rst" ${st?'':'disabled'}>${RSTC==='st'+id?'再按一次確認':'星級歸零'}<br><small>返還 🃏${sc} 張</small></button></div><div style="font-size:11px;opacity:.8">等級歸零回到 Lv.1，返還全部用掉的經驗丹；星級歸零回到 ★0，用掉的同名卡全數改以萬用卡返還（金幣不返還）。</div>`}
 function navDots(){const d=(id,on)=>{const e=$(id);if(e){if(on)e.setAttribute('data-dot','');else e.removeAttribute('data-dot')}};try{const td=today();
- d('mHarem',BEA.some(x=>{const b=(S.hrm||{})[x.id];return b&&b.chat!==td}));d('bHeroes',H.some(h=>starReady(h.id)===2));
+ d('mHarem',BEA.some(x=>{const b=(S.hrm||{})[x.id];return b&&b.chat!==td}));d('bHeroes',H.some(h=>starReady(h.id)===2||(isDep(h.id)&&typeof canLv==='function'&&canLv(h.id))));
  d('mGacha',(typeof newLeft==='function'&&newLeft())||(typeof ptsReady==='function'&&ptsReady()));d('mTower',typeof msClaimable==='function'&&msClaimable()>0);
  const F=S.frag||{};d('sFrag',['SR','SSR','UR'].some(k=>(F[k]||0)>=FSYN[k]));
  ['mPvp','mTower'].forEach(id=>$(id).classList.toggle('on',(id==='mPvp')===(MODE==='pvp')))}catch(e){}navDots2()}
@@ -2487,7 +2522,7 @@ function reset(){if(OPP.arena)OPP={d:1,list:[]};applyDL();sel=-1;busy=false;FLOO
 $('bAuto').onclick=()=>{if(busy)return;autoBest(false);render();toast('已上陣最強陣容（本場；要存成預設請到「布陣」）')};
 $('bForm').onclick=()=>openForm();
 $('bHeroes').onclick=()=>{if(busy)return;$('heroes').classList.add('on');render()};
-$('hX').onclick=()=>$('heroes').classList.remove('on');$('hForm').onclick=()=>openForm();
+$('hX').onclick=()=>$('heroes').classList.remove('on');$('hForm').onclick=()=>openForm();$('hStar').onclick=()=>{STW=false;starAllOpen()};
 function spdUI(){const b=$('bSpd'),k=$('bSkip');if(b)b.innerHTML='⏩<br>'+BSPD+'x';if(k)k.disabled=SKIP}
 $('bSpd').onclick=()=>{BSPD=BSPD>=3?1:BSPD+1;try{localStorage.setItem('sgSpd',BSPD)}catch(e){}spdUI()};
 $('bSkip').onclick=()=>{if(!busy)return;SKIP=true;spdUI();document.querySelectorAll('#cine').forEach(e=>e.remove());toast&&toast('已跳過，直接結算')};
@@ -2627,7 +2662,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261029s';
+const CVER='20261029t';
 function cityInit(){const s=Math.min(innerWidth/390,innerHeight/700);$('cBlds').innerHTML=CITYB.map(b=>`<button class="cbd" id="cb_${b.k}" data-c="b_${b.k}" style="left:${b.x*100}%;top:${b.y*100}%;width:${b.w*s}px;height:${b.h*s}px"><span class="cpl">${[...b.n].join('<br>')}</span></button>`).join('');
  CITYB.forEach(b=>{const e=$('cb_'+b.k);e.querySelector('.cpl').style.top=(b.k==='jj'?-40:b.k==='sp'?-60:-30)*s+'px'});cityBind()}
 
