@@ -52,6 +52,7 @@
 .ccf .wbB{left:14%;top:4%;width:72%;aspect-ratio:1;-webkit-mask-image:radial-gradient(circle at 50% 45%,#000 45%,transparent 70%);mask-image:radial-gradient(circle at 50% 45%,#000 45%,transparent 70%)}.ccf .wbH{left:-2%;top:30%;width:46%;z-index:1}
 .ccf s:last-child{z-index:2}.ccir .ctl{z-index:3}
 .ccf.ccn s{background-position:center 18%}.ccf em{position:absolute;left:50%;bottom:18%;transform:translateX(-50%);font:900 clamp(13px,3.6vw,17px) 'LXGW WenKai TC',serif;font-style:normal;letter-spacing:3px;white-space:nowrap;color:#fff6dc;background:linear-gradient(90deg,transparent,#000b 20%,#000b 80%,transparent);padding:2px 18px;text-shadow:0 0 6px var(--nc),0 1px 2px #000;z-index:3}
+.qmfx i img.ugic{width:min(34vw,150px);height:min(34vw,150px);border-radius:16px;object-fit:cover;box-shadow:0 0 24px #ffd27a88;border:2px solid #ffd27a}.qmdt{display:flex;gap:6px}
 </style></head><body>
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
@@ -1005,7 +1006,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261031r</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101a</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -2452,7 +2453,7 @@ function qmSlots(){const Q=qms(),L=S.lord.l||1;if(!Array.isArray(Q.eqs))Q.eqs=Q.
 function qmAttBonus(){const{Q}=qmSlots(),o={atk:0,hp:0,rd:0,spd:0};Q.att.forEach(id=>{const a=QMAT[id];if(a)o[a[0]]+=a[1]*qmAttMul(Q.own[id]+1)});return o}
 const pctS=v=>Math.round(v*100)+'%';
 function qmText(id,lv){const d=QMD.find(x=>x.id===id);const f=k=>{const v=d[k]&&d[k][lv-1];return v==null?'':(v<=1&&!['c'].includes(k)&&!(d.id==='gbyz'&&k==='a')&&!(d.id==='qlfb'&&k==='a')&&!(d.id==='mtgh'&&k==='c')&&!(d.id==='dlj'&&k==='b')?pctS(v):v)};return d.t.replace('{a}',f('a')).replace('{b}',f('b')).replace('{c}',f('c'))}
-function fxQM(side,q){if(!q)return;const d=QMD.find(x=>x.id===q.id);if(BLOG){BLOG.qm=(BLOG.qm||0)+1}if(SKIP||!SPX())return;const e=document.createElement('div');e.className='qmfx '+(side===pl?'p':'e');e.innerHTML=`<i>${d.ic}</i><b>${d.n}</b><small>奇謀・Lv.${q.lv}</small>`;document.body.appendChild(e);setTimeout(()=>e.remove(),1300/BSPD)}
+function fxQM(side,q){if(!q)return;const d=QMD.find(x=>x.id===q.id);if(BLOG){BLOG.qm=(BLOG.qm||0)+1}if(SKIP||!SPX())return;const e=document.createElement('div');e.className='qmfx '+(side===pl?'p':'e');e.innerHTML=`<i>${qmIc(d.id)}</i><b>${d.n}</b><small>奇謀・Lv.${q.lv}</small>`;document.body.appendChild(e);setTimeout(()=>e.remove(),1300/BSPD)}
 function qmInit(){const{Q}=qmSlots(),mine=Q.eqs.map(id=>({id,lv:Q.own[id]+1})),th=OPP.qms||(OPP.qm?[OPP.qm]:[]);const mk2=L=>L.map(q=>({...q,u:{},k:QMK[L.length]||.7}));QMS=[mk2(mine),mk2(th)];
  const ab=qmAttBonus();alive(pl).forEach(u=>{if(ab.atk)u.atk=Math.round(u.atk*(1+ab.atk));if(ab.hp){u.mhp=Math.round(u.mhp*(1+ab.hp));u.hp=Math.round(u.hp*(1+ab.hp))}if(ab.spd)u.spd=Math.round(u.spd*(1+ab.spd));if(ab.rd)u.rd=(u.rd||0)+ab.rd});
  [[pl,0],[en,1]].forEach(([a,i])=>{for(const q of QMS[i])if(q.id==='xsdr'){fxQM(a,q);const rg=50+(q.lv>=15?25:q.lv>=10?10:0);alive(a).forEach(u=>{if(Math.random()<qmV(q,'a'))addRage(u,rg)})}})}
@@ -2484,7 +2485,7 @@ function renderQM(){const{Q,nm,na}=qmSlots(),d=QMD.find(x=>x.id===QSEL),own=Q.ow
  <div class="qmsl at"><span>附著</span>${QMAL.map((lv,i)=>{const id=Q.att[i];return i<na?(id?`<button class="qs on" data-q="sel" data-id="${id}"><i>${qmIc(id)}</i><small>${QMAT[id][2]}+${Math.round(QMAT[id][1]*qmAttMul(Q.own[id]+1)*1000)/10}%</small></button>`:'<button class="qs" disabled><i>＋</i><small>空</small></button>'):`<button class="qs lk" disabled><i>🔒</i><small>Lv.${lv}</small></button>`}).join('')}</div>
  <div class="hjft qmft">${[['all','全部'],['own','已解鎖'],['lk','未解鎖'],['eq','使用中']].map(([k,n])=>`<button data-q="flt" data-k="${k}" class="${QFLT===k?'on':''}">${n}</button>`).join('')}</div>
  ${(()=>{const L=QMD.filter(x=>{const o=Q.own[x.id]!=null,e=Q.eqs.includes(x.id)||Q.att.includes(x.id);return QFLT==='all'||(QFLT==='own'&&o)||(QFLT==='lk'&&!o)||(QFLT==='eq'&&e)});if(!L.length)return '<p class="sub">沒有符合的奇謀</p>';return pager(chunk(L.map(x=>{const o=Q.own[x.id]!=null,em=Q.eqs.includes(x.id)?'主':Q.att.includes(x.id)?'附著':'',up=o&&Q.own[x.id]<QMMAX&&(Q.jian||0)>=QMSTAR[Q.own[x.id]];return `<button class="qmc qmt${o?'':' lk'}${em?' eq':''}" data-q="sel" data-id="${x.id}"><i>${qmIc(x.id)}</i><b>${x.n}</b><small>${o?'★'+Math.min(5,Q.own[x.id])+'・Lv.'+(Q.own[x.id]+1):'未解鎖'}</small>${em?`<em>${em}</em>`:''}${up?'<s class="qmup">可升級</s>':''}</button>`}),innerHeight<760?6:9).map(c=>`<div class="qmgr">${c.join('')}</div>`),'','qmg'+QFLT)})()}`}
- else h+=`<div class="qmdt"><button class="g qmbk" data-q="back">‹ 返回奇謀列表</button></div><div class="qmd"><div class="qmh"><i>${d.ic}</i><div><b>${d.n}</b><br><small>${own?`★${Math.min(st,5)}/5・Lv.${lv}/${QMMAX+1}`:'未解鎖'}</small></div></div>
+ else h+=`<div class="qmdt"><button class="g qmbk" data-q="back">‹ 返回奇謀列表</button><button class="g qmbk" data-q="ugc">🎨 圖鑑</button></div><div class="qmd"><div class="qmh"><i>${d.ic}</i><div><b>${d.n}</b><br><small>${own?`★${Math.min(st,5)}/5・Lv.${lv}/${QMMAX+1}`:'未解鎖'}</small></div></div>
  ${pager([`<div class="skr"><b>${own?'目前效果':'Lv.1 效果'}</b><br>${qmText(d.id,lv)}${QMAT[d.id]?`<br><small style="opacity:.8">附著：全隊${QMAT[d.id][2]} +${Math.round(QMAT[d.id][1]*qmAttMul(lv)*1000)/10}%</small>`:''}</div>`,...(own&&st<QMMAX?[`<div class="skr" style="opacity:.85"><b>下一級 Lv.${lv+1}</b><br>${qmText(d.id,lv+1)}</div>`]:[])],'','qmfx')}
  <div class="btns stk">${!own?`<button class="actgo" data-q="un" ${(Q.jian||0)<QMU?'disabled':''}>解鎖（📜 ${QMU}）</button>`:st<QMMAX?`<button class="actgo" data-q="up" ${(Q.jian||0)<cost?'disabled':''}>${st<5?'升星':'升級'}（📜 ${cost}）</button>`:'<button disabled>已滿級</button>'}${own?(Q.eqs.includes(d.id)||Q.att.includes(d.id)?`<button class="g" data-q="uneq">卸下（${Q.eqs.includes(d.id)?'主奇謀':'附著'}）</button>`:`<button data-q="eqm" ${Q.eqs.length<nm?'':'disabled'}>裝為主奇謀</button><button class="g" data-q="eqa" ${Q.att.length<na?'':'disabled'}>裝為附著</button>`):''}</div></div>`;
  $('qmBody').innerHTML=h;pgRestore($('qmBody'))}
@@ -2493,6 +2494,7 @@ function qmBind(){$('qmBody').onclick=e=>{const b=e.target.closest('[data-q]');i
  if(k==='x'){$('qmv').classList.remove('on');render();return}
  if(k==='sel'){QSEL=b.dataset.id;QDET=true;renderQM();return}
  if(k==='back'){QDET=false;renderQM();return}
+ if(k==='ugc'){ugcOpen(QSEL,'qm');UGBACK='qm';return}
  if(k==='flt'){QFLT=b.dataset.k;renderQM();return}
  if(k==='un'&&Q.jian>=QMU){Q.jian-=QMU;Q.own[QSEL]=0;{const z=qmSlots();if(z.Q.eqs.length<z.nm){z.Q.eqs.push(QSEL);z.Q.eq=z.Q.eqs[0]}}saveS();sfx('win');renderQM();qmFlash();return}
  if(k==='up'){const st=Q.own[QSEL],c=QMSTAR[st];if(st<QMMAX&&Q.jian>=c){Q.jian-=c;Q.own[QSEL]=st+1;dtAdd('up',1);saveS();sfx('win');renderQM();qmFlash()}return}
@@ -2605,7 +2607,8 @@ const CCP={"c_zx": "三國武將【關羽、劉備、張飛】圍坐在古代酒
 function ugcPrompt(k,ref){if(k==='scene'&&String(ref).startsWith('twf_')){const[,tk,i]=ref.split('_');return{zh:(TWFP[tk]||[])[+i-1]||'',en:''}}if(k==='scene'&&String(ref).startsWith('wb_')){const b=wbOf(ref.slice(3))||[];return{zh:`山海經妖獸「${b[1]}」，${b[11]}，國漫水彩風格，正方形 1:1，妖獸置中、氣勢磅礡，背景簡單，無文字`,en:`Chinese mythical beast ${b[1]}, watercolor, square 1:1, centered, no text`}}if(k==='scene'&&CCP[ref])return{zh:CCP[ref]+'（【】裡的人物可以自由替換；同一個圓圈上傳多張會在主城輪播）',en:''};if(k==='scene'&&String(ref).startsWith('c_'))return{zh:`三國${ugcName(k,ref)}主題插畫，水彩國漫風格，正方形 1:1，主體置中（會被裁成圓形，四個角落不要放重要東西），無文字`,en:`Three Kingdoms themed illustration, watercolor, square 1:1, centered subject (will be cropped to a circle), no text`};if(k==='scene')return{zh:`三國${ugcName(k,ref)}，水墨國風山水，直式 9:16，${['city','war'].includes(ref)||ref.startsWith('tw_')?'畫面中央留空、避免明顯建築（遊戲會在上面放木牌），':''}色調沉穩，無文字`,en:`Three Kingdoms ${ref} background, Chinese ink wash landscape, vertical 9:16, calm tones, no text`};if(k==='eq')return{zh:`三國${ugcName(k,ref)}，遊戲道具圖示，正方形，物件置中，深色簡單背景，無文字`,en:`Three Kingdoms equipment icon, square, centered item, dark simple background, no text`};if(k==='qm')return{zh:`三國兵法「${ugcName(k,ref)}」，遊戲技能圖示，正方形，水墨風，無文字`,en:`Three Kingdoms strategy skill icon, square, ink style, no text`};if(k==='lord')return{zh:'古風主公頭像，水墨國風插畫，正方形，人物胸像置中，背景簡單偏暗，無文字',en:'ancient Chinese lord portrait, ink wash painting style, square, bust centered, simple dark background, no text'};
  const h=k==='bea'?((BEA.find(b=>b.id===ref))||{n:ref}):H.find(x=>x.id===ref)||{n:ref};const w={blade:'青龍偃月刀',spear:'長槍',sword:'寶劍',halberd:'方天畫戟',axe:'大斧',bow:'長弓',fan:'羽扇',qin:'古琴',staff:'法杖',dagger:'雙短刃',shield:'大盾',gourd:'葫蘆',flower:'花枝',brush:'毛筆',scroll:'竹簡',seal:'玉璽'}[WPN[ref]]||'兵器';
  return{zh:`三國${h.n}${h.f?`，${h.f}陣營${h.job||''}`:''}，手持${k==='bea'?'團扇':w}，水墨國風插畫，直式 3:4 比例，人物在畫面上方約 75%，下方 25% 為較素淨的背景，畫面內不要有任何文字或外框，背景偏暗、人物突出，高細節`,en:`${h.n}, Three Kingdoms ${k==='bea'?'beauty':'general'}, holding ${k==='bea'?'a round fan':'a weapon'}, Chinese ink wash illustration, vertical 3:4, character in upper 75%, plain lower 25%, no text, no frame, dark background, highly detailed`}}
-async function ugcOpen(ref,kind){S.ugcSeen=S.ugcSeen||{};S.ugcSeen[ugcKey(kind||'hero',ref)]=Date.now();saveS();UGV={kind:kind||'hero',ref,list:[],msg:'載入中…',busy:false,prev:null,q:null};ugcClean();renderUGC();$('ugv').classList.add('on');await ugcFetch()}
+let UGBACK='';
+async function ugcOpen(ref,kind){UGBACK='';S.ugcSeen=S.ugcSeen||{};S.ugcSeen[ugcKey(kind||'hero',ref)]=Date.now();saveS();UGV={kind:kind||'hero',ref,list:[],msg:'載入中…',busy:false,prev:null,q:null};ugcClean();renderUGC();$('ugv').classList.add('on');await ugcFetch()}
 async function ugcFetch(){if(!SB){UGV.msg='目前無法連線，無法載入玩家上傳的圖。';renderUGC();return}
  try{let q=SB.from('ugc_art').select('id,kind,ref,path,owner,owner_name,likes,created_at').eq('kind',UGV.kind);q=UGV.kind==='lord'?q.eq('owner',ME?ME.id:'00000000-0000-0000-0000-000000000000'):q.eq('ref',UGV.ref);
   const{data,error}=await q.order('likes',{ascending:false}).limit(30);UGV.list=data||[];if(error)UGV.msg='載入失敗：'+error.message;else if(UGV.msg==='載入中…')UGV.msg='';
@@ -2641,7 +2644,7 @@ async function ugcSend(){if(!UGV.prev||!SB||!ME||UGV.busy)return;const L0=ugcLef
   S.ugc=S.ugc||{};S.ugc[ugcKey(UGV.kind,UGV.kind==='lord'?'me':UGV.ref)]=ugcUrl(path);saveS();ugcRecalc();UGV.prev=null;UGV.msg='上傳成功！已自動套用。';sfx('win')}
  catch(e){const m=String(e.message||e).replace(/^.*?UGC_(DAY|REF):/,'');UGV.msg='上傳失敗：'+m;ugAlert('上傳失敗：'+m)}UGV.busy=false;await ugcFetch();if(!busy)render()}
 function ugcBind(){$('ugBody').onclick=async e=>{const b=e.target.closest('[data-u]');if(!b||b.disabled)return;const k=b.dataset.u,V=UGV;
- if(k==='x'){$('ugv').classList.remove('on');if($('hero').classList.contains('on'))renderHero();if($('harem').classList.contains('on'))renderHarem();if($('thub').classList.contains('on'))renderHub();render();return}
+ if(k==='x'){$('ugv').classList.remove('on');if(UGBACK==='hub'){UGBACK='';ugcHub();return}if(UGBACK==='qm'){UGBACK='';renderQM();return}if($('hero').classList.contains('on'))renderHero();if($('harem').classList.contains('on'))renderHarem();if($('thub').classList.contains('on'))renderHub();render();return}
  if(k==='use'){S.ugc=S.ugc||{};const key=ugcKey(V.kind,V.kind==='lord'?'me':V.ref);S.ugc[key]=b.dataset.p;saveS();ugcRecalc();for(const c of[ARTC,ART2C])delete c[V.ref];ugcApplyScenes();renderUGC();toast('已套用');return}
  if(k==='like'||k==='rep'){if(!ME){toast('請先登入');return}if(k==='rep'&&!b.dataset.ok){b.dataset.ok=1;b.textContent='確認?';return}const{data,error}=await SB.rpc('ugc_vote_do',{p_art:+b.dataset.i,p_kind:k==='like'?'like':'report'});if(error)toast(error.message);else{toast(k==='like'?'❤️ '+data:'已檢舉');burstAt(b,k==='like'?'❤️':'⚠')}await ugcFetch();return}
  if(k==='del'){if(!b.dataset.ok){b.dataset.ok=1;b.textContent='確認?';return}await SB.from('ugc_art').delete().eq('id',+b.dataset.i);await SB.storage.from('ugc').remove([b.dataset.p]);await ugcFetch();return}
@@ -3760,7 +3763,7 @@ function ugcHub(){let d=document.querySelector('#ughv');if(!d){d=document.create
  d.innerHTML=`<div class="bgpp" style="text-align:left"><h3 style="text-align:center">圖鑑總覽</h3><div class="ught">${T.map(([k,n])=>`<button class="${UGHT===k?'on':''}" data-t="${k}"${A.some(x=>x[0]===k&&ugcIsNew(...x))?' data-dot':''}>${n}</button>`).join('')}</div>
  ${pager(chunk(L,6).map(c=>`<div class="ughg">${c.map(row).join('')}</div>`),'ughp','ugh'+UGHT)}<p class="sub" style="font-size:13px;text-align:center">武將、紅顏的圖鑑在各自頁面的「🎨 圖鑑」</p>
  <div class="bgpb"><button class="g" data-x="1">關閉</button></div></div>`;requestAnimationFrame(()=>pgRestore(d));
- d.onclick=e=>{const t=e.target.closest('[data-t]');if(t){UGHT=t.dataset.t;ugcHub();return}const b=e.target.closest('[data-k]');if(e.target===d||e.target.closest('[data-x]')){d.remove();return}if(b){d.remove();ugcOpen(b.dataset.r,b.dataset.k)}}}
+ d.onclick=e=>{const t=e.target.closest('[data-t]');if(t){UGHT=t.dataset.t;ugcHub();return}const b=e.target.closest('[data-k]');if(e.target===d||e.target.closest('[data-x]')){d.remove();return}if(b){d.remove();ugcOpen(b.dataset.r,b.dataset.k).then(()=>{});UGBACK='hub'}}}
 /* ===================== 主城圓圖輪播：同一個圓圈上傳的多張圖輪流顯示 ===================== */
 const CCT={zx:1,hg:1,jj:1,dj:1,wb:1};
 const ccShuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -3772,8 +3775,8 @@ function ccList(k){const def=k==='wb'?cityPick('c_wb',wbArtGen(WB.st?wbKey():'tt
  else if(k==='dj'){const m=hjModels().filter(ccUp);L=(m.length?m:ccShuf(H.filter(h=>ccUp(h.id)).map(h=>h.id)).slice(0,6)).map(id=>{const h=H.find(x=>x.id===id);return{u:ccUp(id),n:h.n,c:FC[h.f]}})}
  else if(k==='hg')L=ccShuf(BEA.filter(b=>ccUp(b.id)||BEAIMG.has(b.id))).slice(0,12).map(b=>({u:ccUp(b.id)||`bea/${beaF(b.id)}_b.jpg`,n:b.n,c:'#ff9ac4'}));
  else if(k==='wb'){const cur=wbSeq()%24;L=WBK.map((_,i)=>WBK[(cur+i)%24]).map(q=>({u:wbArt(q),n:(wbOf(q)||[])[1]||'',c:'#ff7a5a'}))}
- if(k==='jj')return [{u:def}];
- if(k==='zx'||k==='dj'){const H2=L.filter(x=>x.u&&x.u!==def);return [{u:def},...H2.flatMap((x,i)=>i<H2.length-1?[x,{u:def,d:1}]:[x])]}
+ if(k==='jj')L=ccShuf(QMD.filter(q=>ugcIco('qm',q.id))).map(q=>({u:ugcIco('qm',q.id),n:q.n,c:'#9fd8ff'}));
+ if(k==='zx'||k==='dj'||k==='jj'){const H2=L.filter(x=>x.u&&x.u!==def);return [{u:def},...H2.flatMap((x,i)=>i<H2.length-1?[x,{u:def,d:1}]:[x])]}
  return [{u:def},...ups,...L].filter((v,i,a)=>v.u&&a.findIndex(z=>z.u===v.u)===i)}
 function ccBuild(){if(!$('cBlds'))return;for(const k in CCT){const e=$('cb_'+k);if(!e)continue;let c=e.querySelector('.ccar');if(!c){c=document.createElement('i');c.className='ccar';e.insertBefore(c,e.querySelector('.ctl'))}
  const A=ccList(k),L=A.slice(1),key=k+L.length+A[0].u+(L[0]&&L[0].u);if(c.dataset.key===key)continue;c.dataset.key=key;c.innerHTML=L.map(x=>`<b class="ccf${x.n?' ccn':''}"><s style="background-image:url(${x.u})"></s>${x.n?`<em style="--nc:${x.c||'#ffd27a'}">${x.n}</em>`:''}</b>`).join('');c.dataset.n=L.length;c.dataset.i=0}}
@@ -4093,7 +4096,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261031r';
+const CVER='20261101a';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityImgs();cityLayout();cityBind();setTimeout(cityLayout,700);setTimeout(cityLayout,2000)}
 function cityLayout(){const C=$('city');if(!C||!C.offsetHeight)return;const R=C.getBoundingClientRect(),q=sel=>{const e=C.querySelector(sel);return e&&e.offsetHeight?e.getBoundingClientRect():null};
@@ -4282,11 +4285,11 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261101a',d:'11/01',t:['主城奇謀圓圖改成輪播：你的圖與有上傳圖的奇謀輪流出現，下方寫奇謀名字','戰鬥上方的奇謀標籤改回小圖示，比較清楚；奇謀發動的中央動畫改用上傳的大圖','從圖鑑總覽進入上傳頁後按返回，會回到圖鑑總覽；奇謀詳細頁新增「🎨 圖鑑」按鈕，返回會回到奇謀']},
  {v:'20261031r',d:'10/31',t:['奇謀圓圖不輪播，只顯示你設定的圖','招募與豪傑書圓圖：每換一位武將之後，會先回到你設定的圖再換下一位','在圖鑑上傳或選用新的圓圖後，主城馬上換成新圖（輪播中也是）']},
  {v:'20261031q',d:'10/31',t:['修正主城招募、奇謀、豪傑書圓圖不會輪播的問題（上傳圖載入完成後才建立輪播）']},
  {v:'20261031p',d:'10/31',t:['更新紀錄只保留最近幾個版本，比較好讀']},
- {v:'20261031o',d:'10/31',t:['主城圓圖輪播改成「一張圖＋名字」：招募輪播大家上傳的武將圖、後宮輪播紅顏、奇謀輪播謀士與輔助型武將、豪傑書輪播你的榜樣武將、妖獸討伐輪播 24 隻妖獸，每張下方寫上名字；原本的圓圈圖仍在輪播中','只用真正上傳的圖，沒上傳圖的武將不會出現（不再用 Q 版）']},
- {v:'20261031n',d:'10/31',t:['主城圓圖輪播改版：拿掉 Q 版合成畫面，改成在大家上傳到同一個圓圈的圖之間輪播（每 6 秒，讚數高的優先）；只有一張就不輪播','圓圈的上傳頁換上新提示詞（酒館、庭園、對弈、古書、妖獸對決），【】裡的人物可自由替換']}];
+ {v:'20261031o',d:'10/31',t:['主城圓圖輪播改成「一張圖＋名字」：招募輪播大家上傳的武將圖、後宮輪播紅顏、奇謀輪播謀士與輔助型武將、豪傑書輪播你的榜樣武將、妖獸討伐輪播 24 隻妖獸，每張下方寫上名字；原本的圓圈圖仍在輪播中','只用真正上傳的圖，沒上傳圖的武將不會出現（不再用 Q 版）']}];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
 function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${pager(L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`),'vpg')}</div>
@@ -4366,7 +4369,7 @@ function arenaArt(){if(ARENA_BG)return ARENA_BG;const W=540,Hh=1170,c=document.c
  g=x.createRadialGradient(cx,Hh*.6,W*.3,cx,Hh*.6,W*1.1);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(20,14,8,.65)');x.fillStyle=g;x.fillRect(0,0,W,Hh);
  return ARENA_BG=c.toDataURL('image/jpeg',.82)}
 function btSideName(mine){return mine?esc(S.lord.n||'我方'):OPP.arena||OPP.fr?esc(OPP.name||'對手'):MODE==='tower'?`${FLOOR+1}層`:`${DIFFS[OPP.d].n}`}
-function btQm(i){const L=(typeof QMS!=='undefined'&&QMS[i])||[];if(!L.length)return '';const ds=L.map(q=>QMD.find(z=>z.id===q.id)).filter(Boolean);return ds.length===1?`<span class="bqm" title="${ds[0].n}">${qmIc(ds[0].id)}<small>${ds[0].n}</small></span>`:`<span class="bqm" title="${ds.map(d=>d.n).join('、')}">${ds.map(d=>qmIc(d.id)).join('')}</span>`}
+function btQm(i){const L=(typeof QMS!=='undefined'&&QMS[i])||[];if(!L.length)return '';const ds=L.map(q=>QMD.find(z=>z.id===q.id)).filter(Boolean);return ds.length===1?`<span class="bqm" title="${ds[0].n}">${ds[0].ic}<small>${ds[0].n}</small></span>`:`<span class="bqm" title="${ds.map(d=>d.n).join('、')}">${ds.map(d=>d.ic).join('')}</span>`}
 function btHud(){const h=$('btHud');if(!h)return;h.innerHTML=`<div class="bhs me"><b>${btSideName(true)}</b>${btQm(0)}</div><div class="bhr"><span>回合</span><b>${ROUND}/${MAXR()}</b></div><div class="bhs en">${btQm(1)}<b>${btSideName(false)}</b></div>`}
 function btOrder(){const o=$('btOrd');if(!o)return;const L=[...alive(pl).map(u=>[u,1]),...alive(en).map(u=>[u,0])].sort((a,b)=>spdOf(b[0])-spdOf(a[0]));
  o.style.setProperty('--bs',Math.max(22,Math.min(34,Math.floor((Math.min(innerWidth,560)-16)/Math.max(1,L.length))-4))+'px');o.innerHTML=`<div class="boi">${L.map(([u,m])=>`${!artHasName(u.id)?`<span class="${m?'me':'en'}${u===CUR?' cur':''}" style="background-image:url(${ART[u.id]})"><b>${u.n.slice(-2)}</b></span>`:`<span class="${m?'me':'en'}${u===CUR?' cur':''} ink" style="background:${FC[u.f]}"><b>${u.n.slice(-2)}</b></span>`}`).join('')}</div><small>速度決定出手順序</small>`}
