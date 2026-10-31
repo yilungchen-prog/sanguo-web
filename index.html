@@ -69,6 +69,9 @@
 .twbea i.bs{left:12%;top:28%;width:76%;opacity:1!important;animation:twfl 5s ease-in-out infinite!important;z-index:2}@keyframes twfl{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .twbea i.sq{aspect-ratio:1!important}
 .twbea i.oc{left:12%;top:28%;width:76%;z-index:2}
+.pup{position:absolute;right:4px;top:4px;font-style:normal;font-size:12px;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;background:#555c;color:#ddd;border:1px solid #999;z-index:3}
+.hnote{display:block;font-size:11px;opacity:.7;font-weight:400}.pillno{margin-top:8px;padding:8px;border-radius:10px;background:#5a1a1022;border:1px solid #c0392b88;color:#ffb0a0;font-size:14px;display:flex;align-items:center;gap:8px;justify-content:space-between}.pillno button{flex:none!important;width:auto!important;padding:6px 12px!important;min-height:0!important}
+button[data-dot]:not(.ccir):not(.cic):not(.cmed):not(.cfame):not(#nvBar):not(.tchip){position:relative}
 </style></head><body>
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
@@ -1022,7 +1025,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101f</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101g</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -1804,9 +1807,9 @@ function render(){
 function fillPool(pp){const PW={};H.forEach(h=>PW[h.id]=powOf(h));const paged=pp.id==='hpool';
  const list=H.filter(h=>PF==='all'||h.f===PF).sort((a,b)=>(!!S.own[b.id]-!!S.own[a.id])||(heroDot(b.id)-heroDot(a.id))||PW[b.id]-PW[a.id]);const st=pp.parentNode.parentNode.scrollTop;pp.innerHTML='';let secs=null;if(paged){HORD=list.map(h=>h.id);const n=Math.ceil(list.length/16);pp.innerHTML=pager(Array(Math.max(1,n)).fill(''),'hpg','hero'+PF);secs=[...pp.querySelectorAll('section')]}let ix=0;
  list.forEach(h=>{const has=!!S.own[h.id];const e=document.createElement('div');e.className='pc'+(has?'':' lock')+(has&&starReady(h.id)==2?' ready':'');
-  e.appendChild(cardEl(h,true));e.insertAdjacentHTML('beforeend',has?(heroDot(h.id)?`<i class="pdot">!</i><em class="pwhy">${heroWhy(h.id)}</em>`:'')+(ugcIsNew('hero',h.id)?'<em class="pnew">🎨 新圖</em>':''):'<div class="st">未獲得</div>');
+  e.appendChild(cardEl(h,true));e.insertAdjacentHTML('beforeend',has?(heroDot(h.id)?`<i class="pdot">!</i><em class="pwhy">${heroWhy(h.id)}</em>`:(!isDep(h.id)&&canLv(h.id)?'<i class="pup">⬆</i>':''))+(ugcIsNew('hero',h.id)?'<em class="pnew">🎨 新圖</em>':''):'<div class="st">未獲得</div>');
   e.onclick=()=>{if(!busy)openHero(h.id)};(secs?secs[Math.floor(ix/16)]:pp).appendChild(e);ix++});if(paged)requestAnimationFrame(()=>pgRestore(pp));
- {const ds=H.filter(h=>heroDot(h.id)),ns=ds.filter(h=>starReady(h.id)===2).length;$('hCnt').innerHTML=`已獲得 ${H.filter(h=>S.own[h.id]).length}/${H.length}`+(ds.length?`　<b class="hwhy">● ${ns?ns+' 位可升星':''}${ns&&ds.length>ns?'、':''}${ds.length>ns?(ds.length-ns)+' 位上陣武將可培養':''}・排最前</b>`:'');$('hFrag').toggleAttribute('data-dot',fragDot())}pp.parentNode.parentNode.scrollTop=st}
+ {const ds=H.filter(h=>heroDot(h.id)),ns=ds.filter(h=>starReady(h.id)===2).length;$('hCnt').innerHTML=`已獲得 ${H.filter(h=>S.own[h.id]).length}/${H.length}`+(ds.length?`　<b class="hwhy">● ${ns?ns+' 位可升星':''}${ns&&ds.length>ns?'、':''}${ds.length>ns?(ds.length-ns)+' 位上陣武將可培養':''}・排最前</b>`:'')+'<small class="hnote">紅點只提示上陣武將；灰色 ⬆ 表示未上陣但可升級</small>';$('hFrag').toggleAttribute('data-dot',fragDot())}pp.parentNode.parentNode.scrollTop=st}
 const BEST=[1,0,2,4,3,5,7,6,8];
 function bestIds(){const hs=H.filter(h=>S.own[h.id]).sort((a,b)=>powOf(b)-powOf(a)).slice(0,MAXN()).map(h=>mkP(h)).sort((a,b)=>b.mhp-a.mhp);const r=Array(9).fill(null);hs.forEach((u,k)=>r[BEST[k]]=u.id);return r}
 function autoBest(save){pl=bestIds().map(id=>id?mkP(H.find(h=>h.id===id)):null);if(save)saveDL()}
@@ -2978,7 +2981,7 @@ function starAllOpen(){const P=starPlan(STW),tg=P.reduce((a,x)=>a+x.ug,0),tc=P.r
 function starReady(id){const st=S.star[id]||0;if(!S.own[id]||st>=MAXSTAR||(S.cp[id]||0)<STAR_COST[st])return 0;return S.coins>=STAR_GOLD[st]?2:1}
 const isDep=id=>pl.some(u=>u&&u.id===id)||(Array.isArray(S.dl)&&S.dl.includes(id));
 const heroDot=id=>!!S.own[id]&&(starReady(id)===2||(isDep(id)&&((typeof canLv==='function'&&canLv(id))||(typeof eqBetter==='function'&&!inHJ(id)&&eqBetter(id))||(typeof fsDot==='function'&&fsDot(id)))));
-const heroWhy=id=>starReady(id)===2?'可升星':isDep(id)&&typeof canLv==='function'&&canLv(id)?'可升級':'可換裝備';
+const heroWhy=id=>{const r=[];if(starReady(id)===2)r.push('可升星');if(isDep(id)){if(typeof canLv==='function'&&canLv(id))r.push('可升級');if(typeof eqBetter==='function'&&!inHJ(id)&&eqBetter(id))r.push('可換裝備');if(typeof fsDot==='function'&&fsDot(id))r.push('可裝符石')}return r.slice(0,2).join('・')};
 const fragDot=()=>{try{const F=S.frag||{};return ['SR','SSR','UR'].some(k=>(F[k]||0)>=FSYN[k])}catch(e){return false}};
 function lvCost(id,k){const o=S.lv[id]||{l:1,e:0};k=Math.min(k,maxLvOf(id)-o.l);if(k<=0)return 0;let c=-o.e;for(let j=0;j<k;j++)c+=NEED(o.l+j);return c}
 function migrate(){
@@ -3152,7 +3155,7 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  const tab=(k,ic,n,dot,dis)=>`<button class="hvt${HTAB===k?' on':''}" data-a="tab" data-t="${k}" ${dis?'disabled':''}>${dot?'<i class="dot"></i>':''}${n}</button>`;
  let sheet='';
  if(HTAB==='lv'){sheet=`<div class="sht">⬆ 培養</div><div class="sub">Lv.${lv} / ${maxLvOf(h.id)}${lv>=maxLvOf(h.id)?'（滿級）':`　經驗 ${o.e.toLocaleString()} / ${NEED(lv).toLocaleString()}`}</div><div class="xp"><i style="width:${lv>=maxLvOf(h.id)?100:o.e/NEED(lv)*100}%"></i></div>
-  ${hj?'<div class="sub" style="color:#ffd27a">📖 在豪傑書槽位中：等級共享為 Lv.'+lv+'，不能自行升級。</div>':lv<maxLvOf(h.id)?`<div class="sub">🔮 經驗丹 <b>${S.pill.toLocaleString()}</b>（1 顆 = 1 點經驗）</div><div class="btns" style="margin:6px 0"><button data-a="pill" data-k="1" ${lvCost(h.id,1)>S.pill?'disabled':''}>升 1 級<br><small>${lvCost(h.id,1).toLocaleString()}</small></button><button data-a="pill" data-k="10" ${lvCost(h.id,10)>S.pill?'disabled':''}>升 10 級<br><small>${lvCost(h.id,10).toLocaleString()}</small></button><button data-a="pill" data-k="all" ${S.pill<=0?'disabled':''}>全部使用<br><small>${Math.min(S.pill,lvCost(h.id,MAXLV2)).toLocaleString()}</small></button></div>`:'<div class="sub">已滿級，可到「進階」突破。</div>'}
+  ${hj?'<div class="sub" style="color:#ffd27a">📖 在豪傑書槽位中：等級共享為 Lv.'+lv+'，不能自行升級。</div>':lv<maxLvOf(h.id)?`<div class="sub">🔮 經驗丹 <b>${S.pill.toLocaleString()}</b>（1 顆 = 1 點經驗）</div><div class="btns" style="margin:6px 0"><button data-a="pill" data-k="1" ${lvCost(h.id,1)>S.pill?'disabled':''}>升 1 級<br><small>${lvCost(h.id,1).toLocaleString()}</small></button><button data-a="pill" data-k="10" ${lvCost(h.id,10)>S.pill?'disabled':''}>升 10 級<br><small>${lvCost(h.id,10).toLocaleString()}</small></button><button data-a="pill" data-k="all" ${S.pill<=0?'disabled':''}>全部使用<br><small>${Math.min(S.pill,lvCost(h.id,MAXLV2)).toLocaleString()}</small></button></div>${lvCost(h.id,1)>S.pill?`<div class="pillno">🔮 經驗丹不足（持有 ${S.pill.toLocaleString()}，升 1 級需 ${lvCost(h.id,1).toLocaleString()}）<button class="g" data-a="getpill">前往取得</button></div>`:''}`:'<div class="sub">已滿級，可到「進階」突破。</div>'}
   <div class="sub" style="font-size:11px">等級提高生命、攻擊（每級 +6%）與怒氣技倍率（目前 ×${lvmOf(lv).toFixed(2)}）。</div>`}
  else if(HTAB==='adv'){sheet=`<div class="sht">★ 進階</div><div class="hjft advt"><button data-a="advt" data-k="star" class="${HADV==='star'?'on':''}">⭐ 升星 ★${st}/${MAXSTAR}</button><button data-a="advt" data-k="brk" class="${HADV==='brk'?'on':''}">💥 突破</button></div><div class="hv2"><div${HADV==='star'?'':' style="display:none"'}><div class="skb">攻擊與生命 +${Math.round(starB(st)*100)}%；技能等級也隨星級提升（★5／10／15）。${st<MAXSTAR?(()=>{const need=STAR_COST[st],g=STAR_GOLD[st],cp=S.cp[h.id]||0,wc=S.wc||0,have=cp+wc,okC=have>=need,okG=S.coins>=g;
   return `<div class="rq ${okC?'good':'bad'}"><span>同名卡${wc?'＋🃏':''}</span><b>${have} / ${need}</b><i>${okC?'✓':'✗'}</i></div><div class="rq ${okG?'good':'bad'}"><span>💰 金幣</span><b>${kf(S.coins)} / ${kf(g)}</b><i>${okG?'✓':'✗'}</i></div><button data-a="star" style="width:100%;margin-top:6px" ${!okC||!okG?'disabled':''}>升星 → ★${st+1}</button>`})():'<div class="rq good"><span>已滿星</span><b>★'+MAXSTAR+'</b><i>✓</i></div>'}</div></div>
@@ -3184,7 +3187,7 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  <div class="hvtabs">${tab('lv','⬆','培養',canLv(h.id),!own)}${tab('adv','★','進階',canAdv(h.id),!own)}${tab('eq','🛡','裝備',(!inHJ(h.id)&&eqBetter(h.id)),!own)}${tab('fs','🐯','符石',own&&fsDot(h.id),!own)}${tab('sk','📜','技能',0,0)}${tab('bd','🤝','羈絆',0,0)}</div>${HTAB==='fs'&&own?fsView(h.id):''}
  <div class="hvs${HTAB&&HTAB!=='fs'?' on':''}"><button class="hvsx" data-a="tabx">▾</button><div class="hvsc">${sheet}</div></div>${pk}</div>`}
 let HADV='star';
-$('heroBody').onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;const k=a.dataset.a;if(k==='advt'){HADV=a.dataset.k;renderHero();return}
+$('heroBody').onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;const k=a.dataset.a;if(k==='getpill'){askBox('🔮 取得經驗丹','經驗塔每層都會掉經驗丹，掛機收益與商城也能取得。',[['去經驗塔',()=>{$('hero').classList.remove('on');$('heroes').classList.remove('on');TWK='exp';hubOpen()},'actgo'],['去商城',()=>{$('hero').classList.remove('on');$('heroes').classList.remove('on');$('mShop').click()},'g'],['取消',()=>{},'g']]);return}if(k==='advt'){HADV=a.dataset.k;renderHero();return}
  if(k==='x'){$('hero').classList.remove('on');render();return}
  if(k==='view'){HVIEW=!HVIEW;HTAB=null;HSK=-1;renderHero();return}
  if(k==='tab'){HTAB=HTAB===a.dataset.t?null:a.dataset.t;HSK=-1;renderHero();return}
@@ -4157,7 +4160,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261101f';
+const CVER='20261101g';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}try{FAME=JSON.parse(localStorage.getItem('sgFame')||'null')}catch(e){}fameDraw();cityImgs();cityBind();{let n=0;const go=()=>{cityLayout();const so=document.querySelector('.csoc');if((so&&so.offsetHeight)||n++>30)$('cBlds').classList.add('rdy');else requestAnimationFrame(go)};go()}try{document.fonts.ready.then(()=>cityLayout())}catch(e){}
  let wasC=document.body.classList.contains('city');new MutationObserver(()=>{const c=document.body.classList.contains('city');if(c&&!wasC){const B=$('cBlds');B.classList.remove('rdy');requestAnimationFrame(()=>{cityLayout();requestAnimationFrame(()=>B.classList.add('rdy'))})}wasC=c}).observe(document.body,{attributes:true,attributeFilter:['class']});
@@ -4351,11 +4354,11 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261101g',d:'11/01',t:['武將卡下方的提示改成顯示真正原因：可升級／可升星／可換裝備／可裝符石','沒上陣但可以升級的武將，顯示灰色 ⬆；武將列表上方說明紅點規則','經驗丹不足時，培養頁會提示並可前往經驗塔或商城','修正競技場「段位」等分頁的紅點跑到畫面右上角的問題']},
  {v:'20261101f',d:'11/01',t:['修正主城「天下第一」出現後五個圓圖縮小跳動的問題（預先保留位置，並記住上次的第一名）','修正主城好友／排行／圖鑑按鈕有時擋到奇謀、豪傑書','試煉塔有多張物品圖時，改成在塔前中央輪流淡入淡出']},
  {v:'20261101e',d:'11/01',t:['試煉塔畫面：名將塔輪播大家上傳的武將圖；裝備塔用上傳的高品階裝備圖示；虎符、金幣、經驗、寶石塔放上專屬物品圖（自動去掉白底，只有 1 張時會在塔前輕輕浮動）']},
  {v:'20261101d',d:'11/01',t:['新增綜合排行榜（主城「排行」）：戰力、主公、收集、星數、成就、後宮，顯示我的名次，也能直接跳到爬塔、競技、妖獸排行','新增排名獎勵：競技場每週一結算（前 10 名，第 1 名稱號「天下無雙」一週）、爬塔每月 1 日結算、妖獸被打倒後傷害前 10 名都有獎勵','新增「📬 信箱」：排名獎勵、系統禮物都寄到這裡，可一鍵領取','主城新增「👑 天下第一」名人堂，顯示全服戰力第一的主公','圖鑑總覽重新分類：主城、場景、試煉塔、妖獸、奇謀、裝備、武將、紅顏，並顯示已上傳數量']},
- {v:'20261101c',d:'11/01',t:['修正回到主城時五個圓圖會先變大再縮小、往上跳一下的問題','遊戲會自動檢查新版本：有新版時上方出現「有新版本，點此更新」，點一下就會載入最新版']},
- {v:'20261101b',d:'11/01',t:['主城五個圓圖的輪播規則統一：預設圖 → 一張其他圖 → 回到預設圖 → 下一張……（後宮、妖獸討伐也一樣）']}];
+ {v:'20261101c',d:'11/01',t:['修正回到主城時五個圓圖會先變大再縮小、往上跳一下的問題','遊戲會自動檢查新版本：有新版時上方出現「有新版本，點此更新」，點一下就會載入最新版']}];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
 function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${pager(L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`),'vpg')}</div>
