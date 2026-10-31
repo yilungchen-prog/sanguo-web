@@ -65,6 +65,9 @@
 .mlr{display:grid!important;grid-template-columns:34px 1fr auto;gap:8px;align-items:center;width:100%;text-align:left;padding:8px!important;margin:5px 0;border-radius:10px!important;min-height:0!important}.mlr i{font-style:normal;font-size:24px}.mlr b{display:block;font-size:14px}.mlr small{font-size:12px;color:#ffd27a}.mlr u{text-decoration:none;font-weight:900;font-size:14px;background:#7a2a18;border:1px solid #f0c66a;border-radius:10px;padding:4px 10px}.mlr.got{opacity:.55}.mlr.got u{background:#333;border-color:#666}
 #cMail[data-dot]{position:relative}
 .ught{display:flex!important;overflow-x:auto;gap:6px;scrollbar-width:none}.ught button{flex:none!important;min-height:40px!important;padding:4px 14px!important;font-size:15px!important;white-space:nowrap}.ughi.hb{aspect-ratio:3/4!important;background-position:center 15%!important}
+.twbea i.ob{-webkit-mask-image:none!important;mask-image:none!important;background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important;filter:drop-shadow(0 0 18px #fff6)}.twbea i.ob:not(.dw){visibility:hidden}
+.twbea i.bs{left:12%;top:28%;width:76%;opacity:1!important;animation:twfl 5s ease-in-out infinite!important;z-index:2}@keyframes twfl{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.twbea i.sq{aspect-ratio:1!important}
 </style></head><body>
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
@@ -1018,7 +1021,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101d</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101e</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -3776,10 +3779,18 @@ function twOneArt(k,W,Hh){const key=k+W+'x'+Hh;if(TWART[key])return TWART[key];c
   x.strokeStyle='rgba(220,200,255,.5)';x.lineWidth=2;x.beginPath();x.ellipse(ccx,ccy,150*s,80*s,-.1,0,7);x.stroke()}
  g=x.createLinearGradient(0,Hh*.85,0,Hh);g.addColorStop(0,'rgba(10,8,6,0)');g.addColorStop(1,'rgba(10,8,6,.75)');x.fillStyle=g;x.fillRect(0,Hh*.85,W,Hh*.15);
  return TWART[key]=c.toDataURL('image/jpeg',.85)}
-function twFig(k){let L;if(k==='harem'){const up=BEA.filter(b=>UGC_SEL&&UGC_SEL[b.id]).map(b=>UGC_SEL[b.id]);L=up.length>=3?up:[...up,...['xishi','zhaojun','yuhuan','feiyan','waner','yuji2'].filter(id=>BEAIMG.has(id)).map(id=>`bea/${beaF(id)}_b.jpg`)]}else L=[1,2,3].map(i=>ugcScene('twf_'+k+'_'+i)).filter(Boolean);L=L.slice(0,6);if(L.length&&L.length<3)while(L.length<3)L.push(L[L.length%L.length]);if(L.length>3&&L.length<6)L=L.slice(0,3);return L}
+const DWC={};function deWhite(u){if(DWC[u])return DWC[u];return DWC[u]=new Promise(res=>{const im=new Image();im.crossOrigin='anonymous';im.onload=()=>{try{const sc=Math.min(1,640/Math.max(im.width,im.height)),w=Math.round(im.width*sc),h=Math.round(im.height*sc),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.drawImage(im,0,0,w,h);const d=x.getImageData(0,0,w,h),a=d.data;
+ for(let i=0;i<a.length;i+=4){const r=a[i],g=a[i+1],bb=a[i+2],mx=Math.max(r,g,bb),mn=Math.min(r,g,bb),sat=mx-mn,lum=(r+g+bb)/3;let al=Math.min(1,Math.max(0,(250-lum)/70)+sat/90);al=Math.min(1,al);if(al<1){a[i+3]=Math.round(a[i+3]*al);if(al>0){a[i]=Math.max(0,255-(255-r)/al);a[i+1]=Math.max(0,255-(255-g)/al);a[i+2]=Math.max(0,255-(255-bb)/al)}}}
+ x.putImageData(d,0,0);res(c.toDataURL('image/png'))}catch(e){res(u)}};im.onerror=()=>res(u);im.src=u})}
+function twFig(k){let L;if(k==='harem'){const up=BEA.filter(b=>UGC_SEL&&UGC_SEL[b.id]).map(b=>UGC_SEL[b.id]);L=up.length>=3?up:[...up,...['xishi','zhaojun','yuhuan','feiyan','waner','yuji2'].filter(id=>BEAIMG.has(id)).map(id=>`bea/${beaF(id)}_b.jpg`)];return L.slice(0,6).map(u=>({u}))}
+ if(k==='frag'){const L2=ccShuf(H.filter(h=>ccUp(h.id))).slice(0,6).map(h=>({u:ccUp(h.id)}));return L2.length>=3?L2:L2.length?[L2[0]].map(x=>({...x,solo:1})):[]}
+ const own=[1,2,3].map(i=>ugcScene('twf_'+k+'_'+i)).filter(Boolean);
+ if(k==='eq'&&!own.length){const E=[];for(let t=6;t>=0&&E.length<6;t--)for(const sl of SLOTS){const u=UGC_TOP['eq:'+sl.k+t];if(u&&E.length<6)E.push({u,obj:1,sq:1})}if(E.length===1||E.length===2)return [{...E[0],solo:1}];return E.slice(0,E.length>=6?6:3)}
+ if(!own.length)return [];if(own.length===1)return [{u:own[0],obj:1,solo:1}];const L3=own.map(u=>({u,obj:1}));while(L3.length<3)L3.push(L3[0]);return L3}
+function twDeWhite(){document.querySelectorAll('.twbea i[data-dw]').forEach(el=>{const u=el.dataset.dw;el.removeAttribute('data-dw');deWhite(u).then(v=>{el.style.backgroundImage=`url(${v})`;el.classList.add('dw')})})}
 function towerScene(){if(!TWK||!TOWERS.includes(TWK))TWK=(S.pref&&S.pref.twk)||'exp';const k=TWK,T=S.tw[k],O=TWONE[k],W=Math.min(innerWidth,560),Hh=innerHeight,nc=typeof msClaimable==='function'?msClaimable():0,i=TOWERS.indexOf(k);
  const ub=typeof ugcScene==='function'&&ugcScene('tw_'+k);
- const bl=ub?'':twFig(k).map((u,j)=>`<i class="b${j%3}" style="background-image:url(${u});--d:${j<3?-j*1.5:-9-(j-3)*1.5}s"></i>`).join('');
+ const bl=ub?'':twFig(k).map((x,j)=>x.obj?`<i class="${x.solo?'bs':'b'+(j%3)} ob${x.sq?' sq':''}" data-dw="${x.u}" style="--d:${j<3?-j*1.5:-9-(j-3)*1.5}s"></i>`:`<i class="${x.solo?'bs':'b'+(j%3)}" style="background-image:url(${x.u});--d:${j<3?-j*1.5:-9-(j-3)*1.5}s"></i>`).join('');
  return `<div class="twsc tw1" style="background-image:url(${ub||twOneArt(k,W,Hh)})">${ub?'<div class="ugdim"></div>':''}${bl?`<div class="twbea">${bl}</div>`:''}<div class="twcl"><i></i><i></i></div>
  <div class="twsh"><button class="xb" data-y="x">←</button><b>試煉塔</b><button class="ugbtn" data-y="ugs" data-r="tw_${k}"${typeof ugcIsNew==='function'&&ugcIsNew('scene','tw_'+k)?' data-dot':''}>🎨</button></div>
  <button class="tw1t" data-y="map" data-k="${k}"></button>
@@ -3834,7 +3845,7 @@ function cityPick(ref,def){const v=(S.ugc||{})[ugcKey('scene',ref)];return v&&v!
 function cityImgs(){const cu=$('cUbg');if(cu){cu.style.backgroundImage=`url(${cityPick('city','city/bg.jpg')})`;cu.classList.add('on')}['zx','hg','jj','dj'].forEach(k=>{const e=$('cb_'+k),i=e&&e.querySelector('.ccim');if(i)i.style.backgroundImage=`url(${cityPick('c_'+k,'city/'+k+'.jpg')})`});{const e=$('cb_wb'),i=e&&e.querySelector('.ccim');if(i)i.style.backgroundImage=`url(${cityPick('c_wb',wbArtGen(WB.st?wbKey():'tt'))})`}try{ccBuild()}catch(e){}}
 function ugcApplyScenes(){const w=ugcScene('war');cityImgs();const su=$('sUbg');if(su){su.style.backgroundImage=SCK==='war'&&w?`url(${w})`:'';su.classList.toggle('on',SCK==='war'&&!!w)}}
 
-function renderHub(){$('thub').classList.toggle('scn',HUBV==='main');if(HUBV==='main'){$('thBody').innerHTML=towerScene();return}const nc=msClaimable();let h=`<div class="shh"><b>🗼 爬塔</b><button data-y="x" style="flex:none;width:44px;padding:6px 0">✕</button></div><div class="btns" style="margin:6px 0">${[['main','🗼 五座塔'],['rank','🏆 排行榜'],['ms','🎁 里程碑'+(nc?'（'+nc+'）':'')]].map(([k,n])=>`<button class="g${HUBV===k?' on':''}" data-y="v" data-v="${k}"${k==='ms'&&nc?' data-dot':''}>${n}</button>`).join('')}</div>`;
+function renderHub(){$('thub').classList.toggle('scn',HUBV==='main');if(HUBV==='main'){$('thBody').innerHTML=towerScene();twDeWhite();return}const nc=msClaimable();let h=`<div class="shh"><b>🗼 爬塔</b><button data-y="x" style="flex:none;width:44px;padding:6px 0">✕</button></div><div class="btns" style="margin:6px 0">${[['main','🗼 五座塔'],['rank','🏆 排行榜'],['ms','🎁 里程碑'+(nc?'（'+nc+'）':'')]].map(([k,n])=>`<button class="g${HUBV===k?' on':''}" data-y="v" data-v="${k}"${k==='ms'&&nc?' data-dot':''}>${n}</button>`).join('')}</div>`;
  if(HUBV!=='main'){$('thBody').innerHTML=h+hubSub();return}
  const TRS={exp:'🔮 經驗丹',eq:'🛡 裝備',gold:'💰 金幣',frag:'🧩 名將碎片',harem:'🌸 紅顏信物',hf:'🐯 虎符',gem:'💎 寶石'};
  h+=`<p class="sub" style="font-size:15px">點方格看塔圖；一鍵爬塔最多到第 ${AUTOMAX} 層。</p><div class="twg">`;
@@ -4145,7 +4156,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261101d';
+const CVER='20261101e';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityImgs();cityLayout();cityBind();$('cBlds').classList.add('rdy');try{document.fonts.ready.then(()=>cityLayout())}catch(e){}
  let wasC=document.body.classList.contains('city');new MutationObserver(()=>{const c=document.body.classList.contains('city');if(c&&!wasC){const B=$('cBlds');B.classList.remove('rdy');requestAnimationFrame(()=>{cityLayout();requestAnimationFrame(()=>B.classList.add('rdy'))})}wasC=c}).observe(document.body,{attributes:true,attributeFilter:['class']});
@@ -4339,11 +4350,11 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261101e',d:'11/01',t:['試煉塔畫面：名將塔輪播大家上傳的武將圖；裝備塔用上傳的高品階裝備圖示；虎符、金幣、經驗、寶石塔放上專屬物品圖（自動去掉白底，只有 1 張時會在塔前輕輕浮動）']},
  {v:'20261101d',d:'11/01',t:['新增綜合排行榜（主城「排行」）：戰力、主公、收集、星數、成就、後宮，顯示我的名次，也能直接跳到爬塔、競技、妖獸排行','新增排名獎勵：競技場每週一結算（前 10 名，第 1 名稱號「天下無雙」一週）、爬塔每月 1 日結算、妖獸被打倒後傷害前 10 名都有獎勵','新增「📬 信箱」：排名獎勵、系統禮物都寄到這裡，可一鍵領取','主城新增「👑 天下第一」名人堂，顯示全服戰力第一的主公','圖鑑總覽重新分類：主城、場景、試煉塔、妖獸、奇謀、裝備、武將、紅顏，並顯示已上傳數量']},
  {v:'20261101c',d:'11/01',t:['修正回到主城時五個圓圖會先變大再縮小、往上跳一下的問題','遊戲會自動檢查新版本：有新版時上方出現「有新版本，點此更新」，點一下就會載入最新版']},
  {v:'20261101b',d:'11/01',t:['主城五個圓圖的輪播規則統一：預設圖 → 一張其他圖 → 回到預設圖 → 下一張……（後宮、妖獸討伐也一樣）']},
- {v:'20261101a',d:'11/01',t:['主城奇謀圓圖改成輪播：你的圖與有上傳圖的奇謀輪流出現，下方寫奇謀名字','戰鬥上方的奇謀標籤改回小圖示，比較清楚；奇謀發動的中央動畫改用上傳的大圖','從圖鑑總覽進入上傳頁後按返回，會回到圖鑑總覽；奇謀詳細頁新增「🎨 圖鑑」按鈕，返回會回到奇謀']},
- {v:'20261031r',d:'10/31',t:['奇謀圓圖不輪播，只顯示你設定的圖','招募與豪傑書圓圖：每換一位武將之後，會先回到你設定的圖再換下一位','在圖鑑上傳或選用新的圓圖後，主城馬上換成新圖（輪播中也是）']}];
+ {v:'20261101a',d:'11/01',t:['主城奇謀圓圖改成輪播：你的圖與有上傳圖的奇謀輪流出現，下方寫奇謀名字','戰鬥上方的奇謀標籤改回小圖示，比較清楚；奇謀發動的中央動畫改用上傳的大圖','從圖鑑總覽進入上傳頁後按返回，會回到圖鑑總覽；奇謀詳細頁新增「🎨 圖鑑」按鈕，返回會回到奇謀']}];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
 function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${pager(L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`),'vpg')}</div>
