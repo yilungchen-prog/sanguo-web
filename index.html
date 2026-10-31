@@ -53,6 +53,8 @@
 .ccf s:last-child{z-index:2}.ccir .ctl{z-index:3}
 .ccf.ccn s{background-position:center 18%}.ccf em{position:absolute;left:50%;bottom:18%;transform:translateX(-50%);font:900 clamp(13px,3.6vw,17px) 'LXGW WenKai TC',serif;font-style:normal;letter-spacing:3px;white-space:nowrap;color:#fff6dc;background:linear-gradient(90deg,transparent,#000b 20%,#000b 80%,transparent);padding:2px 18px;text-shadow:0 0 6px var(--nc),0 1px 2px #000;z-index:3}
 .qmfx i img.ugic{width:min(34vw,150px);height:min(34vw,150px);border-radius:16px;object-fit:cover;box-shadow:0 0 24px #ffd27a88;border:2px solid #ffd27a}.qmdt{display:flex;gap:6px}
+#cBlds .ccir{transition:opacity .25s,transform .15s}#cBlds:not(.rdy) .ccir{opacity:0}
+#nvBar{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 8px);transform:translateX(-50%);z-index:300;padding:10px 18px!important;border-radius:22px!important;background:linear-gradient(#c0392b,#7a1a10)!important;border:2px solid #ffd27a!important;color:#fff3c4!important;font-size:15px!important;box-shadow:0 4px 16px #000a;white-space:nowrap;width:auto!important;min-height:0!important}#nvBar b{color:#ffe27a}
 </style></head><body>
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
@@ -1006,7 +1008,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101b</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101c</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -4095,9 +4097,14 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261101b';
+const CVER='20261101c';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
- if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityImgs();cityLayout();cityBind();setTimeout(cityLayout,700);setTimeout(cityLayout,2000)}
+ if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityImgs();cityLayout();cityBind();$('cBlds').classList.add('rdy');try{document.fonts.ready.then(()=>cityLayout())}catch(e){}
+ let wasC=document.body.classList.contains('city');new MutationObserver(()=>{const c=document.body.classList.contains('city');if(c&&!wasC){const B=$('cBlds');B.classList.remove('rdy');requestAnimationFrame(()=>{cityLayout();requestAnimationFrame(()=>B.classList.add('rdy'))})}wasC=c}).observe(document.body,{attributes:true,attributeFilter:['class']});
+ if(window.visualViewport)visualViewport.addEventListener('resize',()=>{if(document.body.classList.contains('city'))cityLayout()})}
+/* 自動檢查新版本 */
+let NVSHOWN=false;async function nvCheck(){if(NVSHOWN||location.protocol==='file:')return;try{const r=await fetch(location.pathname+'?nv='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const CVER='([^']+)'/);if(m&&m[1]!==CVER){NVSHOWN=true;const d=document.createElement('button');d.id='nvBar';d.innerHTML=`🆕 有新版本 ${m[1]}　<b>點此更新</b>`;d.onclick=()=>{location.replace(location.pathname+'?v='+m[1])};document.body.appendChild(d)}}catch(e){}}
+setTimeout(nvCheck,4000);setInterval(nvCheck,10*60e3);document.addEventListener('visibilitychange',()=>{if(!document.hidden)nvCheck()});
 function cityLayout(){const C=$('city');if(!C||!C.offsetHeight)return;const R=C.getBoundingClientRect(),q=sel=>{const e=C.querySelector(sel);return e&&e.offsetHeight?e.getBoundingClientRect():null};
  const tp=Math.max(...[q('.ctop'),q('.cres')].filter(Boolean).map(r=>r.bottom-R.top),90)+8,so=q('.csoc'),bt=(so?so.top-R.top:R.height-230)-6,cl=document.body.classList.contains('cfold')?null:q('.cl'),lf=(cl?cl.right-R.left:0)+6,rt=R.width-8;
  const aw=rt-lf,ah=bt-tp,lab=34;let d=90,ax=0,ay=0;
@@ -4284,11 +4291,11 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261101c',d:'11/01',t:['修正回到主城時五個圓圖會先變大再縮小、往上跳一下的問題','遊戲會自動檢查新版本：有新版時上方出現「有新版本，點此更新」，點一下就會載入最新版']},
  {v:'20261101b',d:'11/01',t:['主城五個圓圖的輪播規則統一：預設圖 → 一張其他圖 → 回到預設圖 → 下一張……（後宮、妖獸討伐也一樣）']},
  {v:'20261101a',d:'11/01',t:['主城奇謀圓圖改成輪播：你的圖與有上傳圖的奇謀輪流出現，下方寫奇謀名字','戰鬥上方的奇謀標籤改回小圖示，比較清楚；奇謀發動的中央動畫改用上傳的大圖','從圖鑑總覽進入上傳頁後按返回，會回到圖鑑總覽；奇謀詳細頁新增「🎨 圖鑑」按鈕，返回會回到奇謀']},
  {v:'20261031r',d:'10/31',t:['奇謀圓圖不輪播，只顯示你設定的圖','招募與豪傑書圓圖：每換一位武將之後，會先回到你設定的圖再換下一位','在圖鑑上傳或選用新的圓圖後，主城馬上換成新圖（輪播中也是）']},
- {v:'20261031q',d:'10/31',t:['修正主城招募、奇謀、豪傑書圓圖不會輪播的問題（上傳圖載入完成後才建立輪播）']},
- {v:'20261031p',d:'10/31',t:['更新紀錄只保留最近幾個版本，比較好讀']}];
+ {v:'20261031q',d:'10/31',t:['修正主城招募、奇謀、豪傑書圓圖不會輪播的問題（上傳圖載入完成後才建立輪播）']}];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
 function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${pager(L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`),'vpg')}</div>
