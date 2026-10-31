@@ -1,0 +1,47 @@
+name: backup-art
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/backup-art.trigger']
+permissions:
+  contents: write
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download all uploaded art
+        run: |
+          set -e
+          URL=https://bspbwzjcxduloneserea.supabase.co
+          KEY=$(grep -o "SB_KEY='[^']*'" index.html | cut -d"'" -f2)
+          curl -s "$URL/rest/v1/ugc_art?select=id,kind,ref,path,likes,owner_name,created_at&order=kind,ref,likes.desc,created_at.desc&limit=5000" -H "apikey: $KEY" -H "Authorization: Bearer $KEY" > /tmp/list.json
+          python3 - <<'PY'
+          import json,os,urllib.request,re
+          L=json.load(open('/tmp/list.json'))
+          base='https://bspbwzjcxduloneserea.supabase.co/storage/v1/object/public/ugc/'
+          os.makedirs('art/all',exist_ok=True);os.makedirs('art/top',exist_ok=True)
+          seen=set();man=[]
+          for r in L:
+            safe=lambda s:re.sub(r'[^A-Za-z0-9_\-]','_',str(s))
+            ext=os.path.splitext(r['path'])[1] or '.jpg'
+            fn=f"{safe(r['kind'])}__{safe(r['ref'])}__{r['id']}{ext}"
+            try:
+              data=urllib.request.urlopen(base+r['path'],timeout=60).read()
+            except Exception as e:
+              print('fail',r['path'],e);continue
+            open('art/all/'+fn,'wb').write(data)
+            key=(r['kind'],r['ref']);top=key not in seen
+            if top:
+              seen.add(key);open(f"art/top/{safe(r['kind'])}__{safe(r['ref'])}{ext}",'wb').write(data)
+            man.append({**r,'file':'all/'+fn,'top':top})
+          json.dump(man,open('art/manifest.json','w'),ensure_ascii=False,indent=1)
+          print('saved',len(man),'top',len(seen))
+          PY
+      - name: Commit
+        run: |
+          git config user.name "art-backup-bot"
+          git config user.email "art-backup-bot@users.noreply.github.com"
+          git add art
+          git commit -m "備份玩家上傳圖片 $(date -u +%Y-%m-%d)" || echo nothing
+          git push
