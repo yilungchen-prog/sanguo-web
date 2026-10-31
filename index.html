@@ -887,11 +887,35 @@ body.lite .pfx{display:none}
 
 .hgrow{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.hgrow .hgsl{min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px;border-radius:12px;border:2px solid #c9993c;background:#1a120c;color:#ffe9b0}.hgrow .hgsl b{font-size:22px}.hgrow .hgsl span{font-size:12px;line-height:1.2}.hgrow .hgsl.gm{border-color:#5fb3c9}.hgrow .hgsl.sel{background:#5a3a10}.hgrow .hgsl:disabled{opacity:.45}
 .hgpk{display:flex;flex-direction:column;gap:6px;margin-top:6px;max-height:40vh;overflow:auto}.hgpk>button{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:8px 10px;min-height:0;border-radius:10px;background:#221810;border:1px solid #c9993c88;color:#ffe9b0}.hgpk>button small{font-size:12px;opacity:.85}
+
+.hvtabs{grid-template-columns:repeat(6,1fr)!important;gap:4px!important}.hvt{font-size:17px!important}
+.hv.fsm .hvsk,.hv.fsm .hvbig,.hv.fsm .hvb{display:none!important}
+.fsv{position:absolute;right:8px;top:calc(env(safe-area-inset-top,0px) + 232px);width:min(62%,250px);display:flex;flex-direction:column;align-items:flex-end;gap:4px;z-index:3}
+.fsh{font:900 15px 'LXGW WenKai TC',serif;color:#ffd27a;text-shadow:0 1px 3px #000;letter-spacing:2px}
+.fsr{display:flex;gap:10px;justify-content:flex-end}
+.fsd,.fsg{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0;min-height:0;background:none!important;border:none!important;box-shadow:none!important;color:#fff;width:74px}
+.fsd span,.fsg span{position:relative;width:62px;height:62px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 40% 35%,#4a2e14,#1a0f08 75%);border:3px solid #d9b25a;box-shadow:0 4px 10px #000a}
+.fsd span{transform:rotate(45deg);border-radius:10px;width:54px;height:54px;margin:6px 0}.fsd span b{transform:rotate(-45deg)}.fsd span i{transform:rotate(-45deg)}
+.fsg span{border-radius:50%;border-color:#6fd0e8;background:radial-gradient(circle at 40% 35%,#18465a,#08161c 75%)}
+.fsd b,.fsg b{font-size:28px;font-weight:400}.fsd.has span,.fsg.has span{box-shadow:0 0 12px #ffd27a99,0 4px 10px #000a}
+.fsd i,.fsg i{position:absolute;bottom:-4px;right:-6px;font-style:normal;font:900 11px sans-serif;background:#000c;border:1px solid #d9b25a;border-radius:8px;padding:0 4px;color:#ffe27a}
+.fsd em,.fsg em{font-style:normal;font:900 12px/1.2 'LXGW WenKai TC',serif;text-shadow:0 1px 3px #000;white-space:nowrap}
+.fsd:disabled,.fsg:disabled{opacity:.55}
+.fsm2{min-height:36px!important;padding:4px 12px!important;font-size:14px!important;border-radius:18px!important;background:#000b!important;border:1px solid #d9b25a!important;color:#ffe9b0;margin-top:4px}
+.fssum{position:absolute;left:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 218px);width:min(56%,230px);max-height:22vh;overflow:auto;font-size:12px;line-height:1.45;background:#000a;border:1px solid #d9b25a66;border-radius:10px;padding:6px 8px;color:#f3e6c4;z-index:3}
+.fsbt{position:absolute;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 96px);display:flex;gap:8px;z-index:3}
+.fsbt button{width:84px;height:84px;min-height:0;padding:0;border-radius:50%;font:900 19px/1.15 'LXGW WenKai TC',serif;color:#fff3c4;text-shadow:0 2px 3px #000;background:radial-gradient(circle at 40% 35%,#c0392b,#5a1208 75%)!important;border:3px solid #d9b25a!important;box-shadow:0 6px 14px #000a}
+.fsbt button.un{background:radial-gradient(circle at 40% 35%,#2c5a52,#0c201c 75%)!important}
+.fsgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-height:55vh;overflow:auto;margin:6px 0}
+.fsgrid button{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;min-height:0;border-radius:12px;background:#221810;border:1px solid #c9993c88;color:#ffe9b0;height:auto}
+.fsgrid b{font-size:28px;font-weight:400}.fsgrid span{font-size:13px;font-weight:900}.fsgrid small{font-size:10px;line-height:1.3;opacity:.85}.fsgrid i{position:absolute;top:4px;right:6px;font-style:normal;font-size:12px;color:#ffd27a;font-weight:900}
+.fsx{width:100%;margin:4px 0}
+@media (max-height:760px){.fsv{top:calc(env(safe-area-inset-top,0px) + 222px);scale:.82;transform-origin:right top}.fssum{display:none}.fsbt button{width:74px;height:74px;font-size:17px}}
 </style></head><body><div class="wrap" id="app">
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261031c</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261031d</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -2092,6 +2116,26 @@ function hgSec(id){const lv=LV(id),hf=hfI().filter(x=>x.e===id),gm=gemI().filter
   h+=`<div class="hgpk">${cur?`<button class="g" data-a="hgx" style="width:100%">卸下 ${T==='hf'?HFD[cur.k].n:GEMD[cur.k][0]+'寶石'}</button>`:''}${L.length?L.map(x=>`<button data-a="hgp" data-u="${x.u}">${T==='hf'?`<b>${HFD[x.k].ic} ${HFD[x.k].n} Lv.${x.l}</b><small>${HFD[x.k].d(x.l)}</small>`:`<b>${GEMD[x.k][1]} ${GEMD[x.k][0]}寶石 Lv.${x.l}</b><small>${GEMD[x.k][0]} +${pct(gemV(x.k,x.l))}</small>`}</button>`).join(''):`<p class="sub">沒有未使用的${T==='hf'?'虎符（挑戰虎符塔或到商城購買）':'寶石（挑戰寶石塔或到商城購買）'}。</p>`}</div>`}
  return h+`<button class="g" data-a="hgm" style="width:100%;margin-top:6px">🐯💎 虎符・寶石管理（升級、合成）</button>`}
 let HGPK=null,HGT='hf';
+/* ---- 符石頁（虎符＋寶石） ---- */
+function fsDot(id){const lv=LV(id),hf=hfI(),gm=gemI();const fh=HFSL.some((n,i)=>lv>=n&&!hf.some(x=>x.e===id&&x.sl===i))&&hf.some(x=>!x.e&&!hf.some(y=>y.e===id&&y.k===x.k));const fg=GEMSL.some((n,i)=>lv>=n&&!gm.some(x=>x.e===id&&x.sl===i))&&gm.some(x=>!x.e);return fh||fg}
+function fsView(id){const lv=LV(id),hf=hfI().filter(x=>x.e===id),gm=gemI().filter(x=>x.e===id);
+ const hs=HFSL.map((need,i)=>{const it=hf.find(x=>x.sl===i),on=lv>=need;return `<button class="fsd${it?' has':''}" data-a="fss" data-t="hf" data-i="${i}" ${on?'':'disabled'}><span><b>${it?HFD[it.k].ic:on?'＋':'🔒'}</b>${it?`<i>Lv${it.l}</i>`:''}</span><em>${it?HFD[it.k].n:on?'虎符':'Lv'+need+' 開'}</em></button>`}).join('');
+ const gs=GEMSL.map((need,i)=>{const it=gm.find(x=>x.sl===i),on=lv>=need;return `<button class="fsg${it?' has':''}" data-a="fss" data-t="gem" data-i="${i}" ${on?'':'disabled'}><span><b>${it?GEMD[it.k][1]:on?'＋':'🔒'}</b>${it?`<i>Lv${it.l}</i>`:''}</span><em>${it?GEMD[it.k][0]+' +'+pct(gemV(it.k,it.l)):on?'寶石':'Lv'+need+' 開'}</em></button>`}).join('');
+ const sum=[...hf.map(x=>`${HFD[x.k].ic} ${HFD[x.k].d(x.l)}`),...(()=>{const g=gemBonus(id);return Object.keys(g).map(k=>`${GEMD[k][1]} ${GEMD[k][0]} +${pct(g[k])}`)})()];
+ return `<div class="fsv"><div class="fsh">🐯 虎符</div><div class="fsr">${hs}</div><div class="fsh">💎 寶石</div><div class="fsr g3">${gs}</div><button class="fsm2" data-a="hgm">⚙ 升級・合成</button></div>
+ ${sum.length?`<div class="fssum">${sum.map(x=>`<div>${x}</div>`).join('')}</div>`:''}
+ <div class="fsbt"><button data-a="fsae">一鍵<br>裝備</button><button class="un" data-a="fsun">一鍵<br>卸下</button></div>`}
+function fsPick(hid,t,i){document.querySelectorAll('.fspk').forEach(x=>x.remove());const A=t==='hf'?hfI():gemI(),cur=A.find(x=>x.e===hid&&x.sl===i),grp={};
+ A.filter(x=>!x.e).forEach(x=>{const key=x.k+'|'+x.l;(grp[key]=grp[key]||{k:x.k,l:x.l,n:0,u:x.u}).n++});const G=Object.values(grp).sort((a,b)=>b.l-a.l||a.k.localeCompare(b.k));
+ const d=document.createElement('div');d.className='bgp vmod fspk';d.innerHTML=`<div class="bgpp"><h3>${t==='hf'?'🐯 選擇虎符':'💎 選擇寶石'}</h3>${cur?`<button class="g fsx" data-u="0">卸下目前的 ${t==='hf'?HFD[cur.k].n:GEMD[cur.k][0]+'寶石'} Lv${cur.l}</button>`:''}
+ <div class="fsgrid">${G.length?G.map(g=>`<button data-u="${g.u}"><b>${t==='hf'?HFD[g.k].ic:GEMD[g.k][1]}</b><span>${t==='hf'?HFD[g.k].n:GEMD[g.k][0]} Lv${g.l}</span>${g.n>1?`<i>×${g.n}</i>`:''}<small>${t==='hf'?HFD[g.k].d(g.l):'+'+pct(gemV(g.k,g.l))}</small></button>`).join(''):`<p class="sub">沒有未使用的${t==='hf'?'虎符（挑戰虎符塔或到商城購買）':'寶石（挑戰寶石塔或到商城購買）'}。</p>`}</div>
+ <div class="bgpb"><button class="g" data-x="1">關閉</button></div></div>`;document.body.appendChild(d);
+ d.onclick=e=>{const b=e.target.closest('[data-u],[data-x]');if(e.target===d||(b&&b.dataset.x)){d.remove();return}if(!b)return;HGPK={t,i};if(+b.dataset.u)hgEquip(hid,+b.dataset.u);else hgUnequip(hid);d.remove();renderHero()}}
+function fsAuto(hid){const lv=LV(hid);let n=0;HFSL.forEach((need,i)=>{if(lv<need)return;const A=hfI(),cur=A.find(x=>x.e===hid&&x.sl===i),used=new Set(A.filter(x=>x.e===hid&&x.sl!==i).map(x=>x.k)),best=A.filter(x=>!x.e&&!used.has(x.k)).sort((a,b)=>b.l-a.l)[0];if(best&&(!cur||best.l>cur.l)){if(cur)cur.e=null;best.e=hid;best.sl=i;n++}});
+ const ord=['atk','hp','spd','crit','cdb','rd','hb'];GEMSL.forEach((need,i)=>{if(lv<need)return;const A=gemI(),cur=A.find(x=>x.e===hid&&x.sl===i),best=A.filter(x=>!x.e).sort((a,b)=>b.l-a.l||ord.indexOf(a.k)-ord.indexOf(b.k))[0];if(best&&(!cur||best.l>cur.l)){if(cur)cur.e=null;best.e=hid;best.sl=i;n++}});
+ saveS();if(!busy)refreshPl();render();toast(n?`換上 ${n} 個虎符／寶石`:'沒有更好的未使用虎符或寶石')}
+function fsClear(hid){let n=0;[...hfI(),...gemI()].forEach(x=>{if(x.e===hid){x.e=null;n++}});saveS();if(!busy)refreshPl();render();toast(n?`卸下 ${n} 個虎符／寶石`:'沒有可卸下的')}
+
 function hgEquip(hid,uid){const T=HGPK.t,A=T==='hf'?hfI():gemI(),it=A.find(x=>x.u===uid);if(!it)return;
  if(T==='hf'&&A.some(x=>x.e===hid&&x.k===it.k&&x.sl!==HGPK.i)){toast('同一位武將不能裝兩個相同的虎符');return}
  A.forEach(x=>{if(x.e===hid&&x.sl===HGPK.i)x.e=null});it.e=hid;it.sl=HGPK.i;HGPK=null;saveS();if(!busy)refreshPl();render()}
@@ -2659,8 +2703,8 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
   return `<div class="rq ${okC?'good':'bad'}"><span>同名卡${wc?'＋🃏':''}</span><b>${have} / ${need}</b><i>${okC?'✓':'✗'}</i></div><div class="rq ${okG?'good':'bad'}"><span>💰 金幣</span><b>${kf(S.coins)} / ${kf(g)}</b><i>${okG?'✓':'✗'}</i></div><button data-a="star" style="width:100%;margin-top:6px" ${!okC||!okG?'disabled':''}>升星 → ★${st+1}</button>`})():'<div class="rq good"><span>已滿星</span><b>★'+MAXSTAR+'</b><i>✓</i></div>'}</div></div>
   <div><div class="sec">突破（升到 Lv.${maxLvOf(h.id)} 後）</div><div class="skb">${brkHtml(h.id)}</div></div></div>`}
  else if(HTAB==='eq'){const slot=k=>{const it=S.inv.find(x=>x.e===h.id&&x.s===k),sl=SLOTS.find(x=>x.k===k);return `<button class="hve" data-a="pk" data-s="${k}" style="${it?`border-color:${TIERS[it.t].c}`:''}"><b>${it?eqIc(it.s,it.t):sl.ic}</b>${it?`<span style="color:${TIERS[it.t].c}">${INAME[k][it.t]}</span><small>Lv${it.l}・+${pct(ibonus(it))}${sl.s}</small>`:`<span>${sl.n}</span><small>未裝備</small>`}</button>`};
-  if(inHJ(h.id)){const sh=hjShare(),own=S.inv.filter(x=>x.e===h.id);sheet=`<div class="sht">🛡 裝備（豪傑書）</div><div class="sub" style="color:#ffd27a">📖 這位武將在豪傑書槽位中，使用下列「共用裝備」的屬性，不能自己穿裝備。</div>${SLOTS.map(sl=>{const it=sh[sl.k];return `<div class="it"><span>${sl.ic} ${sl.n}</span><div class="in" style="flex:1;text-align:right">${it?`<b style="color:${TIERS[it.t].c}">${TIERS[it.t].n}品・${INAME[it.s][it.t]} Lv${it.l}</b>（+${pct(ibonus(it))}${sl.s}）`:'<span style="opacity:.6">未解鎖（榜樣武將此部位需全穿紅色以上）</span>'}</div></div>`}).join('')}${own.length?`<div class="sub" style="color:#ff9a7a">⚠ 身上還有 ${own.length} 件自己的裝備，會擋住該部位的共用裝備。</div><button class="g" data-a="hjun" style="width:100%;margin-top:6px">卸下全部裝備</button>`:''}${hgSec(h.id)}`}else
-  sheet=`<div class="sht">🛡 裝備</div><div class="hvx"><div></div>${slot('wp')}<div></div>${slot('ac')}<button class="hvae" data-a="ae">⚡<br>一鍵<br>裝備</button>${slot('bt')}<div></div>${slot('ar')}<div></div></div><div class="sub" style="text-align:center;font-size:11px">點格子更換；一鍵裝備會換上沒人用的最佳裝備。</div>${hgSec(h.id)}`}
+  if(inHJ(h.id)){const sh=hjShare(),own=S.inv.filter(x=>x.e===h.id);sheet=`<div class="sht">🛡 裝備（豪傑書）</div><div class="sub" style="color:#ffd27a">📖 這位武將在豪傑書槽位中，使用下列「共用裝備」的屬性，不能自己穿裝備。</div>${SLOTS.map(sl=>{const it=sh[sl.k];return `<div class="it"><span>${sl.ic} ${sl.n}</span><div class="in" style="flex:1;text-align:right">${it?`<b style="color:${TIERS[it.t].c}">${TIERS[it.t].n}品・${INAME[it.s][it.t]} Lv${it.l}</b>（+${pct(ibonus(it))}${sl.s}）`:'<span style="opacity:.6">未解鎖（榜樣武將此部位需全穿紅色以上）</span>'}</div></div>`}).join('')}${own.length?`<div class="sub" style="color:#ff9a7a">⚠ 身上還有 ${own.length} 件自己的裝備，會擋住該部位的共用裝備。</div><button class="g" data-a="hjun" style="width:100%;margin-top:6px">卸下全部裝備</button>`:''}`}else
+  sheet=`<div class="sht">🛡 裝備</div><div class="hvx"><div></div>${slot('wp')}<div></div>${slot('ac')}<button class="hvae" data-a="ae">⚡<br>一鍵<br>裝備</button>${slot('bt')}<div></div>${slot('ar')}<div></div></div><div class="sub" style="text-align:center;font-size:11px">點格子更換；一鍵裝備會換上沒人用的最佳裝備。</div>`}
  else if(HTAB==='sk'){sheet=`<div class="sht">📜 技能（攻擊範圍：${P[h.pat]}）</div>${skHtml(h,st)}`}
  else if(HTAB==='bd'){const bs=BONDS.filter(x=>x.ids.includes(h.id));sheet=`<div class="sht">🤝 羈絆</div>
   ${bs.length?`${bs.map(x=>`<div class="skr"><b>${x.n}</b>（${x.ids.map(i=>`<span style="${S.own[i]?'color:#ffd27a':'opacity:.55'}">${hname(i)}</span>`).join('、')}）<br>${x.t}</div>`).join('')}`:'<div class="sub">這位武將沒有專屬羈絆。</div>'}<div class="sec">陣營羈絆（${h.f}）</div><div class="skr">2 人：${FT[h.f][0]}<br>4 人：${FT[h.f][1]}<br>6 人：${FT[h.f][2]}</div>`}
@@ -2672,7 +2716,7 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
   pk=`<div class="hvp"><div class="hvpp"><div class="shh"><b>${SLOTS.find(x=>x.k===HPK).ic} 選擇${SLOTS.find(x=>x.k===HPK).n}</b><button data-a="pkx" style="flex:none;width:44px;padding:6px 0">✕</button></div>${cur?'<button class="g" data-a="eqi" data-u="0" style="width:100%;margin:4px 0">卸下目前裝備</button>':''}
   <div class="hvl">${its.length?its.map(i=>`<button class="hvi${i.e===h.id?' on':''}" data-a="eqi" data-u="${i.u}"><b style="color:${TIERS[i.t].c}">${TIERS[i.t].n}・${INAME[i.s][i.t]}</b><span>Lv${i.l}　+${pct(ibonus(i))}</span><small>${i.e===h.id?'裝備中':i.e?'｜'+hname(i.e)+' 使用中':'未使用'}</small></button>`).join(''):'<div class="sub">背包沒有這類裝備，可到商城購買或挑戰裝備塔。</div>'}</div></div></div>`}
  const bub=HSK>=0&&sks[HSK]?`<div class="hvb" data-a="skx"><b>${sks[HSK].l}・${sks[HSK].n}</b> <small>Lv.${sks[HSK].lv}/${sks[HSK].mx}</small><br>${sks[HSK].d}</div>`:'';
- $('heroBody').innerHTML=`<div class="hv${HVIEW?' view':''}${own?'':' lock'}" style="--fc:${FC[h.f]};--rc:${r.c}">
+ $('heroBody').innerHTML=`<div class="hv${HVIEW?' view':''}${own?'':' lock'}${HTAB==='fs'&&own?' fsm':''}" style="--fc:${FC[h.f]};--rc:${r.c}">
  <div class="hvbg" style="background-image:url(${heroBgOf(h.id)})" data-a="${HVIEW?'view':''}"></div><div class="hvsh"></div>
  <button class="xb hvxb" data-a="x">←</button><b class="hvtt">武將</b><span class="hvres">${res}</span>
  <div class="hvname"><div class="hvn">${h.n}</div><div class="hvq"><span style="background:${r.c}">${r.n}</span><b>資質 ${h.q}</b></div><div class="hvtags"><span style="background:${FC[h.f]}">${h.f}</span><span>${JB[h.job].ic}${h.job}</span><span class="st">★${st}</span>${brk?`<span>突破 ${brk}</span>`:''}</div></div>
@@ -2682,8 +2726,8 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  ${bub}
  <div class="hvst"><div class="hvpw"><small>戰力</small><b>${pw(u).toLocaleString()}</b></div><div class="hvlv">Lv.${lv} / ${maxLvOf(h.id)}</div><div class="hvg"><span>攻擊 <b>${kf(u.atk)}</b></span><span>生命 <b>${kf(u.mhp)}</b></span><span>速度 <b>${u.spd}</b></span><span>暴擊 <b>${pct(cr)}</b></span></div></div>
  <button class="hvbig" data-a="big" data-k="${big[2]}">${big[1]}</button>
- <div class="hvtabs">${tab('lv','⬆','培養',canLv(h.id),!own)}${tab('adv','★','進階',canAdv(h.id),!own)}${tab('eq','🛡','裝備',(!inHJ(h.id)&&eqBetter(h.id)),!own)}${tab('sk','📜','技能',0,0)}${tab('bd','🤝','羈絆',0,0)}</div>
- <div class="hvs${HTAB?' on':''}"><button class="hvsx" data-a="tabx">▾</button><div class="hvsc">${sheet}</div></div>${pk}</div>`}
+ <div class="hvtabs">${tab('lv','⬆','培養',canLv(h.id),!own)}${tab('adv','★','進階',canAdv(h.id),!own)}${tab('eq','🛡','裝備',(!inHJ(h.id)&&eqBetter(h.id)),!own)}${tab('fs','🐯','符石',own&&fsDot(h.id),!own)}${tab('sk','📜','技能',0,0)}${tab('bd','🤝','羈絆',0,0)}</div>${HTAB==='fs'&&own?fsView(h.id):''}
+ <div class="hvs${HTAB&&HTAB!=='fs'?' on':''}"><button class="hvsx" data-a="tabx">▾</button><div class="hvsc">${sheet}</div></div>${pk}</div>`}
 $('heroBody').onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;const k=a.dataset.a;
  if(k==='x'){$('hero').classList.remove('on');render();return}
  if(k==='view'){HVIEW=!HVIEW;HTAB=null;HSK=-1;renderHero();return}
@@ -2694,7 +2738,7 @@ $('heroBody').onclick=e=>{const a=e.target.closest('[data-a]');if(!a)return;cons
  if(k==='prev'||k==='next'){const L=heroOrder(),i=L.findIndex(x=>x.id===HM);HM=L[(i+(k==='next'?1:-1)+L.length)%L.length].id;HSK=-1;HPK=null;HGPK=null;renderHero();const b=document.querySelector('.hv .hvbg');if(b){b.classList.add(k==='next'?'inr':'inl')}return}
  if(k==='ugc'){if(typeof ugcOpen==='function')ugcOpen(HM);else toast('圖鑑即將開放');return}
  if(k==='big'){const t=a.dataset.k;if(t==='gacha'){$('hero').classList.remove('on');$('mGacha').click()}else if(t==='hj'){$('hero').classList.remove('on');hjOpen()}else if(t==='dep'){const dep=pl.some(x=>x&&x.id===HM);if(dep)undeploy(HM);else deploy(HM);renderHero()}else{HTAB=t;renderHero()}return}
- if(k==='hjun'){hjUnequip([HM]);renderHero();return}if(k==='hgs'){const t=a.dataset.t,i=+a.dataset.i;HGPK=HGPK&&HGPK.t===t&&HGPK.i===i?null:{t,i};renderHero();return}if(k==='hgp'){if(HGPK)hgEquip(HM,+a.dataset.u);renderHero();return}if(k==='hgx'){if(HGPK)hgUnequip(HM);renderHero();return}if(k==='hgm'){hgOpen();return}if(k==='pk'){if(inHJ(HM)){toast('豪傑書中的武將不能穿裝備');return}HPK=a.dataset.s;renderHero();return}if(k==='pkx'){HPK=null;renderHero();return}
+ if(k==='hjun'){hjUnequip([HM]);renderHero();return}if(k==='hgs'){const t=a.dataset.t,i=+a.dataset.i;HGPK=HGPK&&HGPK.t===t&&HGPK.i===i?null:{t,i};renderHero();return}if(k==='hgp'){if(HGPK)hgEquip(HM,+a.dataset.u);renderHero();return}if(k==='hgx'){if(HGPK)hgUnequip(HM);renderHero();return}if(k==='hgm'){hgOpen();return}if(k==='fss'){fsPick(HM,a.dataset.t,+a.dataset.i);return}if(k==='fsae'){fsAuto(HM);renderHero();return}if(k==='fsun'){fsClear(HM);renderHero();return}if(k==='pk'){if(inHJ(HM)){toast('豪傑書中的武將不能穿裝備');return}HPK=a.dataset.s;renderHero();return}if(k==='pkx'){HPK=null;renderHero();return}
  if(k==='eqi'){if(inHJ(HM))return;equipSlot(HM,HPK,+a.dataset.u||0);HPK=null;renderHero();return}
  if(k==='pill'){if(inHJ(HM))return;const id=HM,kk=a.dataset.k,amt=kk==='all'?Math.min(S.pill,lvCost(id,MAXLV2)):lvCost(id,+kk);if(!S.own[id]||amt<=0||amt>S.pill)return;S.pill-=amt;gain(id,amt);dtAdd('lv',1);saveS();if(!busy)refreshPl();sfx('win');renderHero();render();hvFlash('等級提升');return}
  if(k==='star'){const s0=S.star[HM]||0;starUp(HM);if((S.star[HM]||0)>s0)hvFlash('★'+S.star[HM]);return}
@@ -3606,7 +3650,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261031c';
+const CVER='20261031d';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityImgs();cityLayout();cityBind()}
 function cityLayout(){const C=$('city');if(!C||!C.offsetHeight)return;const R=C.getBoundingClientRect(),q=sel=>{const e=C.querySelector(sel);return e&&e.offsetHeight?e.getBoundingClientRect():null};
@@ -3793,6 +3837,7 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261031d',d:'10/31',t:['武將頁新增「符石」分頁：虎符與寶石格子直接排在立繪右側，不用往下拉；點格子跳出選擇視窗（同種同級合併顯示數量），另有一鍵裝備、一鍵卸下','「裝備」分頁回到只有四件裝備']},
  {v:'20261031c',d:'10/31',t:['所有武將資質統一為 95，沒有爛將；抽卡改為每位武將機率相同，積分招募每位 30 分；碎片可合成任一武將','原本資質較低的 29 位武將補齊天賦、絕技、被動：每國都有復活（蜀 馬良、魏 楊修、吳 張昭／周泰、神 于吉、魔 步練師）、禁止復活（馬岱、樂進、凌統、龐德、李傕）、淨化（簡雍、荀攸、諸葛瑾、管輅、田豐）等功能','奇謀上限提高到 Lv15：★5 之後繼續用竹簡升級，越後面越貴；Lv10、Lv15 解鎖更強效果；附著加成 Lv6 之後成長減半','高層爬塔與競技場對手的奇謀等級也會跟著提高']},
  {v:'20261031b',d:'10/31',t:['新增「虎符」：每位武將 2 格（Lv100、Lv250 開），復生、絕命、淨化、堅盾、免控、吸血、反傷、破甲、降療、追擊 10 種，用虎符碎片升到 Lv10；同一隊同一種最多 2 個生效','新增「寶石」：每位武將 3 格（Lv50、Lv150、Lv300 開），攻擊、生命、速度、暴擊、暴傷、減傷、治療 7 種，3 顆同級合成高一級，最高 Lv10','虎符、寶石都能隨時拆下換人；武將頁「裝備」下方可以裝配，另有管理畫面可升級、一鍵合成','新增「虎符塔」「寶石塔」，並加入排行榜','商城新增：虎符碎片、虎符寶匣、寶石袋、高級寶石袋','突破提高等級上限：每突破一次上限 +10，最高 Lv450，經驗丹一直有用','主公陣營加成改成各國不同：魏 生命＋減傷、蜀 攻擊＋生命、吳 攻擊＋速度、神 攻擊＋暴擊、魔 攻擊＋吸血','測試模式改成只有管理員可以使用']},
  {v:'20261031a',d:'10/31',t:['主城改版：背景大圖＋招募、後宮、奇謀、豪傑書四個圓形大圖，可在圖鑑上傳自己的圖替換','商城裝備：神、聖、帝品不再直接販售；聖品寶箱改為神 60%／聖 35%／帝 5%；帝品寶箱降為 30 萬、聖 70%／帝 30%，連開 5 次必出帝品','豪傑書：冷卻可用金幣加速、選武將可分陣營、槽位武將改用共用裝備（不能自己穿，並可一鍵卸下），武將頁顯示共用裝備','圍魏救趙修正：被放逐的武將完全不能行動（含追擊、反擊），我方也會避開他改打別人','後宮信物可升星或可招入時會有紅點','武將頁左右滑動改為依目前選的陣營循環切換','出征前畫面顯示我方全部奇謀與等級、附著加成','個人中心：ID、陣營、等級縮到頭像旁，不再擋住背景人物','建議陣容：點選後上方列表不會跳回第一個']},
