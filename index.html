@@ -1005,7 +1005,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261031q</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261031r</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -2596,7 +2596,7 @@ let UGC_ALL={},UGC_NEW={},UGC_TOP={},UGV={kind:'hero',ref:null,list:[],msg:'',bu
 const ugcUrl=p=>`${SB_URL}/storage/v1/object/public/ugc/${p}`;
 const ugcKey=(k,r)=>k+':'+r;
 function ugcRecalc(){UGC_SEL={};const pick=S.ugc||{};const ids=[...H.map(h=>['hero',h.id]),...(typeof BEA!=='undefined'?BEA.map(b=>['bea',b.id]):[])];
- for(const[k,id]of ids){const v=pick[ugcKey(k,id)];if(v==='ink')continue;if(v){UGC_SEL[id]=v;continue}const t=UGC_TOP[ugcKey(k,id)];if(t)UGC_SEL[id]=t}if(typeof ccBuild==='function')try{ccBuild()}catch(e){}}
+ for(const[k,id]of ids){const v=pick[ugcKey(k,id)];if(v==='ink')continue;if(v){UGC_SEL[id]=v;continue}const t=UGC_TOP[ugcKey(k,id)];if(t)UGC_SEL[id]=t}if(typeof cityImgs==='function')try{cityImgs()}catch(e){}}
 const ugcIsNew=(kind,ref)=>{const k=ugcKey(kind,ref),t=UGC_NEW[k]||0;return t>Math.max(S.ugcBase||Date.now(),(S.ugcSeen||{})[k]||0)};
 async function ugcLoadTop(){if(!SB)return;try{const{data}=await SB.from('ugc_art').select('kind,ref,path,likes,owner,created_at').in('kind',['hero','bea','eq','scene','qm']).order('likes',{ascending:false}).order('created_at',{ascending:false}).limit(3000);
  const T={},N={},A={};(data||[]).forEach(r=>{const k=ugcKey(r.kind,r.ref);if(!T[k])T[k]=ugcUrl(r.path);(A[k]=A[k]||[]).push(ugcUrl(r.path));if(!(ME&&r.owner===ME.id)){const t=Date.parse(r.created_at)||0;if(!N[k]||t>N[k])N[k]=t}});UGC_TOP=T;UGC_NEW=N;UGC_ALL=A;ugcApplyScenes();if(!S.ugcBase){S.ugcBase=Date.now();saveS()}ugcRecalc();if(!busy)render()}catch(e){}}
@@ -3772,9 +3772,11 @@ function ccList(k){const def=k==='wb'?cityPick('c_wb',wbArtGen(WB.st?wbKey():'tt
  else if(k==='dj'){const m=hjModels().filter(ccUp);L=(m.length?m:ccShuf(H.filter(h=>ccUp(h.id)).map(h=>h.id)).slice(0,6)).map(id=>{const h=H.find(x=>x.id===id);return{u:ccUp(id),n:h.n,c:FC[h.f]}})}
  else if(k==='hg')L=ccShuf(BEA.filter(b=>ccUp(b.id)||BEAIMG.has(b.id))).slice(0,12).map(b=>({u:ccUp(b.id)||`bea/${beaF(b.id)}_b.jpg`,n:b.n,c:'#ff9ac4'}));
  else if(k==='wb'){const cur=wbSeq()%24;L=WBK.map((_,i)=>WBK[(cur+i)%24]).map(q=>({u:wbArt(q),n:(wbOf(q)||[])[1]||'',c:'#ff7a5a'}))}
+ if(k==='jj')return [{u:def}];
+ if(k==='zx'||k==='dj'){const H2=L.filter(x=>x.u&&x.u!==def);return [{u:def},...H2.flatMap((x,i)=>i<H2.length-1?[x,{u:def,d:1}]:[x])]}
  return [{u:def},...ups,...L].filter((v,i,a)=>v.u&&a.findIndex(z=>z.u===v.u)===i)}
 function ccBuild(){if(!$('cBlds'))return;for(const k in CCT){const e=$('cb_'+k);if(!e)continue;let c=e.querySelector('.ccar');if(!c){c=document.createElement('i');c.className='ccar';e.insertBefore(c,e.querySelector('.ctl'))}
- const L=ccList(k).slice(1),key=k+L.length+(L[0]&&L[0].u);if(c.dataset.key===key)continue;c.dataset.key=key;c.innerHTML=L.map(x=>`<b class="ccf${x.n?' ccn':''}"><s style="background-image:url(${x.u})"></s>${x.n?`<em style="--nc:${x.c||'#ffd27a'}">${x.n}</em>`:''}</b>`).join('');c.dataset.n=L.length;c.dataset.i=0}}
+ const A=ccList(k),L=A.slice(1),key=k+L.length+A[0].u+(L[0]&&L[0].u);if(c.dataset.key===key)continue;c.dataset.key=key;c.innerHTML=L.map(x=>`<b class="ccf${x.n?' ccn':''}"><s style="background-image:url(${x.u})"></s>${x.n?`<em style="--nc:${x.c||'#ffd27a'}">${x.n}</em>`:''}</b>`).join('');c.dataset.n=L.length;c.dataset.i=0}}
 let CCI=0;setInterval(()=>{if(!document.body.classList.contains('city')||document.hidden)return;CCI++;let j=0;for(const k in CCT){const c=document.querySelector('#cb_'+k+' .ccar');if(!c)continue;const n=+c.dataset.n||0;if(!n)continue;const t=CCI-j*1;j++;if(t<0||t%5)continue;const i=((+c.dataset.i||0)+1)%(n+1);c.dataset.i=i;c.querySelectorAll('.ccf').forEach((f,q)=>f.classList.toggle('on',q===i-1))}},1200);
 function cityPick(ref,def){const v=(S.ugc||{})[ugcKey('scene',ref)];return v&&v!=='ink'?v:def}
 function cityImgs(){const cu=$('cUbg');if(cu){cu.style.backgroundImage=`url(${cityPick('city','city/bg.jpg')})`;cu.classList.add('on')}['zx','hg','jj','dj'].forEach(k=>{const e=$('cb_'+k),i=e&&e.querySelector('.ccim');if(i)i.style.backgroundImage=`url(${cityPick('c_'+k,'city/'+k+'.jpg')})`});{const e=$('cb_wb'),i=e&&e.querySelector('.ccim');if(i)i.style.backgroundImage=`url(${cityPick('c_wb',wbArtGen(WB.st?wbKey():'tt'))})`}try{ccBuild()}catch(e){}}
@@ -4091,7 +4093,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261031q';
+const CVER='20261031r';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityImgs();cityLayout();cityBind();setTimeout(cityLayout,700);setTimeout(cityLayout,2000)}
 function cityLayout(){const C=$('city');if(!C||!C.offsetHeight)return;const R=C.getBoundingClientRect(),q=sel=>{const e=C.querySelector(sel);return e&&e.offsetHeight?e.getBoundingClientRect():null};
@@ -4280,11 +4282,11 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261031r',d:'10/31',t:['奇謀圓圖不輪播，只顯示你設定的圖','招募與豪傑書圓圖：每換一位武將之後，會先回到你設定的圖再換下一位','在圖鑑上傳或選用新的圓圖後，主城馬上換成新圖（輪播中也是）']},
  {v:'20261031q',d:'10/31',t:['修正主城招募、奇謀、豪傑書圓圖不會輪播的問題（上傳圖載入完成後才建立輪播）']},
  {v:'20261031p',d:'10/31',t:['更新紀錄只保留最近幾個版本，比較好讀']},
  {v:'20261031o',d:'10/31',t:['主城圓圖輪播改成「一張圖＋名字」：招募輪播大家上傳的武將圖、後宮輪播紅顏、奇謀輪播謀士與輔助型武將、豪傑書輪播你的榜樣武將、妖獸討伐輪播 24 隻妖獸，每張下方寫上名字；原本的圓圈圖仍在輪播中','只用真正上傳的圖，沒上傳圖的武將不會出現（不再用 Q 版）']},
- {v:'20261031n',d:'10/31',t:['主城圓圖輪播改版：拿掉 Q 版合成畫面，改成在大家上傳到同一個圓圈的圖之間輪播（每 6 秒，讚數高的優先）；只有一張就不輪播','圓圈的上傳頁換上新提示詞（酒館、庭園、對弈、古書、妖獸對決），【】裡的人物可自由替換']},
- {v:'20261031m',d:'10/31',t:['主城五個圓圖改成輪播：原本的圖之外，加上水墨場景＋武將的組合畫面，每 6 秒淡入淡出換一張','招募＝酒館裡的名將組合（桃園三兄弟、五虎、曹家、孫家、呂布父女、江東雙璧）；後宮＝你的紅顏在庭園；奇謀＝兩位謀士對弈；豪傑書＝你的榜樣武將從書中浮現；妖獸討伐＝今天的妖獸與你最強的武將','人物圖用大家上傳、票選第一的圖，沒人上傳用 Q 版','修正主城下方好友／排行／圖鑑按鈕擋到奇謀、豪傑書的問題']}];
+ {v:'20261031n',d:'10/31',t:['主城圓圖輪播改版：拿掉 Q 版合成畫面，改成在大家上傳到同一個圓圈的圖之間輪播（每 6 秒，讚數高的優先）；只有一張就不輪播','圓圈的上傳頁換上新提示詞（酒館、庭園、對弈、古書、妖獸對決），【】裡的人物可自由替換']}];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
 function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${pager(L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`),'vpg')}</div>
