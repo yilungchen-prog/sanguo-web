@@ -42,6 +42,15 @@
 .qmgr{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0}.qmt{flex:none!important;min-height:0!important;padding:12px 4px!important;aspect-ratio:1/1.05;justify-content:center}.qmt i{font-size:36px!important;font-style:normal}.qmt b{font-size:15px}
 .qmup{position:absolute;left:4px;top:4px;text-decoration:none;font-size:10px;background:#c0392b;color:#fff;border-radius:6px;padding:0 4px}.qmft{margin:6px 0 0}.qmbk{width:auto!important;padding:6px 14px!important;margin:4px 0}
 .hlpb{flex:none!important;width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;border-radius:50%!important;font:900 18px serif!important;background:#2a3a40!important;border:2px solid #c9b07a!important;color:#ffe9b0!important;margin-left:6px}
+.ccar{position:absolute;inset:4px;border-radius:50%;overflow:hidden;pointer-events:none;z-index:1}
+.ccf{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}.ccf.on{opacity:1}
+.ccf s{position:absolute;inset:0;background:center/cover;text-decoration:none}
+.ccf u{position:absolute;aspect-ratio:3/4;background:center 18%/cover;-webkit-mask-image:radial-gradient(ellipse 55% 60% at 50% 40%,#000 50%,transparent 78%);mask-image:radial-gradient(ellipse 55% 60% at 50% 40%,#000 50%,transparent 78%)}
+.ccf.on u{animation:ccfl 7s ease-in-out both}@keyframes ccfl{from{transform:translateY(4%) scale(.97)}to{transform:translateY(0) scale(1.02)}}
+.ccf .p3l{left:-8%;top:16%;width:52%}.ccf .p3r{left:56%;top:16%;width:52%}.ccf .p3c{left:22%;top:6%;width:56%;z-index:1}
+.ccf .p2l{left:-4%;top:10%;width:56%}.ccf .p2r{left:48%;top:10%;width:56%}
+.ccf .wbB{left:14%;top:4%;width:72%;aspect-ratio:1;-webkit-mask-image:radial-gradient(circle at 50% 45%,#000 45%,transparent 70%);mask-image:radial-gradient(circle at 50% 45%,#000 45%,transparent 70%)}.ccf .wbH{left:-2%;top:30%;width:46%;z-index:1}
+.ccf s:last-child{z-index:2}.ccir .ctl{z-index:3}
 </style></head><body>
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
@@ -995,7 +1004,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261031l</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261031m</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -3750,8 +3759,46 @@ function ugcHub(){let d=document.querySelector('#ughv');if(!d){d=document.create
  ${pager(chunk(L,6).map(c=>`<div class="ughg">${c.map(row).join('')}</div>`),'ughp','ugh'+UGHT)}<p class="sub" style="font-size:13px;text-align:center">武將、紅顏的圖鑑在各自頁面的「🎨 圖鑑」</p>
  <div class="bgpb"><button class="g" data-x="1">關閉</button></div></div>`;requestAnimationFrame(()=>pgRestore(d));
  d.onclick=e=>{const t=e.target.closest('[data-t]');if(t){UGHT=t.dataset.t;ugcHub();return}const b=e.target.closest('[data-k]');if(e.target===d||e.target.closest('[data-x]')){d.remove();return}if(b){d.remove();ugcOpen(b.dataset.r,b.dataset.k)}}}
+/* ===================== 主城圓圖輪播：水墨場景＋上傳人物 ===================== */
+const CCINK={};
+function ccInk(type,layer){const key=type+layer;if(CCINK[key])return CCINK[key];const W=300,c=document.createElement('canvas');c.width=c.height=W;const x=c.getContext('2d');let sd=type.length*97+(layer==='fg'?13:7);const R=()=>(sd=(sd*16807)%2147483647)/2147483647;
+ const wash=(cx,cy,rx,ry,col,a)=>{const g=x.createRadialGradient(cx,cy,0,cx,cy,Math.max(rx,ry));g.addColorStop(0,col.replace('A',a));g.addColorStop(1,col.replace('A',0));x.save();x.translate(cx,cy);x.scale(1,ry/rx);x.translate(-cx,-cy);x.fillStyle=g;x.beginPath();x.arc(cx,cy,rx,0,7);x.fill();x.restore()};
+ const mtn=(base,h,col)=>{x.fillStyle=col;x.beginPath();x.moveTo(0,W);x.lineTo(0,base);for(let i=0;i<=8;i++){const px=i*W/8,py=base-(i%2?h*(.6+R()*.5):h*R()*.3);x.quadraticCurveTo(px-W/16,py-h*.3,px,py)}x.lineTo(W,W);x.fill()};
+ const stroke=(w,col)=>{x.lineWidth=w;x.strokeStyle=col;x.lineCap='round';x.lineJoin='round'};
+ if(layer==='bg'){const pal={tavern:['#f3e7cc','#d8c29a'],garden:['#f7e9ec','#e3c6cf'],chess:['#eef0e6','#c9d2c2'],book:['#f2ead6','#d6c6a0'],mist:['#3a3436','#1a1214']}[type];const g=x.createLinearGradient(0,0,0,W);g.addColorStop(0,pal[0]);g.addColorStop(1,pal[1]);x.fillStyle=g;x.fillRect(0,0,W,W);
+  if(type==='mist'){for(let i=0;i<14;i++)wash(R()*W,R()*W,40+R()*70,20+R()*40,i%3?'rgba(0,0,0,A)':'rgba(140,30,20,A)',.5);}
+  else{mtn(W*.62,W*.18,'rgba(60,70,70,.16)');mtn(W*.74,W*.12,'rgba(40,50,50,.22)');for(let i=0;i<5;i++)wash(R()*W,W*.55+R()*W*.2,60,14,'rgba(255,255,255,A)',.55)}
+  if(type==='tavern'){stroke(7,'rgba(70,40,20,.75)');x.beginPath();x.moveTo(0,40);x.lineTo(W,30);x.stroke();for(const lx of[60,150,240]){stroke(1.5,'rgba(60,30,10,.7)');x.beginPath();x.moveTo(lx,36);x.lineTo(lx,58);x.stroke();const lg=x.createRadialGradient(lx,78,2,lx,78,26);lg.addColorStop(0,'#ffd27a');lg.addColorStop(.5,'#d8402a');lg.addColorStop(1,'rgba(160,30,20,0)');x.fillStyle=lg;x.beginPath();x.ellipse(lx,78,16,20,0,0,7);x.fill()}}
+  if(type==='garden'){x.fillStyle='rgba(60,40,40,.55)';x.beginPath();x.moveTo(170,70);x.quadraticCurveTo(230,40,300,58);x.lineTo(300,78);x.quadraticCurveTo(240,66,178,84);x.fill();stroke(4,'rgba(60,40,40,.5)');x.beginPath();x.moveTo(210,80);x.lineTo(210,180);x.moveTo(270,74);x.lineTo(270,180);x.stroke();
+   stroke(3,'rgba(50,30,25,.7)');x.beginPath();x.moveTo(0,20);x.quadraticCurveTo(60,40,90,90);x.moveTo(40,34);x.quadraticCurveTo(70,30,110,46);x.stroke();for(let i=0;i<26;i++){x.fillStyle=`rgba(${230+R()*25|0},${120+R()*60|0},${150+R()*40|0},.85)`;x.beginPath();x.arc(10+R()*110,20+R()*80,2+R()*4,0,7);x.fill()}}
+  if(type==='chess'){stroke(6,'rgba(40,40,30,.7)');x.beginPath();x.moveTo(250,300);x.quadraticCurveTo(240,160,270,40);x.stroke();for(let i=0;i<6;i++){x.fillStyle='rgba(40,70,50,.55)';x.beginPath();x.ellipse(230+R()*60,40+i*28,40,10,-.2,0,7);x.fill()}}
+  if(type==='book'){for(let i=0;i<7;i++){x.fillStyle=`rgba(${120+R()*60|0},${70+R()*40|0},40,.18)`;x.fillRect(i*44,20,30,110)}stroke(2,'rgba(80,50,20,.25)');x.beginPath();x.moveTo(0,132);x.lineTo(W,132);x.stroke()}}
+ else{const shade=(y0,h,col)=>{const g=x.createLinearGradient(0,y0,0,y0+h);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,col);x.fillStyle=g;x.fillRect(0,y0,W,h)};
+  if(type==='tavern'){shade(170,130,'rgba(30,15,5,.55)');x.fillStyle='#5a3420';x.beginPath();x.moveTo(20,226);x.lineTo(280,226);x.lineTo(296,250);x.lineTo(4,250);x.fill();x.fillStyle='#3a2010';x.fillRect(4,250,292,12);x.fillRect(40,262,14,40);x.fillRect(246,262,14,40);
+   for(const[jx,s]of[[70,1],[226,.8]]){x.fillStyle='#7a4a2a';x.beginPath();x.ellipse(jx,212,22*s,26*s,0,0,7);x.fill();x.fillStyle='#c0392b';x.fillRect(jx-12*s,196*s+(1-s)*212,24*s,14*s);x.fillStyle='#2a1810';x.fillRect(jx-8*s,184+(1-s)*20,16*s,8)}
+   for(const cx of[130,160,190]){x.fillStyle='#e8dcc0';x.beginPath();x.moveTo(cx-9,212);x.lineTo(cx+9,212);x.lineTo(cx+6,226);x.lineTo(cx-6,226);x.fill();x.fillStyle='#8a5a20';x.fillRect(cx-8,212,16,3)}}
+  if(type==='garden'){shade(190,110,'rgba(80,30,50,.45)');x.fillStyle='rgba(120,40,40,.85)';x.fillRect(0,250,W,8);for(let i=0;i<=10;i++)x.fillRect(i*30,232,5,30);x.fillRect(0,232,W,5);for(let i=0;i<30;i++){x.fillStyle=`rgba(255,${150+R()*60|0},${180+R()*40|0},.9)`;x.beginPath();x.ellipse(R()*W,150+R()*150,3,5,R()*3,0,7);x.fill()}}
+  if(type==='chess'){shade(180,120,'rgba(20,30,20,.5)');x.save();x.translate(150,252);x.scale(1,.42);x.fillStyle='#c8a062';x.fillRect(-110,-110,220,220);stroke(1.6,'#4a3010');for(let i=-100;i<=100;i+=20){x.beginPath();x.moveTo(i,-100);x.lineTo(i,100);x.moveTo(-100,i);x.lineTo(100,i);x.stroke()}for(let i=0;i<22;i++){x.fillStyle=i%2?'#111':'#f4f4ee';x.beginPath();x.arc(-100+(R()*10|0)*20,-100+(R()*10|0)*20,8,0,7);x.fill()}x.restore()}
+  if(type==='book'){shade(170,130,'rgba(40,25,5,.5)');const gl=x.createRadialGradient(150,230,4,150,230,120);gl.addColorStop(0,'rgba(255,220,120,.7)');gl.addColorStop(1,'rgba(255,200,80,0)');x.fillStyle=gl;x.fillRect(0,120,W,180);
+   for(const sgn of[-1,1]){x.fillStyle='#f3e8cc';x.beginPath();x.moveTo(150,236);x.quadraticCurveTo(150+sgn*70,214,150+sgn*140,226);x.lineTo(150+sgn*140,276);x.quadraticCurveTo(150+sgn*70,266,150,284);x.fill();stroke(1,'rgba(60,40,20,.45)');for(let i=0;i<5;i++){x.beginPath();x.moveTo(150+sgn*20,244+i*7);x.lineTo(150+sgn*120,236+i*7);x.stroke()}}
+   x.fillStyle='#6a2a18';x.fillRect(146,232,8,54)}
+  if(type==='mist'){shade(150,150,'rgba(10,0,0,.7)');for(let i=0;i<10;i++)wash(R()*W,240+R()*60,60,20,'rgba(40,20,20,A)',.7)}}
+ return CCINK[key]=c.toDataURL('image/png')}
+const CCT={zx:'tavern',hg:'garden',jj:'chess',dj:'book',wb:'mist'};
+const hasH=id=>H.some(h=>h.id===id);
+function ccGroups(k){let G=[];
+ if(k==='zx')G=[['guanyu','liubei','zhangfei'],['zhaoyun','machao','huangzhong'],['xiahoudun','caocao','xiahouyuan'],['sunshangxiang','sunce','sunquan'],['lubu','diaochan','lvlingqi'],['zhouyu','sunce','taishici']];
+ else if(k==='jj')G=[['zhugeliang','simayi'],['zhouyu','guojia'],['luxun','xunyou'],['xushu','yangxiu']];
+ else if(k==='hg'){const own=Object.keys(hrm()).filter(id=>BEA.some(b=>b.id===id)),rest=BEA.map(b=>b.id).filter(id=>!own.includes(id)&&UGC_SEL&&UGC_SEL[id]),L=[...own,...rest,...BEA.map(b=>b.id)].filter((v,i,a)=>a.indexOf(v)===i).slice(0,9);for(let i=0;i+2<L.length&&G.length<3;i+=3)G.push(L.slice(i,i+3))}
+ else if(k==='dj'){const m=hjModels();if(m.length>=3)G.push([m[1],m[0],m[2]]);if(m.length>=6)G.push([m[4],m[3],m[5]]);if(!G.length)G=[['guanyu','zhugeliang','zhaoyun']]}
+ else if(k==='wb'){const best=H.filter(h=>S.own[h.id]).sort((a,b)=>powOf(b)-powOf(a))[0];G=[['wb_'+(WB.st?wbKey():'tt'),best?best.id:'guanyu']]}
+ return G.map(g=>g.filter(id=>id.startsWith('wb_')||hasH(id)||BEA.some(b=>b.id===id))).filter(g=>g.length>=2)}
+function ccBuild(){if(!$('cBlds'))return;for(const k in CCT){const e=$('cb_'+k);if(!e)continue;let c=e.querySelector('.ccar');if(!c){c=document.createElement('i');c.className='ccar';e.insertBefore(c,e.querySelector('.ctl'))}
+ const bg=ccInk(CCT[k],'bg'),fg=ccInk(CCT[k],'fg'),G=ccGroups(k);
+ c.innerHTML=G.map(g=>{const pos=g.length===2?(k==='wb'?['wbB','wbH']:['p2l','p2r']):['p3l','p3c','p3r'];return `<b class="ccf"><s style="background-image:url(${bg})"></s>${g.map((id,j)=>`<u class="${pos[j]}" style="background-image:url(${id.startsWith('wb_')?wbArt(id.slice(3)):ART2[id]})"></u>`).join('')}<s style="background-image:url(${fg})"></s></b>`}).join('');c.dataset.n=G.length;c.dataset.i=0}}
+let CCI=0;setInterval(()=>{if(!document.body.classList.contains('city')||document.hidden)return;CCI++;let j=0;for(const k in CCT){const c=document.querySelector('#cb_'+k+' .ccar');if(!c)continue;const n=+c.dataset.n||0;if(!n)continue;const t=CCI-j*1;j++;if(t<0||t%5)continue;const i=((+c.dataset.i||0)+1)%(n+1);c.dataset.i=i;c.querySelectorAll('.ccf').forEach((f,q)=>f.classList.toggle('on',q===i-1))}},1200);
 function cityPick(ref,def){const v=(S.ugc||{})[ugcKey('scene',ref)];return v&&v!=='ink'?v:def}
-function cityImgs(){const cu=$('cUbg');if(cu){cu.style.backgroundImage=`url(${cityPick('city','city/bg.jpg')})`;cu.classList.add('on')}['zx','hg','jj','dj'].forEach(k=>{const e=$('cb_'+k),i=e&&e.querySelector('.ccim');if(i)i.style.backgroundImage=`url(${cityPick('c_'+k,'city/'+k+'.jpg')})`});{const e=$('cb_wb'),i=e&&e.querySelector('.ccim');if(i)i.style.backgroundImage=`url(${cityPick('c_wb',wbArtGen(WB.st?wbKey():'tt'))})`}}
+function cityImgs(){const cu=$('cUbg');if(cu){cu.style.backgroundImage=`url(${cityPick('city','city/bg.jpg')})`;cu.classList.add('on')}['zx','hg','jj','dj'].forEach(k=>{const e=$('cb_'+k),i=e&&e.querySelector('.ccim');if(i)i.style.backgroundImage=`url(${cityPick('c_'+k,'city/'+k+'.jpg')})`});{const e=$('cb_wb'),i=e&&e.querySelector('.ccim');if(i)i.style.backgroundImage=`url(${cityPick('c_wb',wbArtGen(WB.st?wbKey():'tt'))})`}try{ccBuild()}catch(e){}}
 function ugcApplyScenes(){const w=ugcScene('war');cityImgs();const su=$('sUbg');if(su){su.style.backgroundImage=SCK==='war'&&w?`url(${w})`:'';su.classList.toggle('on',SCK==='war'&&!!w)}}
 
 function renderHub(){$('thub').classList.toggle('scn',HUBV==='main');if(HUBV==='main'){$('thBody').innerHTML=towerScene();return}const nc=msClaimable();let h=`<div class="shh"><b>🗼 爬塔</b><button data-y="x" style="flex:none;width:44px;padding:6px 0">✕</button></div><div class="btns" style="margin:6px 0">${[['main','🗼 五座塔'],['rank','🏆 排行榜'],['ms','🎁 里程碑'+(nc?'（'+nc+'）':'')]].map(([k,n])=>`<button class="g${HUBV===k?' on':''}" data-y="v" data-v="${k}"${k==='ms'&&nc?' data-dot':''}>${n}</button>`).join('')}</div>`;
@@ -4065,12 +4112,12 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261031l';
+const CVER='20261031m';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
- if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityImgs();cityLayout();cityBind()}
+ if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityImgs();cityLayout();cityBind();setTimeout(cityLayout,700);setTimeout(cityLayout,2000)}
 function cityLayout(){const C=$('city');if(!C||!C.offsetHeight)return;const R=C.getBoundingClientRect(),q=sel=>{const e=C.querySelector(sel);return e&&e.offsetHeight?e.getBoundingClientRect():null};
  const tp=Math.max(...[q('.ctop'),q('.cres')].filter(Boolean).map(r=>r.bottom-R.top),90)+8,so=q('.csoc'),bt=(so?so.top-R.top:R.height-230)-6,cl=document.body.classList.contains('cfold')?null:q('.cl'),lf=(cl?cl.right-R.left:0)+6,rt=R.width-8;
- const aw=rt-lf,ah=bt-tp,lab=20;let d=90,ax=0,ay=0;
+ const aw=rt-lf,ah=bt-tp,lab=34;let d=90,ax=0,ay=0;
  for(let t=Math.min(170,aw*.46);t>=84;t-=2){const x=(aw-t)/2,y=(ah-t-lab)/2;if(x<=0||y<=0)continue;const okC=Math.hypot(x,y)>=t+10,okL=y>=t+lab*.8||x>=t*.95,okH=2*x>=t+10;if(okC&&okL&&okH){d=t;ax=x;ay=Math.min(y,t*1.05+lab);break}}
  if(!ax){ax=(aw-d)/2;ay=(ah-d-lab)/2}
  const cx=lf+aw/2,cy=tp+ah/2-lab/2,pos={zx:[-1,-1],hg:[1,-1],wb:[0,0],jj:[-1,1],dj:[1,1]};
@@ -4254,6 +4301,7 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261031m',d:'10/31',t:['主城五個圓圖改成輪播：原本的圖之外，加上水墨場景＋武將的組合畫面，每 6 秒淡入淡出換一張','招募＝酒館裡的名將組合（桃園三兄弟、五虎、曹家、孫家、呂布父女、江東雙璧）；後宮＝你的紅顏在庭園；奇謀＝兩位謀士對弈；豪傑書＝你的榜樣武將從書中浮現；妖獸討伐＝今天的妖獸與你最強的武將','人物圖用大家上傳、票選第一的圖，沒人上傳用 Q 版','修正主城下方好友／排行／圖鑑按鈕擋到奇謀、豪傑書的問題']},
  {v:'20261031l',d:'10/31',t:['紅顏塔畫面改用大家上傳的紅顏圖（優先顯示有上傳的紅顏）','其他六座塔也可以上傳 3 張「人物圖」，會像紅顏塔一樣疊在塔前輪流淡入淡出：在塔畫面按右上 🎨 選「人物 1～3」，上傳頁有提示詞']},
  {v:'20261031k',d:'10/31',t:['爬塔地圖標題兩側新增 ‹ › 換塔，也可以在地圖上左右滑直接換塔，不用退出','各主要畫面標題旁新增「?」功能說明；點畫面上的資源（金幣、竹簡、萬用卡、精魄、虎符碎片等）可看用途與來源','奇謀改成「點進去」設計：先看奇謀九宮格（可篩選全部／已解鎖／未解鎖／使用中），點奇謀才進詳細頁，升級後不會跳回','妖獸討伐的精魄商店改成九宮格，點了看說明再兌換','陣營招募視窗顯示今日剩餘與可用抽數；招募頁左側按鈕往下移，不再擋到上方','武將可以裝新的寶石或虎符時，武將列表也會出現紅點','戰鬥下方出手順序的人名不再被切掉；「左右滑動」提示加大']},
  {v:'20261031j',d:'10/31',t:['戰鬥結束後顯示「戰鬥數據」：雙方每位武將的輸出、治療、承傷與綜合分數，綜合最高的標記「最佳」，上方放我方最佳武將大圖；右上 ℹ️ 有計分說明（一鍵爬塔不會跳出）','圖卡改成統一規則：武將、紅顏、妖獸、主城圖預設用大家上傳、票選第一名的圖，沒人上傳的用 Q 版；移除其他畫風選項']},
