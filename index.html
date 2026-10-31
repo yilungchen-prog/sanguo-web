@@ -4354,7 +4354,7 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
- {v:'20261101h',d:'11/01',t:['管理員可在「設置」匯出全部上傳圖片（每項票選第一的圖，打包成 zip）','遊戲支援內建預設圖：放進遊戲資料夾的圖會在連不上伺服器、或還沒有人上傳時自動使用']},
+ {v:'20261101h',d:'11/01',t:['管理員可在「設置」匯出全部上傳圖片（每項票選第一的圖，打包成 zip）','玩家上傳的圖已全部備份進遊戲資料夾（每週日自動再備份一次），並當作內建預設圖：連不上伺服器時也會顯示這些圖']},
  {v:'20261101g',d:'11/01',t:['武將卡下方的提示改成顯示真正原因：可升級／可升星／可換裝備／可裝符石','沒上陣但可以升級的武將，顯示灰色 ⬆；武將列表上方說明紅點規則','經驗丹不足時，培養頁會提示並可前往經驗塔或商城','修正競技場「段位」等分頁的紅點跑到畫面右上角的問題']},
  {v:'20261101f',d:'11/01',t:['修正主城「天下第一」出現後五個圓圖縮小跳動的問題（預先保留位置，並記住上次的第一名）','修正主城好友／排行／圖鑑按鈕有時擋到奇謀、豪傑書','試煉塔有多張物品圖時，改成在塔前中央輪流淡入淡出']},
  {v:'20261101e',d:'11/01',t:['試煉塔畫面：名將塔輪播大家上傳的武將圖；裝備塔用上傳的高品階裝備圖示；虎符、金幣、經驗、寶石塔放上專屬物品圖（自動去掉白底，只有 1 張時會在塔前輕輕浮動）']},
@@ -4397,7 +4397,7 @@ function renderPC(){const L=S.lord||{},av=(S.ugc||{})['lord:me'],kf=v=>v>=1e8?(v
  if(PCPICK){const own=H.filter(x=>S.own[x.id]).sort((a,b)=>b.q-a.q);h+=`<div class="bgp" data-p="pkx"><div class="bgpp"><h3>選擇背景武將</h3><div class="pcpk">${own.map(x=>`<button data-p="pk" data-i="${x.id}" class="${x.id===hid?'on':''}" style="background-image:url(${ART[x.id]})"><b>${x.n}</b></button>`).join('')}</div><div class="bgpb"><button class="g" data-p="pkx">關閉</button></div></div></div>`}
  $('pcBody').innerHTML=h}
 /* ===================== 內建預設圖（art/）與管理員匯出 ===================== */
-(async()=>{try{const r=await fetch('art/index.json',{cache:'no-cache'});if(!r.ok)return;const j=await r.json();for(const k in j)DEFART[k]='art/'+j[k];if(typeof ugcRecalc==='function')ugcRecalc();if(typeof cityImgs==='function')try{cityImgs()}catch(e){}if(!busy)try{render()}catch(e){}}catch(e){}})();
+(async()=>{try{const r=await fetch('art/manifest.json',{cache:'no-cache'});if(!r.ok)return;const j=await r.json();for(const x of j)if(x.top&&x.kind!=='lord')DEFART[x.kind+':'+x.ref]='art/'+x.file;if(typeof ugcRecalc==='function')ugcRecalc();if(typeof cityImgs==='function')try{cityImgs()}catch(e){}if(!busy)try{render()}catch(e){}}catch(e){}})();
 const artFile=k=>k.replace(/[^a-z0-9_]/gi,'_');
 function artLabel(k){const i=k.indexOf(':'),kind=k.slice(0,i),ref=k.slice(i+1);try{return kind==='lord'?'主公頭像':ugcName(kind,ref)}catch(e){return k}}
 function loadJS(u){return new Promise((res,rej)=>{if(window.JSZip)return res();const s=document.createElement('script');s.src=u;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
