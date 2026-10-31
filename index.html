@@ -872,7 +872,7 @@ body.lite .pfx{display:none}
 #heroes .pc .card .upd{bottom:54px!important}.card .upd{bottom:56px!important}
 #heroes .pwhy{bottom:auto!important;top:3px;left:auto!important;right:12px;transform:none!important;font-size:11px!important;padding:0 5px!important;line-height:17px}
 .card .lv small{font-size:.85em}body.bt .card .lv small{display:none}body.bt .card .lv{left:auto!important;right:2px!important;top:2px!important;bottom:auto!important;padding:0 3px!important;font-size:calc(var(--ch,80px)*.1)!important}
-.hjft{display:flex;gap:6px;margin:6px 0;flex-wrap:wrap}.hjft button{flex:1;min-width:44px;min-height:40px;font-size:16px;font-weight:900;border-radius:20px;border:2px solid var(--fc,#d9b25a);background:#1a120c;color:#ffe9b0}.hjft button.on{background:var(--fc,#d9b25a);color:#fff}
+.hgk{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:2px 0 6px;padding-bottom:2px}.hgk::-webkit-scrollbar{display:none}.hgk button{flex:none;min-height:34px;padding:4px 12px;font-size:14px;border-radius:17px;border:1px solid #d9b25a88;background:#1a120c;color:#ffe9b0;white-space:nowrap}.hgk button.on{background:#d9b25a;color:#1a120c;font-weight:900}.hgn{font-style:normal;color:#ffd27a;font-size:.9em}.hjft{display:flex;gap:6px;margin:6px 0;flex-wrap:wrap}.hjft button{flex:1;min-width:44px;min-height:40px;font-size:16px;font-weight:900;border-radius:20px;border:2px solid var(--fc,#d9b25a);background:#1a120c;color:#ffe9b0}.hjft button.on{background:var(--fc,#d9b25a);color:#fff}
 .pcl{display:flex;flex-direction:column}.pcl>*{flex:none}.pcgap{flex:1 1 auto!important;min-height:12px}.pcme{margin-bottom:6px}.pcn .pcf{font-size:14px;padding:1px 8px}.pcid{font-size:13px;color:#e8d6ae;margin-top:3px;display:flex;align-items:center;gap:6px}.pcid .pccp{font-size:12px;padding:1px 8px;min-height:24px}.pcxp{width:min(100%,240px)}
 
 /* 主城：背景＋四個圓形大圖 */
@@ -915,7 +915,7 @@ body.lite .pfx{display:none}
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261031d</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261031e</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -2115,7 +2115,7 @@ function hgSec(id){const lv=LV(id),hf=hfI().filter(x=>x.e===id),gm=gemI().filter
  if(HGPK){const T=HGPK.t,cur=(T==='hf'?hf:gm).find(x=>x.sl===HGPK.i),L=(T==='hf'?hfI():gemI()).filter(x=>!x.e).sort((a,b)=>b.l-a.l||a.k.localeCompare(b.k));
   h+=`<div class="hgpk">${cur?`<button class="g" data-a="hgx" style="width:100%">卸下 ${T==='hf'?HFD[cur.k].n:GEMD[cur.k][0]+'寶石'}</button>`:''}${L.length?L.map(x=>`<button data-a="hgp" data-u="${x.u}">${T==='hf'?`<b>${HFD[x.k].ic} ${HFD[x.k].n} Lv.${x.l}</b><small>${HFD[x.k].d(x.l)}</small>`:`<b>${GEMD[x.k][1]} ${GEMD[x.k][0]}寶石 Lv.${x.l}</b><small>${GEMD[x.k][0]} +${pct(gemV(x.k,x.l))}</small>`}</button>`).join(''):`<p class="sub">沒有未使用的${T==='hf'?'虎符（挑戰虎符塔或到商城購買）':'寶石（挑戰寶石塔或到商城購買）'}。</p>`}</div>`}
  return h+`<button class="g" data-a="hgm" style="width:100%;margin-top:6px">🐯💎 虎符・寶石管理（升級、合成）</button>`}
-let HGPK=null,HGT='hf';
+let HGPK=null,HGT='hf',HGK='all';
 /* ---- 符石頁（虎符＋寶石） ---- */
 function fsDot(id){const lv=LV(id),hf=hfI(),gm=gemI();const fh=HFSL.some((n,i)=>lv>=n&&!hf.some(x=>x.e===id&&x.sl===i))&&hf.some(x=>!x.e&&!hf.some(y=>y.e===id&&y.k===x.k));const fg=GEMSL.some((n,i)=>lv>=n&&!gm.some(x=>x.e===id&&x.sl===i))&&gm.some(x=>!x.e);return fh||fg}
 function fsView(id){const lv=LV(id),hf=hfI().filter(x=>x.e===id),gm=gemI().filter(x=>x.e===id);
@@ -2141,15 +2141,25 @@ function hgEquip(hid,uid){const T=HGPK.t,A=T==='hf'?hfI():gemI(),it=A.find(x=>x.
  A.forEach(x=>{if(x.e===hid&&x.sl===HGPK.i)x.e=null});it.e=hid;it.sl=HGPK.i;HGPK=null;saveS();if(!busy)refreshPl();render()}
 function hgUnequip(hid){const T=HGPK.t,A=T==='hf'?hfI():gemI();A.forEach(x=>{if(x.e===hid&&x.sl===HGPK.i)x.e=null});HGPK=null;saveS();if(!busy)refreshPl();render()}
 function hgOpen(){document.querySelectorAll('.hgm').forEach(x=>x.remove());const d=document.createElement('div');d.className='bgp vmod hgm';document.body.appendChild(d);hgDraw(d)}
-function hgDraw(d){let h=`<div class="bgpp" style="max-height:86vh;overflow:auto"><h3>🐯 虎符・💎 寶石</h3><div class="hjft">${[['hf','🐯 虎符'],['gem','💎 寶石']].map(([k,n])=>`<button data-g="t" data-k="${k}" class="${HGT===k?'on':''}">${n}</button>`).join('')}</div>`;
+function hgDraw(d){const sc0=d.querySelector('.bgpp'),top0=sc0?sc0.scrollTop:0;
+ let h=`<div class="bgpp" style="max-height:86vh;overflow:auto"><h3>🐯 虎符・💎 寶石</h3><div class="hjft">${[['hf','🐯 虎符'],['gem','💎 寶石']].map(([k,n])=>`<button data-g="t" data-k="${k}" class="${HGT===k?'on':''}">${n}</button>`).join('')}</div>`;
+ const chips=(keys,cnt,lab)=>`<div class="hgk"><button data-g="k" data-k="all" class="${HGK==='all'?'on':''}">全部 ${Object.values(cnt).reduce((a,b)=>a+b,0)}</button>${keys.filter(k=>cnt[k]).map(k=>`<button data-g="k" data-k="${k}" class="${HGK===k?'on':''}">${lab(k)} ${cnt[k]}</button>`).join('')}</div>`;
  if(HGT==='hf'){h+=`<p class="sub">🐯 虎符碎片 <b>${(S.hfs||0).toLocaleString()}</b>　升級 Lv.N→N+1 需要 10×N 片，最高 Lv.${HFMAX}。同一隊同一種虎符最多 2 個生效。</p>`;
-  const L=hfI().slice().sort((a,b)=>b.l-a.l||a.k.localeCompare(b.k));h+=L.length?L.map(x=>`<div class="it"><span class="ic">${HFD[x.k].ic}</span><div class="in"><b>${HFD[x.k].n} Lv.${x.l}${x.e?`<small style="color:#ffd27a">（${hname(x.e)}）</small>`:''}</b><small>${HFD[x.k].d(x.l)}</small></div>${x.l<HFMAX?`<button data-g="up" data-u="${x.u}" ${(S.hfs||0)>=hfCost(x.l)?'':'disabled'}>升級<br><small>🐯${hfCost(x.l)}</small></button>`:'<button disabled>滿級</button>'}</div>`).join(''):'<p class="sub">還沒有虎符。挑戰「虎符塔」或到商城購買虎符寶匣。</p>'}
+  const A=hfI(),KO=Object.keys(HFD),cnt={};A.forEach(x=>cnt[x.k]=(cnt[x.k]||0)+1);if(HGK!=='all'&&!cnt[HGK])HGK='all';
+  if(A.length)h+=chips(KO,cnt,k=>HFD[k].ic+HFD[k].n.replace('符',''));
+  const grp={};A.filter(x=>HGK==='all'||x.k===HGK).forEach(x=>{const key=x.e?'e'+x.u:x.k+'|'+x.l;(grp[key]=grp[key]||{k:x.k,l:x.l,e:x.e,us:[]}).us.push(x.u)});
+  const G=Object.values(grp).sort((a,b)=>(!!b.e-!!a.e)||b.l-a.l||KO.indexOf(a.k)-KO.indexOf(b.k));
+  const row=g=>`<div class="it"><span class="ic">${HFD[g.k].ic}</span><div class="in"><b>${HFD[g.k].n} Lv.${g.l}${g.us.length>1?` <i class="hgn">×${g.us.length}</i>`:''}${g.e?`<small style="color:#ffd27a">（${hname(g.e)}）</small>`:''}</b><small>${HFD[g.k].d(g.l)}</small></div>${g.l<HFMAX?`<button data-g="up" data-u="${g.us[0]}" ${(S.hfs||0)>=hfCost(g.l)?'':'disabled'}>升級<br><small>🐯${hfCost(g.l)}</small></button>`:'<button disabled>滿級</button>'}</div>`;
+  h+=G.length?pager(chunk(G.map(row),6).map(c=>c.join('')),'','hghf'+HGK):'<p class="sub">還沒有虎符。挑戰「虎符塔」或到商城購買虎符寶匣。</p>'}
  else{h+=`<p class="sub">3 顆同種類、同等級、沒裝備的寶石可以合成 1 顆高一級的寶石，最高 Lv.${GEMMAX}。</p><button class="g" data-g="all" style="width:100%;margin-bottom:6px">一鍵合成全部</button>`;
-  const grp={};gemI().forEach(x=>{const key=x.k+'|'+x.l;(grp[key]=grp[key]||{k:x.k,l:x.l,free:0,used:0})[x.e?'used':'free']++});
-  const G=Object.values(grp).sort((a,b)=>b.l-a.l||a.k.localeCompare(b.k));h+=G.length?G.map(g=>`<div class="it"><span class="ic">${GEMD[g.k][1]}</span><div class="in"><b>${GEMD[g.k][0]}寶石 Lv.${g.l}</b><small>${GEMD[g.k][0]} +${pct(gemV(g.k,g.l))}　未使用 ${g.free}${g.used?`・已裝備 ${g.used}`:''}</small></div>${g.l<GEMMAX?`<button data-g="mix" data-k="${g.k}" data-l="${g.l}" ${g.free>=3?'':'disabled'}>合成<br><small>3→1</small></button>`:''}</div>`).join(''):'<p class="sub">還沒有寶石。挑戰「寶石塔」或到商城購買寶石袋。</p>'}
- h+=`<div class="bgpb"><button class="g" data-g="x">關閉</button></div></div>`;d.innerHTML=h;
+  const A=gemI(),KO=Object.keys(GEMD),cnt={};A.forEach(x=>cnt[x.k]=(cnt[x.k]||0)+1);if(HGK!=='all'&&!cnt[HGK])HGK='all';
+  if(A.length)h+=chips(KO,cnt,k=>GEMD[k][1]+GEMD[k][0]);
+  const grp={};A.filter(x=>HGK==='all'||x.k===HGK).forEach(x=>{const key=x.k+'|'+x.l;(grp[key]=grp[key]||{k:x.k,l:x.l,free:0,used:0})[x.e?'used':'free']++});
+  const G=Object.values(grp).sort((a,b)=>b.l-a.l||KO.indexOf(a.k)-KO.indexOf(b.k));h+=G.length?pager(chunk(G.map(g=>`<div class="it"><span class="ic">${GEMD[g.k][1]}</span><div class="in"><b>${GEMD[g.k][0]}寶石 Lv.${g.l}</b><small>${GEMD[g.k][0]} +${pct(gemV(g.k,g.l))}　未使用 ${g.free}${g.used?`・已裝備 ${g.used}`:''}</small></div>${g.l<GEMMAX?`<button data-g="mix" data-k="${g.k}" data-l="${g.l}" ${g.free>=3?'':'disabled'}>合成<br><small>3→1</small></button>`:''}</div>`),6).map(c=>c.join('')),'','hggem'+HGK):'<p class="sub">還沒有寶石。挑戰「寶石塔」或到商城購買寶石袋。</p>'}
+ h+=`<div class="bgpb"><button class="g" data-g="x">關閉</button></div></div>`;d.innerHTML=h;const sc1=d.querySelector('.bgpp');if(sc1)sc1.scrollTop=top0;pgRestore(d);
  d.onclick=e=>{const b=e.target.closest('[data-g]');if(e.target===d||(b&&b.dataset.g==='x')){d.remove();if($('hero').classList.contains('on'))renderHero();return}if(!b)return;const g=b.dataset.g;
-  if(g==='t'){HGT=b.dataset.k;hgDraw(d);return}
+  if(g==='t'){if(HGT!==b.dataset.k){HGT=b.dataset.k;HGK='all'}hgDraw(d);return}
+  if(g==='k'){HGK=b.dataset.k;hgDraw(d);return}
   if(g==='up'){const it=hfI().find(x=>x.u===+b.dataset.u);if(!it||it.l>=HFMAX)return;const c=hfCost(it.l);if((S.hfs||0)<c)return;S.hfs-=c;it.l++;saveS();sfx('win');hgDraw(d);return}
   if(g==='mix'){if(gemMix(b.dataset.k,+b.dataset.l))sfx('win');hgDraw(d);return}
   if(g==='all'){let n=0;for(let l=1;l<GEMMAX;l++)for(const k in GEMD)while(gemMix(k,l))n++;toast(n?`合成了 ${n} 次`:'沒有可以合成的寶石');if(n)sfx('win');hgDraw(d);return}}}
@@ -2714,7 +2724,7 @@ function renderHero(){const h=H.find(x=>x.id===HM),lv=LV(h.id),o=S.lv[h.id]||{l:
  else if(HTAB==='rst'){sheet=`<div class="sht">♻ 重生</div>${rstHtml(h.id)}`}
  let pk='';if(HPK){const its=S.inv.filter(i=>i.s===HPK).sort((a,b)=>b.t-a.t||b.l-a.l);const cur=S.inv.find(x=>x.e===h.id&&x.s===HPK);
   pk=`<div class="hvp"><div class="hvpp"><div class="shh"><b>${SLOTS.find(x=>x.k===HPK).ic} 選擇${SLOTS.find(x=>x.k===HPK).n}</b><button data-a="pkx" style="flex:none;width:44px;padding:6px 0">✕</button></div>${cur?'<button class="g" data-a="eqi" data-u="0" style="width:100%;margin:4px 0">卸下目前裝備</button>':''}
-  <div class="hvl">${its.length?its.map(i=>`<button class="hvi${i.e===h.id?' on':''}" data-a="eqi" data-u="${i.u}"><b style="color:${TIERS[i.t].c}">${TIERS[i.t].n}・${INAME[i.s][i.t]}</b><span>Lv${i.l}　+${pct(ibonus(i))}</span><small>${i.e===h.id?'裝備中':i.e?'｜'+hname(i.e)+' 使用中':'未使用'}</small></button>`).join(''):'<div class="sub">背包沒有這類裝備，可到商城購買或挑戰裝備塔。</div>'}</div></div></div>`}
+  <div class="hvl">${its.length?pager(chunk(its.map(i=>`<button class="hvi${i.e===h.id?' on':''}" data-a="eqi" data-u="${i.u}"><b style="color:${TIERS[i.t].c}">${TIERS[i.t].n}・${INAME[i.s][i.t]}</b><span>Lv${i.l}　+${pct(ibonus(i))}</span><small>${i.e===h.id?'裝備中':i.e?'｜'+hname(i.e)+' 使用中':'未使用'}</small></button>`),6).map(c=>`<div class="hvl">${c.join('')}</div>`),'','hvpk'+HPK):'<div class="sub">背包沒有這類裝備，可到商城購買或挑戰裝備塔。</div>'}</div></div></div>`}
  const bub=HSK>=0&&sks[HSK]?`<div class="hvb" data-a="skx"><b>${sks[HSK].l}・${sks[HSK].n}</b> <small>Lv.${sks[HSK].lv}/${sks[HSK].mx}</small><br>${sks[HSK].d}</div>`:'';
  $('heroBody').innerHTML=`<div class="hv${HVIEW?' view':''}${own?'':' lock'}${HTAB==='fs'&&own?' fsm':''}" style="--fc:${FC[h.f]};--rc:${r.c}">
  <div class="hvbg" style="background-image:url(${heroBgOf(h.id)})" data-a="${HVIEW?'view':''}"></div><div class="hvsh"></div>
@@ -2803,7 +2813,7 @@ function renderBag(){const tabs=[['item','道具'],['eq','裝備'],['frag','碎�
  else if(BAGC==='eq'){const its=S.inv.filter(x=>BAGF==='all'||x.s===BAGF).sort((a,b)=>b.t-a.t||b.l-a.l||SLOTS.findIndex(x=>x.k===a.s)-SLOTS.findIndex(x=>x.k===b.s)),sl=S.inv.filter(x=>!x.e&&x.t<=BSELL),sv=sl.reduce((a,x)=>a+sellv(x),0);
   h+=`<div class="bgf">${[['all','全部'],...SLOTS.map(x=>[x.k,x.n])].map(([k,n])=>`<button class="${BAGF===k?'on':''}" data-bgf="${k}">${n}</button>`).join('')}</div>
   <div class="bgsell"><select id="bsT">${TIERS.map((t,i)=>`<option value="${i}" ${i===BSELL?'selected':''}>${t.n}品（含）以下</option>`).join('')}</select><button data-bs="1" ${sl.length?'':'disabled'}>${BSC?'再按確認':`批次出售 ${sl.length} 件`}</button></div><div class="sub" style="font-size:14px">只賣未裝備的裝備，可得 💰${sv.toLocaleString()}</div>`;
-  h+=its.length?`<div class="bgg">${its.map(it=>bagTile({key:'e:'+it.u,ic:eqIc(it.s,it.t),c:'Lv'+it.l,n:INAME[it.s][it.t],col:TIERS[it.t].c,tag:it.e?hname(it.e):''})).join('')}</div>`:'<p class="sub">沒有裝備，可到商城購買或挑戰裝備塔。</p>'}
+  h+=its.length?`<div class="sub" style="font-size:13px;margin:4px 0 0">共 ${its.length} 件</div>`+pager(chunk(its.map(it=>bagTile({key:'e:'+it.u,ic:eqIc(it.s,it.t),c:'Lv'+it.l,n:INAME[it.s][it.t],col:TIERS[it.t].c,tag:it.e?hname(it.e):''})),20).map(c=>`<div class="bgg">${c.join('')}</div>`),'','bageq'+BAGF):'<p class="sub">沒有裝備，可到商城購買或挑戰裝備塔。</p>'}
  else if(BAGC==='frag'){const F=frg(),cps=H.filter(x=>(S.cp[x.id]||0)>0).sort((a,b)=>b.q-a.q);
   h+=`<div class="bgsec">名將碎片 <button class="g" data-bgx="frag">合成／分解</button></div><div class="bgg">${FRK.filter(k=>k!=='SP'||F[k]).map((k,i)=>bagTile({key:'f:'+k,ic:FRI[k],c:(F[k]||0).toLocaleString(),n:FRN[k],col:RCOL[Math.min(5,i+1)]})).join('')}</div>
   <div class="bgsec">同名卡（升星用）</div>${cps.length?`<div class="bgg">${cps.map(x=>`<button class="bgt bgh" data-bg="h:${x.id}" style="--rc:${RAR[rarOf(x.id)].c};background-image:url(${ART[x.id]})"><b>${S.cp[x.id]}</b><small>${x.n}</small></button>`).join('')}</div>`:'<p class="sub">還沒有同名卡，重複招募到的武將會變成同名卡。</p>'}`}
@@ -2826,12 +2836,12 @@ function bagGo(a){const close=()=>{$('shop').classList.remove('on');BAGSEL=null}
  if(a==='hero'){close();$('bHeroes').click();return}if(a.startsWith('hero:')){close();openHero(a.slice(5));return}
  if(a==='gacha'){close();$('mGacha').click();return}if(a==='qm'){close();qmOpen();return}if(a==='frag'){close();FRBACK='bag';fragOpen();return}if(a==='harem'){close();$('mHarem').click();return}
  if(a==='shop'){BAGSEL=null;TAB='shop';$('shT').textContent='商城';renderShop();return}}
-let SHT='item';function renderShop(){$('shCoin').textContent='💰 '+S.coins.toLocaleString();$('tShop').classList.toggle('on',TAB==='shop');$('tBag').classList.toggle('on',TAB==='bag');let h='';
- if(TAB==='shop'){h+=`<div class="sht2">${[['item','🎁 道具'],...SLOTS.map(sl=>[sl.k,sl.ic+' '+sl.n])].map(([k,n])=>`<button class="${SHT===k?'on':''}" data-sht="${k}">${n}</button>`).join('')}</div>`;if(SHT==='item')h+=SHOPI.map(x=>{const lim=x.lim?x.lim-((S.d.sh||{})[x.k]||0):1,ok=S.coins>=x.p&&lim>0;return `<div class="it"><span class="ic" style="border-color:#ffd27a;color:#ffd27a">${x.ic}</span><div class="in"><b style="color:#ffd27a">${x.n}</b><small>${x.d}${x.lim?`（今日剩 ${lim}/${x.lim}）`:''}</small></div><button data-item2="${x.k}" ${ok?'':'disabled'}>💰${x.p.toLocaleString()}</button></div>`}).join('')+`<p class="sub">每日登錄可領 10,000 金幣、600 顆經驗丹與 4 件隨機裝備（凡 40%／良 35%／精 20%／極 5%）；對戰、經驗塔、金幣塔通關都會獲得金幣，裝備塔會掉落裝備（背包可出售多餘裝備）。${S.test?'<button id="cheat" style="padding:4px 8px;font-size:11px;margin-left:6px">測試：+50,000 金幣、+5,000 經驗丹</button>':''}</p>`;
+let SHT='item',SHIC='all';const SHCAT=[['all','全部'],['grow','🔮 養成',/^(pill|lexp|bst|qmj)/],['pull','🎴 招募',/^(pull|wc|pts)/],['box','📦 寶箱',/^(box|gbox|sbox|dbox)$/],['hg','🌸 紅顏',/^hg\d/],['hf','🐯 符石',/^h_/]];function renderShop(){$('shCoin').textContent='💰 '+S.coins.toLocaleString();$('tShop').classList.toggle('on',TAB==='shop');$('tBag').classList.toggle('on',TAB==='bag');let h='';
+ if(TAB==='shop'){h+=`<div class="sht2">${[['item','🎁 道具'],...SLOTS.map(sl=>[sl.k,sl.ic+' '+sl.n])].map(([k,n])=>`<button class="${SHT===k?'on':''}" data-sht="${k}">${n}</button>`).join('')}</div>`;if(SHT==='item'){const cr=(SHCAT.find(c=>c[0]===SHIC)||SHCAT[0])[2];h+=`<div class="hgk">${SHCAT.map(([k,n])=>`<button class="${SHIC===k?'on':''}" data-shic="${k}">${n}</button>`).join('')}</div>`}if(SHT==='item')h+=SHOPI.filter(x=>{const cr=(SHCAT.find(c=>c[0]===SHIC)||SHCAT[0])[2];return !cr||cr.test(x.k)}).map(x=>{const lim=x.lim?x.lim-((S.d.sh||{})[x.k]||0):1,ok=S.coins>=x.p&&lim>0;return `<div class="it"><span class="ic" style="border-color:#ffd27a;color:#ffd27a">${x.ic}</span><div class="in"><b style="color:#ffd27a">${x.n}</b><small>${x.d}${x.lim?`（今日剩 ${lim}/${x.lim}）`:''}</small></div><button data-item2="${x.k}" ${ok?'':'disabled'}>💰${x.p.toLocaleString()}</button></div>`}).join('')+`<p class="sub">每日登錄可領 10,000 金幣、600 顆經驗丹與 4 件隨機裝備（凡 40%／良 35%／精 20%／極 5%）；對戰、經驗塔、金幣塔通關都會獲得金幣，裝備塔會掉落裝備（背包可出售多餘裝備）。${S.test?'<button id="cheat" style="padding:4px 8px;font-size:11px;margin-left:6px">測試：+50,000 金幣、+5,000 經驗丹</button>':''}</p>`;
   SLOTS.filter(sl=>sl.k===SHT).forEach(sl=>{h+=`<p class="sub">${sl.n}：加${sl.s}。神、聖、帝品不直接販售，請開「道具」裡的裝備寶箱或挑戰裝備塔。</p>`;TIERS.forEach((tr,i)=>{if(i>3)return;h+=`<div class="it"><span class="ic" style="border-color:${tr.c};color:${tr.c}">${eqIc(sl.k,i)}</span><div class="in"><b style="color:${tr.c}">${INAME[sl.k][i]}</b><small>${tr.n}品・${sl.s} +${pct(IBASE[sl.k][i])}（滿級 +${pct(IBASE[sl.k][i]*(1+.12*(MAXIL-1)))}）</small></div><button data-buy="${sl.k}|${i}" ${S.coins<tr.p?'disabled':''}>💰${tr.p.toLocaleString()}</button></div>`})})}
  else{h+=renderBag()}
- $('shBody').innerHTML=h}
-$('shBody').onclick=e=>{const b=e.target.closest('button');if(b&&b.dataset.sht){SHT=b.dataset.sht;renderShop();return}if(!b){if(e.target.classList&&e.target.classList.contains('bgp')){BAGSEL=null;renderShop()}return}
+ $('shBody').innerHTML=h;pgRestore($('shBody'))}
+$('shBody').onclick=e=>{const b=e.target.closest('button');if(b&&b.dataset.sht){SHT=b.dataset.sht;renderShop();return}if(b&&b.dataset.shic){SHIC=b.dataset.shic;renderShop();return}if(!b){if(e.target.classList&&e.target.classList.contains('bgp')){BAGSEL=null;renderShop()}return}
  if(b.dataset.bgc){BAGC=b.dataset.bgc;BAGSEL=null;renderShop();return}if(b.dataset.bgf){BAGF=b.dataset.bgf;renderShop();return}if(b.dataset.bg){BAGSEL=b.dataset.bg;renderShop();return}if(b.dataset.bgx){bagGo(b.dataset.bgx);return}
  if(b.dataset.item2){buyItem(b.dataset.item2);return}
  if(b.id==='cheat'){S.coins+=50000;S.pill+=5000;saveS();renderShop();render();return}
@@ -3650,7 +3660,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261031d';
+const CVER='20261031e';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}cityImgs();cityLayout();cityBind()}
 function cityLayout(){const C=$('city');if(!C||!C.offsetHeight)return;const R=C.getBoundingClientRect(),q=sel=>{const e=C.querySelector(sel);return e&&e.offsetHeight?e.getBoundingClientRect():null};
@@ -3837,6 +3847,7 @@ function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261031e',d:'10/31',t:['虎符・寶石管理：按「升級」不再跳回最上面；同種同級的虎符合併成一列並顯示數量，上方可依種類篩選，已裝備的排最前，每頁 6 列左右滑動','背包裝備改成每頁 20 件左右滑動，並顯示總件數','商城道具分成養成、招募、寶箱、紅顏、符石五類','武將選裝備的清單改成每頁 6 件左右滑動']},
  {v:'20261031d',d:'10/31',t:['武將頁新增「符石」分頁：虎符與寶石格子直接排在立繪右側，不用往下拉；點格子跳出選擇視窗（同種同級合併顯示數量），另有一鍵裝備、一鍵卸下','「裝備」分頁回到只有四件裝備']},
  {v:'20261031c',d:'10/31',t:['所有武將資質統一為 95，沒有爛將；抽卡改為每位武將機率相同，積分招募每位 30 分；碎片可合成任一武將','原本資質較低的 29 位武將補齊天賦、絕技、被動：每國都有復活（蜀 馬良、魏 楊修、吳 張昭／周泰、神 于吉、魔 步練師）、禁止復活（馬岱、樂進、凌統、龐德、李傕）、淨化（簡雍、荀攸、諸葛瑾、管輅、田豐）等功能','奇謀上限提高到 Lv15：★5 之後繼續用竹簡升級，越後面越貴；Lv10、Lv15 解鎖更強效果；附著加成 Lv6 之後成長減半','高層爬塔與競技場對手的奇謀等級也會跟著提高']},
  {v:'20261031b',d:'10/31',t:['新增「虎符」：每位武將 2 格（Lv100、Lv250 開），復生、絕命、淨化、堅盾、免控、吸血、反傷、破甲、降療、追擊 10 種，用虎符碎片升到 Lv10；同一隊同一種最多 2 個生效','新增「寶石」：每位武將 3 格（Lv50、Lv150、Lv300 開），攻擊、生命、速度、暴擊、暴傷、減傷、治療 7 種，3 顆同級合成高一級，最高 Lv10','虎符、寶石都能隨時拆下換人；武將頁「裝備」下方可以裝配，另有管理畫面可升級、一鍵合成','新增「虎符塔」「寶石塔」，並加入排行榜','商城新增：虎符碎片、虎符寶匣、寶石袋、高級寶石袋','突破提高等級上限：每突破一次上限 +10，最高 Lv450，經驗丹一直有用','主公陣營加成改成各國不同：魏 生命＋減傷、蜀 攻擊＋生命、吳 攻擊＋速度、神 攻擊＋暴擊、魔 攻擊＋吸血','測試模式改成只有管理員可以使用']},
