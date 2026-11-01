@@ -86,6 +86,9 @@ button[data-dot]:not(.ccir):not(.cic):not(.cmed):not(.cfame):not(#nvBar):not(.tc
 .ptags{left:auto!important;right:3px!important;top:30%!important}
 .cell .card .str{left:auto!important;right:1px!important;bottom:5px!important;top:auto!important;z-index:4;font-size:11px!important;padding:0 2px!important}
 .cell .card .bar.hp{bottom:22px!important}
+.qrow{display:flex;align-items:center;justify-content:center;gap:14px;margin:8px 0}.qrow button{width:56px!important;height:52px;font-size:26px!important;padding:0!important;flex:none!important;border-radius:14px!important}.qn{font:900 34px serif;color:#ffe27a;min-width:80px;text-align:center}
+.qfast{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:6px;margin:4px 0}.qfast button{min-height:40px!important;font-size:15px!important;padding:2px!important}
+.qtot{text-align:center;font-size:15px;margin:8px 0 4px}.qbt{display:grid!important;grid-template-columns:2fr 1fr;gap:8px}.qbt button{min-height:52px!important;font-size:18px!important}
 </style></head><body>
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
@@ -1039,7 +1042,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261102b</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261102c</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -2969,7 +2972,7 @@ setInterval(()=>{const B=document.body.classList;if(B.contains('full')&&!busy&&!
 function setMode(m,tk){if(busy||AUTOC)return;OPP.fr=null;MODE=m;if(tk)TK=tk;FLOOR=m==='tower'?S.tw[TK].f:0;
  [['mPvp','pvp',''],['mExp','tower','exp'],['mEq','tower','eq'],['mGold','tower','gold']].forEach(([id,mm,k])=>$(id).classList.toggle('on',mm===MODE&&(MODE==='pvp'||k===TK)));$('mTower').classList.toggle('on',MODE==='tower');
  $('dsel').classList.toggle('hide',MODE!=='pvp');reset()}
-const defS=()=>({dl:null,fl:0,bp:0,wc:0,lv:{},test:false,coins:0,login:'',inv:[],uid:1,own:null,star:{},cp:{},pill:300,pity:0,p10:0,pts:0,born:'',nd:'',lord:{n:'',f:'',l:1,e:0},d:{day:'',pvp:0,pull:0},tw:{exp:{f:0,end:false},eq:{f:0,end:false},gold:{f:0,end:false},frag:{f:0,end:false},harem:{f:0,end:false},hf:{f:0,end:false},gem:{f:0,end:false}},frag:{n:0,SR:0,SSR:0,UR:0,SP:0}});
+const defS=()=>({dl:null,fl:0,bp:0,wc:0,lv:{},test:false,coins:0,login:'',inv:[],uid:1,own:null,star:{},cp:{},pill:300,pity:0,p10:0,pts:0,born:'',nd:'',lord:{n:'',f:'',l:1,e:0},d:{day:'',pvp:0,pull:0},tw:{exp:{f:0,end:false},eq:{f:0,end:false},gold:{f:0,end:false},frag:{f:0,end:false},harem:{f:0,end:false},hf:{f:0,end:false},gem:{f:0,end:false}},frag:{n:0,M:0}});
 let S=(()=>{const d=defS();try{return Object.assign(d,JSON.parse(localStorage.getItem('sgSave')||'{}'))}catch(e){return d}})();
 const saveS=()=>{try{localStorage.setItem('sgSave',JSON.stringify(S))}catch(e){}cloudKick()};
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
@@ -3016,7 +3019,7 @@ function starReady(id){const st=S.star[id]||0;if(!S.own[id]||st>=MAXSTAR||(S.cp[
 const isDep=id=>pl.some(u=>u&&u.id===id)||(Array.isArray(S.dl)&&S.dl.includes(id));
 const heroDot=id=>!!S.own[id]&&(starReady(id)===2||(isDep(id)&&((typeof canLv==='function'&&canLv(id))||(typeof canBrk==='function'&&canBrk(id))||(typeof eqBetter==='function'&&!inHJ(id)&&eqBetter(id))||(typeof fsDot==='function'&&fsDot(id)))));
 const heroWhy=id=>{const r=[];if(starReady(id)===2)r.push('升星');if(isDep(id)){if(typeof canLv==='function'&&canLv(id))r.push('升級');if(typeof canBrk==='function'&&canBrk(id))r.push('突破');if(typeof eqBetter==='function'&&!inHJ(id)&&eqBetter(id))r.push('換裝');if(typeof fsDot==='function'&&fsDot(id))r.push('符石')}return r.slice(0,2).join('・')};
-const fragDot=()=>{try{const F=S.frag||{};return ['SR','SSR','UR'].some(k=>(F[k]||0)>=FSYN[k])}catch(e){return false}};
+const fragDot=()=>{try{return frg().M>=FSYN.M}catch(e){return false}};
 function lvCost(id,k){const o=S.lv[id]||{l:1,e:0};k=Math.min(k,maxLvOf(id)-o.l);if(k<=0)return 0;let c=-o.e;for(let j=0;j<k;j++)c+=NEED(o.l+j);return c}
 function migrate(){
  if(!S.v5&&S.own){S.v5=1;let rp=0,rc=0;for(const id of REMOVED){if(S.own[id]){rp+=lvSpent(id);rc+=(S.cp[id]||0)+starSpent(id)}delete S.own[id];delete S.lv[id];delete S.star[id];delete S.cp[id];if(S.brk)delete S.brk[id];(S.inv||[]).forEach(x=>{if(x.e===id)x.e=null});if(Array.isArray(S.dl))S.dl=S.dl.map(x=>x===id?null:x);if(S.hj&&S.hj.sl)S.hj.sl=S.hj.sl.map(x=>x===id?null:x)}S.pill=(S.pill||0)+rp;S.wc=(S.wc||0)+rc;if(S.frag&&S.frag.SP){S.frag.UR=(S.frag.UR||0)+S.frag.SP*3;S.frag.SP=0}if(rp||rc)S.v5msg=`武將名單調整：退還 🔮${rp.toLocaleString()}、🃏萬用卡 ${rc} 張`}
@@ -3267,12 +3270,12 @@ const SHOPI=[
  {k:'hg3',ic:'🎀',n:'綾羅綢緞',d:'後宮送禮（好感 +150）',p:80000,lim:3},
  {k:'hg4',ic:'🔮',n:'夜明珠',d:'後宮送禮（好感 +600）',p:300000,lim:1},{k:'qmj',ic:'📜',n:'奇謀竹簡 ×10',d:'解鎖、升星奇謀用',p:30000,lim:3},
  {k:'h_hfs',ic:'🐯',n:'虎符碎片 ×20',d:'升級虎符用',p:60000,lim:3},{k:'h_hfb',ic:'🧧',n:'虎符寶匣',d:'隨機 1 個虎符 Lv.1',p:200000,lim:1},{k:'h_gb1',ic:'💠',n:'寶石袋',d:'隨機 3 顆 Lv.1 寶石',p:50000,lim:3},{k:'h_gb3',ic:'💎',n:'高級寶石袋',d:'隨機 1 顆 Lv.3 寶石',p:150000,lim:2}];
-function buyItem(k){const x=SHOPI.find(i=>i.k===k);if(!x)return;dayCheck();S.d.sh=S.d.sh||{};const used=S.d.sh[k]||0;
- if(x.lim&&used>=x.lim){toast('今日購買次數已用完');return}if(S.coins<x.p){toast('金幣不足');return}S.coins-=x.p;if(x.lim)S.d.sh[k]=used+1;dtAdd('buy',1);let msg='購入 '+x.n;
- if(k.startsWith('h_')){if(k==='h_hfs')S.hfs=(S.hfs||0)+20;else if(k==='h_hfb'){const it=hfNew(hfRand(),1);msg=`開出【${HFD[it.k].n}】Lv.1`}else{const L=k==='h_gb3'?3:1,n=k==='h_gb3'?1:3,o=[];for(let i=0;i<n;i++){const g=gemNew(gemRand(),L);o.push(GEMD[g.k][0]+'寶石 Lv.'+L)}msg='獲得 '+o.join('、')}saveS();toast(msg);sfx('win');renderShop();render();return}
+function buyItem(k,Q){const x=SHOPI.find(i=>i.k===k);if(!x)return;dayCheck();S.d.sh=S.d.sh||{};const used=S.d.sh[k]||0;
+ if(x.lim&&used>=x.lim){if(!Q)toast('今日購買次數已用完');return}if(S.coins<x.p){if(!Q)toast('金幣不足');return}S.coins-=x.p;if(x.lim)S.d.sh[k]=used+1;dtAdd('buy',1);let msg='購入 '+x.n;
+ if(k.startsWith('h_')){if(k==='h_hfs')S.hfs=(S.hfs||0)+20;else if(k==='h_hfb'){const it=hfNew(hfRand(),1);msg=`開出【${HFD[it.k].n}】Lv.1`}else{const L=k==='h_gb3'?3:1,n=k==='h_gb3'?1:3,o=[];for(let i=0;i<n;i++){const g=gemNew(gemRand(),L);o.push(GEMD[g.k][0]+'寶石 Lv.'+L)}msg='獲得 '+o.join('、')}if(Q)return msg;saveS();toast(msg);sfx('win');renderShop();render();return}
  if(k==='pill1')S.pill+=1000;else if(k==='pill10')S.pill+=10000;else if(k==='pull1')S.bp=(S.bp||0)+1;else if(k==='pull10')S.bp=(S.bp||0)+10;else if(k==='wc')S.wc=(S.wc||0)+1;else if(k==='pill100')S.pill+=100000;else if(k==='wc5')S.wc=(S.wc||0)+5;else if(k==='pts10')S.pts=(S.pts||0)+10;else if(k==='lexp')msg=lordGain(200);else if(k==='bst5')S.bst=(S.bst||0)+5;else if(k==='hg1')hgf().g1+=10;else if(k==='hg2')hgf().g2+=5;else if(k==='hg3')hgf().g3+=1;else if(k==='hg4')hgf().g4+=1;else if(k==='qmj')qms().jian=(qms().jian||0)+10;
  else{const r=Math.random()*100,t=k==='box'?(r<50?1:r<85?2:r<98?3:4):k==='gbox'?(r<45?2:r<90?3:4):k==='sbox'?(r<60?4:r<95?5:6):((S.dpity||0)>=4||r<30?6:5),s=SLOTS[Math.floor(Math.random()*4)].k;S.inv.push({u:S.uid++,s,t,l:1,e:null});if(k==='dbox')S.dpity=t===6?0:(S.dpity||0)+1;msg=`開出 ${TIERS[t].n}品・${INAME[s][t]}（已放入背包）`}
- saveS();toast(msg);sfx('win');renderShop();render()}
+ if(Q)return msg;saveS();toast(msg);sfx('win');renderShop();render()}
 var BSELL=1,BSC=0;
 function autoEquip(){const seen=new Set(),order=[];const add=id=>{if(id&&S.own[id]&&!inHJ(id)&&!seen.has(id)){seen.add(id);order.push(id)}};
  pl.forEach(u=>u&&add(u.id));(S.dl||[]).forEach(add);H.filter(h=>S.own[h.id]).sort((a,b)=>powOf(b)-powOf(a)).forEach(h=>add(h.id));
@@ -3310,7 +3313,7 @@ function bagDetail(){const[t,k]=BAGSEL.split(':');let ic='',n='',body='',btn='';
  else if(t==='e'){const it=S.inv.find(z=>z.u===+k);if(!it)return '';const tr=TIERS[it.t],sl=SLN(it.s),mx=it.l>=MAXIL,cost=ucost(it);ic=eqIc(it.s,it.t,1)+`<div><button class="g" data-bgx="ugeq:${it.s}${it.t}" style="min-height:36px;font-size:14px;margin-top:4px">🎨 圖示圖鑑</button></div>`;n=`<span style="color:${tr.c}">${tr.n}品・${INAME[it.s][it.t]}</span>`;
   body=`<p class="bgc">Lv <b>${it.l}</b> / ${MAXIL}　${sl.s} <b>+${pct(ibonus(it))}</b>${mx?'':`（升級後 +${pct(ibonus({...it,l:it.l+1}))}）`}</p><div class="bgeq">裝備給：<select data-item="${it.u}"><option value="">未裝備</option>${H.filter(x=>S.own[x.id]).map(x=>`<option value="${x.id}" ${it.e===x.id?'selected':''}>${x.n}</option>`).join('')}</select></div>`;
   btn=`<button data-up="${it.u}" ${mx||S.coins<cost?'disabled':''}>${mx?'已滿級':'升級 💰'+cost.toLocaleString()}</button><button class="g" data-sell="${it.u}" ${it.e?'disabled':''}>出售 💰${sellv(it).toLocaleString()}</button>`}
- else if(t==='f'){ic=FRI[k];n=FRN[k];body=`<p class="bgc">持有 <b>${(frg()[k]||0).toLocaleString()}</b></p><p>名將塔掉落，可合成對應稀有度的武將，或分解成較低階碎片。</p>`;btn='<button data-bgx="frag">合成／分解</button>'}
+ else if(t==='f'){ic=FRI[k];n=FRN[k];body=`<p class="bgc">持有 <b>${(frg()[k]||0).toLocaleString()}</b></p><p>名將塔掉落。一般碎片可換成名將碎片，每 30 片名將碎片可合成任一武將。</p>`;btn='<button data-bgx="frag">合成／分解</button>'}
  else if(t==='h'){const x=H.find(z=>z.id===k);ic=`<span class="bgav" style="background-image:url(${ART[k]})"></span>`;n=x.n;body=`<p class="bgc">同名卡 <b>${S.cp[k]||0}</b> 張</p><p>升星時使用，不足的部分可用萬用卡代替。</p>`;btn=`<button data-bgx="hero:${k}">前往武將</button>`}
  else if(t==='g'){ic=GIFT[k].ic;n=GIFT[k].n;body=`<p class="bgc">持有 <b>${hgf()[k]||0}</b></p><p>送給紅顏可增加好感（每份 +${GIFT[k].x}，送她最愛的禮物 ×1.5）。</p>`;btn='<button data-bgx="harem">前往後宮</button>'}
  else if(t==='b'){const x=BEA.find(z=>z.id===k);ic=`<span class="bgav" style="background-image:url(${ART[k]})"></span>`;n=x.n+' 的信物';body=`<p class="bgc">持有 <b>${hfr()[k]||0}</b></p><p>紅顏塔掉落，用來招入與升星這位紅顏。</p>`;btn='<button data-bgx="harem">前往後宮</button>'}
@@ -3320,9 +3323,21 @@ function bagGo(a){const close=()=>{$('shop').classList.remove('on');BAGSEL=null}
  if(a==='hero'){close();$('bHeroes').click();return}if(a.startsWith('hero:')){close();openHero(a.slice(5));return}
  if(a==='gacha'){close();$('mGacha').click();return}if(a==='qm'){close();qmOpen();return}if(a==='frag'){close();FRBACK='bag';fragOpen();return}if(a==='harem'){close();$('mHarem').click();return}
  if(a==='shop'){BAGSEL=null;TAB='shop';$('shT').textContent='商城';renderShop();return}}
+/* 數量購買視窗 */
+function qtyBox(o){document.querySelectorAll('.qtyb').forEach(x=>x.remove());const d=document.createElement('div');d.className='bgp vmod qtyb';let n=1;
+ const draw=()=>{const mx=Math.max(0,o.max()),hv=o.have();n=Math.max(mx?1:0,Math.min(n,mx));const tot=o.price*n,ok=n>=1&&hv>=tot;
+  d.innerHTML=`<div class="bgpp"><h3>${o.title}</h3><p style="font-size:15px;line-height:1.55;text-align:center;margin:4px 0">${o.desc()}</p>
+  <div class="qrow"><button data-q="-">−</button><b class="qn">${n}</b><button data-q="+">＋</button></div>
+  <div class="qfast"><button data-q="1">×1</button><button data-q="10">×10</button><button data-q="mx">最大${mx?'（'+mx+'）':''}</button></div>
+  <p class="qtot">${o.unit} ${o.price.toLocaleString()} × ${n} ＝ <b style="color:${ok?'#ffd27a':'#ff6a5a'}">${o.unit} ${tot.toLocaleString()}</b><br><small>持有 ${o.unit} ${hv.toLocaleString()}${o.limTxt?'　'+o.limTxt():''}</small></p>
+  <div class="bgpb qbt"><button class="actgo" data-q="buy" ${ok?'':'disabled'}>${o.btn||'購買'}${n>1?' ×'+n:''}</button><button class="g" data-q="x">關閉</button></div>${o.msg?`<p class="sub" style="text-align:center;color:#7fe08a">${o.msg}</p>`:''}</div>`};
+ draw();d.onclick=e=>{const b=e.target.closest('[data-q]');if(e.target===d||(b&&b.dataset.q==='x')){d.remove();if(o.close)o.close();return}if(!b||b.disabled)return;const q=b.dataset.q,mx=o.max();
+  if(q==='-')n--;else if(q==='+')n++;else if(q==='1')n=1;else if(q==='10')n=10;else if(q==='mx')n=mx;else if(q==='buy'){o.msg=o.buy(n);sfx('claim');n=Math.min(n,Math.max(1,o.max()))}draw()};document.body.appendChild(d)}
 function shDetail(key){const[t,k]=key.split(':');let title,desc,price,ok,act;
- if(t==='i'){const x=SHOPI.find(i=>i.k===k);if(!x)return;const lim=x.lim?x.lim-((S.d.sh||{})[x.k]||0):1;title=`${x.ic} ${x.n}`;desc=x.d+(x.lim?`<br><small>今日剩 ${lim}/${x.lim}</small>`:'');price=x.p;ok=S.coins>=x.p&&lim>0;act=()=>buyItem(k)}
- else{const[sl,i]=k.split('|'),tr=TIERS[+i],sd=SLOTS.find(z=>z.k===sl);title=`${eqIc(sl,+i)} ${tr.n}品・${INAME[sl][+i]}`;desc=`${sd.s} +${pct(IBASE[sl][+i])}（滿級 +${pct(IBASE[sl][+i]*(1+.12*(MAXIL-1)))}）`;price=tr.p;ok=S.coins>=tr.p;act=()=>{if(S.coins<tr.p)return;S.coins-=tr.p;S.inv.push({u:S.uid++,s:sl,t:+i,l:1,e:null});dtAdd('buy',1);saveS();toast(`購入 ${INAME[sl][+i]}`);renderShop();render()}}
+ if(t==='i'){const x=SHOPI.find(i=>i.k===k);if(!x)return;dayCheck();const lim=()=>x.lim?x.lim-((S.d.sh||{})[x.k]||0):1e9;
+  qtyBox({title:`${x.ic} ${x.n}`,desc:()=>x.d,unit:'💰',price:x.p,have:()=>S.coins,max:()=>Math.min(lim(),Math.floor(S.coins/x.p)),limTxt:x.lim?()=>`今日剩 ${lim()}/${x.lim}`:null,
+   buy(n){const ms={};for(let i=0;i<n;i++){const m=buyItem(k,1);if(!m)break;ms[m]=(ms[m]||0)+1}saveS();renderShop();render();const L=Object.entries(ms);return L.length?(L.length>4?`購買 ${n} 次完成`:L.map(([m,c])=>c>1?m+' ×'+c:m).join('、')):''}});return}
+ else{const[sl,i]=k.split('|'),tr=TIERS[+i],sd=SLOTS.find(z=>z.k===sl);title=`${eqIc(sl,+i)} ${tr.n}品・${INAME[sl][+i]}`;desc=`${sd.s} +${pct(IBASE[sl][+i])}（滿級 +${pct(IBASE[sl][+i]*(1+.12*(MAXIL-1)))}）`;qtyBox({title,desc:()=>desc,unit:'💰',price:tr.p,have:()=>S.coins,max:()=>Math.floor(S.coins/tr.p),buy(n){let c=0;for(let j=0;j<n&&S.coins>=tr.p;j++){S.coins-=tr.p;S.inv.push({u:S.uid++,s:sl,t:+i,l:1,e:null});c++}if(c)dtAdd('buy',1);saveS();renderShop();render();return `購入 ${INAME[sl][+i]} ×${c}（已放入背包）`}});return}
  askBox(title,`${desc}<br><b style="color:#ffd27a">💰 ${price.toLocaleString()}</b>　<small>持有 ${S.coins.toLocaleString()}</small>`,ok?[['購買',act,'actgo'],['取消',()=>{},'g']]:[['金幣不足或今日已買完',()=>{},'g']])}
 let SHT='item',SHIC='grow';const SHCAT=[['grow','🔮 養成',/^(pill|lexp|bst|qmj)/],['pull','🎴 招募',/^(pull|wc|pts)/],['box','📦 寶箱',/^(box|gbox|sbox|dbox)$/],['hg','🌸 紅顏',/^hg\d/],['hf','🐯 符石',/^h_/]];function renderShop(){$('shCoin').textContent='💰 '+S.coins.toLocaleString();$('tShop').classList.toggle('on',TAB==='shop');$('tBag').classList.toggle('on',TAB==='bag');let h='';
  if(TAB==='shop'){h+=`<div class="sht2">${[['item','🎁 道具'],...SLOTS.map(sl=>[sl.k,sl.ic+' '+sl.n])].map(([k,n])=>`<button class="${SHT===k?'on':''}" data-sht="${k}">${n}</button>`).join('')}</div>`;if(SHT==='item'){if(!SHCAT.some(c=>c[0]===SHIC))SHIC='grow';h+=`<div class="hgk">${SHCAT.map(([k,n])=>`<button class="${SHIC===k?'on':''}" data-shic="${k}">${n}</button>`).join('')}</div>`;
@@ -3578,7 +3593,7 @@ const AMS=[[1100,'青銅',{coins:100000}],[1200,'白銀',{coins:200000,pill:2000
 const arBest=()=>Math.max(S.arBest||0,AR.me?AR.me.score:0);
 const arMsN=()=>AMS.filter(([sc])=>arBest()>=sc&&!(S.amcl||{})[sc]).length;
 function arMsHtml(){const b=arBest();return `<p class="sub">個人最高積分達到門檻即可領取段位獎勵（每段一次）。目前最高：<b>${b}</b></p>`+AMS.map(([sc,n,r])=>{const got=(S.amcl||{})[sc],ok=b>=sc;return `<div class="it" style="display:block"><div style="display:flex;justify-content:space-between;align-items:center"><b>${n}・${sc} 分</b>${got?'<span style="color:#7fe08a">✓ 已領取</span>':ok?`<button data-z="amc" data-s="${sc}">領取</button>`:'<span style="opacity:.6">尚未達成</span>'}</div><small style="display:block;opacity:.85">${MSTXT(r)}</small></div>`}).join('')}
-function arMsClaim(sc){const m=AMS.find(x=>x[0]===sc);if(!m||arBest()<sc||(S.amcl||{})[sc])return;S.amcl=S.amcl||{};S.amcl[sc]=1;const r=m[2],F=frg();if(r.coins)S.coins+=r.coins;if(r.pill)S.pill+=r.pill;if(r.wc)S.wc=(S.wc||0)+r.wc;if(r.bst)S.bst=(S.bst||0)+r.bst;if(r.UR)F.UR+=r.UR;if(r.SP)F.UR+=r.SP;saveS();sfx('claim');toast(`已領取${m[1]}段位獎勵：${MSTXT(r)}`);render();renderArena()}
+function arMsClaim(sc){const m=AMS.find(x=>x[0]===sc);if(!m||arBest()<sc||(S.amcl||{})[sc])return;S.amcl=S.amcl||{};S.amcl[sc]=1;const r=m[2],F=frg();if(r.coins)S.coins+=r.coins;if(r.pill)S.pill+=r.pill;if(r.wc)S.wc=(S.wc||0)+r.wc;if(r.bst)S.bst=(S.bst||0)+r.bst;if(r.UR)F.M+=Math.round(r.UR*.75);if(r.SP)F.M+=Math.round(r.SP*.5);saveS();sfx('claim');toast(`已領取${m[1]}段位獎勵：${MSTXT(r)}`);render();renderArena()}
 $('mArena').onclick=()=>arenaOpen();
 const BART=new Proxy({},{get:(o,id)=>typeof id==='string'?[artOf(id,false),artOf(id,true)]:undefined});
 /* ---- 後宮（紅顏）---- */
@@ -3650,7 +3665,7 @@ function brkHtml(id){const b=(S.brk||{})[id]||0,lv=LV(id);let h=`突破 <b>${b}/
 function brkUp(id){S.brk=S.brk||{};const b=S.brk[id]||0;if(b>=BRKMAX||LV(id)<maxLvOf(id)||(S.bst||0)<BRK_S[b]||S.coins<BRK_G[b])return;S.bst-=BRK_S[b];S.coins-=BRK_G[b];S.brk[id]=b+1;saveS();if(!busy)refreshPl();sfx('win');toast(`${hname(id)} 突破到第 ${b+1} 階！`);renderHero();render()}
 /* ---- 爬塔排行榜・全服里程碑 ---- */
 const MS=[[100,{coins:200000,pill:50000}],[200,{coins:500000,pill:150000,wc:3}],[350,{coins:1000000,bst:10,UR:10}],[500,{coins:2000000,bst:20,SP:10}],[750,{coins:3000000,bst:30,SP:20}],[1000,{coins:5000000,bst:50,SP:30}],[1250,{coins:6000000,bst:60,SP:40}],[1500,{coins:8000000,bst:80,SP:50}],[1750,{coins:10000000,bst:100,SP:60}],[2000,{coins:20000000,bst:150,SP:100}]];
-const MSTXT=r=>[r.coins&&'💰'+r.coins.toLocaleString(),r.pill&&'🔮'+r.pill.toLocaleString(),r.wc&&'🃏萬用卡 '+r.wc,r.bst&&'💎突破石 '+r.bst,r.UR&&'🟠傳說碎片 '+r.UR,r.SP&&'🟠傳說碎片 '+r.SP].filter(Boolean).join('、');
+const MSTXT=r=>[r.coins&&'💰'+r.coins.toLocaleString(),r.pill&&'🔮'+r.pill.toLocaleString(),r.wc&&'🃏萬用卡 '+r.wc,r.bst&&'💎突破石 '+r.bst,r.UR&&'🟠名將碎片 '+Math.round(r.UR*.75),r.SP&&'🟠名將碎片 '+Math.round(r.SP*.5)].filter(Boolean).join('、');
 var HUBV='main',TRK={rank:[],ms:[],max:0,msg:''},TST=0;
 const towerFloors=()=>{const o={};TWALL.forEach(k=>{const T=S.tw[k];o[k]=T.done?NF:T.f});o.best=Math.max(o.exp,o.eq,o.gold,o.frag,o.harem,o.hf,o.gem);return o};
 function towerSync(){if(!SB||!ME)return;clearTimeout(TST);TST=setTimeout(async()=>{try{const o=towerFloors();await SB.from('tower_progress').upsert({user_id:ME.id,name:(S.lord.n||'無名').slice(0,8),...o,updated_at:new Date().toISOString()});
@@ -3662,32 +3677,31 @@ function msMig(){const m=S.mcl;if(!m)return;const ks=Object.keys(m).filter(k=>/^
 const mclHas=(tw,fl)=>!!(S.mcl||{})[tw+':'+fl];
 const msClaimable=tw=>{msMig();let n=0;for(const t of (tw?[tw]:TOWERS))for(const[fl]of MS)if(msReached(t,fl)&&!mclHas(t,fl))n++;return n};
 function msClaim(tw,fl){const m=MS.find(x=>x[0]===fl);if(!m||!msReached(tw,fl)||mclHas(tw,fl))return;S.mcl=S.mcl||{};S.mcl[tw+':'+fl]=1;const r=m[1],F=frg();
- if(r.coins)S.coins+=r.coins;if(r.pill)S.pill+=r.pill;if(r.wc)S.wc=(S.wc||0)+r.wc;if(r.bst)S.bst=(S.bst||0)+r.bst;if(r.UR)F.UR+=r.UR;if(r.SP)F.UR+=r.SP;
+ if(r.coins)S.coins+=r.coins;if(r.pill)S.pill+=r.pill;if(r.wc)S.wc=(S.wc||0)+r.wc;if(r.bst)S.bst=(S.bst||0)+r.bst;if(r.UR)F.M+=Math.round(r.UR*.75);if(r.SP)F.M+=Math.round(r.SP*.5);
  saveS();sfx('claim');toast(`已領取${TKN[tw]}第 ${fl} 層里程碑：${MSTXT(r)}`);render();renderHub()}
 /* ---- 爬塔分頁・名將碎片 ---- */
-const FRK=['n','SR','SSR','UR','SP'],FRN={n:'一般碎片',SR:'稀有碎片',SSR:'史詩碎片',UR:'傳說碎片',SP:'神話碎片'},FRI={n:'⚪',SR:'🔷',SSR:'🟣',UR:'🟠',SP:'🌟'};
-const FSYN={SR:20,SSR:30,UR:40,SP:60},FUP={SR:['n',5],SSR:['SR',3],UR:['SSR',3],SP:['UR',3]},DECV={N:1,R:2,Y:3,SR:5};
-const frg=()=>{if(!S.frag)S.frag={n:0,SR:0,SSR:0,UR:0,SP:0};return S.frag};
+const FRK=['n','M'],FRN={n:'一般碎片',M:'名將碎片'},FRI={n:'⚪',M:'🟠'};
+const FSYN={M:30},FUP={M:['n',4]},DECV={N:1,R:2,Y:3,SR:5};
+const frg=()=>{if(!S.frag)S.frag={n:0,M:0};const F=S.frag;if(F.M==null){F.M=Math.round((F.SR||0)*1.5+(F.SSR||0)+(F.UR||0)*.75+(F.SP||0)*.5);delete F.SR;delete F.SSR;delete F.UR;delete F.SP;try{saveS()}catch(e){}}F.n=F.n||0;return F};
 const fragTier=f=>f<150?'SR':f<400?'SSR':'UR';
 function fragReward(f,boss,win){const F=frg(),g=Math.round((2+Math.floor(f/20))*(win?1:.25))*(boss&&win?2:1);F.n+=g;let t='',c=0;
- if(win){t=fragTier(f);c=Math.min(5,1+Math.floor(f/250))*(boss?2:1);F[t]+=c}
- return `${FRI.n} 一般碎片 +${g}`+(c?`<br>${FRI[t]} ${FRN[t]} +${c}`:'')+'<br>（到「🗼 爬塔 → 🧩 名將碎片」合成武將）'}
-let FTAB='syn',FSR='SR',FRMSG='',FSF='全';
+ if(win){t='M';c=Math.max(1,Math.round(Math.min(5,1+Math.floor(f/250))*(boss?2:1)*(f<150?1.5:f<400?1:.75)));F.M+=c}
+ return `${FRI.n} 一般碎片 +${g}`+(c?`<br>${FRI.M} 名將碎片 +${c}`:'')+'<br>（到「🗼 爬塔 → 🧩 名將碎片」合成武將）'}
+let FTAB='syn',FSR='M',FRMSG='',FSF='全';
 let FRBACK='',HJBACK='';
 function decEx(id){let need=0;for(let i=S.star[id]||0;i<MAXSTAR;i++)need+=STAR_COST[i];return Math.max(0,(S.cp[id]||0)-need)}
-function fragOpen(){if(busy&&!AUTOC)return;FRMSG='';{const F=frg(),rd=['SR','SSR','UR'].filter(k=>(F[k]||0)>=FSYN[k]);if(rd.length){FTAB='syn';if(!rd.includes(FSR))FSR=rd[0]}}$('fragv').classList.add('on');renderFrag()}
+function fragOpen(){if(busy&&!AUTOC)return;FRMSG='';{const F=frg();if(F.M>=FSYN.M)FTAB='syn';FSR='M'}$('fragv').classList.add('on');renderFrag()}
 function renderFrag(){const F=frg();let h=`<div class="shh"><b>🧩 名將碎片</b><button data-q="x" style="flex:none;width:44px;padding:6px 0">✕</button></div>
  <div class="sub" style="font-size:13px">${FRK.map(k=>`${FRI[k]} ${FRN[k]} <b>${F[k].toLocaleString()}</b>`).join('　')}</div>
  <div class="btns" style="margin:8px 0">${[['syn','合成名將'],['up','碎片升級'],['dec','分解武將']].map(([k,n])=>`<button class="g${FTAB===k?' on':''}" data-qt="${k}"${k==='syn'&&fragDot()?' data-dot':''} style="position:relative">${n}</button>`).join('')}</div>`;
- if(FTAB==='syn'){h+=`<p class="sub">任一種碎片都能合成任一武將（稀有 ${FSYN.SR}／史詩 ${FSYN.SSR}／傳說 ${FSYN.UR} 片），已擁有的變成同名卡。</p>
-  <div class="btns" style="margin:6px 0">${['SR','SSR','UR'].map(k=>`<button class="g${FSR===k?' on':''}" data-qr="${k}" style="color:${RAR[k].c};position:relative"${(F[k]||0)>=FSYN[k]?' data-dot':''}>${RAR[k].n}</button>`).join('')}</div>
+ if(FTAB==='syn'){h+=`<p class="sub">每 ${FSYN.M} 片名將碎片可合成任一武將，已擁有的變成同名卡。</p>
   <div class="hjft">${['全','魏','蜀','吳','神','魔'].map(f=>`<button data-qf="${f}" class="${FSF===f?'on':''}" style="${f!=='全'?`--fc:${FC[f]}`:''}">${f}</button>`).join('')}</div>
   <div class="sub">${FRI[FSR]} ${FRN[FSR]}：<b>${F[FSR]}</b> / 每位 ${FSYN[FSR]}</div><div id="fsg">`;const FI=[];
   H.filter(x=>FSF==='全'||x.f===FSF).sort((a,b)=>'魏蜀吳神魔'.indexOf(a.f)-'魏蜀吳神魔'.indexOf(b.f)||!!S.own[a.id]-!!S.own[b.id]).forEach(x=>{const own=!!S.own[x.id],st=S.star[x.id]||0;
    FI.push(`<div style="text-align:center;font-size:11px"><div class="cwr"><div class="cw" data-id="${x.id}"></div></div><div style="margin-top:3px">${own?'★'+st+'・同名卡 '+(S.cp[x.id]||0):'未擁有'}</div><button data-qs="${x.id}" class="${F[FSR]>=FSYN[FSR]?'qsok':''}" style="width:100%;margin-top:3px;padding:5px 0" ${F[FSR]>=FSYN[FSR]?'':'disabled'}>合成</button></div>`)});
   h+=pager(chunk(FI,6).map(c=>c.join('')),'fpg','frag'+FSR+FSF)+'</div>'}
- else if(FTAB==='up'){h+='<p class="sub">低階碎片可以升級成高一階的碎片。</p>';
-  ['SR','SSR','UR'].forEach(k=>{const[fr,n]=FUP[k],mx=Math.floor(F[fr]/n);h+=`<div class="it"><div class="in" style="flex:1"><b>${n} ${FRN[fr]} → 1 ${FRN[k]}</b><small style="display:block;opacity:.8">目前 ${FRI[fr]} ${F[fr].toLocaleString()}，最多可換 ${mx.toLocaleString()} 片</small></div><button data-qu="${k}" data-n="1" ${mx>=1?'':'disabled'}>×1</button><button data-qu="${k}" data-n="10" ${mx>=10?'':'disabled'}>×10</button><button class="g" data-qu="${k}" data-n="all" ${mx>=1?'':'disabled'}>全部</button></div>`})}
+ else if(FTAB==='up'){h+='<p class="sub">一般碎片可以換成名將碎片。</p>';
+  ['M'].forEach(k=>{const[fr,n]=FUP[k],mx=Math.floor(F[fr]/n);h+=`<div class="it"><div class="in" style="flex:1"><b>${n} ${FRN[fr]} → 1 ${FRN[k]}</b><small style="display:block;opacity:.8">目前 ${FRI[fr]} ${F[fr].toLocaleString()}，最多可換 ${mx.toLocaleString()} 片</small></div><button data-qu="${k}" data-n="1" ${mx>=1?'':'disabled'}>×1</button><button data-qu="${k}" data-n="10" ${mx>=10?'':'disabled'}>×10</button><button class="g" data-qu="${k}" data-n="all" ${mx>=1?'':'disabled'}>全部</button></div>`})}
  else{const L=H.filter(x=>decEx(x.id)>0),tot=L.reduce((a,x)=>a+decEx(x.id)*5,0);
   h+=`<p class="sub">只能分解「升到滿星也用不完」的多餘同名卡（不會刪掉武將本身），每張可得 5 一般碎片。</p>
   <div class="btns" style="margin:6px 0"><button data-qd="all" ${L.length?'':'disabled'}>一鍵分解全部（+${tot.toLocaleString()} 一般碎片）</button></div>`;
@@ -3954,10 +3968,10 @@ $('wbBody').onclick=async e=>{const b=e.target.closest('[data-w]');if(!b)return;
  if(w==='buy'){const d=wbDay(),c=wbBuyCost(d.bought);if(d.bought>=WBBUYMAX)return;askBox('購買討伐次數',`花費 💰${c.toLocaleString()} 購買 1 次？`,[['購買',()=>{if(S.coins<c){toast('金幣不足');return}S.coins-=c;d.bought++;saveS();renderWB()}],['取消',()=>{}]]);return}
  if(w==='ms'){const i=+b.dataset.i,st=WB.st;S.wbms=S.wbms||{};const c=S.wbms[st.seq]=S.wbms[st.seq]||[];if(c.includes(i)||!WB.me||WB.me.dmg<st.maxhp*WBMS[i][0])return;c.push(i);const r=wbGive(WBMS[i][1]);sfx('claim');toast('領取：'+r);renderWB();return}
  if(w==='claim'){const st=WB.st;S.wbc=S.wbc||{};if(S.wbc[st.seq]||!WB.me||!st.killed)return;S.wbc[st.seq]=1;const r1=wbGive({eq5:1,wbs:30,hfbox:1}),r2=wbGive(wbRankRw(WB.me.rank));if(WB.me.rank<=3)wbGive({title:wbOf(WBK[st.seq%24])[1]+'・第 '+WB.me.rank+' 名'});sfx('claim');askBox('討伐獎勵',`擊殺獎：${r1}<br>排行獎（第 ${WB.me.rank} 名）：${r2}`,[['好',()=>{}]]);renderWB();return}
- if(w==='sd'){const i=+b.dataset.i,x=WBSHOP[i],got=x.once&&(S.wbsb||{})[x.k],ok=(S.wbs||0)>=x.p&&!got;askBox(`${x.ic} ${x.n}`,`${x.d}<br><b style="color:#ffb07a">🔥 ${x.p}</b>　<small>持有 ${S.wbs||0}</small>`,got?[['已購買',()=>{},'g']]:ok?[['兌換',()=>{wbSB(i)},'actgo'],['取消',()=>{},'g']]:[['精魄不足',()=>{},'g']]);return}
+ if(w==='sd'){const i=+b.dataset.i,x=WBSHOP[i],got=x.once&&(S.wbsb||{})[x.k],ok=(S.wbs||0)>=x.p&&!got;if(!x.once){qtyBox({title:`${x.ic} ${x.n}`,desc:()=>x.d,unit:'🔥',price:x.p,have:()=>S.wbs||0,max:()=>Math.floor((S.wbs||0)/x.p),btn:'兌換',buy(n){let c=0;for(let j=0;j<n;j++){if((S.wbs||0)<x.p)break;wbSB(i,1);c++}renderWB();return `兌換 ${x.n} ×${c}`}});return}askBox(`${x.ic} ${x.n}`,`${x.d}<br><b style="color:#ffb07a">🔥 ${x.p}</b>　<small>持有 ${S.wbs||0}</small>`,got?[['已購買',()=>{},'g']]:ok?[['兌換',()=>{wbSB(i)},'actgo'],['取消',()=>{},'g']]:[['精魄不足',()=>{},'g']]);return}
  if(w==='sb'){wbSB(+b.dataset.i);return}
 if(w==='ug'){ugcOpen('wb_'+b.dataset.k,'scene');return}};
-function wbSB(i){{const x=WBSHOP[i];if(!x||(S.wbs||0)<x.p)return;S.wbsb=S.wbsb||{};if(x.once&&S.wbsb[x.k])return;S.wbs-=x.p;let r='';if(x.k==='hfs')r=wbGive({hfs:30});else if(x.k==='box')r=wbBox();else{r=wbGive({ex:x.k.slice(2)});S.wbsb[x.k]=1}saveS();sfx('claim');toast('獲得：'+r);renderWB();return}}
+function wbSB(i,Q){{const x=WBSHOP[i];if(!x||(S.wbs||0)<x.p)return;S.wbsb=S.wbsb||{};if(x.once&&S.wbsb[x.k])return;S.wbs-=x.p;let r='';if(x.k==='hfs')r=wbGive({hfs:30});else if(x.k==='box')r=wbBox();else{r=wbGive({ex:x.k.slice(2)});S.wbsb[x.k]=1}saveS();if(Q)return r;sfx('claim');toast('獲得：'+r);renderWB();return}}
 $('hHJ').onclick=()=>{$('heroes').classList.remove('on');HJBACK='heroes';hjOpen()};
 /* 歸零 */
 const lvSpent=id=>{const o=S.lv[id]||{l:1,e:0};let c=o.e;for(let l=1;l<o.l;l++)c+=NEED(l);return c};
@@ -3972,7 +3986,7 @@ function rstHtml(id){const c=lvSpent(id),st=S.star[id]||0,sc=starSpent(id);
 function navDots(){const d=(id,on)=>{const e=$(id);if(e){if(on)e.setAttribute('data-dot','');else e.removeAttribute('data-dot')}};try{const td=today();
  d('mHarem',BEA.some(x=>{const b=(S.hrm||{})[x.id];return (b&&b.chat!==td)||beaReady(x)}));d('bHeroes',H.some(h=>heroDot(h.id)));
  d('mGacha',(typeof newLeft==='function'&&newLeft())||(typeof ptsReady==='function'&&ptsReady()));d('mTower',typeof msClaimable==='function'&&msClaimable()>0);
- const F=S.frag||{};d('sFrag',['SR','SSR','UR'].some(k=>(F[k]||0)>=FSYN[k]));
+ d('sFrag',fragDot());
  ['mPvp','mTower'].forEach(id=>$(id).classList.toggle('on',(id==='mPvp')===(MODE==='pvp')))}catch(e){}navDots2()}
 $('sHJ').onclick=()=>hjOpen();$('mQM').onclick=()=>qmOpen();qmBind();dtBind();idleBind();ugcBind();ugcRecalc();setTimeout(ugcLoadTop,1500);setTimeout(styleLoad,1200);setInterval(()=>{if(!busy)ugcLoadTop()},600000);$('cDT').onclick=()=>{if(!busy)dtOpen()};$('cIdle').onclick=()=>{if(!busy)idleOpen()};setInterval(navDots2,30000);$('sFrag').onclick=()=>fragOpen();
 document.querySelectorAll('.pfb').forEach(g=>g.onclick=e=>{const b=e.target.closest('button');if(!b||!b.dataset.pf)return;PF=b.dataset.pf;render();if($('form').classList.contains('on'))renderForm()});
@@ -4195,7 +4209,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261102b';
+const CVER='20261102c';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}try{FAME=JSON.parse(localStorage.getItem('sgFame')||'null')}catch(e){}fameDraw();cityImgs();cityBind();{let n=0;const go=()=>{cityLayout();const so=document.querySelector('.csoc');if((so&&so.offsetHeight)||n++>30)$('cBlds').classList.add('rdy');else requestAnimationFrame(go)};go()}try{document.fonts.ready.then(()=>cityLayout())}catch(e){}
  let wasC=document.body.classList.contains('city');new MutationObserver(()=>{const c=document.body.classList.contains('city');if(c&&!wasC){const B=$('cBlds');B.classList.remove('rdy');requestAnimationFrame(()=>{cityLayout();requestAnimationFrame(()=>B.classList.add('rdy'))})}wasC=c}).observe(document.body,{attributes:true,attributeFilter:['class']});
@@ -4432,11 +4446,11 @@ function recBind(){$('rcBody').onchange=e=>{const t=e.target;if(t.dataset.tq){co
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261102c',d:'11/02',t:['商城與精魄商店可以選數量一次買：−／＋、×1、×10、最大，即時顯示總價，購買和關閉按鈕並排在數量下方，買完會留在視窗可以再買','名將碎片簡化：稀有、史詩、傳說、神話四種合併成「名將碎片」，每 30 片合成任一武將；舊碎片自動換算（稀有 ×1.5、史詩 ×1、傳說 ×0.75、神話 ×0.5）','一般碎片 4 片可換 1 片名將碎片；名將塔改掉名將碎片']},
  {v:'20261102b',d:'11/02',t:['武將卡的「陣」「📖」標示移到右側，不再擋到名字','戰鬥卡片的星數移到右下角，血條縮短，不再互相遮擋']},
  {v:'20261102a',d:'11/02',t:['一鍵爬塔不再限制層數，351 層以上也能一鍵；謀略關會自動排推薦陣容，沒有符合的武將才停下','修正塔圖左右換塔後，下方按鈕還顯示上一座塔狀態的問題','武將列表：可突破的武將也會提示（上陣顯示紅點，未上陣顯示灰色「突破」），灰色提示放大並排到前面','武將列表：上陣武將標示「陣」、豪傑書槽位的武將標示 📖']},
  {v:'20261101l',d:'11/01',t:['七座塔的劇本錯開：同一層在不同塔會是不同劇本，核心敵人也會換成另一組武將','武將列表上方新增「⚗️ 試煉」按鈕，直接進入試煉場','武將卡上的提示改成短字（升級、升星、換裝、符石），不再擋到名字']},
- {v:'20261101k',d:'11/01',t:['爬塔改成「劇本章節」：51 層起每 10 層一個主題（不死惡來、無雙降臨、鐵壁藏刀、術法壓制、生生不息、影中刺客、冰封之陣、烈火焚城、疾風之軍、禁療死地），每章有固定的核心敵人與明確的破解方法，第 10 層是關主；10 種劇本輪流出現、逐輪變強','前 50 層改為新手篇：不再有特殊限制，每章附上小提示','出征前顯示「本章劇本」卡：敵方特色、💡 破解提示、一鍵推薦破解陣容','同一層失敗 3 次後可呼叫援軍：敵人生命每次 −10%，最多 −30%，過關後恢復','修正部分樓層敵人沒有出現的問題','布陣下方待選武將可以左右滑動、分頁選擇']},
- {v:'20261101j',d:'11/01',t:['蜀國加強：陣營特性連擊機率提高（上限 25%→35%），蜀 4 人起所有傷害 +15%','廖化（190%＋破綻）、關平（300%＋破綻）、馬岱（170%，殘血 ×2）、張星彩（165%，恫嚇 45%）、簡雍（120%，沉默 40%）、徐庶（300%）、黃忠（320%）技能數值提高','模擬結果：蜀國隨機陣容勝率約 25%→45%，五虎追擊維持約 93%']}];
+ {v:'20261101k',d:'11/01',t:['爬塔改成「劇本章節」：51 層起每 10 層一個主題（不死惡來、無雙降臨、鐵壁藏刀、術法壓制、生生不息、影中刺客、冰封之陣、烈火焚城、疾風之軍、禁療死地），每章有固定的核心敵人與明確的破解方法，第 10 層是關主；10 種劇本輪流出現、逐輪變強','前 50 層改為新手篇：不再有特殊限制，每章附上小提示','出征前顯示「本章劇本」卡：敵方特色、💡 破解提示、一鍵推薦破解陣容','同一層失敗 3 次後可呼叫援軍：敵人生命每次 −10%，最多 −30%，過關後恢復','修正部分樓層敵人沒有出現的問題','布陣下方待選武將可以左右滑動、分頁選擇']}];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
 function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${pager(L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`),'vpg')}</div>
