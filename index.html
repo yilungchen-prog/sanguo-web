@@ -17,7 +17,7 @@
 .ppd{grid-template-columns:repeat(6,1fr)!important;gap:4px!important}.ppd button{min-height:38px!important;font-size:14px!important;padding:2px!important;white-space:nowrap}
 .ppr{font-size:14px!important;padding:3px 0!important;line-height:1.35!important}.ppk{padding:8px 12px!important;margin:6px 0!important}
 #ppB{padding-bottom:110px}
-.rcgw .rcg{grid-template-columns:22px repeat(3,minmax(0,min(92px,calc((100vh - 400px) / 4))))}#recv .pgw section{max-height:calc(100vh - 360px);overflow-y:auto}
+.rcgw .rcg{grid-template-columns:22px repeat(3,minmax(0,min(92px,calc((100vh - 480px) / 3.4))))}#recv .pgw section{max-height:calc(100vh - 360px);overflow-y:auto}
 .ov#ctv{position:fixed;inset:0;z-index:70;background:#0b0f10;display:none;overflow:hidden}#ctv.on{display:block}
 .czp{max-width:480px;margin:0 auto;height:100vh;height:100dvh;box-sizing:border-box;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 6px) 10px 0}
 .czhero{position:relative;flex:0 0 auto;height:clamp(120px,calc(100vh - 560px),260px);border-radius:14px;background:radial-gradient(ellipse at 30% 40%,#3a2a1a,#120d0a);overflow:hidden;border:1px solid #c9b07a44}.czimg{position:absolute;left:50%;transform:translateX(-50%);top:6px;bottom:6px;aspect-ratio:3/4;border-radius:10px;background:center/cover;box-shadow:0 0 24px #ffc23a66;border:2px solid #ffd27a88}
@@ -72,6 +72,13 @@
 .pup{position:absolute;right:4px;top:4px;font-style:normal;font-size:12px;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;background:#555c;color:#ddd;border:1px solid #999;z-index:3}
 .hnote{display:block;font-size:11px;opacity:.7;font-weight:400}.pillno{margin-top:8px;padding:8px;border-radius:10px;background:#5a1a1022;border:1px solid #c0392b88;color:#ffb0a0;font-size:14px;display:flex;align-items:center;gap:8px;justify-content:space-between}.pillno button{flex:none!important;width:auto!important;padding:6px 12px!important;min-height:0!important}
 button[data-dot]:not(.ccir):not(.cic):not(.cmed):not(.cfame):not(#nvBar):not(.tchip){position:relative}
+#cBlds .ccir{transition:opacity .25s,transform .15s,left .3s,top .3s,width .3s,height .3s}
+.trf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px}.trf select{width:100%;min-width:0}.trf label{display:flex;flex-direction:column;font-size:12px;opacity:.95;gap:2px}.trf select{background:#2a2418;color:#ffe9b0;border:1px solid #c9b07a88;border-radius:8px;padding:6px;font-size:13px}
+.trp{position:relative;height:28px;border-radius:14px;background:#0008;border:1px solid #c9b07a66;margin:12px 0;overflow:hidden}.trp i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#c9a227,#ffd27a)}.trp span{position:relative;display:block;text-align:center;line-height:28px;font-weight:900;color:#fff;text-shadow:0 1px 2px #000}
+.trs{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 6px;font-size:15px}.trs b.w{color:#7fe08a}.trs b.l{color:#ff7a6a}.trs span b{color:#ffd27a;font-size:18px}
+.trt{font-size:12px}.trh,.trr{display:grid;grid-template-columns:4.2em 1.6fr 1fr 1fr 1fr 2.4em;gap:4px;align-items:center;padding:4px 2px;border-bottom:1px solid #ffffff14}.trh{opacity:.7}.trr span:nth-child(2){position:relative}.trr span:nth-child(2) i{position:absolute;left:0;top:50%;height:6px;margin-top:5px;background:#5a9ad0;border-radius:3px}.trr.low{color:#ff9a8a}
+.rctabs{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:5px!important}.rctabs button{font-size:14px!important;padding:6px 2px!important;white-space:nowrap}
+.rcf{margin:4px 0 2px;display:grid!important;grid-template-columns:repeat(7,1fr);gap:4px}.rcf button{padding:4px 0!important;min-height:34px!important;font-size:14px!important;white-space:nowrap}.rcst{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;margin:4px 0;color:#ffe9b0}.rcst b{color:#7fe08a;font-size:16px}
 </style></head><body>
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
@@ -1025,7 +1032,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101h</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101i</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -1736,7 +1743,15 @@ const BONDS=[
  {k:'dz',n:'東吳重臣',ids:['zhangzhao','zhugejin'],min:2,t:'全隊減傷 +5%'},
  {k:'nm',n:'南蠻夫妻',ids:['menghuo','zhurong'],min:2,t:'兩人生命 +10%'},
  {k:'fw',n:'方外仙人',ids:['zuoci','yuji','guanlu'],min:2,t:'每多 1 人，成員天威機率 +5%'},
- {k:'yj',n:'袁家兄弟',ids:['yuanshao','yuanshu'],min:2,t:'兩人生命 +10%'}];
+ {k:'yj',n:'袁家兄弟',ids:['yuanshao','yuanshu'],min:2,t:'兩人生命 +10%'},
+ {k:'jzh',n:'荊州忠義',ids:['guanyu','guanping','liaohua'],min:2,t:'成員攻擊與生命各 +8%'},
+ {k:'shc',n:'蜀漢文臣',ids:['zhugeliang','maliang','jianyong'],min:2,t:'成員治療 +15%，全隊減傷 +3%'},
+ {k:'jds',n:'江東宿將',ids:['chengpu','zhoutai','xusheng'],min:2,t:'成員減傷 +8%；3 人時全隊減傷再 +4%'},
+ {k:'sjs',n:'神將降世',ids:['guan','shenzhuge'],min:2,t:'兩人攻擊 +10%，開場 +30 怒氣'},
+ {k:'xlj',n:'西涼舊將',ids:['pangde','mateng'],min:2,t:'兩人攻擊 +10%'},
+ {k:'xzr',n:'三讓徐州',ids:['taoqian','liubei'],min:2,t:'陶謙生命 +15%，劉備治療 +15%'},
+ {k:'smf',n:'司馬夫婦',ids:['simayi','zhangchunhua'],min:2,t:'兩人攻擊 +10%'},
+ {k:'jzj',n:'冀州上將',ids:['panfeng','yuanshao'],min:2,t:'兩人生命 +10%、攻擊 +5%'}];
 function bondsOf(arr){const ids=arr.filter(Boolean).map(u=>u.id);const on=[];for(const b of BONDS){const n=b.ids.filter(i=>ids.includes(i)).length;if(n>=b.min)on.push({...b,c:n})}return on.slice(0,3)}
 const bondOn=(u,k)=>!!(u&&u.X&&u.X.bd&&u.X.bd[k]);
 function applyBonds(arr){const on=bondsOf(arr),us=arr.filter(Boolean);
@@ -1761,7 +1776,14 @@ function applyBonds(arr){const on=bondsOf(arr),us=arr.filter(Boolean);
    case 'jf':mem.forEach(u=>u.cr=(u.cr||0)+.08);break;
    case 'dz':us.forEach(u=>u.rd=(u.rd||0)+.05);break;
    case 'nm':case 'yj':mem.forEach(u=>hpUp(u,.1));break;
-   case 'fw':mem.forEach(u=>u.X.twB=(u.X.twB||0)+.05*b.c);break}}
+   case 'fw':mem.forEach(u=>u.X.twB=(u.X.twB||0)+.05*b.c);break;
+   case 'jzh':mem.forEach(u=>{u.atk*=1.08;hpUp(u,.08)});break;
+   case 'shc':mem.forEach(u=>u.hb=(u.hb||0)+.15);us.forEach(u=>u.rd=(u.rd||0)+.03);break;
+   case 'jds':mem.forEach(u=>u.rd=(u.rd||0)+.08);if(b.c>=3)us.forEach(u=>u.rd=(u.rd||0)+.04);break;
+   case 'sjs':mem.forEach(u=>{u.atk*=1.1;u.rage+=30});break;
+   case 'xlj':case 'smf':mem.forEach(u=>u.atk*=1.1);break;
+   case 'xzr':mem.forEach(u=>{if(u.id==='taoqian')hpUp(u,.15);else u.hb=(u.hb||0)+.15});break;
+   case 'jzj':mem.forEach(u=>{hpUp(u,.1);u.atk*=1.05});break}}
  us.forEach(u=>{u.atk=Math.round(u.atk);u.spd=Math.round(u.spd)})}
 
 const SKSL={tal:'天賦',ex:'絕技',ps:'被動',rg:'怒氣'};
@@ -3096,7 +3118,7 @@ async function mailClick(e){const b=e.target.closest('[data-m]');if(!b||b.disabl
  if(k==='o'){const m=MAIL.list.find(x=>x.id===+b.dataset.i);if(!m)return;askBox(esc(m.title),`<div style="text-align:left;font-size:15px;line-height:1.6">${esc(m.body||'')}</div><div style="margin-top:8px;color:#ffd27a;font-weight:900">${rwTxt(m.reward||{})}</div>`,m.claimed?[['已領取',()=>{},'g']]:[['領取',async()=>{const r=await mailClaim(m.id);if(r){sfx('claim');toast('獲得 '+rwTxt(r));mailDraw();mailDot()}},'actgo'],['稍後',()=>{},'g']]);return}
  if(k==='all'){const L=MAIL.list.filter(m=>!m.claimed);const got=[];for(const m of L){const r=await mailClaim(m.id);if(r)got.push(rwTxt(r))}if(got.length){sfx('claim');askBox('一鍵領取',`領取了 ${got.length} 封：<br>${got.join('<br>')}`,[['好',()=>{},'actgo']])}mailDraw();mailDot()}}
 let STICKED=false;async function seasonTick(){if(STICKED||!SB||!ME)return;STICKED=true;try{await SB.rpc('season_tick')}catch(e){}mailLoad()}
-function finish(){document.body.classList.remove('bt');const win=alive(pl).length>0&&!alive(en).length,b=$('bAgain');let msg='',rs='';
+function finish(){if(TRIAL)return;document.body.classList.remove('bt');const win=alive(pl).length>0&&!alive(en).length,b=$('bAgain');let msg='',rs='';
  if(MODE==='pvp'&&OPP.wb){msg=win?'討 伐 成 功':'討 伐 結 束';rs=`👹 妖獸討伐：${esc(OPP.name)}<br><span id="wbRes">結算中…</span>`;b.textContent='返回';NEXT=0;setTimeout(()=>wbReport(),50)}
  else if(MODE==='pvp'&&OPP.arena){if(win)dtAdd('arw',1);msg=win?'勝 利':(alive(pl).length&&alive(en).length?'平 局':'敗 北');rs=`🏟️ 競技場：對手 ${esc(OPP.name)}<br><span id="arRes">結算中…</span>`;b.textContent='返回';NEXT=0;setTimeout(()=>arReport(win),50)}
  else if(MODE==='pvp'&&OPP.fr){msg=win?'勝 利':(alive(pl).length&&alive(en).length?'平 局':'敗 北');rs=`好友切磋：${esc(OPP.name)}<br>不消耗次數，也沒有獎勵`;b.textContent='再戰一場';NEXT=0;if(OPP.friend&&SB&&ME)SB.rpc('friend_report',{p_def:OPP.friend,p_win:!!win}).then(()=>{})}
@@ -4160,7 +4182,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261101h';
+const CVER='20261101i';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}try{FAME=JSON.parse(localStorage.getItem('sgFame')||'null')}catch(e){}fameDraw();cityImgs();cityBind();{let n=0;const go=()=>{cityLayout();const so=document.querySelector('.csoc');if((so&&so.offsetHeight)||n++>30)$('cBlds').classList.add('rdy');else requestAnimationFrame(go)};go()}try{document.fonts.ready.then(()=>cityLayout())}catch(e){}
  let wasC=document.body.classList.contains('city');new MutationObserver(()=>{const c=document.body.classList.contains('city');if(c&&!wasC){const B=$('cBlds');B.classList.remove('rdy');requestAnimationFrame(()=>{cityLayout();requestAnimationFrame(()=>B.classList.add('rdy'))})}wasC=c}).observe(document.body,{attributes:true,attributeFilter:['class']});
@@ -4169,7 +4191,7 @@ function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<butto
 let NVSHOWN=false;async function nvCheck(){if(NVSHOWN||location.protocol==='file:')return;try{const r=await fetch(location.pathname+'?nv='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const CVER='([^']+)'/);if(m&&m[1]!==CVER){NVSHOWN=true;const d=document.createElement('button');d.id='nvBar';d.innerHTML=`🆕 有新版本 ${m[1]}　<b>點此更新</b>`;d.onclick=()=>{location.replace(location.pathname+'?v='+m[1])};document.body.appendChild(d)}}catch(e){}}
 setTimeout(nvCheck,4000);setInterval(nvCheck,10*60e3);document.addEventListener('visibilitychange',()=>{if(!document.hidden)nvCheck()});
 function cityLayout(){const C=$('city');if(!C||!C.offsetHeight)return;const R=C.getBoundingClientRect(),q=sel=>{const e=C.querySelector(sel);return e&&e.offsetHeight?e.getBoundingClientRect():null};
- {const cr=q('.cres'),fm=C.querySelector('.cfame');if(fm&&cr)fm.style.setProperty('--fmt',(cr.bottom-R.top+6)+'px')}const tp=Math.max(...[q('.ctop'),q('.cres'),q('.cfame')].filter(Boolean).map(r=>r.bottom-R.top),90)+8,so=q('.csoc'),bt=(so&&so.offsetHeight?so.top-R.top:R.height-(document.body.classList.contains('cfold')?160:230))-6,cl=document.body.classList.contains('cfold')?null:q('.cl'),lf=(cl?cl.right-R.left:0)+6,rt=R.width-8;
+ {const cr=q('.cres'),fm=C.querySelector('.cfame');if(fm&&cr)fm.style.setProperty('--fmt',(cr.bottom-R.top+6)+'px')}const tp=Math.max(...[q('.ctop'),q('.cres'),q('.cfame')].filter(Boolean).map(r=>r.bottom-R.top),90)+8,so=q('.csoc'),bt=(so&&so.offsetHeight?so.top-R.top:R.height-(document.body.classList.contains('cfold')?160:230))-6,clE=document.body.classList.contains('cfold')?null:C.querySelector('.cl'),lf=(clE&&clE.offsetWidth?clE.offsetLeft+clE.offsetWidth:0)+6,rt=R.width-8;
  const aw=rt-lf,ah=bt-tp,lab=34;let d=90,ax=0,ay=0;
  for(let t=Math.min(170,aw*.46);t>=84;t-=2){const x=(aw-t)/2,y=(ah-t-lab)/2;if(x<=0||y<=0)continue;const okC=Math.hypot(x,y)>=t+10,okL=y>=t+lab*.8||x>=t*.95,okH=2*x>=t+10;if(okC&&okL&&okH){d=t;ax=x;ay=Math.min(y,t*1.05+lab);break}}
  if(!ax){ax=(aw-d)/2;ay=(ah-d-lab)/2}
@@ -4301,15 +4323,27 @@ function sceneBind(){$('scn').onclick=e=>{const t=e.target.closest('[data-c]');i
 /* ===================== 建議陣容（範本＋幫我配＋新手小教室） ===================== */
 // p：九宮格位置（0–2 前排、3–5 中排、6–8 後排）
 const REC=[
- {n:'五虎追擊',f:'蜀',st:4,idea:'五虎上將湊滿五人，靠蜀國連擊與追擊一回合打出大量傷害，劉備在後排補血。',u:[['guanyu',0],['zhangfei',1],['zhaoyun',2],['machao',4],['huangzhong',6],['liubei',7]],qm:'xsdr',tip:'五虎 5 人開場各 +30 怒氣，再配「先聲奪人」，第一回合就有機會連放大招。'},
- {n:'桃園臥龍',f:'蜀',st:3,idea:'桃園結義＋臥龍出山兩組羈絆，張飛擋前排，劉備、諸葛亮雙補，穩紮穩打。',u:[['zhangfei',1],['guanyu',0],['zhaoyun',2],['xushu',6],['liubei',7],['zhugeliang',8]],qm:'gbyz',tip:'徐庶開場替劉備或諸葛亮加 50 怒氣，治療大招會更早出現。'},
- {n:'冰封控場',f:'魏',st:3,idea:'魏國擅長冰凍，曹操每回合沉默敵方最強者，控住敵人再一起收割。',u:[['xiahoudun',1],['caoren',0],['zhangliao',2],['caocao',4],['simayi',6],['zhenmi',7]],qm:'qszh',tip:'魏 4 人起對被控制的敵人傷害 +15%，先控再打最划算。'},
- {n:'謀士連控',f:'魏',st:2,idea:'曹魏謀士四人同場，每多一人控制機率再提高。荀攸、楊修資質較低，是收集向的進階玩法，等他們升星後再用。',u:[['xuchu',1],['caoren',0],['guojia',6],['simayi',7],['xunyou',8],['zhenmi',4]],qm:'smcg',tip:'前排放兩名坦克，替後排的法師爭取放技能的時間。'},
- {n:'烈火焚營',f:'吳',st:3,idea:'周瑜、陸遜群體灼燒，孫權讓灼燒延長，吳國越燒越痛。',u:[['zhoutai',1],['sunce',0],['sunquan',4],['zhouyu',6],['luxun',8],['daqiao',7]],qm:'gbyz',tip:'江東雙璧（孫策＋周瑜）開場各 +50 怒氣，第一回合就能點火。'},
- {n:'孫家速攻',f:'吳',st:3,idea:'孫家兄妹三人同場，速度快、出手早，甘寧刺殺後排，搶先手決勝。',u:[['sunce',1],['taishici',0],['ganning',2],['sunquan',4],['sunshangxiang',6],['daqiao',7]],qm:'xsdr',tip:'孫家 3 人開場 +30 怒氣，孫尚香連弩還會多射一箭。'},
- {n:'天威爆發',f:'神',st:3,idea:'神國疊天威層數，神諸葛、蔡文姬群攻一次引爆；華佗保命不怕被秒。',u:[['guan',1],['menghuo',0],['shenzhuge',6],['caiwenji',7],['zuoci',8],['huatuo',4]],qm:'wwjz',tip:'神 6 人共鳴時天威上限變 4 層，傷害最高。'},
- {n:'魔骨吸血',f:'魔',st:4,idea:'魔國靠魔蠱吸血續戰，生命越低越能吸，呂布、張角群攻一邊打一邊回血。',u:[['dianwei',1],['dongzhuo',0],['lubu',4],['zhangchunhua',2],['zhangjiao',6],['bulianshi',7]],qm:'qlfb',tip:'魔 6 人時生命低於 50% 所有傷害吸血 15%，殘血反而更難打死。'},
- {n:'溫侯貂蟬',f:'混',st:3,idea:'以呂布為核心，貂蟬專門治療呂布、呂玲綺補刀，典韋許褚雙坦擋在前面。',u:[['dianwei',1],['xuchu',0],['lubu',4],['lvlingqi',2],['diaochan',7],['huatuo',6]],qm:'xsdr',tip:'混搭陣營拿不到 4 人以上的陣營加成，靠武將羈絆補回來。'}];
+ {n:'五虎追擊',f:'蜀',st:5,idea:'五虎上將湊滿五人，蜀國追擊一回合連打好幾下，劉備在後排補血。模擬中蜀國最強。',u:[['guanyu',0],['zhangfei',1],['zhaoyun',2],['machao',4],['huangzhong',6],['liubei',7]],qm:'xsdr',tip:'五虎 5 人開場各 +30 怒氣，再配「先聲奪人」，第一回合就能連放大招。',win:97,rd:7.3,use:'推圖、競技場都強',sub:'缺黃忠用馬雲祿；缺劉備用諸葛亮'},
+ {n:'雙補鐵壁',f:'蜀',st:4,idea:'張飛嘲諷擋前排，劉備、諸葛亮雙補不倒，關羽、馬超、馬雲祿慢慢打穿。',u:[['zhangfei',1],['mayunlu',0],['machao',2],['guanyu',4],['liubei',6],['zhugeliang',8]],qm:'qlfb',tip:'打不過的高層用這組最穩；「潛龍伏波」讓快倒的人再撐一下。',win:90,rd:9.5,use:'高層爬塔、妖獸討伐',sub:'缺諸葛亮用馬良'},
+ {n:'西涼鐵騎',f:'蜀',st:4,idea:'西涼馬家每多一人速度更快，搶先出手；張飛在前排嘲諷，趙雲收割殘血。',u:[['zhangfei',1],['machao',0],['mayunlu',2],['madai',4],['zhaoyun',3],['liubei',7]],qm:'xsdr',tip:'馬家 3 人速度 +9%，常常比敵人先動。',win:87,rd:9.8,use:'競技場搶先手',sub:'缺馬岱用關羽'},
+ {n:'桃園臥龍',f:'蜀',st:3,idea:'桃園結義＋臥龍出山兩組羈絆，張飛擋前排，劉備、諸葛亮雙補，穩紮穩打。',u:[['zhangfei',1],['guanyu',0],['zhaoyun',2],['xushu',6],['liubei',7],['zhugeliang',8]],qm:'gbyz',tip:'徐庶開場替諸葛亮加 50 怒氣，治療大招更早出現。',win:73,rd:10.4,use:'新手過渡',sub:'徐庶可換成馬超，勝率更高'},
+ {n:'魏國速攻',f:'魏',st:5,idea:'曹操、郭嘉、辛憲英、司馬懿四個群攻輪流轟炸，凍結加沉默讓敵人動不了。',u:[['xiahoudun',1],['caocao',4],['xiahouyuan',3],['guojia',6],['simayi',7],['xinxianying',8]],qm:'smcg',tip:'沒有補師，靠控場讓敵人沒機會出手，平均 6 回合結束。',win:90,rd:6.1,use:'推圖、競技場',sub:'缺夏侯淵用曹仁'},
+ {n:'謀士連控',f:'魏',st:4,idea:'曹魏謀士羈絆讓控制機率更高，郭嘉凍結、司馬懿偷怒氣，敵人大招放不出來。',u:[['xuchu',1],['caoren',0],['zhenmi',4],['guojia',6],['simayi',7],['xunyou',8]],qm:'smcg',tip:'謀士越多控制機率越高；甄宓補血兼護盾。',win:87,rd:9.7,use:'打大招型敵人',sub:'缺荀攸用辛憲英'},
+ {n:'冰封控場',f:'魏',st:4,idea:'曹操對凍結的敵人傷害翻倍，夏侯惇、曹仁雙坦克，司馬懿、甄宓支援。',u:[['xiahoudun',1],['caoren',0],['zhangliao',2],['caocao',4],['simayi',6],['zhenmi',7]],qm:'qszh',tip:'魏 4 人起對被控制的敵人傷害 +15%，先控再打。',win:83,rd:9.9,use:'穩定推圖',sub:'缺張遼用許褚'},
+ {n:'魏武主力',f:'魏',st:3,idea:'曹氏宗親雙坦克，曹操、郭嘉、辛憲英三個群攻，甄宓補血。',u:[['caoren',1],['xiahoudun',0],['caocao',4],['zhenmi',7],['guojia',6],['xinxianying',8]],qm:'qszh',tip:'辛憲英對有負面效果的敵人傷害更高，搭郭嘉的凍結最好。',win:70,rd:8.5,use:'新手好湊',sub:'想更強就把曹仁換成夏侯淵（變魏國速攻）'},
+ {n:'赤壁火攻',f:'吳',st:5,idea:'陸遜、周瑜全場上灼燒並疊層，孫尚香連射補灼燒，程普嘲諷、周泰保護，大喬補血解負面。',u:[['chengpu',1],['zhoutai',0],['sunshangxiang',4],['luxun',6],['daqiao',7],['zhouyu',8]],qm:'gbyz',tip:'灼燒越疊越痛；程普嘲諷全場讓後排安全輸出。',win:87,rd:5.7,use:'推圖、競技場',sub:'缺周泰用徐盛'},
+ {n:'烈火焚營',f:'吳',st:4,idea:'東吳都督周瑜、陸遜雙法師，孫權延長灼燒並全隊加速，周泰保護孫權。',u:[['zhoutai',1],['sunce',0],['sunquan',4],['zhouyu',6],['daqiao',7],['luxun',8]],qm:'gbyz',tip:'陸遜每回合貢獻最高；孫權讓灼燒多燒 1 回合。',win:87,rd:5.2,use:'快速通關',sub:'孫策可換程普'},
+ {n:'江東鐵壁',f:'吳',st:4,idea:'程普、徐盛、周泰三坦克，江東宿將減傷，周瑜、陸遜在後面放火，大喬補血。',u:[['chengpu',1],['xusheng',0],['zhoutai',2],['luxun',6],['daqiao',7],['zhouyu',8]],qm:'qlfb',tip:'三坦克很耐打，適合打不贏的高層。',win:83,rd:7.2,use:'高層、妖獸討伐',sub:'缺徐盛用孫策'},
+ {n:'孫家速攻',f:'吳',st:3,idea:'孫家兄妹羈絆開場加怒氣，孫尚香連射、孫策 X 斬快速壓制。',u:[['sunce',1],['taishici',0],['ganning',2],['sunquan',4],['sunshangxiang',6],['daqiao',7]],qm:'xsdr',tip:'太史慈在這組貢獻最低，換成陸遜或周瑜會更強。',win:83,rd:5.6,use:'孫家粉絲',sub:'太史慈→陸遜'},
+ {n:'江東二喬',f:'吳',st:3,idea:'大喬補血、小喬後排必灼燒，周瑜搭二喬，孫策、孫尚香補輸出。',u:[['chengpu',1],['sunshangxiang',3],['sunce',4],['xiaoqiao',6],['daqiao',7],['zhouyu',8]],qm:'gbyz',tip:'江東二喬羈絆讓治療與灼燒各 +15%。',win:83,rd:5.2,use:'喜歡二喬',sub:'孫策→陸遜'},
+ {n:'雙補不死',f:'神',st:5,idea:'貂蟬復活、華佗群補又能復活，神關羽、孟獲雙坦克，神諸葛、袁紹全場天威。',u:[['guan',1],['menghuo',0],['yuanshao',4],['shenzhuge',6],['diaochan',7],['huatuo',8]],qm:'qlfb',tip:'兩個能復活的補師，很難被打倒。',win:90,rd:7.8,use:'高層、妖獸討伐',sub:'缺華佗用于吉'},
+ {n:'神將降世',f:'神',st:4,idea:'神關羽、神諸葛帶頭，袁紹、祝融群攻上天威，貂蟬復活隊友。',u:[['guan',1],['menghuo',0],['zhurong',3],['yuanshao',4],['shenzhuge',6],['diaochan',7]],qm:'wwjz',tip:'天威越多，神國傷害越高；南蠻夫妻生命 +10%。',win:87,rd:6.6,use:'推圖、競技場',sub:'缺祝融用左慈'},
+ {n:'天威爆發',f:'神',st:3,idea:'神諸葛、蔡文姬、左慈三個全場法師，天威疊滿一起爆發。',u:[['guan',1],['menghuo',0],['huatuo',4],['shenzhuge',6],['caiwenji',7],['zuoci',8]],qm:'wwjz',tip:'蔡文姬會驅散敵人增益，對護盾多的敵人特別有效。',win:83,rd:6.8,use:'打護盾型敵人',sub:'缺蔡文姬用袁紹'},
+ {n:'南蠻火舞',f:'神',st:3,idea:'孟獲、祝融南蠻夫妻，左慈、蔡文姬法師輸出，于吉補血。',u:[['menghuo',1],['guan',0],['zhurong',4],['zuoci',6],['yuji',7],['caiwenji',8]],qm:'wwjz',tip:'方外仙人（左慈＋于吉）天威機率 +10%。',win:80,rd:7.3,use:'好湊的神國隊',sub:'于吉→貂蟬'},
+ {n:'魔骨吸血',f:'魔',st:5,idea:'呂布全場重擊，張角雷澤增傷，張春華收割殘血，董卓、典韋雙坦克吸血。',u:[['dianwei',1],['dongzhuo',0],['zhangchunhua',2],['lubu',4],['zhangjiao',6],['bulianshi',7]],qm:'qlfb',tip:'魔國靠魔蠱吸血越打越有血；步練師在我方危險時大補。',win:93,rd:5.3,use:'推圖、競技場',sub:'缺張春華用呂玲綺'},
+ {n:'呂布無雙',f:'魔',st:5,idea:'呂布、呂玲綺父女羈絆，呂布每回合打全場，張角增傷，董卓吸血擋前排。',u:[['dianwei',0],['dongzhuo',1],['lvlingqi',3],['lubu',4],['zhangjiao',6],['bulianshi',7]],qm:'xsdr',tip:'呂家父女讓呂布更容易進入戰魔。',win:93,rd:4.9,use:'速攻',sub:'缺典韋用張梁'},
+ {n:'黃天當立',f:'魔',st:3,idea:'黃巾三兄弟張角、張梁、張寶，雷澤加魔蠱，呂布補強輸出。',u:[['dongzhuo',0],['zhangliang',1],['lubu',4],['zhangjiao',6],['bulianshi',7],['zhangbao',8]],qm:'smcg',tip:'黃巾羈絆讓雷澤效果 +25%。',win:83,rd:5.8,use:'黃巾主題',sub:'張寶→張春華'},
+ {n:'溫侯貂蟬',f:'混',st:4,idea:'跨陣營：呂布、貂蟬溫侯羈絆，呂玲綺收割，典韋、許褚虎癡惡來雙坦克，華佗補血。',u:[['xuchu',0],['dianwei',1],['lvlingqi',2],['lubu',4],['huatuo',6],['diaochan',7]],qm:'xsdr',tip:'虎癡惡來兩人減傷 +10%；貂蟬治療呂布 +30%。',win:83,rd:9.7,use:'混搭玩法',sub:'華佗→步練師'}];
 let RECT='tpl',RECSEL=0,RECMSG='';
 function recWhy(ids){const hs=ids.map(id=>H.find(h=>h.id===id)).filter(Boolean),out=[],cnt={};hs.forEach(h=>cnt[h.f]=(cnt[h.f]||0)+1);
  for(const f in cnt){const n=cnt[f];if(n>=2){const tier=n>=6?2:n>=4?1:0;out.push(`<b>${f} ${n} 人</b>：${FT[f].slice(0,tier+1).join('；')}${n>=6?'（共鳴：陣營特性觸發機率 ×1.5）':''}`)}}
@@ -4324,13 +4358,40 @@ function recFill(t){const used=new Set(),own=id=>!!S.own[id],L=Array(9).fill(nul
   if(sub){L[p]=sub.id;used.add(sub.id);miss.push([h,sub])}else miss.push([h,null])});return{L,miss}}
 const recGrid=L=>`<div class="rcg">${[0,1,2].map(r=>`<i>${['前','中','後'][r]}</i>`+[0,1,2].map(c=>{const id=L[r*3+c],h=id&&H.find(x=>x.id===id);return h?`<span class="${S.own[id]?'':'no'}" style="background-image:url(${ART[id]});border-color:${FC[h.f]}"><b>${h.n}</b></span>`:'<span class="e"></span>'}).join('')).join('')}</div>`;
 function recOpen(){RECMSG='';renderRec();$('recv').classList.add('on')}
-let RECSL=0;function renderRec(){let h=`<div class="shh"><button class="xb" data-r="x">←</button><b>建議陣容</b></div><div class="rctabs">${[['tpl','推薦陣容'],['auto','幫我配'],['learn','新手小教室']].map(([k,n])=>`<button class="${RECT===k?'on':''}" data-r="tab" data-t="${k}">${n}</button>`).join('')}</div>${RECMSG?`<div class="rcmsg">${RECMSG}</div>`:''}`;
- if(RECT==='tpl'){h+=`<div class="rcl">${REC.map((t,i)=>`<button class="${RECSEL===i?'on':''}" data-r="sel" data-i="${i}"><b>${t.n}</b><small>${t.f==='混'?'混搭':t.f}・${'★'.repeat(t.st)}</small></button>`).join('')}</div>`;
+/* ===================== ⚗️ 技能試煉場 ===================== */
+let TRIAL=null,TRQ={me:'cur',op:'rand',n:20,eq:1},TRRES=null;
+function trLineup(k){if(k==='cur'){const L=[];pl.forEach((u,i)=>{if(u)L.push([u.id,i])});return L}const t=REC[+k];return t?t.u.map(x=>[...x]):[]}
+async function trRun(){if(busy||AUTOC){toast('戰鬥進行中，稍後再試');return}const A=trLineup(TRQ.me);if(!A.length){toast('我方沒有上陣武將');return}
+ const save={pl,en,MODE,OPP,SKIP},N=TRQ.n,epos=[7,6,8,4,3,5],mirror=p=>[2,1,0,5,4,3,8,7,6][p]+0,flip=p=>({0:6,1:7,2:8,3:3,4:4,5:5,6:0,7:1,8:2})[p];
+ let sd=777;const R=()=>(sd=(sd*16807)%2147483647)/2147483647;const myLv=Math.max(1,Math.round(avgLv()));const lv=TRQ.eq?200:myLv;
+ const st={};A.forEach(([id])=>st[id]={d:0,h:0,t:0,c:0,s:0,b:0});let w=0,l=0,rd=0;TRIAL={i:0,n:N};trDraw();
+ try{for(let n=0;n<N;n++){let B;if(TRQ.op==='rand'){const pool=[...H];B=[];while(B.length<6){B.push(pool.splice(Math.floor(R()*pool.length),1)[0])}B.sort((a,b)=>(a.job==='坦克'?0:1)-(b.job==='坦克'?0:1));B=B.map((h,i)=>({i:epos[i],id:h.id}))}else B=trLineup(TRQ.op).map(([id,p])=>({i:flip(p),id}));
+   MODE='pvp';OPP={d:1,list:[],fr:B.map(x=>({i:x.i,id:x.id,l:lv,s:TRQ.eq?5:Math.round(A.reduce((s,[id])=>s+(S.star[id]||0),0)/A.length),g:{atk:0,hp:0,spd:0,crit:0,brk:0}})),qms:[]};
+   pl=Array(9).fill(null);A.forEach(([id,p])=>{const h=H.find(x=>x.id===id);pl[p]=TRQ.eq?mk(h,200):mkP(h)});
+   const pr=battle();SKIP=true;await pr;const U=pl.filter(Boolean),pw=alive(pl).length>0&&!alive(en).length,ew=alive(en).length>0&&!alive(pl).length;if(pw)w++;if(ew)l++;rd+=ROUND;
+   const tot=U.reduce((s,u)=>s+ctScore(u.cs),0)||1;let best=null;U.forEach(u=>{const c=u.cs||{},x=st[u.id];if(!x)return;x.d+=c.d||0;x.h+=c.h||0;x.t+=c.t||0;x.c+=c.c||0;x.s+=ctScore(c)/tot;if(!best||ctScore(c)>ctScore(best.cs))best=u});if(best&&st[best.id])st[best.id].b++;
+   busy=false;TRIAL.i=n+1;trDraw();await sleep(0)}}
+ finally{busy=false;SKIP=save.SKIP;pl=save.pl;en=save.en;MODE=save.MODE;OPP=save.OPP;TRIAL=null;document.body.classList.remove('full','bt');try{render()}catch(e){}}
+ TRRES={w,l,dr:N-w-l,N,rd:rd/N,lv,per:A.map(([id])=>{const x=st[id];return{id,n:hname(id),share:x.s/N*100,d:x.d/N,h:x.h/N,t:x.t/N,c:x.c/N,b:x.b}}).sort((a,b)=>b.share-a.share)};trDraw()}
+function trHTML(){const sel=(k,v,inc)=>`<select data-tq="${k}">${inc.map(([a,b])=>`<option value="${a}"${String(v)===String(a)?' selected':''}>${b}</option>`).join('')}</select>`;
+ const lus=REC.map((t,i)=>[i,`${t.f==='混'?'混搭':t.f}・${t.n}`]);
+ let h=`<div class="rck trk"><div class="trf"><label>我方 ${sel('me',TRQ.me,[['cur','目前九宮格陣容'],...lus])}</label><label>對手 ${sel('op',TRQ.op,[['rand','隨機混合（固定 20 組）'],...lus])}</label>
+ <label>條件 ${sel('eq',TRQ.eq,[[1,'同等條件（Lv200・5 星・無裝備）'],[0,'我的練度（含裝備）']])}</label><label>場數 ${sel('n',TRQ.n,[[10,'10 場'],[20,'20 場'],[40,'40 場']])}</label></div>`;
+ if(TRIAL)h+=`<div class="trp"><i style="width:${TRIAL.i/TRIAL.n*100}%"></i><span>模擬中 ${TRIAL.i}/${TRIAL.n}…</span></div>`;
+ else if(TRRES){const R=TRRES,mx=Math.max(...R.per.map(x=>x.share));h+=`<div class="trs"><b class="w">勝 ${R.w}</b><b class="l">敗 ${R.l}</b>${R.dr?`<b>和 ${R.dr}</b>`:''}<span>勝率 <b>${Math.round(R.w/R.N*100)}%</b>・平均 ${R.rd.toFixed(1)} 回合</span></div>
+  <div class="trt"><div class="trh"><span>武將</span><span>貢獻</span><span>輸出</span><span>治療</span><span>承傷</span><span>最佳</span></div>${R.per.map((x,i)=>`<div class="trr${i===R.per.length-1&&R.per.length>2?' low':''}"><span>${x.n}</span><span><i style="width:${x.share/mx*100}%"></i>${x.share.toFixed(1)}%</span><span>${ctNum(x.d)}</span><span>${ctNum(x.h)}</span><span>${ctNum(x.t)}</span><span>${x.b}</span></div>`).join('')}</div>
+  <p class="sub" style="font-size:11px">貢獻＝每場綜合分數佔全隊的比例（輸出×1＋治療×1.2＋承傷×0.6＋控場）。貢獻最低的武將標紅，可以試著換掉再測一次。</p>`}
+ else h+=`<p class="rci">選好雙方，按「開始模擬」會在背景快速打完，列出每位武將的平均表現。想測某位武將，就一次只換他一個人，比較前後的勝率與貢獻。</p>`;
+ return h+`<div class="stk"><button class="rcgo actgo" data-r="trrun" ${TRIAL?'disabled':''}>${TRIAL?'模擬中…':'⚗️ 開始模擬'}</button></div></div>`}
+function trDraw(){if(RECT==='trial'&&$('recv').classList.contains('on'))renderRec()}
+let RECSL=0,RECF='全';function renderRec(){let h=`<div class="shh"><button class="xb" data-r="x">←</button><b>建議陣容</b></div><div class="rctabs">${[['tpl','推薦陣容'],['trial','⚗️ 試煉場'],['auto','幫我配'],['learn','新手小教室']].map(([k,n])=>`<button class="${RECT===k?'on':''}" data-r="tab" data-t="${k}">${n}</button>`).join('')}</div>${RECMSG?`<div class="rcmsg">${RECMSG}</div>`:''}`;
+ if(RECT==='tpl'){if(REC[RECSEL]&&RECF!=='全'&&REC[RECSEL].f!==RECF){const j=REC.findIndex(t=>t.f===RECF);if(j>=0)RECSEL=j}h+=`<div class="hjft rcf">${['全','蜀','魏','吳','神','魔','混'].map(f=>`<button data-r="rf" data-f="${f}" class="${RECF===f?'on':''}">${f==='混'?'混搭':f}</button>`).join('')}</div><div class="rcl">${REC.map((t,i)=>RECF==='全'||t.f===RECF?`<button class="${RECSEL===i?'on':''}" data-r="sel" data-i="${i}"><b>${t.n}</b><small>${t.f==='混'?'混搭':t.f}・勝率 ${t.win}%</small></button>`:'').join('')}</div>`;
   const t=REC[RECSEL],L=Array(9).fill(null);t.u.forEach(([id,p])=>L[p]=id);const{miss}=recFill(t),q=QMD.find(x=>x.id===t.qm);
-  h+=`<div class="rck"><h3>${t.n}<small>${'★'.repeat(t.st)}${'☆'.repeat(5-t.st)}</small></h3>${pager([`<p class="rci">${t.idea}</p><div class="rcgw">${recGrid(L)}</div>${miss.length?`<p class="rci" style="color:#ffd27a">缺 ${miss.length} 位：${miss.map(([a,b])=>`${a.n}→${b?b.n:'無'}`).join('、')}</p>`:''}`,
-  `<div class="sec">為什麼這樣搭</div><ul class="rcw">${recWhy(t.u.map(x=>x[0])).map(x=>`<li>${x}</li>`).join('')}${q?`<li><b>推薦奇謀</b>：${q.n}</li>`:''}<li><b>小訣竅</b>：${t.tip}</li></ul>`,
+  h+=`<div class="rck"><h3>${t.n}<small>${'★'.repeat(t.st)}${'☆'.repeat(5-t.st)}</small></h3>${pager([`<div class="rcst"><span>模擬勝率 <b>${t.win}%</b></span><span>平均 ${t.rd} 回合</span><span>適合：${t.use}</span></div><div class="rcgw">${recGrid(L)}</div>${miss.length?`<p class="rci" style="color:#ffd27a">缺 ${miss.length} 位：${miss.map(([a,b])=>`${a.n}→${b?b.n:'無'}`).join('、')}</p>`:''}`,
+  `<p class="rci">${t.idea}</p><div class="sec">為什麼這樣搭</div><ul class="rcw">${recWhy(t.u.map(x=>x[0])).map(x=>`<li>${x}</li>`).join('')}${q?`<li><b>推薦奇謀</b>：${q.n}</li>`:''}<li><b>小訣竅</b>：${t.tip}</li><li><b>替代人選</b>：${t.sub}</li></ul><p class="sub" style="font-size:11px">模擬：雙方 Lv200・5 星・無裝備，對上 30 組隨機混合陣容。可到「⚗️ 試煉場」自己驗證。</p>`,
   `<div class="sec">成員技能</div><ul class="rcw">${t.u.map(([id])=>{const hh=H.find(x=>x.id===id),r=(SK[id]||{}).rg;return `<li><b>${hh.n}</b>${S.own[id]?'':'<i class="no">未擁有</i>'}：${r?r[0]+'—'+r[1]:''}</li>`}).join('')}</ul>`],'','rcpg')}
   <div class="stk"><button class="rcgo actgo" data-r="apply">一鍵套用到布陣</button></div></div>`}
+ else if(RECT==='trial'){h+=trHTML()}
  else if(RECT==='auto'){const ids=pl.filter(Boolean).map(u=>u.id);
   h+=`<div class="rck"><p class="rci">從你擁有的武將裡算出目前最強的組合，並說明它為什麼有效。</p><button class="rcgo" data-r="auto">⚡ 幫我配</button>${ids.length?`<div class="sec">目前陣容</div>${recGrid(pl.map(u=>u?u.id:null))}<div class="sec">這個陣容的優點</div><ul class="rcw">${recWhy(ids).map(x=>`<li>${x}</li>`).join('')}</ul>${recHint(ids)}`:''}</div>`}
  else{h+=`<div class="rck rclearn">
@@ -4344,21 +4405,23 @@ let RECSL=0;function renderRec(){let h=`<div class="shh"><button class="xb" data
 function recHint(ids){const hs=ids.map(id=>H.find(h=>h.id===id)),tips=[];if(!hs.some(h=>h.job==='坦克'))tips.push('沒有坦克：前排容易被秒，建議放 1–2 名坦克。');if(!hs.some(h=>h.pat==='heal'))tips.push('沒有治療：長期戰會吃虧，可以考慮加一名補師。');
  const cnt={};hs.forEach(h=>cnt[h.f]=(cnt[h.f]||0)+1);const mx=Math.max(...Object.values(cnt));if(mx<4)tips.push('同陣營不到 4 人：拿不到陣營特色加成，試試集中同一國。');
  return tips.length?`<div class="sec">可以再加強</div><ul class="rcw">${tips.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
-function recBind(){$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');if(!b)return;const k=b.dataset.r;
+function recBind(){$('rcBody').onchange=e=>{const t=e.target;if(t.dataset.tq){const k=t.dataset.tq;TRQ[k]=k==='n'||k==='eq'?+t.value:t.value;TRRES=null;renderRec()}};$('rcBody').onclick=e=>{const b=e.target.closest('[data-r]');if(!b)return;const k=b.dataset.r;
  if(k==='x'){$('recv').classList.remove('on');if($('form').classList.contains('on'))renderForm();return}
  if(k==='tab'){RECT=b.dataset.t;RECMSG='';renderRec();return}
  if(k==='sel'){RECSEL=+b.dataset.i;RECMSG='';renderRec();$('recv').scrollTop=0;return}
+ if(k==='trrun'){trRun();return}
+ if(k==='rf'){RECF=b.dataset.f;renderRec();return}
  if(k==='apply'){const{L,miss}=recFill(REC[RECSEL]);if(!L.some(Boolean)){RECMSG='你還沒有可上陣的武將';renderRec();return}const mx=typeof MAXN==='function'?MAXN():6;let n=0;const L2=L.map(id=>{if(id&&n<mx){n++;return id}return null});
   if(!$('form').classList.contains('on'))openForm();FL=L2;renderForm();$('recv').classList.remove('on');toast(`已套用「${REC[RECSEL].n}」${miss.length?`（${miss.filter(x=>x[1]).length} 位用替代人選）`:''}，記得按「保存」`);return}
  if(k==='auto'){if(busy)return;autoBest(false);render();RECMSG='✓ 已配好，下方是說明。滿意的話到布陣按「保存」。';renderRec();return}}}
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261101i',d:'11/01',t:['建議陣容擴充到 21 組（蜀、魏、吳、神、魔各 3～5 組＋混搭），可依陣營篩選，每組附模擬勝率、平均回合、適合時機與替代人選','建議陣容新增「⚗️ 試煉場」：選我方與對手陣容，背景快速模擬 10～40 場，列出每位武將的平均貢獻、輸出、治療、承傷','新增 8 組羈絆，讓原本沒有羈絆的武將也有搭配：荊州忠義、蜀漢文臣、江東宿將、神將降世、西涼舊將、三讓徐州、司馬夫婦、冀州上將','修正主城按 × 收起再展開時，圓圖和左側按鈕重疊']},
  {v:'20261101h',d:'11/01',t:['管理員可在「設置」匯出全部上傳圖片（每項票選第一的圖，打包成 zip）','玩家上傳的圖已全部備份進遊戲資料夾（每週日自動再備份一次），並當作內建預設圖：連不上伺服器時也會顯示這些圖']},
  {v:'20261101g',d:'11/01',t:['武將卡下方的提示改成顯示真正原因：可升級／可升星／可換裝備／可裝符石','沒上陣但可以升級的武將，顯示灰色 ⬆；武將列表上方說明紅點規則','經驗丹不足時，培養頁會提示並可前往經驗塔或商城','修正競技場「段位」等分頁的紅點跑到畫面右上角的問題']},
  {v:'20261101f',d:'11/01',t:['修正主城「天下第一」出現後五個圓圖縮小跳動的問題（預先保留位置，並記住上次的第一名）','修正主城好友／排行／圖鑑按鈕有時擋到奇謀、豪傑書','試煉塔有多張物品圖時，改成在塔前中央輪流淡入淡出']},
- {v:'20261101e',d:'11/01',t:['試煉塔畫面：名將塔輪播大家上傳的武將圖；裝備塔用上傳的高品階裝備圖示；虎符、金幣、經驗、寶石塔放上專屬物品圖（自動去掉白底，只有 1 張時會在塔前輕輕浮動）']},
- {v:'20261101d',d:'11/01',t:['新增綜合排行榜（主城「排行」）：戰力、主公、收集、星數、成就、後宮，顯示我的名次，也能直接跳到爬塔、競技、妖獸排行','新增排名獎勵：競技場每週一結算（前 10 名，第 1 名稱號「天下無雙」一週）、爬塔每月 1 日結算、妖獸被打倒後傷害前 10 名都有獎勵','新增「📬 信箱」：排名獎勵、系統禮物都寄到這裡，可一鍵領取','主城新增「👑 天下第一」名人堂，顯示全服戰力第一的主公','圖鑑總覽重新分類：主城、場景、試煉塔、妖獸、奇謀、裝備、武將、紅顏，並顯示已上傳數量']}];
+ {v:'20261101e',d:'11/01',t:['試煉塔畫面：名將塔輪播大家上傳的武將圖；裝備塔用上傳的高品階裝備圖示；虎符、金幣、經驗、寶石塔放上專屬物品圖（自動去掉白底，只有 1 張時會在塔前輕輕浮動）']}];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
 function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${pager(L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`),'vpg')}</div>
