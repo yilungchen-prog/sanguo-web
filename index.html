@@ -83,6 +83,9 @@ button[data-dot]:not(.ccir):not(.cic):not(.cmed):not(.cfame):not(#nvBar):not(.tc
 .sck .pzh em{font-style:normal;font-size:12px;opacity:.85;margin-left:auto}.sck{border-color:#c9993c!important}
 #form .pool{display:block!important;overflow:visible!important;position:relative;padding:0 4px!important}#form .pool .pg section{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-content:start}
 .fpa{position:absolute;top:38%;width:30px!important;height:46px;min-height:0!important;padding:0!important;font-size:22px!important;z-index:3;border-radius:10px!important;background:#000a!important}.fpa.l{left:-6px}.fpa.r{right:-6px}
+.ptags{left:auto!important;right:3px!important;top:30%!important}
+.cell .card .str{left:auto!important;right:1px!important;bottom:5px!important;top:auto!important;z-index:4;font-size:11px!important;padding:0 2px!important}
+.cell .card .bar.hp{bottom:22px!important}
 </style></head><body>
 <!DOCTYPE html>
 <html lang="zh-Hant"><head><meta charset="utf-8">
@@ -1036,7 +1039,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261102a</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261102b</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -4192,7 +4195,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261102a';
+const CVER='20261102b';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}try{FAME=JSON.parse(localStorage.getItem('sgFame')||'null')}catch(e){}fameDraw();cityImgs();cityBind();{let n=0;const go=()=>{cityLayout();const so=document.querySelector('.csoc');if((so&&so.offsetHeight)||n++>30)$('cBlds').classList.add('rdy');else requestAnimationFrame(go)};go()}try{document.fonts.ready.then(()=>cityLayout())}catch(e){}
  let wasC=document.body.classList.contains('city');new MutationObserver(()=>{const c=document.body.classList.contains('city');if(c&&!wasC){const B=$('cBlds');B.classList.remove('rdy');requestAnimationFrame(()=>{cityLayout();requestAnimationFrame(()=>B.classList.add('rdy'))})}wasC=c}).observe(document.body,{attributes:true,attributeFilter:['class']});
@@ -4429,11 +4432,11 @@ function recBind(){$('rcBody').onchange=e=>{const t=e.target;if(t.dataset.tq){co
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261102b',d:'11/02',t:['武將卡的「陣」「📖」標示移到右側，不再擋到名字','戰鬥卡片的星數移到右下角，血條縮短，不再互相遮擋']},
  {v:'20261102a',d:'11/02',t:['一鍵爬塔不再限制層數，351 層以上也能一鍵；謀略關會自動排推薦陣容，沒有符合的武將才停下','修正塔圖左右換塔後，下方按鈕還顯示上一座塔狀態的問題','武將列表：可突破的武將也會提示（上陣顯示紅點，未上陣顯示灰色「突破」），灰色提示放大並排到前面','武將列表：上陣武將標示「陣」、豪傑書槽位的武將標示 📖']},
  {v:'20261101l',d:'11/01',t:['七座塔的劇本錯開：同一層在不同塔會是不同劇本，核心敵人也會換成另一組武將','武將列表上方新增「⚗️ 試煉」按鈕，直接進入試煉場','武將卡上的提示改成短字（升級、升星、換裝、符石），不再擋到名字']},
  {v:'20261101k',d:'11/01',t:['爬塔改成「劇本章節」：51 層起每 10 層一個主題（不死惡來、無雙降臨、鐵壁藏刀、術法壓制、生生不息、影中刺客、冰封之陣、烈火焚城、疾風之軍、禁療死地），每章有固定的核心敵人與明確的破解方法，第 10 層是關主；10 種劇本輪流出現、逐輪變強','前 50 層改為新手篇：不再有特殊限制，每章附上小提示','出征前顯示「本章劇本」卡：敵方特色、💡 破解提示、一鍵推薦破解陣容','同一層失敗 3 次後可呼叫援軍：敵人生命每次 −10%，最多 −30%，過關後恢復','修正部分樓層敵人沒有出現的問題','布陣下方待選武將可以左右滑動、分頁選擇']},
- {v:'20261101j',d:'11/01',t:['蜀國加強：陣營特性連擊機率提高（上限 25%→35%），蜀 4 人起所有傷害 +15%','廖化（190%＋破綻）、關平（300%＋破綻）、馬岱（170%，殘血 ×2）、張星彩（165%，恫嚇 45%）、簡雍（120%，沉默 40%）、徐庶（300%）、黃忠（320%）技能數值提高','模擬結果：蜀國隨機陣容勝率約 25%→45%，五虎追擊維持約 93%']},
- {v:'20261101i',d:'11/01',t:['建議陣容擴充到 21 組（蜀、魏、吳、神、魔各 3～5 組＋混搭），可依陣營篩選，每組附模擬勝率、平均回合、適合時機與替代人選','建議陣容新增「⚗️ 試煉場」：選我方與對手陣容，背景快速模擬 10～40 場，列出每位武將的平均貢獻、輸出、治療、承傷','新增 8 組羈絆，讓原本沒有羈絆的武將也有搭配：荊州忠義、蜀漢文臣、江東宿將、神將降世、西涼舊將、三讓徐州、司馬夫婦、冀州上將','修正主城按 × 收起再展開時，圓圖和左側按鈕重疊']}];
+ {v:'20261101j',d:'11/01',t:['蜀國加強：陣營特性連擊機率提高（上限 25%→35%），蜀 4 人起所有傷害 +15%','廖化（190%＋破綻）、關平（300%＋破綻）、馬岱（170%，殘血 ×2）、張星彩（165%，恫嚇 45%）、簡雍（120%，沉默 40%）、徐庶（300%）、黃忠（320%）技能數值提高','模擬結果：蜀國隨機陣容勝率約 25%→45%，五虎追擊維持約 93%']}];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
 function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${pager(L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`),'vpg')}</div>
