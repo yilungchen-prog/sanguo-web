@@ -1032,7 +1032,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101i</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261101j</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -1474,30 +1474,30 @@ zhugeliang:{tal:'def',tn:'臥龍之才',ex:['觀星','自己回合結束時，�
  aura(u,a){if(!hasSk(u,'ps'))return null;return{cr:(.10+(a.f==='蜀'?.05:0))*otK(u)}},
  async after(u){if(!hasSk(u,'ex'))return;allyA(u).forEach(a=>{if(negN(a)>0)dispel(a,1);else if(chance(u,1))addSt(a,'xj',{t:2,lbl:false},u)})},
  async ult(u,X){await ultHeal(u,X,{m:1.75,who:al=>byLowPct(al).slice(0,3),each:a=>{dispel(a,2,true);addSt(a,'bz',{t:2,v:2+(bondOn(u,'wl')?1:0)},u)}})}},
-zhangxingcai:{tal:'atk',tn:'虎女',ex:['丈八蛇矛','攻擊被控制中的敵人時傷害 +30%。'],ps:['承父威','張飛在場時速度 +10%、攻擊 +8%。'],rg:['槍舞如花','X 形攻擊（攻擊 140%），中心目標 30% 機率【恫嚇】。'],
+zhangxingcai:{tal:'atk',tn:'虎女',ex:['丈八蛇矛','攻擊被控制中的敵人時傷害 +30%。'],ps:['承父威','張飛在場時速度 +10%、攻擊 +8%。'],rg:['槍舞如花','X 形攻擊（攻擊 165%），中心目標 45% 機率【恫嚇】。'],
  dmgMod(u,t){return hasSk(u,'ex')&&isCtl(t)?1+.3*otK(u):1},
  start(u){if(hasSk(u,'ps')&&sideHas(u,'zhangfei')){u.spd*=1+.1*otK(u);u.atk*=1+.08*otK(u)}},
- async ult(u,X){let first=true;await ultHit(u,X,{m:1.4,each:async t=>{if(first&&t.hp>0&&cc(u,.3+(bondOn(u,'yr')?.15:0)))addSt(t,'kd',{t:1},u);first=false}})}},
-xushu:{tal:'atk',tn:'單福',ex:['走馬薦諸葛','開場時，諸葛亮或劉備在場則該武將 +50 怒氣。'],ps:['擊劍任俠','普攻改為攻擊生命最低的敵人。'],rg:['破八門金鎖','狙擊生命最低的敵人（攻擊 260%），並驅散其 2 個增益。'],
+ async ult(u,X){let first=true;await ultHit(u,X,{m:1.65,each:async t=>{if(first&&t.hp>0&&cc(u,.45+(bondOn(u,'yr')?.15:0)))addSt(t,'kd',{t:1},u);first=false}})}},
+xushu:{tal:'atk',tn:'單福',ex:['走馬薦諸葛','開場時，諸葛亮或劉備在場則該武將 +50 怒氣。'],ps:['擊劍任俠','普攻改為攻擊生命最低的敵人。'],rg:['破八門金鎖','狙擊生命最低的敵人（攻擊 300%），並驅散其 2 個增益。'],
  start(u){if(!hasSk(u,'ex'))return;allyA(u).filter(a=>a.id==='zhugeliang'||a.id==='liubei').forEach(a=>addRage(a,50*otK(u)))},
  baT(u,X){return hasSk(u,'ps')?byLowHp(vis(alive(X.ec)))[0]:front(X.es,X.ec)},
- async ult(u,X){await ultHit(u,X,{m:2.6,tgt:'lowHp',each:async t=>{if(t.hp>0)dispelBuff(t,2)}})}},
-guanping:{tal:'atk',tn:'少將',ps:['隨父征戰','關羽觸發單刀直入時，50% 機率跟著攻擊（攻擊 30%）。'],rg:['赤心刀','重擊前排單體（攻擊 260%），目標生命高於 70% 時傷害 +30%。'],
- async ult(u,X){await ultHit(u,X,{m:2.6,mt:(t,m)=>t.hp>t.mhp*.7?m*1.3:m})}},
-liaohua:{tal:'def',tn:'老將',ps:['老當益壯','每回合開始攻擊 +4%（最多 +20%）。'],rg:['先鋒破陣','攻擊敵方一整欄（攻擊 150%）。'],
+ async ult(u,X){await ultHit(u,X,{m:3.0,tgt:'lowHp',each:async t=>{if(t.hp>0)dispelBuff(t,2)}})}},
+guanping:{tal:'atk',tn:'少將',ps:['隨父征戰','關羽觸發單刀直入時，50% 機率跟著攻擊（攻擊 30%）。'],rg:['赤心刀','重擊前排單體（攻擊 300%）並附加【破綻】，目標生命高於 70% 時傷害 +30%。'],
+ async ult(u,X){await ultHit(u,X,{m:3.0,mt:(t,m)=>t.hp>t.mhp*.7?m*1.3:m,each:async t=>{if(t.hp>0)addSt(t,'pz',{t:2},u)}})}},
+liaohua:{tal:'def',tn:'老將',ps:['老當益壯','每回合開始攻擊 +4%（最多 +20%）。'],rg:['先鋒破陣','攻擊敵方一整欄（攻擊 190%），命中者 30% 機率【破綻】。'],
  rStart(u){if(hasSk(u,'ps')&&(u.X.lzh||0)<5){u.X.lzh=(u.X.lzh||0)+1;u.atk*=1+.04*otK(u)}},
- async ult(u,X){await ultHit(u,X,{m:1.5})}},
+ async ult(u,X){await ultHit(u,X,{m:1.9,each:async t=>{if(t.hp>0&&cc(u,.3))addSt(t,'pz',{t:2},u)}})}},
 maliang:{ps:['白眉','治療有 30% 機率效果 ×1.5。'],rg:['妙計安民','我方全體回復攻擊 110% 的生命，生命最低者再獲得攻擊 100% 的護盾。'],
  hcrit(u){return hasSk(u,'ps')?.3*otK(u):0},
  async ult(u,X){await ultHeal(u,X,{m:1.1});const a=byLowPct(allyA(u))[0];if(a)addShield(a,atkOf(u)*rgK(u)*u.m,2,'',u)}},
-jianyong:{ps:['談笑自若','開場隨機 2 名隊友 +30 怒氣。'],rg:['說降','攻擊敵方全體（攻擊 100%），30% 機率【沉默】。'],
+jianyong:{ps:['談笑自若','開場隨機 2 名隊友 +30 怒氣。'],rg:['說降','攻擊敵方全體（攻擊 120%），40% 機率【沉默】。'],
  start(u){allyA(u).filter(a=>a!==u).sort(()=>Math.random()-.5).slice(0,2).forEach(a=>addRage(a,30*otK(u)))},
- async ult(u,X){await ultHit(u,X,{m:1.0,each:async t=>{if(t.hp>0&&cc(u,.3))addSt(t,'sl',{t:1},u)}})}},
-madai:{rg:['孰敢殺我','攻擊敵方一整排（攻擊 145%），對生命低於 30% 的目標傷害 ×1.5。'],async ult(u,X){await ultHit(u,X,{m:1.45,mt:(t,m)=>t.hp<t.mhp*.3?m*1.5:m})}},
-huangzhong:{tal:'atk',tn:'漢升',ex:['老當益壯','自身每損失 10% 生命，攻擊傷害 +3%（最多 +30%）。'],ps:['百步穿楊','普攻改射生命最低的敵人；對生命低於 50% 的目標傷害 +20%。'],rg:['定軍斬將','狙擊生命最低的敵人（攻擊 280%）；若擊殺，追加一箭射向下一個生命最低的敵人（攻擊 140%）。'],
+ async ult(u,X){await ultHit(u,X,{m:1.2,each:async t=>{if(t.hp>0&&cc(u,.4))addSt(t,'sl',{t:1},u)}})}},
+madai:{rg:['孰敢殺我','攻擊敵方一整排（攻擊 170%），對生命低於 30% 的目標傷害 ×2。'],async ult(u,X){await ultHit(u,X,{m:1.7,mt:(t,m)=>t.hp<t.mhp*.3?m*2:m})}},
+huangzhong:{tal:'atk',tn:'漢升',ex:['老當益壯','自身每損失 10% 生命，攻擊傷害 +3%（最多 +30%）。'],ps:['百步穿楊','普攻改射生命最低的敵人；對生命低於 50% 的目標傷害 +20%。'],rg:['定軍斬將','狙擊生命最低的敵人（攻擊 320%）；若擊殺，追加一箭射向下一個生命最低的敵人（攻擊 140%）。'],
  dmgMod(u,t){let m=1;if(hasSk(u,'ex'))m*=1+Math.min(.3,Math.floor((1-u.hp/u.mhp)*10)*.03)*otK(u);if(hasSk(u,'ps')&&t.hp<t.mhp*.5)m*=1+.2*otK(u);return m},
  baT(u,X){return hasSk(u,'ps')?byLowHp(vis(alive(X.ec)))[0]:front(X.es,X.ec)},
- async ult(u,X){let k=false;await ultHit(u,X,{m:2.8,tgt:'lowHp',each:async t=>{if(t.hp<=0)k=true}});if(k&&u.hp>0){const t=byLowHp(vis(foeA(u)))[0];if(t){LBL(u,'追魂箭','fx-n');await fly(X.c,cellOf(t),'snipe');await hit(u,t,1.4*rgK(u)*u.m,{fx:'fx-n',kind:'sk'})}}}},
+ async ult(u,X){let k=false;await ultHit(u,X,{m:3.2,tgt:'lowHp',each:async t=>{if(t.hp<=0)k=true}});if(k&&u.hp>0){const t=byLowHp(vis(foeA(u)))[0];if(t){LBL(u,'追魂箭','fx-n');await fly(X.c,cellOf(t),'snipe');await hit(u,t,1.4*rgK(u)*u.m,{fx:'fx-n',kind:'sk'})}}}},
 /* ---------- 魏 ---------- */
 caocao:{tal:'atk',tn:'魏武',ex:['挾天子以令諸侯','每回合開始令敵方攻擊最高者【沉默】（無法放怒氣技能），同一人不會連續兩回合。'],ps:['寧我負人','敵人每被我方控制 1 次，曹操攻擊 +5%（最多 +30%）。'],rg:['天下歸心','攻擊敵方全體（攻擊 120%），對凍結中的敵人改為 200%；我方魏國武將 +25 怒氣。'],
  rStart(u){if(!hasSk(u,'ex'))return;const t=byHiAtk(foeA(u)).find(x=>x!==u.X.slT);if(t){u.X.slT=t;addSt(t,'sl',{t:1},u)}},
@@ -1944,7 +1944,7 @@ function spawn(c,cls,txt,ex){if(!c)return;const f=document.createElement('div');
  if(txt!=null){const n=document.createElement('div');n.className='num '+(ex||'');n.textContent=txt;c.appendChild(n);setTimeout(()=>n.remove(),1000)}}
 
 /* ===================== 戰鬥引擎 v2（五國平衡版） ===================== */
-const TRC={cb0:.06,cb1:.28,cbMax:.25,fz0:.06,fz1:.16,fzd0:.08,fzd1:.14,bn0:.44,bn1:.52,bd0:.6,bd1:.45,bnT:3,aoeT:.5,twP:.2,swP:.3,tw0:.10,tw1:.30,mg0:.12,mg1:.33,mgD:.3,mgL:.30,basic:.6,res:1.5};
+const TRC={cb0:.10,cb1:.30,cbMax:.35,fz0:.06,fz1:.16,fzd0:.08,fzd1:.14,bn0:.44,bn1:.52,bd0:.6,bd1:.45,bnT:3,aoeT:.5,twP:.2,swP:.3,tw0:.10,tw1:.30,mg0:.12,mg1:.33,mgD:.3,mgL:.30,basic:.6,res:1.5};
 const tpow=u=>{const s=Math.min(5,u.st||0)/5,z=Math.max(0,Math.min(1,((u.q||80)-60)/35));return .5*s+.5*z};
 const fzTurns=k=>k>=.65?2:1;
 const pc=v=>Math.round(v*1000)/10+'%';
@@ -2027,7 +2027,7 @@ async function hit(src,t,mult,o){o=o||{};if(!t||t.hp<=0||has(t,'fx')||(src&&!o.d
  if(o.fix!=null){d=o.fix*(has(t,'qx')?.85:1)*(1-auraSum(t,'fixr'))}
  else{d=atkOf(src)*mult*(.92+Math.random()*.16);crit=o.crit!=null?o.crit:Math.random()<critOf(src)+stV(src,'by')+(sk(src).critB?sk(src).critB(src,t)||0:0);
   if(crit)d*=1.5+(src.cdb||0)+stV(src,'cdu');if(crit&&t.boss&&t.wbk==='ns')d*=1.3;
-  let db=1+(src.db||0)+(src.X.sgDb||0)+(src.X.zmDb||0)+auraSum(src,'db')+(o.kind==='fu'?src.X.fuDb||0:0)+stV(src,'by')+(o.kind==='sk'?stV(src,'qmu'):0)+(src.X.wei4&&isCtl(t)?.15:0);if(sk(src).dmgMod)db*=sk(src).dmgMod(src,t,o)||1;d*=db;
+  let db=1+(src.db||0)+(src.X.sgDb||0)+(src.X.shuDb||0)+(src.X.zmDb||0)+auraSum(src,'db')+(o.kind==='fu'?src.X.fuDb||0:0)+stV(src,'by')+(o.kind==='sk'?stV(src,'qmu'):0)+(src.X.wei4&&isCtl(t)?.15:0);if(sk(src).dmgMod)db*=sk(src).dmgMod(src,t,o)||1;d*=db;
   d*=takeMul(t)*(1-rdOf(t))*ruleMul(t,o.fx||'fx-s')*pzMul(src,t)*(CAOE&&has(t,'hid')?.75:1);if(sk(t).takeMod)d*=sk(t).takeMod(t,src,o)||1}
  if(direct&&sk(t).dodge&&sk(t).dodge(t,src)){LBL(t,'幻影','fx-h','g');return 0}
  if(src.X&&src.X.hfJm&&t.hp<t.mhp*.3)d*=1+src.X.hfJm;if(src.X&&src.X.exe&&t.hp<t.mhp*.3)d*=1+src.X.exe;if(src.X&&src.X.frontD&&isFront(t))d*=1+src.X.frontD;d=Math.max(1,d*(src.f&&BAL[src.f]||1));if(direct){src.X.lt=t;facFx(c,src.f,crit)}
@@ -2159,9 +2159,9 @@ async function roundEndV2(){let any=false;
  if(any)await sleep(420)}
 let DELAYQ=[];
 /* 開場 */
-const FT={蜀:['連擊機率 +5%','追擊傷害 +15%','每次追擊回復 3% 生命'],魏:['冰凍機率 +5%','對被控制的敵人傷害 +15%','冰凍與恫嚇多持續 1 次行動'],吳:['速度 +8%','灼燒傷害 +25%','灼燒可疊 2 層，開場 +30 怒氣'],神:['天威機率 +5%','天威傷害 +35%','天威上限 4 層、觸發上限 +1'],魔:['魔蠱吸血 +10%','魔蠱傷害 +25%','生命低於 50% 時所有傷害吸血 15%']};
+const FT={蜀:['連擊機率 +5%','追擊傷害 +15%、所有傷害 +15%','每次追擊回復 3% 生命'],魏:['冰凍機率 +5%','對被控制的敵人傷害 +15%','冰凍與恫嚇多持續 1 次行動'],吳:['速度 +8%','灼燒傷害 +25%','灼燒可疊 2 層，開場 +30 怒氣'],神:['天威機率 +5%','天威傷害 +35%','天威上限 4 層、觸發上限 +1'],魔:['魔蠱吸血 +10%','魔蠱傷害 +25%','生命低於 50% 時所有傷害吸血 15%']};
 function facTier(arr){const y=synergy(arr);arr.forEach(u=>{if(!u)return;const n=y.cnt[u.f]||0,X=u.X;if(n<2)return;const t4=n>=4,t6=n>=6;
- if(u.f==='蜀'){X.cbB=.05;if(t4)X.fuDb=(X.fuDb||0)+.15;if(t6)X.shu6=1}
+ if(u.f==='蜀'){X.cbB=.05;if(t4){X.fuDb=(X.fuDb||0)+.15;X.shuDb=.15}if(t6)X.shu6=1}
  else if(u.f==='魏'){X.fzB=(X.fzB||0)+.05;if(t4)X.wei4=1;if(t6)X.wei6=1}
  else if(u.f==='吳'){u.spd=Math.round(u.spd*1.08);if(t4)X.bnB=(X.bnB||0)+.25;if(t6){X.bn2=1;u.rage+=30}}
  else if(u.f==='神'){X.twB=(X.twB||0)+.05;if(t4)X.twM=1.35;if(t6)X.tw6=1}
@@ -4182,7 +4182,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261101i';
+const CVER='20261101j';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}try{FAME=JSON.parse(localStorage.getItem('sgFame')||'null')}catch(e){}fameDraw();cityImgs();cityBind();{let n=0;const go=()=>{cityLayout();const so=document.querySelector('.csoc');if((so&&so.offsetHeight)||n++>30)$('cBlds').classList.add('rdy');else requestAnimationFrame(go)};go()}try{document.fonts.ready.then(()=>cityLayout())}catch(e){}
  let wasC=document.body.classList.contains('city');new MutationObserver(()=>{const c=document.body.classList.contains('city');if(c&&!wasC){const B=$('cBlds');B.classList.remove('rdy');requestAnimationFrame(()=>{cityLayout();requestAnimationFrame(()=>B.classList.add('rdy'))})}wasC=c}).observe(document.body,{attributes:true,attributeFilter:['class']});
@@ -4323,10 +4323,10 @@ function sceneBind(){$('scn').onclick=e=>{const t=e.target.closest('[data-c]');i
 /* ===================== 建議陣容（範本＋幫我配＋新手小教室） ===================== */
 // p：九宮格位置（0–2 前排、3–5 中排、6–8 後排）
 const REC=[
- {n:'五虎追擊',f:'蜀',st:5,idea:'五虎上將湊滿五人，蜀國追擊一回合連打好幾下，劉備在後排補血。模擬中蜀國最強。',u:[['guanyu',0],['zhangfei',1],['zhaoyun',2],['machao',4],['huangzhong',6],['liubei',7]],qm:'xsdr',tip:'五虎 5 人開場各 +30 怒氣，再配「先聲奪人」，第一回合就能連放大招。',win:97,rd:7.3,use:'推圖、競技場都強',sub:'缺黃忠用馬雲祿；缺劉備用諸葛亮'},
- {n:'雙補鐵壁',f:'蜀',st:4,idea:'張飛嘲諷擋前排，劉備、諸葛亮雙補不倒，關羽、馬超、馬雲祿慢慢打穿。',u:[['zhangfei',1],['mayunlu',0],['machao',2],['guanyu',4],['liubei',6],['zhugeliang',8]],qm:'qlfb',tip:'打不過的高層用這組最穩；「潛龍伏波」讓快倒的人再撐一下。',win:90,rd:9.5,use:'高層爬塔、妖獸討伐',sub:'缺諸葛亮用馬良'},
- {n:'西涼鐵騎',f:'蜀',st:4,idea:'西涼馬家每多一人速度更快，搶先出手；張飛在前排嘲諷，趙雲收割殘血。',u:[['zhangfei',1],['machao',0],['mayunlu',2],['madai',4],['zhaoyun',3],['liubei',7]],qm:'xsdr',tip:'馬家 3 人速度 +9%，常常比敵人先動。',win:87,rd:9.8,use:'競技場搶先手',sub:'缺馬岱用關羽'},
- {n:'桃園臥龍',f:'蜀',st:3,idea:'桃園結義＋臥龍出山兩組羈絆，張飛擋前排，劉備、諸葛亮雙補，穩紮穩打。',u:[['zhangfei',1],['guanyu',0],['zhaoyun',2],['xushu',6],['liubei',7],['zhugeliang',8]],qm:'gbyz',tip:'徐庶開場替諸葛亮加 50 怒氣，治療大招更早出現。',win:73,rd:10.4,use:'新手過渡',sub:'徐庶可換成馬超，勝率更高'},
+ {n:'五虎追擊',f:'蜀',st:5,idea:'五虎上將湊滿五人，蜀國追擊一回合連打好幾下，劉備在後排補血。',u:[['guanyu',0],['zhangfei',1],['zhaoyun',2],['machao',4],['huangzhong',6],['liubei',7]],qm:'xsdr',tip:'五虎 5 人開場各 +30 怒氣，再配「先聲奪人」，第一回合就能連放大招。',win:93,rd:6,use:'推圖、競技場都強',sub:'缺黃忠用馬雲祿；缺劉備用諸葛亮'},
+ {n:'雙補鐵壁',f:'蜀',st:4,idea:'張飛嘲諷擋前排，劉備、諸葛亮雙補不倒，關羽、馬超、馬雲祿慢慢打穿。',u:[['zhangfei',1],['mayunlu',0],['machao',2],['guanyu',4],['liubei',6],['zhugeliang',8]],qm:'qlfb',tip:'打不過的高層用這組最穩；「潛龍伏波」讓快倒的人再撐一下。',win:83,rd:7.6,use:'高層爬塔、妖獸討伐',sub:'缺諸葛亮用馬良'},
+ {n:'西涼鐵騎',f:'蜀',st:4,idea:'西涼馬家每多一人速度更快，搶先出手；張飛在前排嘲諷，趙雲收割殘血。',u:[['zhangfei',1],['machao',0],['mayunlu',2],['madai',4],['zhaoyun',3],['liubei',7]],qm:'xsdr',tip:'馬家 3 人速度 +9%，常常比敵人先動。',win:87,rd:7.7,use:'競技場搶先手',sub:'缺馬岱用關羽'},
+ {n:'桃園臥龍',f:'蜀',st:3,idea:'桃園結義＋臥龍出山兩組羈絆，張飛擋前排，劉備、諸葛亮雙補，穩紮穩打。',u:[['zhangfei',1],['guanyu',0],['zhaoyun',2],['xushu',6],['liubei',7],['zhugeliang',8]],qm:'gbyz',tip:'徐庶開場替諸葛亮加 50 怒氣，治療大招更早出現。',win:87,rd:8.4,use:'新手過渡',sub:'徐庶可換成馬超，勝率更高'},
  {n:'魏國速攻',f:'魏',st:5,idea:'曹操、郭嘉、辛憲英、司馬懿四個群攻輪流轟炸，凍結加沉默讓敵人動不了。',u:[['xiahoudun',1],['caocao',4],['xiahouyuan',3],['guojia',6],['simayi',7],['xinxianying',8]],qm:'smcg',tip:'沒有補師，靠控場讓敵人沒機會出手，平均 6 回合結束。',win:90,rd:6.1,use:'推圖、競技場',sub:'缺夏侯淵用曹仁'},
  {n:'謀士連控',f:'魏',st:4,idea:'曹魏謀士羈絆讓控制機率更高，郭嘉凍結、司馬懿偷怒氣，敵人大招放不出來。',u:[['xuchu',1],['caoren',0],['zhenmi',4],['guojia',6],['simayi',7],['xunyou',8]],qm:'smcg',tip:'謀士越多控制機率越高；甄宓補血兼護盾。',win:87,rd:9.7,use:'打大招型敵人',sub:'缺荀攸用辛憲英'},
  {n:'冰封控場',f:'魏',st:4,idea:'曹操對凍結的敵人傷害翻倍，夏侯惇、曹仁雙坦克，司馬懿、甄宓支援。',u:[['xiahoudun',1],['caoren',0],['zhangliao',2],['caocao',4],['simayi',6],['zhenmi',7]],qm:'qszh',tip:'魏 4 人起對被控制的敵人傷害 +15%，先控再打。',win:83,rd:9.9,use:'穩定推圖',sub:'缺張遼用許褚'},
@@ -4417,11 +4417,11 @@ function recBind(){$('rcBody').onchange=e=>{const t=e.target;if(t.dataset.tq){co
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261101j',d:'11/01',t:['蜀國加強：陣營特性連擊機率提高（上限 25%→35%），蜀 4 人起所有傷害 +15%','廖化（190%＋破綻）、關平（300%＋破綻）、馬岱（170%，殘血 ×2）、張星彩（165%，恫嚇 45%）、簡雍（120%，沉默 40%）、徐庶（300%）、黃忠（320%）技能數值提高','模擬結果：蜀國隨機陣容勝率約 25%→45%，五虎追擊維持約 93%']},
  {v:'20261101i',d:'11/01',t:['建議陣容擴充到 21 組（蜀、魏、吳、神、魔各 3～5 組＋混搭），可依陣營篩選，每組附模擬勝率、平均回合、適合時機與替代人選','建議陣容新增「⚗️ 試煉場」：選我方與對手陣容，背景快速模擬 10～40 場，列出每位武將的平均貢獻、輸出、治療、承傷','新增 8 組羈絆，讓原本沒有羈絆的武將也有搭配：荊州忠義、蜀漢文臣、江東宿將、神將降世、西涼舊將、三讓徐州、司馬夫婦、冀州上將','修正主城按 × 收起再展開時，圓圖和左側按鈕重疊']},
  {v:'20261101h',d:'11/01',t:['管理員可在「設置」匯出全部上傳圖片（每項票選第一的圖，打包成 zip）','玩家上傳的圖已全部備份進遊戲資料夾（每週日自動再備份一次），並當作內建預設圖：連不上伺服器時也會顯示這些圖']},
  {v:'20261101g',d:'11/01',t:['武將卡下方的提示改成顯示真正原因：可升級／可升星／可換裝備／可裝符石','沒上陣但可以升級的武將，顯示灰色 ⬆；武將列表上方說明紅點規則','經驗丹不足時，培養頁會提示並可前往經驗塔或商城','修正競技場「段位」等分頁的紅點跑到畫面右上角的問題']},
- {v:'20261101f',d:'11/01',t:['修正主城「天下第一」出現後五個圓圖縮小跳動的問題（預先保留位置，並記住上次的第一名）','修正主城好友／排行／圖鑑按鈕有時擋到奇謀、豪傑書','試煉塔有多張物品圖時，改成在塔前中央輪流淡入淡出']},
- {v:'20261101e',d:'11/01',t:['試煉塔畫面：名將塔輪播大家上傳的武將圖；裝備塔用上傳的高品階裝備圖示；虎符、金幣、經驗、寶石塔放上專屬物品圖（自動去掉白底，只有 1 張時會在塔前輕輕浮動）']}];
+ {v:'20261101f',d:'11/01',t:['修正主城「天下第一」出現後五個圓圖縮小跳動的問題（預先保留位置，並記住上次的第一名）','修正主城好友／排行／圖鑑按鈕有時擋到奇謀、豪傑書','試煉塔有多張物品圖時，改成在塔前中央輪流淡入淡出']}];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
 function verShow(L,isNew){const d=document.createElement('div');d.className='bgp vmod';d.innerHTML=`<div class="bgpp vpp"><div class="vh">${isNew?'版本更新':'更新紀錄'}</div><div class="vl">${pager(L.map(c=>`<div class="vc"><b>墨戰三國 v${c.v}</b><small>${c.d}</small><ul>${c.t.map(x=>`<li>${x}</li>`).join('')}</ul></div>`),'vpg')}</div>
