@@ -3088,7 +3088,7 @@ function setMode(m,tk){if(busy||AUTOC)return;OPP.fr=null;MODE=m;if(tk)TK=tk;FLOO
  $('dsel').classList.toggle('hide',MODE!=='pvp');reset()}
 const defS=()=>({dl:null,fl:0,bp:0,wc:0,lv:{},test:false,coins:0,login:'',inv:[],uid:1,own:null,star:{},cp:{},pill:300,pity:0,p10:0,pts:0,born:'',nd:'',lord:{n:'',f:'',l:1,e:0},d:{day:'',pvp:0,pull:0},tw:{exp:{f:0,end:false},eq:{f:0,end:false},gold:{f:0,end:false},frag:{f:0,end:false},harem:{f:0,end:false},hf:{f:0,end:false},gem:{f:0,end:false}},frag:{n:0,M:0}});
 let S=(()=>{const d=defS();try{return Object.assign(d,JSON.parse(localStorage.getItem('sgSave')||'{}'))}catch(e){return d}})();
-const saveS=()=>{try{localStorage.setItem('sgSave',JSON.stringify(S))}catch(e){}cloudKick()};
+let LASTC=null;const saveS=()=>{try{localStorage.setItem('sgSave',JSON.stringify(S))}catch(e){}cloudKick();try{const c=S.coins||0;if(LASTC!=null&&c>LASTC&&!(SKIP&&busy))coinSnd(c-LASTC);LASTC=c}catch(e){}};
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
 const LV=id=>{const r=(S.lv[id]&&S.lv[id].l)||1;return S.hj&&S.hj.sl.includes(id)?Math.max(r,hjLv()):r},NEED=l=>Math.round(30+6*l+(l>60?.25*(l-60)*(l-60):0)),MAXLV=350,LVBRK=10,MAXLV2=MAXLV+10*LVBRK,maxLvOf=id=>MAXLV+LVBRK*((S.brk||{})[id]||0);
 const avgLv=()=>{const a=pl.filter(Boolean);return a.length?Math.max(1,Math.round(a.reduce((s,u)=>s+u.lv,0)/a.length)):1};
@@ -4001,6 +4001,12 @@ function trEnemies(k,tier){const B=trBase(k==='frag'?(tier+1)/2:tier),E=Array(9)
  return E}
 const TRHC={};const trHp=(k,tier)=>{const key=today()+k+tier;if(TRHC[key])return TRHC[key];const E=trEnemies(k,tier);return TRHC[key]=E.filter(Boolean).reduce((s,u)=>s+u.mhp,0)};
 /* 試煉敵人的行動 */
+/* 魂器音效：刀劍互擊（金屬泛音）＋戰場（戰鼓、喊殺） */
+function clang(v,t0){const a=au();if(!a||MUTE)return;v=v||.18;const n=a.currentTime+(t0||0),f=900+Math.random()*700;[1,2.76,5.4,8.93].forEach((m,i)=>{const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.value=f*m;g.gain.setValueAtTime(v/(i+1),n);g.gain.exponentialRampToValueAtTime(.0005,n+.5+.3/(i+1));o.connect(g);g.connect(a.destination);o.start(n);o.stop(n+.9)});noise(.05,6000,3000,v*1.4,t0)}
+function battleSnd(){for(let i=0;i<3;i++)tone(80,45,.35,'sine',.35,i*.28);noise(1.2,400,700,.12,.1);[0,.15,.42,.6].forEach(t=>clang(.1,t+.2))}
+let WSN=0;function weaponSnd(u,an){if(MUTE||SKIP||!u||!u.wk)return;const n=Date.now();if(an==='aoe'||n-WSN>5000){WSN=n;battleSnd()}const k=u.wk[0];if(k==='w'){clang(.22);clang(.16,.12);if(an==='aoe')clang(.2,.3)}else if(k==='a'){tone(140,90,.3,'square',.12);clang(.12,.05)}else if(k==='b'){[0,.1,.2,.3].forEach(t=>tone(160,120,.08,'square',.12,t));noise(.4,800,300,.12)}else{tone(660,1320,.5,'sine',.08);clang(.12,.1);noise(.5,3000,6000,.08)}}
+/* 金幣入帳：錢幣叮噹掉落 */
+let CSNT=0;function coinSnd(amt){if(MUTE)return;const n=Date.now();if(n-CSNT<600)return;CSNT=n;const k=Math.min(9,3+Math.floor(Math.log10(Math.max(10,amt))));let t=0;for(let i=0;i<k;i++){const f=2400+Math.random()*1600;tone(f,f*.98,.12,'sine',.07,t);tone(f*1.5,f*1.48,.08,'sine',.035,t+.005);t+=.05+Math.random()*.07}noise(.06,5000,7000,.05,t)}
 /* 妖獸音效：嘶吼（低頻鋸齒波＋顫音＋噪音），依屬性加噴火、雷鳴、水浪、風嘯 */
 function roar(v,len){const a=au();if(!a||MUTE)return;v=v||.35;len=len||1.1;const n=a.currentTime,o=a.createOscillator(),o2=a.createOscillator(),lf=a.createOscillator(),lg=a.createGain(),g=a.createGain(),fl=a.createBiquadFilter();
  o.type='sawtooth';o2.type='square';o.frequency.setValueAtTime(70,n);o.frequency.linearRampToValueAtTime(130,n+len*.25);o.frequency.exponentialRampToValueAtTime(45,n+len);o2.frequency.setValueAtTime(52,n);o2.frequency.exponentialRampToValueAtTime(34,n+len);
@@ -4014,7 +4020,7 @@ let BST=0;function beastSnd(u,an){if(MUTE||SKIP||!u||!u.wbk)return;const n=Date.
 function gCol(u){const c=cellOf(u),cd=c&&c.querySelector('.card');const v=cd&&getComputedStyle(cd).getPropertyValue('--fa').trim();return v||'#ff5a2a'}
 function gCtr(el){const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2,r]}
 function gEl(cls,css){const d=document.createElement('div');d.className=cls;Object.assign(d.style,css);document.body.appendChild(d);return d}
-async function gfx(u,ts,an){if(SKIP)return;const rows=new Set(ts.filter(Boolean).map(t=>Math.floor(pl.indexOf(t)/3)));an=an||(ts.length>=3&&rows.size>1?'aoe':ts.length>=2&&rows.size===1?'row':'single');if(u&&u.wbk&&an!=='bolt')beastSnd(u,an);if(ANIM==='off')return;const c=cellOf(u);if(!c)return;const col=gCol(u),[ux,uy]=gCtr(c),T=ts.filter(t=>t&&t.hp>0).map(t=>cellOf(t)).filter(Boolean);if(!T.length)return;
+async function gfx(u,ts,an){if(SKIP)return;const rows=new Set(ts.filter(Boolean).map(t=>Math.floor(pl.indexOf(t)/3)));an=an||(ts.length>=3&&rows.size>1?'aoe':ts.length>=2&&rows.size===1?'row':'single');if(u&&u.wbk&&an!=='bolt')beastSnd(u,an);if(u&&u.wk)weaponSnd(u,an);if(ANIM==='off')return;const c=cellOf(u);if(!c)return;const col=gCol(u),[ux,uy]=gCtr(c),T=ts.filter(t=>t&&t.hp>0).map(t=>cellOf(t)).filter(Boolean);if(!T.length)return;
  const cd=c.querySelector('.card');
  if(an==='aoe'){cd&&cd.animate([{transform:'scale(1)',filter:'brightness(1)'},{transform:'scale(1.1)',filter:'brightness(1.8)'},{transform:'scale(1)',filter:'brightness(1)'}],{duration:520});
   for(let i=0;i<3;i++){const g=gEl('gshock',{left:ux+'px',top:uy+'px','--gc':col});g.animate([{transform:'translate(-50%,-50%) scale(.2)',opacity:1},{transform:'translate(-50%,-50%) scale(7)',opacity:0}],{duration:700,delay:i*110,easing:'cubic-bezier(.2,.7,.3,1)',fill:'both'}).onfinish=()=>g.remove()}
@@ -4082,7 +4088,7 @@ async function trAct(u){const P=()=>alive(pl),A=()=>alive(en),rnd1=()=>{const L=
    case 'ac6':{const L=P().sort(()=>Math.random()-.5).slice(0,2);L.forEach(t=>addSt(t,'fz',{t:1,v:.12},u));await hitT(P(),.45)}break;
    default:await hitT([front('p',pl)],1.2)}}
  u.rage=0;upd(u)}
-async function trRound(){if(!OPP||!OPP.tr)return;const k=OPP.tr.k;if(k==='hf'&&ROUND===1&&!SKIP){const u=en.find(x=>x&&x.wbk);if(u){BST=0;beastSnd(u,'aoe')}}if(k==='frag'&&ROUND===1){const u=en.find(x=>x&&x.trv);if(u){HST=0;heroSay(u)}}if(k==='harem'&&ROUND===1){const u=en.find(x=>x&&x.trk==='bea');if(u){const L=BSAY[u.bk]||['主公～'];beaSay(L[Math.floor(Math.random()*L.length)]);BVT=Date.now()+2500}}if(k==='frag'){const u=en.find(x=>x&&x.trv&&x.hp>0);if(!u)return;if(u.trv==='sj'&&!u.X.sh0){u.X.sh0=1;addShield(u,u.mhp*.15,99,'sj',u);LBL(u,'神將護體','fx-h','g')}if(u.trv==='mh'&&!u.X.rg&&u.hp<u.mhp*.5){u.X.rg=1;u.atk=Math.round(u.atk*1.6);LBL(u,'魔化狂暴','fx-c')}return}if(k!=='eq')return;const W=en.filter(x=>x&&x.trk==='wpn'),dead=W.filter(x=>x.hp<=0).length;
+async function trRound(){if(!OPP||!OPP.tr)return;const k=OPP.tr.k;if(k==='hf'&&ROUND===1&&!SKIP){const u=en.find(x=>x&&x.wbk);if(u){BST=0;beastSnd(u,'aoe')}}if(k==='eq'&&ROUND===1&&!SKIP){WSN=Date.now();battleSnd()}if(k==='frag'&&ROUND===1){const u=en.find(x=>x&&x.trv);if(u){HST=0;heroSay(u)}}if(k==='harem'&&ROUND===1){const u=en.find(x=>x&&x.trk==='bea');if(u){const L=BSAY[u.bk]||['主公～'];beaSay(L[Math.floor(Math.random()*L.length)]);BVT=Date.now()+2500}}if(k==='frag'){const u=en.find(x=>x&&x.trv&&x.hp>0);if(!u)return;if(u.trv==='sj'&&!u.X.sh0){u.X.sh0=1;addShield(u,u.mhp*.15,99,'sj',u);LBL(u,'神將護體','fx-h','g')}if(u.trv==='mh'&&!u.X.rg&&u.hp<u.mhp*.5){u.X.rg=1;u.atk=Math.round(u.atk*1.6);LBL(u,'魔化狂暴','fx-c')}return}if(k!=='eq')return;const W=en.filter(x=>x&&x.trk==='wpn'),dead=W.filter(x=>x.hp<=0).length;
  for(const u of W){if(u.hp<=0)continue;const a=u.aw||0;let m=1;if(a>=5)m*=1+.08*(ROUND-1);if(a>=7&&u.hp<u.mhp*.5){m*=1.5;if(!u.X.rg7){u.X.rg7=1;LBL(u,'魂器狂暴','fx-c')}}u.atk=Math.round(u.atk0*m);
   if(a>=3)heal(u,u,u.mhp*.03,{nob:1,quiet:1});if(u.wk==='ar6'&&ROUND%2===1)addSt(u,'gd',{t:2,n:2},u)}}
 /* 獎勵 */
@@ -4799,7 +4805,7 @@ function recBind(){$('rcBody').onchange=e=>{const t=e.target;if(t.dataset.tq){co
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
- {v:'20261102i',d:'11/02',t:['征戰頁改成跟主城一樣的大圓圈輪播：試煉塔、競技場、切磋；拿掉「關卡對戰」，布陣在武將列表右下角','主城往左滑到征戰頁、往右滑回主城，下方小圓點標示目前頁面','試煉塔入口改成「試煉群峰」地圖，七座山峰各有顏色與光芒，點峰進入','名將試煉改成「名將列傳」：桌上一本本傳記，每天開放一位，10 回合內打倒他就完美通關、隔天開放下一本','百兵之塔改成每天一件超大魂器；四座試煉畫面各不相同：妖獸祭壇＋血條、紅顏月窗燈籠、魂器符文環台座、名將翻開的傳記','巨大敵人出招有不同動畫：全體攻擊爆炸震波、整排橫掃、單體撲擊斬痕、連擊光彈','語音：紅顏開場、被打、放大招時會撒嬌說話；武將放大招時喊一句台詞；妖獸出招有嘶吼聲，再依屬性加噴火、雷鳴、水浪、風嘯等音效（可在設置關閉音效）','每日任務「對戰 3 場」改成「試煉挑戰 3 次」']},
+ {v:'20261102i',d:'11/02',t:['征戰頁改成跟主城一樣的大圓圈輪播：試煉塔、競技場、切磋；拿掉「關卡對戰」，布陣在武將列表右下角','主城往左滑到征戰頁、往右滑回主城，下方小圓點標示目前頁面','試煉塔入口改成「試煉群峰」地圖，七座山峰各有顏色與光芒，點峰進入','名將試煉改成「名將列傳」：桌上一本本傳記，每天開放一位，10 回合內打倒他就完美通關、隔天開放下一本','百兵之塔改成每天一件超大魂器；四座試煉畫面各不相同：妖獸祭壇＋血條、紅顏月窗燈籠、魂器符文環台座、名將翻開的傳記','巨大敵人出招有不同動畫：全體攻擊爆炸震波、整排橫掃、單體撲擊斬痕、連擊光彈','語音：紅顏開場、被打、放大招時會撒嬌說話；武將放大招時喊一句台詞；妖獸出招有嘶吼聲，再依屬性加噴火、雷鳴、水浪、風嘯等音效；魂器出招有刀劍互擊與戰鼓喊殺；拿到金幣會有錢幣叮噹聲（可在設置關閉音效）','每日任務「對戰 3 場」改成「試煉挑戰 3 次」']},
  {v:'20261102h',d:'11/02',t:['妖獸、紅顏、名將三種試煉都改成「一隻超大的」：戰鬥時佔滿整個敵方九宮格，塔前展示也放大','紅顏試煉每天一位紅顏（9 天一輪），每人 3 招：專屬招、群芳亂舞（打全體）輪流出，生命低於一半時放一次大招','名將試煉每天一位名將，分「魔化」（暗紅魔焰、吸血、半血狂暴）與「神將」（金色光環、開場護盾、倒下復活一次）兩種版本，技能跟原本一樣','三種試煉的塔前展示各不相同：妖獸怒吼震波、魔化名將黑焰震動／神將金光旋轉、紅顏緩慢推近加落花']},
  {v:'20261102g',d:'11/02',t:['主城拿掉「妖獸討伐」，改成招募、後宮、奇謀、豪傑書四個圓圈','精魄改由「妖獸試煉」產出：每個寶箱都有精魄，第一次擊倒某隻妖獸再送精魄與專屬稱號','精魄商店與妖獸圖鑑搬到妖獸試煉畫面下方的「🔥 精魄」','妖獸相關的每日任務、每週任務與成就改算妖獸試煉；已在信箱的舊獎勵照樣能領，精魄全部保留']},
  {v:'20261102f',d:'11/02',t:['紅顏塔改成「紅顏試煉」：每天 3 位紅顏帶著專屬技能（魅惑、冰封、疊攻、閃避、護盾、沉默、背水、群療淨化、復活）守關，打出傷害開寶箱拿信物與禮物','裝備塔改成「百兵之塔」：每天 2～3 件神、聖、帝品魂器當王，難度用「覺醒 1～10」表示，覺醒越高魂器多出回復、同鳴、狂暴、減傷等能力；寶箱給高品裝備與突破石，極低機率掉出魂器本體','試煉敵人都有特效：妖獸依屬性有火焰、雷光、水波、旋風、日輪等光環，紅顏有花瓣粉光，魂器有旋轉光芒與閃光','四座試煉塔前的展示各不相同：妖獸怒吼震波、名將三人輪轉、紅顏輪流淡入與落花、魂器環繞旋轉','試煉畫面點「ℹ️ 技能」可以看今天敵人的技能說明']},
