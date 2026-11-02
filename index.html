@@ -2601,8 +2601,8 @@ const dtCan={day:()=>{const D=dts();return DTL.some(x=>!D.got[x.k]&&(D.c[x.k]||0
  sg:()=>{const G=sgs(),t=today();return G.l7!==t||(G.lm!==t&&G.cm<30)},
  ach:()=>ACH.some(a=>{const i=(S.ach||{})[a.k]||0;return i<a.g.length&&a.v()>=a.g[i]})};
 const dtReady=()=>Object.values(dtCan).some(f=>f());
-function rwTxt(o){const kf=v=>v>=1e4?(v/1e4)+'萬':String(v),m={coins:v=>'💰'+kf(v),pill:v=>'🔮'+kf(v),jian:v=>'📜'+v,hfs:v=>'🐯'+v,wbs:v=>'🔥'+v,wc:v=>'🃏'+v,bp:v=>'🎴'+v,gem3:()=>'💎Lv3',hfbox:()=>'🐯寶匣',title:v=>'稱號「'+v+'」',frame:()=>'頭像框'};return Object.keys(o).map(k=>m[k]?m[k](o[k]):'').filter(Boolean).join(' ')}
-function rwGive(o){const x={...o};if(x.pill){S.pill+=x.pill;delete x.pill}if(x.wc){S.wc=(S.wc||0)+x.wc;delete x.wc}if(x.bp){S.bp=(S.bp||0)+x.bp;delete x.bp}const keepF=S.frame;wbGive(x);if(keepF)S.frame=keepF;saveS()}
+function rwTxt(o){const kf=v=>v>=1e4?(v/1e4)+'萬':String(v),m={coins:v=>'💰'+kf(v),pill:v=>'🔮'+kf(v),jian:v=>'📜'+v,hfs:v=>'🐯'+v,wbs:v=>'🔥'+v,wc:v=>'🃏'+v,bp:v=>'🎴'+v,gem3:()=>'💎Lv3',hfbox:()=>'🐯寶匣',M:v=>'🟠名將碎片'+v,title:v=>'稱號「'+v+'」',frame:()=>'頭像框'};return Object.keys(o).map(k=>m[k]?m[k](o[k]):'').filter(Boolean).join(' ')}
+function rwGive(o){const x={...o};if(x.pill){S.pill+=x.pill;delete x.pill}if(x.wc){S.wc=(S.wc||0)+x.wc;delete x.wc}if(x.bp){S.bp=(S.bp||0)+x.bp;delete x.bp}if(x.M){frg().M+=x.M;delete x.M}const keepF=S.frame;wbGive(x);if(keepF)S.frame=keepF;saveS()}
 function dtClaim(kind,key){const D=dts(),W=wks(),G=sgs(),t=today();
  if(kind==='dt'){const x=DTL.find(y=>y.k===key);if(!x||D.got[x.k]||(D.c[x.k]||0)<x.g)return 0;const b0=dtAct();D.got[x.k]=1;if(b0<100&&dtAct()>=100&&!D.f100){D.f100=1;W.c.d100=(W.c.d100||0)+1}return '+'+x.a}
  if(kind==='db'){const b=DTB.find(y=>y.a===+key);if(!b||D.box[b.a]||dtAct()<b.a)return 0;D.box[b.a]=1;rwGive(b.o);return rwTxt(b.o)}
@@ -3141,7 +3141,7 @@ async function mailClaim(id){try{const{data,error}=await SB.rpc('mail_claim',{p_
 async function mailClick(e){const b=e.target.closest('[data-m]');if(!b||b.disabled)return;const k=b.dataset.m;if(k==='x'){$('mlv').classList.remove('on');mailDot();render();return}
  if(k==='o'){const m=MAIL.list.find(x=>x.id===+b.dataset.i);if(!m)return;askBox(esc(m.title),`<div style="text-align:left;font-size:15px;line-height:1.6">${esc(m.body||'')}</div><div style="margin-top:8px;color:#ffd27a;font-weight:900">${rwTxt(m.reward||{})}</div>`,m.claimed?[['已領取',()=>{},'g']]:[['領取',async()=>{const r=await mailClaim(m.id);if(r){sfx('claim');toast('獲得 '+rwTxt(r));mailDraw();mailDot()}},'actgo'],['稍後',()=>{},'g']]);return}
  if(k==='all'){const L=MAIL.list.filter(m=>!m.claimed);const got=[];for(const m of L){const r=await mailClaim(m.id);if(r)got.push(rwTxt(r))}if(got.length){sfx('claim');askBox('一鍵領取',`領取了 ${got.length} 封：<br>${got.join('<br>')}`,[['好',()=>{},'actgo']])}mailDraw();mailDot()}}
-let STICKED=false;async function seasonTick(){if(STICKED||!SB||!ME)return;STICKED=true;try{await SB.rpc('season_tick')}catch(e){}mailLoad()}
+let STICKED=false;async function seasonTick(){if(STICKED||!SB||!ME)return;STICKED=true;try{await SB.rpc('season_tick')}catch(e){}try{await SB.rpc('trial_tick')}catch(e){}mailLoad()}
 function finish(){if(TRIAL)return;document.body.classList.remove('bt');const win=scWin(),b=$('bAgain');let msg='',rs='';
  if(MODE==='pvp'&&OPP.tr){msg=win?'試 煉 成 功':'試 煉 結 束';rs=trResult();b.textContent='返回';NEXT=0}
  else if(MODE==='pvp'&&OPP.wb){msg=win?'討 伐 成 功':'討 伐 結 束';rs=`👹 妖獸討伐：${esc(OPP.name)}<br><span id="wbRes">結算中…</span>`;b.textContent='返回';NEXT=0;setTimeout(()=>wbReport(),50)}
