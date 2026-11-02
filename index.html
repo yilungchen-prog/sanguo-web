@@ -70,7 +70,7 @@
 .twbea i.sq{aspect-ratio:1!important}
 .twbea i.oc{left:12%;top:28%;width:76%;z-index:2}
 .pup{position:absolute;right:3px;top:3px;font-style:normal;font:900 15px/24px 'LXGW WenKai TC',serif;min-width:26px;height:26px;padding:0 4px;box-sizing:border-box;text-align:center;border-radius:13px;background:#5a5f66ee;color:#f2f2f2;border:2px solid #c8c8c8;box-shadow:0 0 6px #000;z-index:3;white-space:nowrap}
-.ptags{position:absolute;left:3px;top:34%;display:flex;flex-direction:column;gap:3px;z-index:3;pointer-events:none}.ptags em{width:24px;height:24px;border-radius:50%;font-style:normal;text-align:center;box-sizing:border-box;box-shadow:0 0 5px #000}.phj{background:#000c;border:1px solid #ffd27a;font-size:14px;line-height:22px}.pdep{background:#b0261cee;border:1px solid #ffd27a;color:#fff;font:900 13px/22px 'LXGW WenKai TC',serif}
+.ptags{position:absolute;left:3px;top:34%;display:flex;flex-direction:column;gap:3px;z-index:3;pointer-events:none}.ptags em{width:24px;height:24px;border-radius:50%;font-style:normal;text-align:center;box-sizing:border-box;box-shadow:0 0 5px #000}.phj{background:#000c;border:1px solid #ffd27a;font-size:14px;line-height:22px}.pdep{background:radial-gradient(circle,#e8321c,#8a0e08)!important;border:2px solid #ffe27a!important;color:#fff;font:900 14px/22px 'LXGW WenKai TC',serif;box-shadow:0 0 0 2px #ff9a2a,0 0 10px 3px #ffd24acc;animation:pdepg 1.6s ease-in-out infinite alternate}@keyframes pdepg{from{box-shadow:0 0 0 2px #ff9a2a,0 0 6px 2px #ffd24a99}to{box-shadow:0 0 0 2px #ffc24a,0 0 14px 5px #ffd24aee}}
 .hnote{display:block;font-size:11px;opacity:.7;font-weight:400;white-space:normal}.pillno{margin-top:8px;padding:8px;border-radius:10px;background:#5a1a1022;border:1px solid #c0392b88;color:#ffb0a0;font-size:14px;display:flex;align-items:center;gap:8px;justify-content:space-between}.pillno button{flex:none!important;width:auto!important;padding:6px 12px!important;min-height:0!important}
 button[data-dot]:not(.ccir):not(.cic):not(.cmed):not(.cfame):not(#nvBar):not(.tchip){position:relative}
 #cBlds .ccir{transition:opacity .25s,transform .15s,left .3s,top .3s,width .3s,height .3s}
@@ -1159,7 +1159,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261103a</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261103b</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -1955,11 +1955,11 @@ function render(){
 
 const heroUpG=id=>!!S.own[id]&&!heroDot(id)&&!isDep(id)&&(canLv(id)||canBrk(id));
 function fillPool(pp){const PW={};H.forEach(h=>PW[h.id]=powOf(h));const paged=pp.id==='hpool';
- const list=H.filter(h=>PF==='all'||h.f===PF).sort((a,b)=>(!!S.own[b.id]-!!S.own[a.id])||(heroDot(b.id)-heroDot(a.id))||(heroUpG(b.id)-heroUpG(a.id))||PW[b.id]-PW[a.id]);const st=pp.parentNode.parentNode.scrollTop;pp.innerHTML='';let secs=null;if(paged){HORD=list.map(h=>h.id);const n=Math.ceil(list.length/16);pp.innerHTML=pager(Array(Math.max(1,n)).fill(''),'hpg','hero'+PF);secs=[...pp.querySelectorAll('section')]}let ix=0;
+ const list=H.filter(h=>PF==='all'||h.f===PF).sort((a,b)=>(!!S.own[b.id]-!!S.own[a.id])||(!!isDep(b.id)-!!isDep(a.id))||(!!inHJ(b.id)-!!inHJ(a.id))||PW[b.id]-PW[a.id]);const st=pp.parentNode.parentNode.scrollTop;pp.innerHTML='';let secs=null;if(paged){HORD=list.map(h=>h.id);const n=Math.ceil(list.length/16);pp.innerHTML=pager(Array(Math.max(1,n)).fill(''),'hpg','hero'+PF);secs=[...pp.querySelectorAll('section')]}let ix=0;
  list.forEach(h=>{const has=!!S.own[h.id];const e=document.createElement('div');e.className='pc'+(has?'':' lock')+(has&&starReady(h.id)==2?' ready':'');
-  e.appendChild(cardEl(h,true));e.insertAdjacentHTML('beforeend',has?(heroDot(h.id)?`<i class="pdot">!</i><em class="pwhy">${heroWhy(h.id)}</em>`:(heroUpG(h.id)?`<i class="pup">${canBrk(h.id)?'突破':'⬆'}</i>`:''))+((isDep(h.id)||inHJ(h.id))?`<div class="ptags">${isDep(h.id)?'<em class="pdep">陣</em>':''}${inHJ(h.id)?'<em class="phj">📖</em>':''}</div>`:'')+(ugcIsNew('hero',h.id)?'<em class="pnew">🎨 新圖</em>':''):'<div class="st">未獲得</div>');
+  e.appendChild(cardEl(h,true));e.insertAdjacentHTML('beforeend',has?(heroDot(h.id)?`<i class="pdot">!</i><em class="pwhy">${heroWhy(h.id)}</em>`:(heroUpG(h.id)?`<i class="pup">${canBrk(h.id)?'突破':'⬆'}</i>`:''))+((isDep(h.id)||inHJ(h.id))?`<div class="ptags">${isDep(h.id)?'<em class="pdep">戰</em>':''}${inHJ(h.id)?'<em class="phj">📖</em>':''}</div>`:'')+(ugcIsNew('hero',h.id)?'<em class="pnew">🎨 新圖</em>':''):'<div class="st">未獲得</div>');
   e.onclick=()=>{if(!busy)openHero(h.id)};(secs?secs[Math.floor(ix/16)]:pp).appendChild(e);ix++});if(paged)requestAnimationFrame(()=>pgRestore(pp));
- {const ds=H.filter(h=>heroDot(h.id)),ns=ds.filter(h=>starReady(h.id)===2).length;$('hCnt').innerHTML=`已獲得 ${H.filter(h=>S.own[h.id]).length}/${H.length}`+(ds.length?`　<b class="hwhy">● ${ns?ns+' 位可升星':''}${ns&&ds.length>ns?'、':''}${ds.length>ns?(ds.length-ns)+' 位上陣武將可培養':''}・排最前</b>`:'')+'<small class="hnote">紅點＝上陣可培養・灰 ⬆＝未上陣可升級/突破・陣＝上陣・📖＝豪傑書</small>';$('hFrag').toggleAttribute('data-dot',fragDot())}pp.parentNode.parentNode.scrollTop=st}
+ {const ds=H.filter(h=>heroDot(h.id)),ns=ds.filter(h=>starReady(h.id)===2).length;$('hCnt').innerHTML=`已獲得 ${H.filter(h=>S.own[h.id]).length}/${H.length}`+(ds.length?`　<b class="hwhy">● ${ns?ns+' 位可升星':''}${ns&&ds.length>ns?'、':''}${ds.length>ns?(ds.length-ns)+' 位上陣武將可培養':''}・排最前</b>`:'')+'<small class="hnote">紅點＝上陣可培養・灰 ⬆＝未上陣可升級/突破・戰＝上陣・📖＝豪傑書</small>';$('hFrag').toggleAttribute('data-dot',fragDot())}pp.parentNode.parentNode.scrollTop=st}
 const BEST=[1,0,2,4,3,5,7,6,8];
 function bestIds(){const hs=H.filter(h=>S.own[h.id]).sort((a,b)=>powOf(b)-powOf(a)).slice(0,MAXN()).map(h=>mkP(h)).sort((a,b)=>b.mhp-a.mhp);const r=Array(9).fill(null);hs.forEach((u,k)=>r[BEST[k]]=u.id);return r}
 function autoBest(save){pl=bestIds().map(id=>id?mkP(H.find(h=>h.id===id)):null);if(save)saveDL()}
@@ -4207,7 +4207,7 @@ function towerScene(){if(!TWK||!TOWERS.includes(TWK))TWK=(S.pref&&S.pref.twk)||'
  <button class="tw1a l" data-y="tw" data-d="-1">‹</button><button class="tw1a r" data-y="tw" data-d="1">›</button>
  <div class="tw1b"><button class="seal" data-y="go" data-k="${k}" ${T.done?'disabled':''}>⚔️ 挑戰</button><button class="g" data-y="auto" data-k="${k}" ${T.done||T.f>=AUTOMAX?'disabled':''}>⚡ 一鍵爬塔</button><button class="g" data-y="map" data-k="${k}">🗺 塔圖</button><button class="g" data-y="swp" data-k="${k}" ${swLeft(k)>0||swBuyable(k)?'':'disabled'}${swLeft(k)>0&&swCl(k)>0?' data-dot':''}>🧹 掃蕩${swLeft(k)>0?'（免費）':''}</button></div>
  <div class="tw1d">${TOWERS.map((x,j)=>`<i class="${j===i?'on':''}" style="--tc:${TWONE[x].c}"></i>`).join('')}</div>
- <div class="twsb"><button data-y="swa"${TOWERS.some(x=>swLeft(x)>0&&swCl(x)>0)?' data-dot':''}><i>🧹</i>一鍵掃蕩</button><button data-y="v" data-v="rank"><i>🏆</i>排行榜</button><button data-y="v" data-v="ms"${nc?' data-dot':''}><i>🎁</i>里程碑</button><button data-y="frag"${fragDot()?' data-dot':''}><i>🧩</i>碎片</button></div></div>`}
+ <div class="twsb"><button data-y="swa"${CLIMB().some(x=>swLeft(x)>0&&swCl(x)>0)?' data-dot':''}><i>🧹</i>一鍵掃蕩</button><button data-y="v" data-v="rank"><i>🏆</i>排行榜</button><button data-y="v" data-v="ms"${nc?' data-dot':''}><i>🎁</i>里程碑</button><button data-y="frag"${fragDot()?' data-dot':''}><i>🧩</i>碎片</button></div></div>`}
 function twSwipe(d){TRFV='shelf';const L=TOWERS,i=L.indexOf(TWK);TWK=L[(i+d+L.length)%L.length];renderHub();const e=document.querySelector('.tw1');if(e)e.classList.add(d>0?'inr':'inl')}
 /* ===================== 記住使用習慣 ===================== */
 function prefLoad(){const P=S.pref||{};VMUTE=!!P.vmute;if(P.pf)PF=P.pf;if(P.bagc)BAGC=P.bagc;if(P.bagf)BAGF=P.bagf;if(P.rect)RECT=P.rect;if(P.recsel!=null)RECSEL=P.recsel;if(P.frt&&typeof FR!=='undefined')FR.tab=P.frt;if(P.gfac!==undefined)GFAC=P.gfac;if(P.pkf)PKF=P.pkf;if(P.twk)TWK=P.twk;if(P.mapk)MAPK=P.mapk}
@@ -4601,7 +4601,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261103a';
+const CVER='20261103b';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');{const c=$('city');if(c&&!c.querySelector('.pgdots')){const d=document.createElement('div');d.className='pgdots';d.innerHTML='<i class="on"></i><i></i>';c.appendChild(d)}}
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}try{FAME=JSON.parse(localStorage.getItem('sgFame')||'null')}catch(e){}fameDraw();cityImgs();cityBind();{let n=0;const go=()=>{cityLayout();const so=document.querySelector('.csoc');if((so&&so.offsetHeight)||n++>30)$('cBlds').classList.add('rdy');else requestAnimationFrame(go)};go()}try{document.fonts.ready.then(()=>cityLayout())}catch(e){}
  let wasC=document.body.classList.contains('city');new MutationObserver(()=>{const c=document.body.classList.contains('city');if(c&&!wasC){const B=$('cBlds');B.classList.remove('rdy');requestAnimationFrame(()=>{cityLayout();requestAnimationFrame(()=>B.classList.add('rdy'))})}wasC=c}).observe(document.body,{attributes:true,attributeFilter:['class']});
@@ -4854,11 +4854,11 @@ function recBind(){$('rcBody').onchange=e=>{const t=e.target;if(t.dataset.tq){co
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261103b',d:'11/03',t:['武將列表排序：上陣的排最前面，其次豪傑書，再照戰力排；紅點不再影響順序','上陣標示「陣」改成「戰」，外面加一圈會閃動的金色光圈','修正：一鍵掃蕩的紅點會被試煉塔的舊進度誤判']},
  {v:'20261103a',d:'11/03',t:['修正：積分招募、新手選將的武將卡片消失（和試煉群峰的名牌樣式撞名）']},
  {v:'20261102n',d:'11/02',t:['卡片右上角的等級加上「Lv」並放大，戰鬥中也看得清楚；巨大敵人的等級更大','試煉群峰：峰上的小字只顯示進度（第幾階、第幾層），字放大；今天打完的峰會變暗；妖獸試煉與寶石塔的名牌錯開']},
  {v:'20261102m',d:'11/02',t:['奇謀詳細頁：左上「←」改成回到奇謀列表，在列表再按一次才回首頁；拿掉小的「返回奇謀列表」按鈕','奇謀詳細頁直接同時顯示「目前效果」和「下一級效果」，不用再左右滑','男將不再用手機語音（iPhone 只有女聲）：要有人在圖鑑「🎙 語音」錄音後才會說話；紅顏、女將維持手機語音','妖獸試煉裡沒有人說話，只有妖獸嘶吼與屬性音效，嘶吼也加大聲']},
  {v:'20261102l',d:'11/02',t:['主城重新排版：四個圓圈縮小、放在左側按鈕與右邊之間置中，上下拉開間距','好友、排行、圖鑑改到下方置中一排；收起按鈕移到右下角，不再擋到豪傑書；收起時四個圓圈自動放大','征戰頁：魂器名字不再重複兩次；競技場、切磋的名字分兩行顯示，不會被圓圈切到']},
- {v:'20261102k',d:'11/02',t:['征戰頁的競技場、切磋圓圈換上專屬場景圖（擂台對決、庭院木劍切磋）','輪播改成「預設圖 → 其他圖 → 預設圖」：競技場輪播排行前 3 名主公，切磋輪播你的好友','征戰頁右上 🎨 可以換背景，或換試煉塔、競技場、切磋三個圓圈的圖']},
 ];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
