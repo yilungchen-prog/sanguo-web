@@ -1084,7 +1084,7 @@ body.auto.bgac{overflow:auto!important;position:static!important;height:auto!imp
 <button id="anim" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:44px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🎬</button>
 <button id="snd" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 26px);right:6px;z-index:60;width:32px;height:32px;padding:0;border-radius:50%;flex:none">🔊</button>
 <div id="spdBar"><button id="bSpd" class="g"></button><button id="bSkip">⏭<br>跳過</button></div>
-<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261102f</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
+<div class="ver" id="ver"><span id="coin">💰 0</span><span id="lchip" style="cursor:pointer;text-decoration:underline">👤 設定主公</span><button class="tchip" id="cDT">📋 任務</button><button class="tchip" id="cIdle">⏳ 收益</button><span>版本 20261102g</span><span class="util"><button class="uc" id="bTest"><span id="tTxt">測試：關</span></button><button class="uc" id="bWipe"><span id="wTxt">重置</span></button></span></div>
 <h1>墨戰三國</h1>
 <div class="banner" id="bn"></div>
 <div class="btns" id="modes" style="display:none"><button class="g" id="mExp" style="display:none"></button><button class="g" id="mEq" style="display:none"></button><button class="g" id="mGold" style="display:none"></button></div>
@@ -2446,11 +2446,11 @@ const wbDay=()=>{const t=today();S.wbd=S.wbd||{};if(S.wbd.day!==t)S.wbd={day:t,u
 const wbLeft=()=>{const d=wbDay();return WBFREE+d.bought-d.used};
 const wbSeq=()=>WB.st?WB.st.seq:0,wbKey=()=>WBK[wbSeq()%24],wbLap=()=>Math.floor(wbSeq()/24);
 async function wbLoad(){if(!SB){WB.msg='目前無法連線，妖獸討伐需要網路。';return}try{const{data,error}=await SB.rpc('wb_get',{p_power:cityPow()});if(error)throw error;WB.st=data;WB.msg='';if(ME){const r=await SB.rpc('wb_rank',{p_seq:data.seq});if(!r.error&&r.data){WB.rank=r.data.top||[];WB.me=r.data.me||null}}wbClaimCheck()}catch(e){WB.msg='讀取妖獸資料失敗：'+(e.message||e)}}
-function wbOpen(){if(busy&&!AUTOC)return;document.querySelectorAll('.ov.on').forEach(x=>x.classList.remove('on'));$('wbv').classList.add('on');WB.tab=WB.tab||'main';renderWB();wbLoad().then(renderWB)}
+function wbOpen(from){if(busy&&!AUTOC)return;WB.from=from||'';document.querySelectorAll('.ov.on').forEach(x=>x.classList.remove('on'));$('wbv').classList.add('on');if(!['shop','dex'].includes(WB.tab))WB.tab='shop';renderWB()}
 function wbPhase(st){const p=st&&st.maxhp?st.hp/st.maxhp:1;return p<=.3?2:p<=.7?1:0}
 function renderWB(){const st=WB.st,k=st?wbKey():'tt',b=wbOf(k),kf=v=>v>=1e8?(v/1e8).toFixed(2)+'億':v>=1e4?(v/1e4).toFixed(1)+'萬':(+v||0).toLocaleString();
- let h=`<div class="shh"><button class="xb" data-w="x">←</button><b>👹 妖獸討伐</b><span style="margin-left:auto;font-size:14px">🔥 精魄 <b>${(S.wbs||0).toLocaleString()}</b></span></div>`;
- h+=`<div class="trtab">${[['main','討伐'],['rank','傷害排行'],['ms','里程碑'],['shop','精魄商店'],['dex','妖獸圖鑑']].map(([t,n])=>`<button class="${WB.tab===t?'on':''}" data-w="tab" data-t="${t}">${n}</button>`).join('')}</div>`;
+ let h=`<div class="shh"><button class="xb" data-w="x">←</button><b>🔥 精魄商店</b><span style="margin-left:auto;font-size:14px">🔥 精魄 <b>${(S.wbs||0).toLocaleString()}</b></span></div>`;
+ h+=`<div class="trtab">${[['shop','精魄商店'],['dex','妖獸圖鑑']].map(([t,n])=>`<button class="${WB.tab===t?'on':''}" data-w="tab" data-t="${t}">${n}</button>`).join('')}</div>`;
  if(WB.msg)h+=`<p class="sub" style="color:#ff9a7a">${WB.msg}</p>`;
  if(WB.tab==='main'&&st){const ph=wbPhase(st),killed=!!st.killed,pc=st.maxhp?st.hp/st.maxhp*100:0;
   h+=`<div class="wbhero"><div class="wbimg" style="background-image:url(${wbArt(k)})"></div><div class="wbinfo"><b>${b[1]}</b><small>第 ${wbSeq()+1} 隻・第 ${wbLap()+1} 輪</small><span class="wbph p${ph}">${killed?'已討伐':['平靜','暴怒','狂暴'][ph]}</span></div></div>
@@ -2464,7 +2464,7 @@ function renderWB(){const st=WB.st,k=st?wbKey():'tt',b=wbOf(k),kf=v=>v>=1e8?(v/1
  else if(WB.tab==='rank'&&st){const R=WB.rank||[];h+=`<p class="sub">${wbOf(k)[1]}・傷害排行（前 50 名）</p>${st.killed?wbClaimHtml():''}`+(R.length?R.map((r,i)=>`<div class="it"><span class="ic">${i<3?['🥇','🥈','🥉'][i]:i+1}</span><div class="in"><b>${esc(r.name||'主公')}${ME&&r.user_id===ME.id?'（我）':''}</b><small>${r.hits} 次出戰</small></div><b>${kf(r.dmg)}</b></div>`).join(''):'<p class="sub">還沒有人出戰。</p>')}
  else if(WB.tab==='ms'&&st){const md=WB.me?WB.me.dmg:0,c=(S.wbms||{})[st.seq]||[];h+=`<p class="sub">對這隻妖獸的累積傷害達到門檻就能領取，一個人打也拿得到。</p>`+WBMS.map((m,i)=>{const need=Math.ceil(st.maxhp*m[0]),ok=md>=need,got=c.includes(i);return `<div class="it"><div class="in"><b>傷害達 ${(m[0]*100).toFixed(1)}%（${kf(need)}）</b><small>${m[2]}</small></div><button data-w="ms" data-i="${i}" ${ok&&!got?'':'disabled'}>${got?'已領取':ok?'領取':'未達成'}</button></div>`}).join('')}
  else if(WB.tab==='shop'){const L=WBSHOP.map((x,i)=>[x,i]).sort((a,b)=>(!!(a[0].once&&(S.wbsb||{})[a[0].k]))-(!!(b[0].once&&(S.wbsb||{})[b[0].k]))||(a[0].once?1:0)-(b[0].once?1:0));h+=`<p class="sub">點道具看說明再兌換。專屬虎符每種限購 1 個。</p>`+pager(chunk(L.map(([x,i])=>{const got=x.once&&(S.wbsb||{})[x.k];return `<button class="shtl${got?' out':''}" data-w="sd" data-i="${i}">${got?'<em>已購</em>':''}<i>${x.ic}</i><b>${x.n}</b><u class="${(S.wbs||0)>=x.p&&!got?'':'no'}">🔥${x.p}</u></button>`}),9).map(c=>`<div class="shgr">${c.join('')}</div>`),'','wbsh')}
- else if(WB.tab==='dex'){h+=`<p class="sub">24 隻妖獸依序登場，輪完一輪後更強。點圖可以到圖鑑上傳自己畫的妖獸。</p><div class="wbdex">${WBD.map((x,i)=>`<button data-w="ug" data-k="${x[0]}" class="${st&&i===wbSeq()%24?'on':''}"><i style="background-image:url(${wbArt(x[0])})"></i><b>${i+1}. ${x[1]}</b><small>${x[11]}</small></button>`).join('')}</div>`}
+ else if(WB.tab==='dex'){h+=`<p class="sub">24 隻妖獸每天輪流到「妖獸試煉」守關（亮框是今天這隻）。點圖可以到圖鑑上傳自己畫的妖獸。</p><div class="wbdex">${WBD.map((x,i)=>`<button data-w="ug" data-k="${x[0]}" class="${i===WBK.indexOf(trBeast())?'on':''}"><i style="background-image:url(${wbArt(x[0])})"></i><b>${i+1}. ${x[1]}</b><small>${x[11]}</small></button>`).join('')}</div>`}
  $('wbBody').innerHTML=h;pgRestore($('wbBody'))}
 const WBMS=[[.005,{coins:30000,wbs:10},'💰3 萬、🔥10'],[.01,{coins:60000,wbs:20,hfs:10},'💰6 萬、🔥20、🐯10'],[.02,{coins:100000,wbs:30,hfs:20},'💰10 萬、🔥30、🐯20'],[.04,{wbs:50,gem3:1},'🔥50、Lv3 寶石'],[.08,{wbs:80,hfbox:1},'🔥80、虎符寶匣']];
 const WBSHOP=[...WBD.map(b=>({k:'w_'+b[0],ic:b[15],n:b[14],d:HFD['w_'+b[0]].d(1),p:300,once:1})),{k:'hfs',ic:'🐯',n:'虎符碎片 ×30',d:'升級虎符用',p:40},{k:'box',ic:'🎁',n:'妖獸寶匣',d:'隨機開出好東西，有機會開到專屬虎符',p:120}];
@@ -2604,10 +2604,10 @@ function qmEnemy(f,seedOff){if(f<60)return null;let s=f*31+(seedOff||7);const r=
 
 /* ---- 每日任務 ＋ 掛機收益 ---- */
 const DTL=[{k:'login',n:'每日登入',g:1,a:10,ic:'🌅'},{k:'idle',n:'領取掛機收益',g:1,a:10,ic:'⏳'},{k:'chat',n:'和紅顏聊天 1 次',g:1,a:10,ic:'💬'},{k:'gift',n:'贈送好友 3 次',g:3,a:10,ic:'🎁'},{k:'pull',n:'招募 5 次',g:5,a:10,ic:'🎴'},{k:'lv',n:'培養武將 1 次',g:1,a:10,ic:'⬆'},{k:'sweep',n:'掃蕩 1 次',g:1,a:10,ic:'🧹'},
- {k:'pvp',n:'對戰 3 場',g:3,a:15,ic:'⚔️'},{k:'tower',n:'爬塔勝利 5 層',g:5,a:15,ic:'🗼'},{k:'arena',n:'競技場挑戰 2 次',g:2,a:15,ic:'🏟️'},{k:'boss',n:'妖獸討伐 1 次',g:1,a:20,ic:'👹'},{k:'hgift',n:'送紅顏禮物 1 次',g:1,a:5,ic:'💝'},{k:'up',n:'升級虎符、寶石或奇謀',g:1,a:10,ic:'🐯'},{k:'buy',n:'商城購買 1 次',g:1,a:5,ic:'🛒'}];
+ {k:'pvp',n:'對戰 3 場',g:3,a:15,ic:'⚔️'},{k:'tower',n:'爬塔勝利 5 層',g:5,a:15,ic:'🗼'},{k:'arena',n:'競技場挑戰 2 次',g:2,a:15,ic:'🏟️'},{k:'boss',n:'妖獸試煉 1 次',g:1,a:20,ic:'👹'},{k:'hgift',n:'送紅顏禮物 1 次',g:1,a:5,ic:'💝'},{k:'up',n:'升級虎符、寶石或奇謀',g:1,a:10,ic:'🐯'},{k:'buy',n:'商城購買 1 次',g:1,a:5,ic:'🛒'}];
 const DTMAX=120;
 const DTB=[{a:20,o:{coins:30000}},{a:40,o:{coins:30000,pill:5000}},{a:60,o:{jian:5,hfs:10}},{a:80,o:{wc:1}},{a:100,o:{bp:3,coins:50000}},{a:120,o:{bp:2,wbs:30,hfs:20}}];
-const WKL=[{k:'tower',n:'爬塔勝利 50 層',g:50,a:25,ic:'🗼'},{k:'boss',n:'妖獸討伐 10 次',g:10,a:25,ic:'👹'},{k:'arw',n:'競技場勝利 10 場',g:10,a:25,ic:'🏟️'},{k:'pull',n:'招募 50 次',g:50,a:25,ic:'🎴'},{k:'d100',n:'5 天活躍度達 100',g:5,a:25,ic:'🔥'},{k:'sweep',n:'掃蕩 7 次',g:7,a:25,ic:'🧹'}];
+const WKL=[{k:'tower',n:'爬塔勝利 50 層',g:50,a:25,ic:'🗼'},{k:'boss',n:'妖獸試煉 10 次',g:10,a:25,ic:'👹'},{k:'arw',n:'競技場勝利 10 場',g:10,a:25,ic:'🏟️'},{k:'pull',n:'招募 50 次',g:50,a:25,ic:'🎴'},{k:'d100',n:'5 天活躍度達 100',g:5,a:25,ic:'🔥'},{k:'sweep',n:'掃蕩 7 次',g:7,a:25,ic:'🧹'}];
 const WKB=[{a:50,o:{bp:5,coins:200000}},{a:100,o:{wc:2,jian:20}},{a:150,o:{gem3:1,hfbox:1,wbs:100}}];
 const SG7=[{coins:50000},{pill:10000},{bp:3},{jian:10},{hfs:30},{wc:1},{bp:10,wc:2,coins:300000}];
 const SGM=i=>i===29?{bp:10,wbs:100,title:'勤勉主公'}:i%5===4?(i%10===9?{wc:1}:{bp:5}):[{coins:30000},{pill:5000},{jian:3},{hfs:10}][i%5];
@@ -2615,8 +2615,8 @@ const ACH=[{k:'own',n:'收集武將',ic:'🎴',g:[10,25,50,75],v:()=>H.filter(x=
  {k:'lord',n:'主公等級',ic:'👑',g:[20,50,100,200],v:()=>S.lord.l||1,t:'一代雄主'},
  {k:'tower',n:'任一塔最高層',ic:'🗼',g:[100,300,500,1000],v:()=>Math.max(...TWALL.map(k=>S.tw[k]?(S.tw[k].done?nf(k):S.tw[k].f):0)),t:'登峰造極',f:'a_j'},
  {k:'pull',n:'累計招募',ic:'🎴',g:[100,500,1000,3000],v:()=>ltv('pull'),t:'求賢若渴'},
- {k:'boss',n:'累計妖獸討伐',ic:'👹',g:[10,50,150],v:()=>ltv('boss'),t:'屠妖勇士'},
- {k:'kill',n:'妖獸最後一擊',ic:'⚔️',g:[1,3,10],v:()=>ltv('kill'),t:'斬妖除魔',f:'a_p'},
+ {k:'boss',n:'累計妖獸試煉',ic:'👹',g:[10,50,150],v:()=>ltv('boss'),t:'屠妖勇士'},
+ {k:'kill',n:'妖獸試煉擊倒妖獸',ic:'⚔️',g:[1,3,10],v:()=>ltv('kill'),t:'斬妖除魔',f:'a_p'},
  {k:'arw',n:'競技場勝利',ic:'🏟️',g:[10,50,200],v:()=>ltv('arw'),t:'百戰百勝'},
  {k:'hrm',n:'後宮佳麗',ic:'🌸',g:[3,8,15],v:()=>Object.keys(hrm()).length,t:'風流天子'},
  {k:'login',n:'累計登入天數',ic:'🌅',g:[7,30,100],v:()=>ltv('login'),t:'三國元老'}];
@@ -2671,7 +2671,7 @@ function dtBind(){$('dtBody').onchange=e=>{const s=e.target;if(s.dataset.d==='tt
  if(k==='x'){$('dtv').classList.remove('on');render();return}
  if(k==='t'){DTT=b.dataset.k;renderDT();return}
  if(k==='all'){dtAll();return}
- if(k==='go'){const g=b.dataset.k;$('dtv').classList.remove('on');render();setTimeout(()=>{try{({gift:()=>frOpen(),pvp:()=>sceneOpen('war'),tower:()=>hubOpen(),sweep:()=>hubOpen(),pull:()=>$('mGacha').click(),lv:()=>$('bHeroes').click(),idle:()=>idleOpen(),chat:()=>$('mHarem').click(),hgift:()=>$('mHarem').click(),arena:()=>arenaOpen(),boss:()=>wbOpen(),up:()=>hgOpen(),buy:()=>$('mShop').click()})[g]()}catch(e){}},50);return}
+ if(k==='go'){const g=b.dataset.k;$('dtv').classList.remove('on');render();setTimeout(()=>{try{({gift:()=>frOpen(),pvp:()=>sceneOpen('war'),tower:()=>hubOpen(),sweep:()=>hubOpen(),pull:()=>$('mGacha').click(),lv:()=>$('bHeroes').click(),idle:()=>idleOpen(),chat:()=>$('mHarem').click(),hgift:()=>$('mHarem').click(),arena:()=>arenaOpen(),boss:()=>{TWK='hf';hubOpen()},up:()=>hgOpen(),buy:()=>$('mShop').click()})[g]()}catch(e){}},50);return}
  if(k==='sign'){const r=[dtClaim('s7'),dtClaim('sm')].filter(Boolean);saveS();if(r.length){sfx('claim');toast('簽到獲得 '+r.join(' '));burstAt(b,'✍️')}renderDT();navDots2();return}
  const r=dtClaim(k,b.dataset.k);if(r){saveS();sfx('claim');if(!String(r).startsWith('+'))toast('獲得 '+r);renderDT();navDots2();try{burstAt(b,String(r).startsWith('+')?r:'🎁')}catch(e){}}}}
 const IDLEMAX=12*3600e3;
@@ -3127,14 +3127,14 @@ const HELP={
  thub:['🗼 試煉','選一座塔挑戰。打過的層數可以「掃蕩」：每天每座塔免費 1 次，直接拿最近 10 層的獎勵。'],
  fragv:['🧩 名將碎片','碎片塔掉落各級碎片，集滿可合成武將；已擁有的武將會變成同名卡。多餘（超過滿星所需）的同名卡可以分解成一般碎片。'],
  harem:['🌸 後宮','用紅顏信物招入紅顏。每天可以聊天一次加好感，送禮也能加好感（送她喜歡的禮物 ×1.5）。好感升級、升星會給全隊屬性加成。'],
- wbv:['👹 妖獸討伐','全服玩家一起打同一隻妖獸，每天免費 3 次，可用金幣加買。<br>每次出戰得到竹簡、虎符碎片與精魄；打出最後一擊的主公得到專屬虎符與限定頭像框。<br>精魄可在「精魄商店」兌換專屬虎符與道具。'],
+ wbv:['🔥 精魄商店','精魄來自「妖獸試煉」的寶箱和每日傷害排行。<br>可兌換 24 種專屬虎符（各限購 1 個）、虎符碎片與妖獸寶匣。<br>「妖獸圖鑑」可看 24 隻妖獸的招式，亮框是今天守關的那隻。'],
  hjv:['📖 豪傑書','等級最高的 6 位武將是「榜樣」，豪傑書等級＝第 6 名的等級。<br>放進槽位的武將等級直接變成豪傑書等級，並改用「共用裝備」。<br>武將移出槽位後，該格冷卻 24 小時（可用金幣加速）。'],
  arena:['🏟️ 競技場','設定防守陣容後可以挑戰其他玩家，勝利加積分、失敗扣積分（平局算敗）。排行榜依積分排名。'],
  dtv:['📋 任務','每日任務完成可得活躍度，活躍度到 20／40／60／80／100／120 可開寶箱；每週任務另有週寶箱。<br>簽到：七日簽到第 7 天有大獎；月簽到漏簽不會歸零。<br>成就完成最後一階可得稱號與頭像框。底部「一鍵領取」會領完所有可領的獎勵。'],
  friend:['👥 好友','每天可以贈送好友禮物（對方會收到），也可以跟好友切磋（不消耗次數、沒有獎勵）。'],
  lord:['👑 主公','主公等級提高全隊攻擊與生命，也會開放更多奇謀格子。主公經驗來自戰鬥與爬塔。'],
  pcv:['👤 個人中心','顯示你的資料、戰績與陣容。稱號與頭像框可以在「任務 → 成就」選擇。']};
-const RHELP=[[/今日抽數/,'今日抽數','每天最多 50 抽，0 點重置。'],[/贈送抽數|🎁\s*\d/,'贈送抽數','活動、任務、簽到送的抽數，不受每天 50 抽限制，用完為止。'],[/萬用卡|🃏/,'🃏 萬用卡','升星時可以當作任何武將的同名卡使用。'],[/精魄|🔥/,'🔥 精魄','妖獸討伐獲得，可在妖獸討伐的「精魄商店」兌換專屬虎符與道具。'],[/竹簡|📜/,'📜 奇謀竹簡','用來解鎖與升級奇謀。來源：爬塔 20 層以上、掛機、妖獸討伐、任務。'],[/虎符碎片|🐯/,'🐯 虎符碎片','用來升級虎符。來源：虎符塔、妖獸討伐、分解多餘虎符。'],[/突破石|💎\s*\d/,'💎 突破石','武將 Lv350 後突破用。來源：300 層以上的塔、商城。'],[/經驗丹|🔮/,'🔮 經驗丹','給武將升級用。來源：經驗塔、掛機、對戰、商城。'],[/金幣|💰/,'💰 金幣','購買道具、升星、加速冷卻等都會用到。來源：金幣塔、對戰、掛機、任務。'],[/積分/,'🏅 招募積分','每抽一次 +1 分，30 分可任選一位武將。']];
+const RHELP=[[/今日抽數/,'今日抽數','每天最多 50 抽，0 點重置。'],[/贈送抽數|🎁\s*\d/,'贈送抽數','活動、任務、簽到送的抽數，不受每天 50 抽限制，用完為止。'],[/萬用卡|🃏/,'🃏 萬用卡','升星時可以當作任何武將的同名卡使用。'],[/精魄|🔥/,'🔥 精魄','妖獸試煉的寶箱與每日排行獲得，可在妖獸試煉的「精魄商店」兌換專屬虎符與道具。'],[/竹簡|📜/,'📜 奇謀竹簡','用來解鎖與升級奇謀。來源：爬塔 20 層以上、掛機、任務。'],[/虎符碎片|🐯/,'🐯 虎符碎片','用來升級虎符。來源：妖獸試煉、精魄商店、分解多餘虎符。'],[/突破石|💎\s*\d/,'💎 突破石','武將 Lv350 後突破用。來源：300 層以上的塔、商城。'],[/經驗丹|🔮/,'🔮 經驗丹','給武將升級用。來源：經驗塔、掛機、對戰、商城。'],[/金幣|💰/,'💰 金幣','購買道具、升星、加速冷卻等都會用到。來源：金幣塔、對戰、掛機、任務。'],[/積分/,'🏅 招募積分','每抽一次 +1 分，30 分可任選一位武將。']];
 function helpShow(k){const v=HELP[k];if(v)askBox(v[0],`<div style="text-align:left;font-size:15px;line-height:1.65">${v[1]}</div>`,[['知道了',()=>{},'actgo']])}
 document.addEventListener('click',e=>{const hb=e.target.closest('[data-help]');if(hb){e.stopPropagation();helpShow(hb.dataset.help);return}
  const el=e.target.closest('em,span');if(!el||el.closest('button,.askb,.bgp,[data-g],[data-q],[data-w],[data-d],.ctl,#board,.cell'))return;const t=(el.textContent||'').trim();if(!t||t.length>24)return;
@@ -3144,7 +3144,7 @@ let HLPRAF=0;new MutationObserver(()=>{if(HLPRAF)return;HLPRAF=requestAnimationF
 const ttlOk=t=>{const e=(S.ttlExp||{})[t];return !e||e>=today2()},today2=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const myTitles=()=>(S.titles||[]).filter(ttlOk);
 function myStats(){const B=hrm();return{heroes:H.filter(h=>S.own[h.id]).length,stars:H.reduce((s,h)=>s+(S.own[h.id]?(S.star[h.id]||0):0),0),ach:Object.values(S.ach||{}).reduce((a,b)=>a+b,0),harem:Object.keys(B).length,harem_lv:Object.values(B).reduce((s,b)=>s+(b.l||0),0),frame:S.frame||'',title:(S.title&&ttlOk(S.title)?S.title:(myTitles().slice(-1)[0]||''))}}
-const RKT=[['power','⚔️ 戰力','戰力'],['lord_lv','👑 主公','等級'],['heroes','🎴 收集','武將'],['stars','⭐ 星數','總星'],['ach','🏅 成就','階數'],['harem','🌸 後宮','紅顏'],['tower','🗼 爬塔'],['arena','🏟️ 競技'],['wb','👹 妖獸']];
+const RKT=[['power','⚔️ 戰力','戰力'],['lord_lv','👑 主公','等級'],['heroes','🎴 收集','武將'],['stars','⭐ 星數','總星'],['ach','🏅 成就','階數'],['harem','🌸 後宮','紅顏'],['tower','🗼 爬塔'],['arena','🏟️ 競技']];
 let RKK='power',RKD={};
 async function rkLoad(k){if(!SB){RKD[k]={err:'離線中，無法讀取排行'};return}try{const{data,error}=await SB.from('profiles').select('user_id,name,fac,'+k+',frame,title,avatar').gt(k,0).order(k,{ascending:false}).limit(50);if(error)throw error;let me=null;if(ME){const mv=myVal(k);const r=await SB.from('profiles').select('user_id',{count:'exact',head:true}).gt(k,mv);me={v:mv,rank:(r.count||0)+1}}RKD[k]={list:data||[],me,t:Date.now()}}catch(e){RKD[k]={err:String(e.message||e)}}}
 function myVal(k){if(k==='power')return lineupPow(myLineup());if(k==='lord_lv')return S.lord.l||1;return myStats()[k]||0}
@@ -3153,9 +3153,9 @@ function rkDraw(){const d=$('rkv');if(!d)return;const T=RKT.find(x=>x[0]===RKK),
  if(!D)h+='<p class="sub">讀取中…</p>';else if(D.err)h+=`<p class="sub">${esc(D.err)}</p>`;else{const L=D.list;
   h+=`<div class="rkme">我的${T[2]} <b>${(D.me?D.me.v:myVal(RKK)).toLocaleString()}</b>　${D.me?`名次 <b>第 ${D.me.rank} 名</b>`:'登入後顯示名次'}</div>`;
   h+=L.length?pager(chunk(L.map((r,i)=>`<div class="rkr${ME&&r.user_id===ME.id?' me':''}"><em class="rk${i<3?i+1:''}">${i<3?['🥇','🥈','🥉'][i]:i+1}</em><span class="rkav${r.frame?' frm'+(String(r.frame).startsWith('a_')?' f'+r.frame:''):''}" style="${r.avatar?`background-image:url(${r.avatar})`:''}">${r.avatar?'':esc((r.name||'主')[0])}</span><div><b>${esc(r.name||'主公')}</b>${r.fac?`<i style="background:${FC[r.fac]||'#555'}">${r.fac}</i>`:''}${r.title?`<small>🏅${esc(r.title)}</small>`:''}</div><u>${(r[RKK]||0).toLocaleString()}</u></div>`),7).map(c=>c.join('')),'','rk'+RKK):'<p class="sub">還沒有資料</p>'}
- h+=`<p class="sub" style="font-size:11px;text-align:center">競技場每週一、爬塔每月 1 日結算排名獎勵；妖獸被打倒後傷害前 10 名有獎勵，都會寄到「📬 信箱」。</p></div>`;d.innerHTML=h;pgRestore(d)}
+ h+=`<p class="sub" style="font-size:11px;text-align:center">競技場每週一、爬塔每月 1 日結算排名獎勵；四座試煉每天的傷害前 10 名隔天有獎勵，都會寄到「📬 信箱」。</p></div>`;d.innerHTML=h;pgRestore(d)}
 function rkClick(e){const b=e.target.closest('[data-r]');if(!b)return;const k=b.dataset.r;if(k==='x'){$('rkv').classList.remove('on');return}
- if(k==='t'){const t=b.dataset.k;if(t==='tower'){$('rkv').classList.remove('on');hubOpen();HUBV='rank';renderHub();return}if(t==='arena'){$('rkv').classList.remove('on');arenaOpen();AR.tab='rank';renderArena();return}if(t==='wb'){$('rkv').classList.remove('on');wbOpen();WB.tab='rank';renderWB();return}RKK=t;rkDraw();if(!RKD[t]||Date.now()-RKD[t].t>60e3)rkLoad(t).then(rkDraw)}}
+ if(k==='t'){const t=b.dataset.k;if(t==='tower'){$('rkv').classList.remove('on');hubOpen();HUBV='rank';renderHub();return}if(t==='arena'){$('rkv').classList.remove('on');arenaOpen();AR.tab='rank';renderArena();return}RKK=t;rkDraw();if(!RKD[t]||Date.now()-RKD[t].t>60e3)rkLoad(t).then(rkDraw)}}
 /* 名人堂：戰力第一 */
 let FAME=null;async function fameLoad(){if(!SB)return;try{const{data}=await SB.from('profiles').select('name,power,fac,title').order('power',{ascending:false}).limit(1);FAME=data&&data[0]||null;try{localStorage.setItem('sgFame',JSON.stringify(FAME))}catch(e){}fameDraw()}catch(e){}}
 function fameDraw(){let f=$('cFame');if(!f){const c=$('city');if(!c)return;f=document.createElement('button');f.id='cFame';f.className='cfame';f.onclick=()=>{RKK='power';rkOpen()};c.appendChild(f)}if(!FAME||!FAME.power){f.style.visibility='hidden';f.innerHTML='<span>👑 天下第一</span><b>—</b>';return}f.style.visibility='';f.innerHTML=`<span>👑 天下第一</span><b>${esc(FAME.name||'主公')}</b><small>戰 ${kfx(FAME.power)}</small>`}
@@ -3961,7 +3961,7 @@ async function trRound(){if(!OPP||!OPP.tr)return;const k=OPP.tr.k;if(k!=='eq')re
   if(a>=3)heal(u,u,u.mhp*.03,{nob:1,quiet:1});if(u.wk==='ar6'&&ROUND%2===1)addSt(u,'gd',{t:2,n:2},u)}}
 /* 獎勵 */
 function trReward(k,tier,i){const t=tier,o={};
- if(k==='hf'){o.hfs=10*t*(i+1);if(i===4){o.hfbox=1;if(t>=5&&Math.random()<.1+.04*t)o.ex=trBeast()}}
+ if(k==='hf'){o.hfs=10*t*(i+1);o.wbs=3*(t+2)*(i+1);if(i===4){o.hfbox=1;if(t>=5&&Math.random()<.1+.04*t)o.ex=trBeast()}}
  else if(k==='frag'){o.M=2*t*(i+1);o.n=20*t;if(i===4&&Math.random()<.05*t)o.card=trGroup()[0]}
  else if(k==='harem'){const L=trBeas();o.hfr={[L[i%L.length]]:Math.max(1,Math.round(t*(i+1)/2))};o.g={g1:2*(i+1),g2:i>=2?Math.ceil(t/3):0,g3:i===4?Math.ceil(t/4):0,g4:i===4&&t>=6?1:0}}
  else{o.eqd=[{s:SLOTS[Math.floor(Math.random()*4)].k,t:Math.min(6,3+Math.floor(t/3)+(i>=3?1:0))}];o.bst=t*(i+1);if(i===4&&Math.random()<.03*t){const w=trWpns()[Math.floor(Math.random()*trWpns().length)];o.eqd.push({s:w.slice(0,2),t:+w[2],soul:1})}}
@@ -3971,11 +3971,11 @@ function trGive(o){const out=[];const F=frg();if(o.M){F.M+=o.M;out.push('🟠名
  if(o.g){const G=hgf();for(const g in o.g)if(o.g[g]){G[g]+=o.g[g];out.push(`${GIFT[g].ic}${GIFT[g].n} +${o.g[g]}`)}}
  if(o.eqd)o.eqd.forEach(e=>{S.inv.push({u:S.uid++,s:e.s,t:e.t,l:1,e:null});out.push(`${e.soul?'✨魂器降臨：':''}<span style="color:${TIERS[e.t].c}">${TIERS[e.t].n}品・${INAME[e.s][e.t]}</span>`)});
  if(o.bst){S.bst=(S.bst||0)+o.bst;out.push('💎突破石 +'+o.bst)}
- const w={};['hfs','hfbox','ex'].forEach(x=>{if(o[x])w[x]=o[x]});if(Object.keys(w).length)out.push(wbGive(w));saveS();return out.filter(Boolean).join('、')}
+ const w={};['hfs','hfbox','ex','wbs','frame','title'].forEach(x=>{if(o[x])w[x]=o[x]});if(Object.keys(w).length)out.push(wbGive(w));saveS();return out.filter(Boolean).join('、')}
 function trApply(k,tier,dmg){const t=trS(k),tot=trHp(k,tier);dmg=Math.min(dmg,tot);t.rec[tier]=Math.max(t.rec[tier]||0,dmg);t.d.g=t.d.g||{};t.d.b=t.d.b||{};t.d.b[tier]=Math.max(t.d.b[tier]||0,dmg);
  if(dmg>t.d.best||(dmg===t.d.best&&tier>t.d.bt)){t.d.best=dmg;t.d.bt=tier}
  const got=[];let n=0;TRCH.forEach((r,i)=>{if(dmg>=tot*r-.5)n=i+1});const from=t.d.g[tier]||0;for(let i=from;i<n;i++)got.push(trGive(trReward(k,tier,i)));if(n>from)t.d.g[tier]=n;
- const killed=dmg>=tot-.5;if(killed&&tier>=t.un&&t.un<TRMAX){t.un=tier+1;got.push(`🔓 解鎖${trLvN(k,tier+1)}`)}saveS();
+ const killed=dmg>=tot-.5;if(killed&&k==='hf'){S.lt=S.lt||{};if(!t.d.kill){t.d.kill=1;dtAdd('kill',1)}const bk=trBeast();S.wbkt=S.wbkt||{};if(!S.wbkt[bk]){S.wbkt[bk]=1;got.push('⚔️ 首次擊倒'+wbOf(bk)[1]+'：'+wbGive({wbs:50,title:wbOf(bk)[1]+'斬殺者'}))}}if(killed&&tier>=t.un&&t.un<TRMAX){t.un=tier+1;got.push(`🔓 解鎖${trLvN(k,tier+1)}`)}saveS();
  try{if(typeof SB!=='undefined'&&SB&&typeof ME!=='undefined'&&ME)SB.rpc('trial_hit',{p_k:k,p_tier:tier,p_dmg:Math.round(t.d.best)}).then(()=>{},()=>{})}catch(e){}return{got,tot,killed,dmg}}
 function trFight(k){const t=trS(k);if(trLeft(k)<=0){trBuy(k);return}if(MODE!=='pvp')setMode('pvp');applyDL();OPP={d:1,list:[],qms:[],name:TRN[k],tr:{k,tier:t.tier}};buildOpp();$('thub').classList.remove('on');render();setInfo();prepOpen('trial')}
 function trBuy(k){const t=trS(k),c=TRBUY[t.d.bought];if(c==null){toast('今天的挑戰次數已用完');return}askBox('購買挑戰次數',`今天的免費次數已用完。花費 💰${c.toLocaleString()} 再挑戰 1 次？`,[['購買',()=>{if(S.coins<c){toast('金幣不足');return}S.coins-=c;t.d.bought++;saveS();renderHub()},'actgo'],['取消',()=>{},'g']])}
@@ -4006,7 +4006,7 @@ function trialScene(k){const t=trS(k),O=TWONE[k],W=Math.min(innerWidth,560),Hh=i
  <button class="tw1a l" data-y="tw" data-d="-1">‹</button><button class="tw1a r" data-y="tw" data-d="1">›</button>
  <div class="tw1b"><button class="seal" data-y="trgo" data-k="${k}">⚔️ 挑戰</button><button class="g" data-y="trsw" data-k="${k}" ${t.rec[t.tier]?'':'disabled'}>🧹 掃蕩</button><button class="g" data-y="trrk" data-k="${k}">🏆 今日排行</button>${trLeft(k)<=0&&TRBUY[t.d.bought]!=null?`<button class="g" data-y="trbuy" data-k="${k}">➕ 買次數</button>`:''}</div>
  <div class="tw1d">${TOWERS.map((x,j)=>`<i class="${j===i?'on':''}" style="--tc:${TWONE[x].c}"></i>`).join('')}</div>
- <div class="twsb"><button data-y="swa"><i>🧹</i>一鍵掃蕩</button><button data-y="v" data-v="rank"><i>🏆</i>爬塔排行</button><button data-y="v" data-v="ms"><i>🎁</i>里程碑</button><button data-y="frag"${fragDot()?' data-dot':''}><i>🧩</i>碎片</button></div></div>`}
+ <div class="twsb"><button data-y="swa"><i>🧹</i>一鍵掃蕩</button>${k==='hf'?`<button data-y="wbshop"><i>🔥</i>精魄 ${(S.wbs||0).toLocaleString()}</button>`:'<button data-y="v" data-v="rank"><i>🏆</i>爬塔排行</button>'}<button data-y="v" data-v="ms"><i>🎁</i>里程碑</button><button data-y="frag"${fragDot()?' data-dot':''}><i>🧩</i>碎片</button></div></div>`}
 function towerScene(){if(!TWK||!TOWERS.includes(TWK))TWK=(S.pref&&S.pref.twk)||'exp';if(TRIALS.includes(TWK))return trialScene(TWK);const k=TWK,T=S.tw[k],O=TWONE[k],W=Math.min(innerWidth,560),Hh=innerHeight,nc=typeof msClaimable==='function'?msClaimable():0,i=TOWERS.indexOf(k);
  const ub=typeof ugcScene==='function'&&ugcScene('tw_'+k);
  const bl=ub?'':twFig(k).map((x,j)=>x.obj?`<i class="${x.solo?'bs':'oc'} ob${x.sq?' sq':''}" data-dw="${x.u}" style="--d:${j<3?-j*1.5:-9-(j-3)*1.5}s"></i>`:`<i class="${x.solo?'bs':'b'+(j%3)}" style="background-image:url(${x.u});--d:${j<3?-j*1.5:-9-(j-3)*1.5}s"></i>`).join('');
@@ -4082,7 +4082,7 @@ $('thBody').onclick=e=>{const b=e.target.closest('[data-y]');if(!b||busy)return;
  if(y==='claim'){msClaim(b.dataset.w,+b.dataset.f);return}
  if(y==='x'){$('thub').classList.remove('on');return}
  if(y==='swp'){swOne(k);return}if(y==='swa'){swAll();return}
- if(y==='trt'){const t=trS(TWK);t.tier=Math.max(1,Math.min(t.un,t.tier+ +b.dataset.d));saveS();renderHub();return}if(y==='trgo'){trFight(k);return}if(y==='trsw'){trSweep(k);return}if(y==='trrk'){trRank(k);return}if(y==='trinfo'){trInfo(b.dataset.k);return}if(y==='trbuy'){trBuy(k);return}
+ if(y==='trt'){const t=trS(TWK);t.tier=Math.max(1,Math.min(t.un,t.tier+ +b.dataset.d));saveS();renderHub();return}if(y==='trgo'){trFight(k);return}if(y==='trsw'){trSweep(k);return}if(y==='trrk'){trRank(k);return}if(y==='trinfo'){trInfo(b.dataset.k);return}if(y==='wbshop'){wbOpen('trial');return}if(y==='trbuy'){trBuy(k);return}
  if(y==='frag'){$('thub').classList.remove('on');FRBACK='thub';fragOpen();return}
  $('thub').classList.remove('on');if(!(MODE==='tower'&&TK===k))setMode('tower',k);
  if(y==='map')openMap(k);else if(y==='auto'){openMap(k);autoClimb(k)}else if(y==='go')prepOpen('tower')};
@@ -4130,7 +4130,7 @@ $('hjBody').onclick=e=>{const t=e.target.closest('[data-j],[data-jl],[data-js],[
   HJPICK=HJPICK===i?-1:i;renderHJ();return}
  if(t.dataset.jp){if(HJPICK<0||J.sl[HJPICK]||hjCdLeft(HJPICK))return;J.sl[HJPICK]=t.dataset.jp;{let n=0;S.inv.forEach(x=>{if(x.e===t.dataset.jp){x.e=null;n++}});HJMSG=`${hname(t.dataset.jp)} 放入第 ${HJPICK+1} 格`+(n?`，自動卸下 ${n} 件裝備（改用共用裝備）`:'')}HJPICK=-1;saveS();if(!busy)refreshPl();render();renderHJ()}};
 $('wbBody').onclick=async e=>{const b=e.target.closest('[data-w]');if(!b)return;const w=b.dataset.w;
- if(w==='x'){$('wbv').classList.remove('on');return}if(w==='tab'){WB.tab=b.dataset.t;renderWB();return}
+ if(w==='x'){$('wbv').classList.remove('on');if(WB.from==='trial'){TWK='hf';hubOpen()}return}if(w==='tab'){WB.tab=b.dataset.t;renderWB();return}
  if(w==='go'){wbFight();return}
  if(w==='buy'){const d=wbDay(),c=wbBuyCost(d.bought);if(d.bought>=WBBUYMAX)return;askBox('購買討伐次數',`花費 💰${c.toLocaleString()} 購買 1 次？`,[['購買',()=>{if(S.coins<c){toast('金幣不足');return}S.coins-=c;d.bought++;saveS();renderWB()}],['取消',()=>{}]]);return}
  if(w==='ms'){const i=+b.dataset.i,st=WB.st;S.wbms=S.wbms||{};const c=S.wbms[st.seq]=S.wbms[st.seq]||[];if(c.includes(i)||!WB.me||WB.me.dmg<st.maxhp*WBMS[i][0])return;c.push(i);const r=wbGive(WBMS[i][1]);sfx('claim');toast('領取：'+r);renderWB();return}
@@ -4327,7 +4327,7 @@ const CITYB=[
  {k:'hg',n:'後宮',x:.3,y:.615,w:170,h:100,ic:'🌸',d:'紅顏'},
  {k:'jj',n:'奇謀',x:.77,y:.615,w:170,h:100,ic:'📜',d:'奇謀'},
  {k:'dj',n:'豪傑書',x:.18,y:.84,w:130,h:110,ic:'🎖',d:'武將'},
- {k:'wb',n:'妖獸討伐',x:.5,y:.5,w:100,h:100,ic:'👹',d:'全服妖獸'},
+ {k:'wb',hide:1,n:'妖獸討伐',x:.5,y:.5,w:100,h:100,ic:'👹',d:'全服妖獸'},
  {k:'sp',hide:1,n:'商城',x:.73,y:.72,w:140,h:70,ic:'🏪',d:'商城'}];
 let CSH=null,CWP=0;
 function cityPow(){let p=0;pl.forEach(u=>{if(u){const h=H.find(z=>z.id===u.id);if(h)p+=powOf(h)}});return p}
@@ -4368,7 +4368,7 @@ function cityBind(){
   if(a==='home'){cshClose();return}if(a==='bag'){TAB='bag';BAGSEL=null;$('shT').textContent='背包';renderShop();$('shop').classList.add('on');return}
   if(a==='shop'){$('mShop').click();return}if(a==='dt'){$('cDT').click();return}if(a==='idle'){$('cIdle').click();return}
   if(a==='ugh'){ugcHub();return}if(a==='ver'){verShow(CHANGES,false);return}if(a==='fold'){S.pref=S.pref||{};S.pref.cfold=!document.body.classList.contains('cfold');document.body.classList.toggle('cfold',S.pref.cfold);$('cFold').textContent=S.pref.cfold?'☰':'×';saveS();cityLayout();return}if(a==='friend'){$('bFriend').click();return}if(a==='rank'){rkOpen();return}if(a==='mail'){mailOpen();return}
-  if(a==='b_zx'){$('mGacha').click();return}if(a==='b_hg'){$('mHarem').click();return}if(a==='b_jj'){$('mQM').click();return}if(a==='b_dj'){$('sHJ').click();return}if(a==='b_wb'){wbOpen();return}if(a==='b_sp'){$('mShop').click();return}};
+  if(a==='b_zx'){$('mGacha').click();return}if(a==='b_hg'){$('mHarem').click();return}if(a==='b_jj'){$('mQM').click();return}if(a==='b_dj'){$('sHJ').click();return}if(a==='b_wb'){TWK='hf';hubOpen();return}if(a==='b_sp'){$('mShop').click();return}};
  $('csh').onclick=e=>{const t=e.target.closest('[data-c]');if(!t){if(e.target.id==='csh')cshClose();return}const a=t.dataset.c;if(a==='x'){cshClose();return}cityAct(a)};
  $('cBack').onclick=()=>{if(!busy)cityShow()};
  new MutationObserver(()=>{const B=document.body.classList;if(B.contains('auto'))return;if(B.contains('full')&&B.contains('city'))cityHide();else if(!B.contains('full')&&!B.contains('city')&&!busy)setTimeout(()=>{if(!busy&&!document.body.classList.contains('full'))cityShow()},0)}).observe(document.body,{attributes:true,attributeFilter:['class']});
@@ -4376,7 +4376,7 @@ function cityBind(){
  setInterval(()=>{if(document.body.classList.contains('city'))cityUpd()},3000);setInterval(()=>{if(ME&&!busy){profSync().then(frLoad)}},300000);
  document.addEventListener('click',e=>{if(document.body.classList.contains('city')&&e.target.closest('.ov'))setTimeout(()=>{if(document.body.classList.contains('city'))cityUpd()},50)},true)}
 function cityIcons(){const M={dt:'task',idle:'idle',friend:'friend',rank:'rank',home:'home',hero:'hero',bag:'bag',set:'set',shop:'shop',ver:'ver',ugh:'ugh'};document.querySelectorAll('#city [data-c]>i').forEach(i=>{const k=M[i.parentNode.dataset.c];if(k&&ICO[k]){i.innerHTML=ICO[k];i.classList.add('ii')}})}
-const CVER='20261102f';
+const CVER='20261102g';
 function cityInit(){$('cBlds').innerHTML=CITYB.filter(b=>!b.hide).map(b=>`<button class="ccir" id="cb_${b.k}" data-c="b_${b.k}"><i class="ccim"></i><span class="ctl">${b.n}</span></button>`).join('');
  if(S.pref&&S.pref.cfold){document.body.classList.add('cfold');$('cFold').textContent='☰'}try{FAME=JSON.parse(localStorage.getItem('sgFame')||'null')}catch(e){}fameDraw();cityImgs();cityBind();{let n=0;const go=()=>{cityLayout();const so=document.querySelector('.csoc');if((so&&so.offsetHeight)||n++>30)$('cBlds').classList.add('rdy');else requestAnimationFrame(go)};go()}try{document.fonts.ready.then(()=>cityLayout())}catch(e){}
  let wasC=document.body.classList.contains('city');new MutationObserver(()=>{const c=document.body.classList.contains('city');if(c&&!wasC){const B=$('cBlds');B.classList.remove('rdy');requestAnimationFrame(()=>{cityLayout();requestAnimationFrame(()=>B.classList.add('rdy'))})}wasC=c}).observe(document.body,{attributes:true,attributeFilter:['class']});
@@ -4387,9 +4387,9 @@ setTimeout(nvCheck,4000);setInterval(nvCheck,10*60e3);document.addEventListener(
 function cityLayout(){const C=$('city');if(!C||!C.offsetHeight)return;const R=C.getBoundingClientRect(),q=sel=>{const e=C.querySelector(sel);return e&&e.offsetHeight?e.getBoundingClientRect():null};
  {const cr=q('.cres'),fm=C.querySelector('.cfame');if(fm&&cr)fm.style.setProperty('--fmt',(cr.bottom-R.top+6)+'px')}const tp=Math.max(...[q('.ctop'),q('.cres'),q('.cfame')].filter(Boolean).map(r=>r.bottom-R.top),90)+8,so=q('.csoc'),bt=(so&&so.offsetHeight?so.top-R.top:R.height-(document.body.classList.contains('cfold')?160:230))-6,clE=document.body.classList.contains('cfold')?null:C.querySelector('.cl'),lf=(clE&&clE.offsetWidth?clE.offsetLeft+clE.offsetWidth:0)+6,rt=R.width-8;
  const aw=rt-lf,ah=bt-tp,lab=34;let d=90,ax=0,ay=0;
- for(let t=Math.min(170,aw*.46);t>=84;t-=2){const x=(aw-t)/2,y=(ah-t-lab)/2;if(x<=0||y<=0)continue;const okC=Math.hypot(x,y)>=t+10,okL=y>=t+lab*.8||x>=t*.95,okH=2*x>=t+10;if(okC&&okL&&okH){d=t;ax=x;ay=Math.min(y,t*1.05+lab);break}}
+ for(let t=Math.min(170,aw*.46);t>=84;t-=2){const x=(aw-t)/2,y=(ah-t-lab)/2;if(x<=0||y<=0)continue;const okV=2*y>=t+lab+10,okH=2*x>=t+12;if(okV&&okH){d=t;ax=x;ay=Math.min(y,t*1.05+lab);break}}
  if(!ax){ax=(aw-d)/2;ay=(ah-d-lab)/2}
- const cx=lf+aw/2,cy=tp+ah/2-lab/2,pos={zx:[-1,-1],hg:[1,-1],wb:[0,0],jj:[-1,1],dj:[1,1]};
+ const cx=lf+aw/2,cy=tp+ah/2-lab/2,pos={zx:[-1,-1],hg:[1,-1],jj:[-1,1],dj:[1,1]};
  for(const k in pos){const e=$('cb_'+k);if(!e)continue;const[px,py]=pos[k];e.style.width=e.style.height=d+'px';e.style.left=(cx+px*ax-d/2)+'px';e.style.top=(cy+py*ay-d/2)+'px';e.style.setProperty('--d',d+'px');if(k==='wb')e.classList.add('wbc')}}
 
 
@@ -4405,7 +4405,7 @@ function renderPrep(){const ep=en.filter(Boolean).reduce((a,u)=>a+upow(u),0),mp=
  let title='',sub='',rows=[],extra='';
  if(MODE==='tower'){const f=FLOOR,boss=(f+1)%5===0;title=`${TKN[TK]}・第 ${f+1} 層`;{const sc=scOf(f);sub=isPZ(f)?`${TWN[f]}${boss?'（關主）':''}`:`${sc.ic} ${sc.n}・第 ${sc.j+1} 關${sc.j===9?'（關主）':''}`};
   rows=[['敵方等級','Lv.'+towerLv(f)],['特殊規則',isPZ(f)?'見上方謀略關說明':RT(TWR[f])+'（20 回合內擊敗全部敵人）'],['勝利獎勵',TK==='exp'?`🔮 經驗丹 +${PILL(f).toLocaleString()}、💰${(100+20*f).toLocaleString()}`:TK==='eq'?`裝備 ${boss?2:1} 件（層數越高越好）`:TK==='frag'?`🧩 一般碎片＋${FRN[fragTier(f)]}`:TK==='harem'?'🌸 紅顏信物與禮物':TK==='hf'?'🐯 虎符碎片（關主必掉虎符）':TK==='gem'?`💎 寶石 Lv.${Math.min(4,1+Math.floor(f/120))}${boss?' ×2':''}`:`💰 ${goldR(f).toLocaleString()}`]]}
- else if(OPP.tr){const k=OPP.tr.k,tier=OPP.tr.tier;title=`${TRIC[k]} ${TRN[k]}・${trLvN(k,tier)}`;sub=`今日${TRWHO[k]}：`+trWho(k).map(id=>trWhoN(k,id)).join('、');rows=[['目標','10 回合內造成越多傷害越好；打倒全部敵人解鎖下一'+(k==='eq'?'級覺醒':'階')],['寶箱','傷害達 10%／25%／50%／75%／100% 各開一箱'],['獎勵',{hf:'🐯 虎符碎片、虎符寶匣、機率得專屬虎符',frag:'🟠 名將碎片、⚪ 一般碎片、機率得同名卡',harem:'🌸 今日紅顏的信物、💄 禮物',eq:'⚔️ 高品裝備、💎 突破石、極低機率魂器本體'}[k]],['今日剩餘',trLeft(k)+' 次']]}
+ else if(OPP.tr){const k=OPP.tr.k,tier=OPP.tr.tier;title=`${TRIC[k]} ${TRN[k]}・${trLvN(k,tier)}`;sub=`今日${TRWHO[k]}：`+trWho(k).map(id=>trWhoN(k,id)).join('、');rows=[['目標','10 回合內造成越多傷害越好；打倒全部敵人解鎖下一'+(k==='eq'?'級覺醒':'階')],['寶箱','傷害達 10%／25%／50%／75%／100% 各開一箱'],['獎勵',{hf:'🐯 虎符碎片、🔥 精魄、虎符寶匣、機率得專屬虎符',frag:'🟠 名將碎片、⚪ 一般碎片、機率得同名卡',harem:'🌸 今日紅顏的信物、💄 禮物',eq:'⚔️ 高品裝備、💎 突破石、極低機率魂器本體'}[k]],['今日剩餘',trLeft(k)+' 次']]}
  else if(OPP.wb){const b=wbOf(wbKey());title='妖獸討伐';sub=b[1];rows=[['妖獸招式',b[11]+'：'+b[12]],['建議',b[13]],['回合','10 回合，傷害計入全服血量'],['今日剩餘',wbLeft()+' 次']]}
  else if(OPP.arena){title='競技場';sub=`對手：${esc(OPP.name)}`;rows=[['對手積分',OPP.arena.score],['說明','勝負計入積分（平局算敗）']]}
  else if(OPP.fr){title='好友切磋';sub=`對手：${esc(OPP.name)}`;rows=[['說明','不消耗次數，也沒有獎勵']]}
@@ -4521,7 +4521,7 @@ function sceneBind(){$('scn').onclick=e=>{const t=e.target.closest('[data-c]');i
 // p：九宮格位置（0–2 前排、3–5 中排、6–8 後排）
 const REC=[
  {n:'五虎追擊',f:'蜀',st:5,idea:'五虎上將湊滿五人，蜀國追擊一回合連打好幾下，劉備在後排補血。',u:[['guanyu',0],['zhangfei',1],['zhaoyun',2],['machao',4],['huangzhong',6],['liubei',7]],qm:'xsdr',tip:'五虎 5 人開場各 +30 怒氣，再配「先聲奪人」，第一回合就能連放大招。',win:93,rd:6,use:'推圖、競技場都強',sub:'缺黃忠用馬雲祿；缺劉備用諸葛亮'},
- {n:'雙補鐵壁',f:'蜀',st:4,idea:'張飛嘲諷擋前排，劉備、諸葛亮雙補不倒，關羽、馬超、馬雲祿慢慢打穿。',u:[['zhangfei',1],['mayunlu',0],['machao',2],['guanyu',4],['liubei',6],['zhugeliang',8]],qm:'qlfb',tip:'打不過的高層用這組最穩；「潛龍伏波」讓快倒的人再撐一下。',win:83,rd:7.6,use:'高層爬塔、妖獸討伐',sub:'缺諸葛亮用馬良'},
+ {n:'雙補鐵壁',f:'蜀',st:4,idea:'張飛嘲諷擋前排，劉備、諸葛亮雙補不倒，關羽、馬超、馬雲祿慢慢打穿。',u:[['zhangfei',1],['mayunlu',0],['machao',2],['guanyu',4],['liubei',6],['zhugeliang',8]],qm:'qlfb',tip:'打不過的高層用這組最穩；「潛龍伏波」讓快倒的人再撐一下。',win:83,rd:7.6,use:'高層爬塔、妖獸試煉',sub:'缺諸葛亮用馬良'},
  {n:'西涼鐵騎',f:'蜀',st:4,idea:'西涼馬家每多一人速度更快，搶先出手；張飛在前排嘲諷，趙雲收割殘血。',u:[['zhangfei',1],['machao',0],['mayunlu',2],['madai',4],['zhaoyun',3],['liubei',7]],qm:'xsdr',tip:'馬家 3 人速度 +9%，常常比敵人先動。',win:87,rd:7.7,use:'競技場搶先手',sub:'缺馬岱用關羽'},
  {n:'桃園臥龍',f:'蜀',st:3,idea:'桃園結義＋臥龍出山兩組羈絆，張飛擋前排，劉備、諸葛亮雙補，穩紮穩打。',u:[['zhangfei',1],['guanyu',0],['zhaoyun',2],['xushu',6],['liubei',7],['zhugeliang',8]],qm:'gbyz',tip:'徐庶開場替諸葛亮加 50 怒氣，治療大招更早出現。',win:87,rd:8.4,use:'新手過渡',sub:'徐庶可換成馬超，勝率更高'},
  {n:'魏國速攻',f:'魏',st:5,idea:'曹操、郭嘉、辛憲英、司馬懿四個群攻輪流轟炸，凍結加沉默讓敵人動不了。',u:[['xiahoudun',1],['caocao',4],['xiahouyuan',3],['guojia',6],['simayi',7],['xinxianying',8]],qm:'smcg',tip:'沒有補師，靠控場讓敵人沒機會出手，平均 6 回合結束。',win:90,rd:6.1,use:'推圖、競技場',sub:'缺夏侯淵用曹仁'},
@@ -4530,10 +4530,10 @@ const REC=[
  {n:'魏武主力',f:'魏',st:3,idea:'曹氏宗親雙坦克，曹操、郭嘉、辛憲英三個群攻，甄宓補血。',u:[['caoren',1],['xiahoudun',0],['caocao',4],['zhenmi',7],['guojia',6],['xinxianying',8]],qm:'qszh',tip:'辛憲英對有負面效果的敵人傷害更高，搭郭嘉的凍結最好。',win:70,rd:8.5,use:'新手好湊',sub:'想更強就把曹仁換成夏侯淵（變魏國速攻）'},
  {n:'赤壁火攻',f:'吳',st:5,idea:'陸遜、周瑜全場上灼燒並疊層，孫尚香連射補灼燒，程普嘲諷、周泰保護，大喬補血解負面。',u:[['chengpu',1],['zhoutai',0],['sunshangxiang',4],['luxun',6],['daqiao',7],['zhouyu',8]],qm:'gbyz',tip:'灼燒越疊越痛；程普嘲諷全場讓後排安全輸出。',win:87,rd:5.7,use:'推圖、競技場',sub:'缺周泰用徐盛'},
  {n:'烈火焚營',f:'吳',st:4,idea:'東吳都督周瑜、陸遜雙法師，孫權延長灼燒並全隊加速，周泰保護孫權。',u:[['zhoutai',1],['sunce',0],['sunquan',4],['zhouyu',6],['daqiao',7],['luxun',8]],qm:'gbyz',tip:'陸遜每回合貢獻最高；孫權讓灼燒多燒 1 回合。',win:87,rd:5.2,use:'快速通關',sub:'孫策可換程普'},
- {n:'江東鐵壁',f:'吳',st:4,idea:'程普、徐盛、周泰三坦克，江東宿將減傷，周瑜、陸遜在後面放火，大喬補血。',u:[['chengpu',1],['xusheng',0],['zhoutai',2],['luxun',6],['daqiao',7],['zhouyu',8]],qm:'qlfb',tip:'三坦克很耐打，適合打不贏的高層。',win:83,rd:7.2,use:'高層、妖獸討伐',sub:'缺徐盛用孫策'},
+ {n:'江東鐵壁',f:'吳',st:4,idea:'程普、徐盛、周泰三坦克，江東宿將減傷，周瑜、陸遜在後面放火，大喬補血。',u:[['chengpu',1],['xusheng',0],['zhoutai',2],['luxun',6],['daqiao',7],['zhouyu',8]],qm:'qlfb',tip:'三坦克很耐打，適合打不贏的高層。',win:83,rd:7.2,use:'高層、妖獸試煉',sub:'缺徐盛用孫策'},
  {n:'孫家速攻',f:'吳',st:3,idea:'孫家兄妹羈絆開場加怒氣，孫尚香連射、孫策 X 斬快速壓制。',u:[['sunce',1],['taishici',0],['ganning',2],['sunquan',4],['sunshangxiang',6],['daqiao',7]],qm:'xsdr',tip:'太史慈在這組貢獻最低，換成陸遜或周瑜會更強。',win:83,rd:5.6,use:'孫家粉絲',sub:'太史慈→陸遜'},
  {n:'江東二喬',f:'吳',st:3,idea:'大喬補血、小喬後排必灼燒，周瑜搭二喬，孫策、孫尚香補輸出。',u:[['chengpu',1],['sunshangxiang',3],['sunce',4],['xiaoqiao',6],['daqiao',7],['zhouyu',8]],qm:'gbyz',tip:'江東二喬羈絆讓治療與灼燒各 +15%。',win:83,rd:5.2,use:'喜歡二喬',sub:'孫策→陸遜'},
- {n:'雙補不死',f:'神',st:5,idea:'貂蟬復活、華佗群補又能復活，神關羽、孟獲雙坦克，神諸葛、袁紹全場天威。',u:[['guan',1],['menghuo',0],['yuanshao',4],['shenzhuge',6],['diaochan',7],['huatuo',8]],qm:'qlfb',tip:'兩個能復活的補師，很難被打倒。',win:90,rd:7.8,use:'高層、妖獸討伐',sub:'缺華佗用于吉'},
+ {n:'雙補不死',f:'神',st:5,idea:'貂蟬復活、華佗群補又能復活，神關羽、孟獲雙坦克，神諸葛、袁紹全場天威。',u:[['guan',1],['menghuo',0],['yuanshao',4],['shenzhuge',6],['diaochan',7],['huatuo',8]],qm:'qlfb',tip:'兩個能復活的補師，很難被打倒。',win:90,rd:7.8,use:'高層、妖獸試煉',sub:'缺華佗用于吉'},
  {n:'神將降世',f:'神',st:4,idea:'神關羽、神諸葛帶頭，袁紹、祝融群攻上天威，貂蟬復活隊友。',u:[['guan',1],['menghuo',0],['zhurong',3],['yuanshao',4],['shenzhuge',6],['diaochan',7]],qm:'wwjz',tip:'天威越多，神國傷害越高；南蠻夫妻生命 +10%。',win:87,rd:6.6,use:'推圖、競技場',sub:'缺祝融用左慈'},
  {n:'天威爆發',f:'神',st:3,idea:'神諸葛、蔡文姬、左慈三個全場法師，天威疊滿一起爆發。',u:[['guan',1],['menghuo',0],['huatuo',4],['shenzhuge',6],['caiwenji',7],['zuoci',8]],qm:'wwjz',tip:'蔡文姬會驅散敵人增益，對護盾多的敵人特別有效。',win:83,rd:6.8,use:'打護盾型敵人',sub:'缺蔡文姬用袁紹'},
  {n:'南蠻火舞',f:'神',st:3,idea:'孟獲、祝融南蠻夫妻，左慈、蔡文姬法師輸出，于吉補血。',u:[['menghuo',1],['guan',0],['zhurong',4],['zuoci',6],['yuji',7],['caiwenji',8]],qm:'wwjz',tip:'方外仙人（左慈＋于吉）天威機率 +10%。',win:80,rd:7.3,use:'好湊的神國隊',sub:'于吉→貂蟬'},
@@ -4614,11 +4614,11 @@ function recBind(){$('rcBody').onchange=e=>{const t=e.target;if(t.dataset.tq){co
 
 /* ===================== 更新公告、新手指南、個人中心 ===================== */
 const CHANGES=[
+ {v:'20261102g',d:'11/02',t:['主城拿掉「妖獸討伐」，改成招募、後宮、奇謀、豪傑書四個圓圈','精魄改由「妖獸試煉」產出：每個寶箱都有精魄，第一次擊倒某隻妖獸再送精魄與專屬稱號','精魄商店與妖獸圖鑑搬到妖獸試煉畫面下方的「🔥 精魄」','妖獸相關的每日任務、每週任務與成就改算妖獸試煉；已在信箱的舊獎勵照樣能領，精魄全部保留']},
  {v:'20261102f',d:'11/02',t:['紅顏塔改成「紅顏試煉」：每天 3 位紅顏帶著專屬技能（魅惑、冰封、疊攻、閃避、護盾、沉默、背水、群療淨化、復活）守關，打出傷害開寶箱拿信物與禮物','裝備塔改成「百兵之塔」：每天 2～3 件神、聖、帝品魂器當王，難度用「覺醒 1～10」表示，覺醒越高魂器多出回復、同鳴、狂暴、減傷等能力；寶箱給高品裝備與突破石，極低機率掉出魂器本體','試煉敵人都有特效：妖獸依屬性有火焰、雷光、水波、旋風、日輪等光環，紅顏有花瓣粉光，魂器有旋轉光芒與閃光','四座試煉塔前的展示各不相同：妖獸怒吼震波、名將三人輪轉、紅顏輪流淡入與落花、魂器環繞旋轉','試煉畫面點「ℹ️ 技能」可以看今天敵人的技能說明']},
  {v:'20261102e',d:'11/02',t:['虎符塔改成「妖獸試煉」：6 打 1 隻當天的妖獸，10 回合比傷害；名將塔改成「名將試煉」：每天輪替一組強化名將（技能一樣、數值高很多，卡片有紅紫火焰特效）','試煉分 1～10 階，10 回合內打倒全部敵人解鎖下一階；舊的爬塔進度每 100 層換 1 階','每天 3 次免費挑戰（可用金幣加買），傷害達 10%／25%／50%／75%／100% 各開一個寶箱，可用最佳紀錄掃蕩','各塔層數不再都是 2000：經驗塔 1500、金幣塔 1200、寶石塔 1000、裝備塔 800；超過的進度直接算登頂','原本虎符塔、名將塔的劇本（赤壁、官渡、長坂、照鏡子、同將五人…）移到經驗、金幣、寶石塔','一鍵爬塔時不再顯示浮動提示，爬完只閃 3 秒「✅ 爬塔完成」']},
  {v:'20261102d',d:'11/02',t:['七座塔各有風格與專屬劇本：經驗塔＝兵法入門（陣容要求）、金幣塔＝奇陣異術（限時、堅守、怒氣狂潮、護盾、後發制人）、裝備塔＝猛將對決（暴擊、力大無窮、銅牆鐵壁、一對一）、寶石塔＝元素之境、虎符塔＝鏡像對決（五將同心、照鏡子、三對三、同室操戈）、名將塔＝名將會戰（赤壁、官渡、長坂坡、虎牢關、五虎齊至、夷陵、九宮全開）、紅顏塔＝魅影迷陣','劇本從 10 種增加到 37 種；同一劇本第二輪起加入變奏（敵軍速度 +15%）','各塔難度依獎勵調整：經驗、金幣簡單；裝備、寶石普通；虎符、名將偏難；紅顏困難','人數變化：大多 6 人，偶爾九宮全開 9 人、五人精銳、三對三、一對一單挑','陣容要求關（如至少 2 位魏國、2 法師 2 戰士、不帶補師、同陣營）會在出征前檢查，推薦破解陣容會自動符合']},
  {v:'20261102c',d:'11/02',t:['商城與精魄商店可以選數量一次買：−／＋、×1、×10、最大，即時顯示總價，購買和關閉按鈕並排在數量下方，買完會留在視窗可以再買','名將碎片簡化：稀有、史詩、傳說、神話四種合併成「名將碎片」，每 30 片合成任一武將；舊碎片自動換算（稀有 ×1.5、史詩 ×1、傳說 ×0.75、神話 ×0.5）','一般碎片 4 片可換 1 片名將碎片；名將塔改掉名將碎片']},
- {v:'20261102b',d:'11/02',t:['武將卡的「陣」「📖」標示移到右側，不再擋到名字','戰鬥卡片的星數移到右下角，血條縮短，不再互相遮擋']},
 ];
 const verSeen=()=>{try{return localStorage.getItem('sgSeenVer')||''}catch(e){return ''}},verMark=()=>{try{localStorage.setItem('sgSeenVer',CVER)}catch(e){}};
 function verCheck(){const seen=verSeen();if(seen===CVER)return;if(!seen&&!S.lord.n){verMark();return}const i=CHANGES.findIndex(c=>c.v===seen);const L=(i<0?CHANGES.slice(0,1):CHANGES.slice(0,i)).slice(0,3);if(!L.length){verMark();return}verShow(L,true)}
